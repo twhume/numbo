@@ -35,3 +35,23 @@
     (is (= (-select-node-for-val (-make-urgencies all-1-rack) 5) nil))
 
     )))
+
+(deftest rack-emptying-test
+	(let [five-item-rack (list (new-codelet) (new-codelet) (new-codelet :urgency 2) (new-codelet :urgency 5) (new-codelet :urgency 10))]
+	 (do
+	 	(reset! CODERACK five-item-rack)
+  	(testing "Rack is processed one item at a time, and doesn't fall over when we hit zero entries"
+  		(is (= 5 (count @CODERACK)))
+  		(process-next-node)
+  		(is (= 4 (count @CODERACK)))
+  		(process-next-node)
+  		(is (= 3 (count @CODERACK)))
+  		(process-next-node)
+  		(is (= 2 (count @CODERACK)))
+  		(process-next-node)
+  		(is (= 1 (count @CODERACK)))
+  		(process-next-node)
+  		(is (= 0 (count @CODERACK)))
+  		(process-next-node)
+  		(is (= 0 (count @CODERACK)))
+  		))))
