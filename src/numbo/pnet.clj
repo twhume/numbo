@@ -7,6 +7,8 @@
 
 (def link-types '(:operand :result :similar))
 
+(def PNET (atom '{}))
+
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
 ; TODO: I don't understand why so many of the links in the plus- ones are :results and not :operands
 (def initial-pnet '{
@@ -163,7 +165,7 @@
 ; - nodes are referenced in links but are never defined
 ; (not yet)- nodes with no connection mentioned (in map or :links)
 
-(defn validate-pnet
+(defn -validate-pnet
  "true if this is a valid pnet, false with printed error messages if not"
 [p]
 	(let [all-nodes (keys p)
@@ -183,16 +185,16 @@
  (into {} (for [[k v] m] [k (f v)])))
 
 ; Initialization means
-; setting activation on all nodes to 0
+; setting activation on all nodes to 1
 ; setting weight to 1
 ; adding a :name value equal to the key for each node - useful when debugging
 
 (defn initialize-pnet
  "Fill in the default values"
- [pnet]
- (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation 0 :weight 1)))]
- 	(apply assoc '{} (mapcat #(list %1 (assoc (get weights-and-activations %1) :name %1)) (keys weights-and-activations)))
- ))
+ ([pnet]
+	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation 1 :weight 1)))]
+	 	(apply assoc '{} (mapcat #(list %1 (assoc (get weights-and-activations %1) :name %1)) (keys weights-and-activations)))))
+ ([] (reset! PNET (initialize-pnet initial-pnet))))
 
 ; TODO make functions to act on a pnet - e.g. to activate a node and have its activation spread
 
@@ -203,10 +205,10 @@
 
 ; TODO might be nicer if this took a sequence and we always passed in a sequence - would let us use iterate()
 
-(defn -update-weight
- "Update the weight of node n by a factor f"
+(defn -update-activation
+ "Update the activation of node n by a factor f"
  [f n]
- (update n :weight (partial * f)))
+ (update n :activation (partial * f)))
 
 (defn -map-values
 	[m keys f & args]
@@ -214,15 +216,15 @@
 
 ; Used in unit tests
 
-(defn -find-with-weight
- "Return a sequence of all nodes in pnet p with weight w"
- [p w]
-	(filter (fn [[k v]] (= w (:weight v))) p))
+(defn -find-with-activation
+ "Return a sequence of all nodes in pnet p with activation a"
+ [p a]
+	(filter (fn [[k v]] (= a (:activation v))) p))
 
-(defn -set-with-weight
+(defn -set-with-activation
  "Return a set of node names with value v from pnet p"
  [p v]
-		(into #{} (map key (-find-with-weight p v))))
+		(into #{} (map key (-find-with-activation p v))))
 
 ; Implements decaying preading activation in a pnet
 ; Double the weight of the main node, +50% of neighbors, +10% of their neighbors
@@ -230,13 +232,15 @@
 
 (defn activate-node
  "Activate a node n in a pnet p"
- [p n]
+ ([p n]
  (let [neighbors (-get-neighbors p n)
  						node-and-neighbors (set (conj neighbors n))
  						neighbors-2 (remove node-and-neighbors (distinct (mapcat (partial -get-neighbors p) neighbors)))]
  (-> p
-	 (update n (partial -update-weight 2))
-  (-map-values neighbors (partial -update-weight 1.5))
-  (-map-values neighbors-2 (partial -update-weight 1.1))
+	 (update n (partial -update-activation 2))
+  (-map-values neighbors (partial -update-activation 1.5))
+  (-map-values neighbors-2 (partial -update-activation 1.1))
  )))
+ ([n] (reset! PNET (activate-node @PNET n))))
+;TODO this will need to update based not just on activation but also weight
 
