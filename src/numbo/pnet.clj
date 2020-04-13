@@ -186,10 +186,53 @@
 ; Initialization means
 ; setting activation on all nodes to 0
 ; setting weight to 1
+; adding a :name value equal to the key for each node - useful when debugging
 
 (defn initialize-pnet
  "Fill in the default values"
  [pnet]
- (-update-values pnet (fn [x] (assoc x :activation 0 :weight 1))))
+ (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation 0 :weight 1)))]
+ 	(apply assoc '{} (mapcat #(list %1 (assoc (get weights-and-activations %1) :name %1)) (keys weights-and-activations)))
+ ))
 
 ; TODO make functions to act on a pnet - e.g. to activate a node and have its activation spread
+
+(defn -get-neighbors
+ "Return the neighbors of node n in pnet n"
+	[p n]
+	(map first (:links (get p n))))
+
+; TODO might be nicer if this took a sequence and we always passed in a sequence - would let us use iterate()
+
+(defn -update-weight
+ "Update the weight of node n by a factor f"
+ [f n]
+ (update n :weight (partial * f)))
+
+(defn -map-values
+	[m keys f & args]
+	(reduce #(apply update-in %1 [%2] f args) m keys))
+
+; Used in unit tests
+
+(defn -find-with-weight
+ "Return a sequence of all nodes in pnet p with weight w"
+ [p w]
+	(filter (fn [[k v]] (= w (:weight v))) p))
+
+; Implements decaying preading activation in a pnet
+; Double the weight of the main node, +50% of neighbors, +10% of their neighbors
+; All arbitrary factors atm
+
+(defn activate-node
+ "Activate a node n in a pnet p"
+ [p n]
+ (let [neighbors (-get-neighbors p n)
+ 						node-and-neighbors (set (conj neighbors n))
+ 						neighbors-2 (remove node-and-neighbors (distinct (mapcat (partial -get-neighbors p) neighbors)))]
+ (-> p
+	 (update n (partial -update-weight 2))
+  (-map-values neighbors (partial -update-weight 1.5))
+  (-map-values neighbors-2 (partial -update-weight 1.1))
+ )))
+
