@@ -8,11 +8,6 @@
       (is (= true (validate-pnet (initialize-pnet initial-pnet))))
 ))
 
-(defn -set-with-weight
- "Return a set of node names with value v from pnet p"
- [p v]
-		(into #{} (map key (-find-with-weight p v))))
-
 (deftest pnet-validation-test
 	(testing "Validates that spreading activation works as expected"
 		(let [p (initialize-pnet initial-pnet)

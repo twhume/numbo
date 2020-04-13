@@ -5,7 +5,6 @@
 ; :weight - default 0
 ; :links - each a tuple of destination (keyword name of dest note) and type (keyword from link-types)
 
-
 (def link-types '(:operand :result :similar))
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
@@ -219,6 +218,11 @@
  "Return a sequence of all nodes in pnet p with weight w"
  [p w]
 	(filter (fn [[k v]] (= w (:weight v))) p))
+
+(defn -set-with-weight
+ "Return a set of node names with value v from pnet p"
+ [p v]
+		(into #{} (map key (-find-with-weight p v))))
 
 ; Implements decaying preading activation in a pnet
 ; Double the weight of the main node, +50% of neighbors, +10% of their neighbors
