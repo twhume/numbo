@@ -1,6 +1,7 @@
 # numbo
 
-A Clojure library designed to ... well, that part is up to you.
+Goal: recreate Hofstadter’s Numbo in Clojure
+See Fluid Concepts & Creative Analogies, p.131 onwards (Chapter 3)
 
 ## Usage
 

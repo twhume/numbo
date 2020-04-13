@@ -9,76 +9,152 @@
 (def link-types '(:operand :result :similar))
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
-(def init-pnet '{
+; TODO: I don't understand why so many of the links in the plus- ones are :results and not :operands
+(def initial-pnet '{
 
 	:1 {
 		:links (
-		 (:plus-1-1 :result),
-			(:plus-1-2 :result),
+		 (:plus-1-1 :result)
+			(:plus-1-2 :result)
 			(:plus-1-3 :result))
 	}
 
 	:2 {
 		:links (
-		 (:plus-1-2 :result),
-			(:plus-2-2 :result),
-			(:plus-2-3 :result),
-			(:times-2-2 :operand),
-			(:times-2-3 :operand),
+		 (:plus-1-2 :result)
+			(:plus-2-2 :result)
+			(:plus-2-3 :result)
+			(:times-2-2 :operand)
+			(:times-2-3 :operand)
 		 (:plus-1-1 :result)
 			)
 	}
 
 	:3 {
 		:links (
-		 (:plus-1-3 :result),
-			(:plus-2-3 :result),
-			(:plus-3-3 :result),
-			(:times-2-3 :operand),
-			(:times-3-3 :operand),
-		 (:plus-1-2 :result),
+		 (:plus-1-3 :result)
+			(:plus-2-3 :result)
+			(:plus-3-3 :result)
+			(:times-2-3 :operand)
+			(:times-3-3 :operand)
+		 (:plus-1-2 :result)
 		 (:4 :similar)
-			)
-	}
-
-	:plus-1-1 {
-			:links ()
-	}
-
-	:plus-1-2 {
-			:links ()
-	}
-
-	:plus-1-3 {
-			:links ()
-	}
-
-	:plus-2-2 {
-			:links ()
-	}
-
-	:plus-2-3 {
-			:links ()
-	}
-
-	:plus-3-3 {
-			:links ()
-	}
-
-	:times-2-2 {
-			:links ()
-	}
-
-	:times-2-3 {
-			:links ()
-	}
-
-	:times-3-3 {
-			:links ()
+		)
 	}
 
 	:4 {
-			:links ()
+			:links (
+				(:plus-1-2 :result)
+				(:plus-2-2 :result)
+				(:times-2-2 :result)
+			 (:3 :similar)
+			 (:5 :similar)
+			)
+	}
+
+	:5 {
+			:links (
+				(:plus-2-3 :result)
+			 (:4 :similar)
+			 (:6 :similar)
+			)
+	}
+
+	:6 {
+			:links (
+				(:times-2-3 :result)
+			 (:5 :similar)
+			 (:7 :similar)
+			)
+	}
+
+	:7 {
+			:links (
+			 (:6 :similar)
+			 (:8 :similar)
+			 )
+	}
+
+	:8 {
+			:links (
+			 (:7 :similar)
+			 (:9 :similar)
+			 )
+	}
+
+	:9 {
+			:links (
+				(:times-3-3 :result)
+				(:8 :similar)
+			)
+	}
+
+
+	:plus-1-1 {
+			:links (
+				(:1 :result)
+				(:2 :result)
+			)
+	}
+
+	:plus-1-2 {
+			:links (
+				(:1 :result)
+				(:2 :result)
+				(:3 :result)				
+		 )
+	}
+
+	:plus-1-3 {
+			:links (
+				(:1 :result)
+				(:3 :result)
+				(:4 :result)				
+			)
+	}
+
+	:plus-2-2 {
+			:links (
+				(:2 :result)
+				(:4 :result)
+		 )
+	}
+
+	:plus-2-3 {
+			:links (
+				(:2 :result)
+				(:3 :result)
+				(:5 :result)				
+		)
+	}
+
+	:plus-3-3 {
+			:links (
+				(:3 :result)
+				(:6 :result)
+			)
+	}
+
+	:times-2-2 {
+			:links (
+				(:2 :operand)
+				(:4 :result)
+			)
+	}
+
+	:times-2-3 {
+			:links (
+				(:2 :operand)
+				(:3 :operand)
+				(:6 :result)
+			)
+	}
+
+	:times-3-3 {
+			:links (
+ 			(:3 :operand)
+				(:9 :result)
+   )
 	}
 
 	})
@@ -89,7 +165,7 @@
 ; (not yet)- nodes with no connection mentioned (in map or :links)
 
 (defn validate-pnet
- "true if this is a valid pnet, false if not"
+ "true if this is a valid pnet, false with printed error messages if not"
 [p]
 	(let [all-nodes (keys p)
 							all-links (apply concat (map #(:links (second %)) p))
@@ -97,10 +173,23 @@
 							used-links (distinct (map first all-links))]
 
 							(cond
-								(not-every? (set link-types) used-types) (do (println "Bad link types" (remove (set link-types) used-types)) false)
-								(not-every? (set all-nodes) used-links) (do (println "Bad nodes in links" (remove (set all-nodes) used-links)) false)
+								(not-every? (set link-types) used-types) (do (println "Bad link types:" (remove (set link-types) used-types)) false)
+								(not-every? (set all-nodes) used-links) (do (println "Unknown nodes referenced in links:" (remove (set all-nodes) used-links)) false)
 								:else true								
 							)))
 
+(defn -update-values
+	"Apply function f to all values in the map m"
+	[m f]
+ (into {} (for [[k v] m] [k (f v)])))
+
+; Initialization means
+; setting activation on all nodes to 0
+; setting weight to 1
+
+(defn initialize-pnet
+ "Fill in the default values"
+ [pnet]
+ (-update-values pnet (fn [x] (assoc x :activation 0 :weight 1))))
+
 ; TODO make functions to act on a pnet - e.g. to activate a node and have its activation spread
-; TODO write unit test for validate-pnet
