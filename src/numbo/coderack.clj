@@ -1,6 +1,7 @@
 (ns numbo.coderack)
 
 (def CODERACK (atom '()))
+(def ITERATIONS (atom 0))
 
 ; What are urgency value ranges?
 ; Imagine we have a set of codelet in the rack with urgencies 1 1 2 5 10
@@ -29,8 +30,12 @@
  "Grabs and executes a codelet from the rack, removing it afterwards"
  ([]
  	(let [codelet (-select-next-codelet @CODERACK)]
- 	 ; TODO operate the node
- 	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m)))))))
+ 	(do
+ 		(swap! ITERATIONS inc)
+ 	 ((:fn codelet))
+ 	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
+ 	 (println "Tick " @ITERATIONS)
+ 	 ))))
 
 (defn add-codelet
  "Adds a new codelet to the coderack"
