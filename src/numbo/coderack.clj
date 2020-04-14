@@ -34,7 +34,7 @@
  		(swap! ITERATIONS inc)
  	 ((:fn codelet))
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
- 	 (println "Tick " @ITERATIONS)
+ 	 (println "Tick" @ITERATIONS)
  	 ))))
 
 (defn add-codelet

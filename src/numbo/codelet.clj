@@ -32,5 +32,4 @@
 ; TODO: more on p143 onwards
 ; TODO: also look at source code
 
-; Next: get simple codelets in and the main loop going
 ; work out: do we need a visualizer?

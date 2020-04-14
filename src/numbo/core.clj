@@ -4,6 +4,17 @@
 											[numbo.working :as wm]
 											[numbo.pnet :as pn]))
 
+(defn run-until
+ [pred]
+ (loop []
+ 	(cr/process-next-codelet)
+ 	(wm/print-state)
+ 	(if (not (pred)) (recur))))
+
+(defn run-until-empty-cr
+ []
+ (run-until (fn[] (empty? @cr/CODERACK))))
+
 (defn -main
   []
   (do
@@ -18,9 +29,7 @@
 (cl/create-node :brick 3)
 (cl/create-node :brick 2)
 
-(wm/print-state)
-(cr/process-next-codelet)
-(wm/print-state)
+(run-until-empty-cr)
 
 
 (println "done")
