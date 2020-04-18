@@ -26,13 +26,18 @@
  	 (if (not-empty urgencies)
  	  (-select-codelet-for-val urgencies (rand-int (first (last urgencies))))))))
 
+(defn -execute
+ "Executes the function f, warning and doing nothing if f is nil"
+ [f]
+ (if f (f) (println "Warning: skipping nil function")))
+
 (defn process-next-codelet
  "Grabs and executes a codelet from the rack, removing it afterwards"
  ([]
  	(let [codelet (-select-next-codelet @CODERACK)]
  	(do
  		(swap! ITERATIONS inc)
- 	 ((:fn codelet))
+ 	 (-execute (:fn codelet))
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
  	 (println "Tick" @ITERATIONS)
  	 ))))
