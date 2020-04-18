@@ -3,12 +3,11 @@
             [numbo.pnet :refer :all]))
 
 (deftest pnet-validation-test
-	(testing "Validate default pnet is OK, even after initialization"
-      (is (= true (-validate-pnet initial-pnet)))
+	(testing "Validate default pnet is OK after initialization"
       (is (= true (-validate-pnet (initialize-pnet initial-pnet))))
 ))
 
-(deftest pnet-validation-test
+(deftest pnet-activation-test
 	(testing "Validates that spreading activation works as expected"
 		(let [p (initialize-pnet initial-pnet)
 								activated (activate-node p :1)]
