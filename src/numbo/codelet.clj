@@ -1,25 +1,143 @@
 (ns numbo.codelet
-	(:require [numbo.working :as wm]
-											[numbo.coderack :as cr]))
+	(:require [numbo.coderack :as cr]
+											[numbo.pnet :as pn]
+											[numbo.working :as wm]))
 
-(def codelet-types :new-node)
+(def codelet-types :load-target)
+
+(def URGENCY_HIGH 3)
+(def URGENCY_MEDIUM 2)
+(def URGENCY_LOW 1)
 
 ; Lets us create codelets with a consistent set of fields.
 ; Example usage:
 ;
 ; (new-codelet)
 ; (new-codelet :urgency 10)
+;
+;
+; Codelet fields are:
+; :urgency
+; :fn
+; :type (one of codelet-types)
+
+(defn -noop
+ [] nil)
 
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
  [& s]
- (into '{:urgency 1} (map vec (partition 2 s))))
+ (into (hash-map :urgency URGENCY_LOW :fn -noop) (map vec (partition 2 s))))
 
-; create-node - adds a new node to WM for a brick or target
+(defn -initial-attractiveness
+	"Calculates an initial attractiveness for the number, based on its value"
+ [n]
+ (cond-> 0
+ 	(= 0 (mod n 5)) (+ 5)
+ 	(= 0 (mod n 10)) (+ 5)
+ 	(= 0 (mod n 100)) (+ 5)
+ ))
+
+;----- HELPER FUNCTIONS USED BY CODELETS -----
+; move these into their files
+
+(defn closest
+	"Return the element of sequence s which is closest to the input value n"
+[s n]
+(nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))
+
+(defn pn-get-operands
+	"Get all the operand nodes from the pnet"
+	[] ())
+
+(defn wm-get-random-free-bricks
+ "Returns a sequence of randomly chosen free bricks (probabilistically chosen)"
+	[]
+	)
+
+(defn pn-get-rand-op
+ ""
+ [])
+
+
+
+;----- CODELETS HEREON -----
+
+; create-node - adds a new node to WM for a brick or target, used to initialize
+; TODO set initial attractiveness, function of numerical value (e.g. mod 5, 10 == 0)
+;
 
 (defn create-node
 	[t v]
 	(cr/add-codelet (new-codelet :type :new-node :fn (fn [] (wm/add-node t v)))))
+
+; activates a specific node in the Pnet
+
+(defn activate-pnet
+	[n]
+	(cr/add-codelet (new-codelet :type :activate-pnet :fn (fn [] (pn/activate-node n)))))
+
+; load-target - (high urgency) when a target is loaded, the pnet landmark closest is activated.
+; operands (* - +) are activated. If it’s larger than the largest brick, * is activated more.
+; (p143)
+
+(defn load-target
+	"Add target node, activate closest number in Pnet, and operands (* if target is larger than largest brick)"
+ [v]
+ (cr/add-codelet
+ 	(new-codelet :type :load-target :urgency URGENCY_HIGH
+	 	:fn (fn []
+		 	(do
+		 		(wm/add-node :target v))
+		 	 (activate-pnet (keyword (str (closest (pn/get-numbers) v))))
+		 	 (map activate-pnet (pn/get-operators))
+		 	 (if (and 
+		 	 	(not (nil? (wm/get-largest-brick)))
+		 	 	(> v (:value (wm/get-largest-brick))))
+		 	 		(activate-pnet :times))
+		 	))))
+
+
+
+(defn syntactic-comparison
+ ""
+ [n1 n2]
+)
+
+(defn rand-op
+ ""
+ [])
+
+(defn create-block
+""
+[n1 n2 op])
+
+; load-target
+; read-brick
+; rand-op
+
+
+
+
+; Next: starting from p142, document the types of codelets
+; THEN
+; write one which looks for syntactic similarities between bricks/blocks + targets, increases attractiveness of bricks
+; write one which looks at random nodes (by attractiveness) and evals to a target
+; write one which makes a secondary target
+; write one which makes a block
+
+;----- END OF CODELETS -----
+
+
+; From the book:
+
+; Types of codelets
+
+; Actual codelets
+;
+; 
+
+; Examples fr
 
 ; Examples from the text
 ; maybe we don't need all these...

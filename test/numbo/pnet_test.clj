@@ -32,13 +32,13 @@
 				(is (= 1.1 (get-in activated [:4 :activation])))
 
 				; Did no-one else get activated a bit less?
-				(is (= #{:2 :3 :4} (-set-with-activation activated 1.1)))
+				(is (= #{:2 :3 :4 :plus} (-set-with-activation activated 1.1)))
 
 				; Is everyone else's activation unaltered?
-				; we have 7 nodes with altered activations. So (count of nodes)-7 should have activations 1.0
+				; we have 8 nodes with altered activations. So (count of nodes)-8 should have activations 1.0
 
 				(is (=
-					(- (count (keys activated)) 7)
+					(- (count (keys activated)) 8)
 					(count (-set-with-activation activated 1))
 					))
 )))

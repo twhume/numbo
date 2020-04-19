@@ -5,31 +5,33 @@
 ; :weight - default 0
 ; :links - each a tuple of destination (keyword name of dest note) and type (keyword from link-types)
 
-(def node-types '(:number :calculation))
-(def link-types '(:operand :result :similar))
+(def node-types '(:number :calculation :operator))
+(def link-types '(:operator :result :similar :param))
+(def operator-map (hash-map :plus + :minus - :times *))
 
 (def PNET (atom '{}))
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
-; TODO: I don't understand why so many of the links in the plus- ones are :results and not :operands
+; TODO: I don't understand why so many of the links in the plus- ones are :results and not :params
 (def initial-pnet '{
 
 	:1 {
 		:type :number
 		:links (
-		 (:plus-1-1 :result)
-			(:plus-1-2 :result)
-			(:plus-1-3 :result))
+		 (:plus-1-1 :param)
+			(:plus-1-2 :param)
+			(:plus-1-3 :param)
+			)
 	}
 
 	:2 {
 		:type :number
 		:links (
-		 (:plus-1-2 :result)
-			(:plus-2-2 :result)
-			(:plus-2-3 :result)
-			(:times-2-2 :operand)
-			(:times-2-3 :operand)
+		 (:plus-1-2 :param)
+			(:plus-2-2 :param)
+			(:plus-2-3 :param)
+			(:times-2-2 :param)
+			(:times-2-3 :param)
 		 (:plus-1-1 :result)
 			)
 	}
@@ -37,11 +39,11 @@
 	:3 {
 		:type :number
 		:links (
-		 (:plus-1-3 :result)
-			(:plus-2-3 :result)
-			(:plus-3-3 :result)
-			(:times-2-3 :operand)
-			(:times-3-3 :operand)
+		 (:plus-1-3 :param)
+			(:plus-2-3 :param)
+			(:plus-3-3 :param)
+			(:times-2-3 :param)
+			(:times-3-3 :param)
 		 (:plus-1-2 :result)
 		 (:4 :similar)
 		)
@@ -50,7 +52,7 @@
 	:4 {
 		:type :number
 		:links (
-			(:plus-1-2 :result)
+			(:plus-1-3 :result)
 			(:plus-2-2 :result)
 			(:times-2-2 :result)
 		 (:3 :similar)
@@ -104,7 +106,7 @@
 	:plus-1-1 {
 		:type :calculation
 		:links (
-			(:1 :result)
+			(:1 :param)
 			(:2 :result)
 		)
 	}
@@ -112,8 +114,8 @@
 	:plus-1-2 {
 		:type :calculation
 		:links (
-			(:1 :result)
-			(:2 :result)
+			(:1 :param)
+			(:2 :param)
 			(:3 :result)				
 	 )
 	}
@@ -121,61 +123,81 @@
 	:plus-1-3 {
 		:type :calculation
 		:links (
-			(:1 :result)
-			(:3 :result)
-			(:4 :result)				
+			(:1 :param)
+			(:3 :param)
+			(:4 :result)
+			(:plus :operator)
 		)
 	}
 
 	:plus-2-2 {
 		:type :calculation
 		:links (
-			(:2 :result)
+			(:2 :param)
 			(:4 :result)
+			(:plus :operator)
 	 )
 	}
 
 	:plus-2-3 {
 		:type :calculation
 		:links (
-			(:2 :result)
-			(:3 :result)
+			(:2 :param)
+			(:3 :param)
 			(:5 :result)				
+			(:plus :operator)
 		)
 	}
 
 	:plus-3-3 {
 		:type :calculation
 		:links (
-			(:3 :result)
+			(:3 :param)
 			(:6 :result)
+			(:plus :operator)
 		)
 	}
 
 	:times-2-2 {
 		:type :calculation
 		:links (
-			(:2 :operand)
+			(:2 :param)
 			(:4 :result)
+			(:times :operator)
 		)
 	}
 
 	:times-2-3 {
 		:type :calculation
 		:links (
-			(:2 :operand)
-			(:3 :operand)
+			(:2 :param)
+			(:3 :param)
 			(:6 :result)
+			(:times :operator)
 		)
 	}
 
 	:times-3-3 {
 		:type :calculation
 		:links (
-			(:3 :operand)
+			(:3 :param)
 			(:9 :result)
+			(:times :operator)
   )
 	}
+
+	:plus {
+		:type :operator
+	}
+
+	:times {
+		:type :operator
+	}
+
+	:minus {
+		:type :operator
+	}
+
 
 	})
 
@@ -188,6 +210,11 @@
  "Return all the numbers in the Pnet"
  ([p] (map #(Integer/parseInt (name (:name %))) (filter #(= :number (:type %)) (vals p))))
  ([] (get-numbers @PNET)))
+
+(defn get-operators
+ "Returns a list of all valid operators for the Pnet"
+ []
+ (keys operator-map))
 
 (defn -validate-pnet
  "true if this is a valid initialized pnet, false with printed error messages if not"
