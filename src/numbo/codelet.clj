@@ -1,5 +1,6 @@
 (ns numbo.codelet
-	(:require [numbo.coderack :as cr]
+	(:require [clojure.string :as str]
+											[numbo.coderack :as cr]
 											[numbo.pnet :as pn]
 											[numbo.working :as wm]))
 
@@ -71,7 +72,12 @@
 
 (defn activate-pnet
 	[n]
-	(cr/add-codelet (new-codelet :type :activate-pnet :fn (fn [] (pn/activate-node n)))))
+	(cr/add-codelet (new-codelet :type :activate-pnet :urgency URGENCY_MEDIUM :fn (fn [] (pn/activate-node n)))))
+
+(defn inc-attraction
+	[n]
+	(cr/add-codelet (new-codelet :type :inc-attraction :urgency URGENCY_MEDIUM :fn (fn [] (wm/pump-node n)))))
+
 
 ; load-target - (high urgency) when a target is loaded, the pnet landmark closest is activated.
 ; operands (* - +) are activated. If it’s larger than the largest brick, * is activated more.
@@ -94,14 +100,21 @@
 		 	))))
 
 (defn syntactic-comparison
- ""
+ "Looks for syntactic similarities between nodes and increases their attractiveness accordingly"
  [n1 n2]
-)
+ (let [v1 (str (:value n1))
+ 						v2 (str (:value n2))]
+	 (cond
+
+	  ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
+
+	  (or (str/includes? v1 v2) (str/includes? v2 v1)) (do (inc-attraction n1) (inc-attraction n2))
+	 )))
 
 (defn load-brick
  "Loads a new brick into memory"
  [v]
-	(cr/add-codelet (new-codelet :type :new-node :fn (fn [] (wm/add-node :brick v)))))
+	(cr/add-codelet (new-codelet :type :new-node :urgency URGENCY_HIGH :fn (fn [] (wm/add-node :brick v)))))
 
 (defn rand-op
  ""

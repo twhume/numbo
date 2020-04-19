@@ -4,6 +4,11 @@
 (def node-types '(:brick :block :operation :target :secondary))
 (def statuses '(:taken :free))
 
+; default amount by which to increase attractiveness of a node, when it's pumped
+(def DEFAULT_ATTRACTION_INC 5)
+; default starting attraction
+(def DEFAULT_ATTRACTION 1)
+
 (def NODES (atom '()))
 
 ; TODO suspiciously similar to cl/new-codelet, rationalize
@@ -18,7 +23,7 @@
 (defn new-node 
  "create a new node of type t with optional values s"
  [t & s]
-  (into (hash-map :type t :status :free :attractiveness 1 ) (map vec (partition 2 s))))
+  (into (hash-map :type t :status :free :attractiveness DEFAULT_ATTRACTION) (map vec (partition 2 s))))
 
 (def initial-working
 	'{
@@ -56,6 +61,12 @@
  "Adds a new node of type t and value v to the working memory"
  ([w t v] (-add-node w (new-node t :value v)))
  ([n v] (reset! NODES (add-node @NODES n v))))
+
+(defn pump-node
+ "Pump a node n in memory w, by increasing its attractiveness"
+ ([w n]
+	 (let [pumped-n (assoc n :attractiveness (+ (:attractiveness n) DEFAULT_ATTRACTION_INC))]
+ 		(conj (remove #{n} w) pumped-n))))
 
 (defn print-state
  "(for debug purposes) print the current WM state"
