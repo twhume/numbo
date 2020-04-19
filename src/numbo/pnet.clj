@@ -1,4 +1,5 @@
-(ns numbo.pnet)
+(ns numbo.pnet
+	(:require [numbo.misc :as misc]))
 
 ; Pnet is a map of name -> node, where name is a keyword name of the node, and node is a map:
 ; :activation - default 0
@@ -299,3 +300,11 @@
  ([n] (reset! PNET (activate-node @PNET n))))
 ;TODO this will need to update based not just on activation but also weight
 
+
+(defn get-random-op
+	"Get a random operator, sampled probabilistically by activation"
+ ([p]
+ 	(let [op-range (misc/make-ranges (filter #(= :operator (:type %)) (vals p)) :activation)]
+ 	 (if (not-empty op-range)
+ 	  (misc/random-val-in-range op-range))))
+ ([] (get-random-op @PNET)))
