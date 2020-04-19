@@ -1,4 +1,5 @@
-(ns numbo.working)
+(ns numbo.working
+	(:require [numbo.misc :as misc]))
 
 ; Working Memory (WM)
 (def node-types '(:brick :block :operation :target :secondary))
@@ -24,6 +25,17 @@
  "create a new node of type t with optional values s"
  [t & s]
   (into (hash-map :type t :status :free :attractiveness DEFAULT_ATTRACTION) (map vec (partition 2 s))))
+
+; Pulls a random brick from the WM, selected probailistically according to :attractiveness.
+; If f is true, only select blocks with a status of :free
+
+(defn get-random-brick
+ "Choose a random brick from the WM w probabilistically by attractiveness. If f is true, just free ones"
+ ([w f]
+ 	(let [ranges (misc/make-ranges (if f (filter #(= :free (:status %)) w) w) :attractiveness)]
+ 	 (if (not-empty ranges)
+ 	  (misc/random-val-in-range ranges)))))
+
 
 (def initial-working
 	'{
