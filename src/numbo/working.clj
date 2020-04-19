@@ -34,7 +34,8 @@
  ([w f]
  	(let [ranges (misc/make-ranges (if f (filter #(= :free (:status %)) w) w) :attractiveness)]
  	 (if (not-empty ranges)
- 	  (misc/random-val-in-range ranges)))))
+ 	  (misc/random-val-in-range ranges))))
+ ([f] (get-random-brick @NODES f)))
 
 
 (def initial-working
