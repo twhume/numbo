@@ -12,9 +12,6 @@
 
 (def NODES (atom '()))
 
-; TODO suspiciously similar to cl/new-codelet, rationalize
-;
-;
 ; Nodes are a map of:
 ; :type - one of :brick :target :target2 (secondary target) :block
 ; :status - one of :free :taken

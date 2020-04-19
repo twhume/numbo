@@ -64,10 +64,6 @@
 
 ;----- CODELETS HEREON -----
 
-; -create-node - adds a new node to WM for a brick or target, used to initialize
-; TODO set initial attractiveness, function of numerical value (e.g. mod 5, 10 == 0)
-;
-
 ; activates a specific node in the Pnet
 
 (defn activate-pnet
@@ -99,6 +95,11 @@
 		 	 		(activate-pnet :times))
 		 	))))
 
+; syntactic-comparison (mid urgency) There is a type of codeliet which inspects various nodes and
+; notices syntactic similarities, increases attractiveness of them - e.g. if brick 11 shares digits 
+; with target 114, increase attractiveness of 11 (p141)
+
+
 (defn syntactic-comparison
  "Looks for syntactic similarities between nodes and increases their attractiveness accordingly"
  [n1 n2]
@@ -116,49 +117,16 @@
  [v]
 	(cr/add-codelet (new-codelet :type :new-node :urgency URGENCY_HIGH :fn (fn [] (wm/add-node :brick v)))))
 
+; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
+; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
+
 (defn rand-op
- ""
- [])
-
-(defn create-block
-""
-[n1 n2 op])
-
-; read-brick
-; rand-op
-
-
-
-
-; Next: starting from p142, document the types of codelets
-; THEN
-; write one which looks for syntactic similarities between bricks/blocks + targets, increases attractiveness of bricks
-; write one which looks at random nodes (by attractiveness) and evals to a target
-; write one which makes a secondary target
-; write one which makes a block
+ "Make a new block out of sampled random bricks and ops"
+ []
+ (let [b1 (wm/get-random-brick false)
+ 						b2 (wm/get-random-brick false)
+ 						op (pn/get-random-op)]
+ 						(cr/add-codelet (new-codelet :type :new-block :urgency URGENCY_HIGH
+ 							:fn (fn [] (wm/add-node :block b1 b2 op))))))
 
 ;----- END OF CODELETS -----
-
-
-; From the book:
-
-; Types of codelets
-
-; Actual codelets
-;
-; 
-
-; Examples fr
-
-; Examples from the text
-; maybe we don't need all these...
-; See p142
-;
-; kill-secondary-nodes: destroys previously built blocks or target, frees up constituent nodes
-; share-digits?: notice that a target and brick share digits
-; activate the pnet landmark closest to the target
-; activate operations suitable for target (e.g. weight towards mult for targets much larger than bricks)
-; TODO: more on p143 onwards
-; TODO: also look at source code
-
-; work out: do we need a visualizer?

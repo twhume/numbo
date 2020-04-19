@@ -13,7 +13,7 @@
 (def PNET (atom '{}))
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
-; TODO: I don't understand why so many of the links in the plus- ones are :results and not :params
+
 (def initial-pnet '{
 
 	:1 {
@@ -252,14 +252,10 @@
 	 	(apply assoc '{} (mapcat #(list %1 (assoc (get weights-and-activations %1) :name %1)) (keys weights-and-activations)))))
  ([] (reset! PNET (initialize-pnet initial-pnet))))
 
-; TODO make functions to act on a pnet - e.g. to activate a node and have its activation spread
-
 (defn -get-neighbors
  "Return the neighbors of node n in pnet n"
 	[p n]
 	(map first (:links (get p n))))
-
-; TODO might be nicer if this took a sequence and we always passed in a sequence - would let us use iterate()
 
 (defn -update-activation
  "Update the activation of node n by a factor f"
@@ -298,8 +294,6 @@
   (-map-values neighbors-2 (partial -update-activation 1.1))
  )))
  ([n] (reset! PNET (activate-node @PNET n))))
-;TODO this will need to update based not just on activation but also weight
-
 
 (defn get-random-op
 	"Get a random operator, sampled probabilistically by activation"

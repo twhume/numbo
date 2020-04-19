@@ -2,14 +2,13 @@
 
 ; Useful functions I want to avoid duplicating across files
 
-;; Used to implement probabilistic sampling. Find a specific value within the range
-
+; Used to implement probabilistic sampling. Find a specific value within the range
+;
 ; e.g. Urgency value ranges for selecting a codelet. What are urgency value ranges?
 ; Imagine we have a set of codelet in the rack with urgencies 1 1 2 5 10
 ; The urgency value ranges are 1 2 4 9 19
 ; (minimum urgency must be 1 rather than 0, so that 0-urgency nodes have a chance of running)
 ; A random value from 0..19 would be generated to choose one weighted by its urgency
-
 
 (defn select-val-in-range
  "Given a sequence of (value range, value) r, and a value v within the ranges, return a value"
