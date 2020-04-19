@@ -21,15 +21,23 @@
 
 (println "Starting")
 
-(pn/initialize-pnet pn/initial-pnet)
+(pn/initialize-pnet)
 
-(cl/create-node :target 10)
 (cl/create-node :brick 1)
+(cr/process-next-codelet)
 (cl/create-node :brick 2)
+(cr/process-next-codelet)
 (cl/create-node :brick 3)
+(cr/process-next-codelet)
 (cl/create-node :brick 2)
+(cr/process-next-codelet)
+(cl/load-target 10)
+
+(println @pn/PNET)
 
 (run-until-empty-cr)
+(println "-----")
+(println @pn/PNET)
 
 
 (println "done")
