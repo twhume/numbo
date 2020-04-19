@@ -47,20 +47,10 @@
 [s n]
 (nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))
 
-(defn pn-get-operands
-	"Get all the operand nodes from the pnet"
-	[] ())
-
 (defn wm-get-random-free-bricks
  "Returns a sequence of randomly chosen free bricks (probabilistically chosen)"
 	[]
 	)
-
-(defn pn-get-rand-op
- ""
- [])
-
-
 
 ;----- CODELETS HEREON -----
 
