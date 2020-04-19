@@ -23,13 +23,13 @@
 
 (pn/initialize-pnet)
 
-(cl/create-node :brick 1)
+(cl/load-brick 1)
 (cr/process-next-codelet)
-(cl/create-node :brick 2)
+(cl/load-brick 2)
 (cr/process-next-codelet)
-(cl/create-node :brick 3)
+(cl/load-brick 3)
 (cr/process-next-codelet)
-(cl/create-node :brick 2)
+(cl/load-brick 2)
 (cr/process-next-codelet)
 (cl/load-target 10)
 

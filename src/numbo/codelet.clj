@@ -63,13 +63,9 @@
 
 ;----- CODELETS HEREON -----
 
-; create-node - adds a new node to WM for a brick or target, used to initialize
+; -create-node - adds a new node to WM for a brick or target, used to initialize
 ; TODO set initial attractiveness, function of numerical value (e.g. mod 5, 10 == 0)
 ;
-
-(defn create-node
-	[t v]
-	(cr/add-codelet (new-codelet :type :new-node :fn (fn [] (wm/add-node t v)))))
 
 ; activates a specific node in the Pnet
 
@@ -97,12 +93,15 @@
 		 	 		(activate-pnet :times))
 		 	))))
 
-
-
 (defn syntactic-comparison
  ""
  [n1 n2]
 )
+
+(defn load-brick
+ "Loads a new brick into memory"
+ [v]
+	(cr/add-codelet (new-codelet :type :new-node :fn (fn [] (wm/add-node :brick v)))))
 
 (defn rand-op
  ""
@@ -112,7 +111,6 @@
 ""
 [n1 n2 op])
 
-; load-target
 ; read-brick
 ; rand-op
 
