@@ -27,7 +27,7 @@
  		(swap! ITERATIONS inc)
  	 (-execute (:fn codelet))
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
- 	 (hist/add-step @pn/PNET @wm/NODES @CODERACK codelet)
+ 	 (hist/add-step @pn/PNET @wm/NODES @CODERACK codelet @ITERATIONS)
  	 (println "Tick" @ITERATIONS)
  	 ))))
 

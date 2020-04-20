@@ -1,6 +1,7 @@
 (ns numbo.core
 	(:require [numbo.coderack :as cr]
 											[numbo.codelet :as cl]
+											[numbo.history :as hist]
 											[numbo.working :as wm]
 											[numbo.pnet :as pn]))
 
