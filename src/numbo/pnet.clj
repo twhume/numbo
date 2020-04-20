@@ -109,6 +109,7 @@
 		:links (
 			(:1 :param)
 			(:2 :result)
+			(:plus :operator)
 		)
 	}
 
@@ -118,6 +119,7 @@
 			(:1 :param)
 			(:2 :param)
 			(:3 :result)				
+			(:plus :operator)
 	 )
 	}
 
@@ -302,3 +304,12 @@
  	 (if (not-empty op-range)
  	  (misc/random-val-in-range op-range))))
  ([] (get-random-op @PNET)))
+
+; Used in graphing
+
+(defn get-link-type
+ "Return the type of link going from node names n1 to n2 in pnet p"
+ [p n1 n2]
+ (let [src (get p n1)
+ 						link (first (filter #(= n2 (first %1))(:links src)))]
+ 						(second link)))

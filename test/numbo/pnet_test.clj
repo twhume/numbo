@@ -4,8 +4,13 @@
 
 (deftest pnet-validation-test
 	(testing "Validate default pnet is OK after initialization"
-      (is (= true (-validate-pnet (initialize-pnet initial-pnet))))
-))
+		(let [p (initialize-pnet initial-pnet)]
+      (is (= true (-validate-pnet p)))
+      (is (= :param (get-link-type p :plus-2-2 :2)))
+      (is (= :result (get-link-type p :plus-1-2 :3)))
+      (is (= :operator (get-link-type p :plus-1-2 :plus)))
+      (is (= :similar (get-link-type p :4 :5)))
+)))
 
 (deftest pnet-activation-test
 	(testing "Validates that spreading activation works as expected"
