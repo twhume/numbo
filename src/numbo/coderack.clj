@@ -1,5 +1,8 @@
 (ns numbo.coderack
-	(:require [numbo.misc :as misc]))
+	(:require [numbo.misc :as misc]
+											[numbo.history :as hist]
+											[numbo.pnet :as pn]
+											[numbo.working :as wm]))
 
 (def CODERACK (atom '()))
 (def ITERATIONS (atom 0))
@@ -24,6 +27,7 @@
  		(swap! ITERATIONS inc)
  	 (-execute (:fn codelet))
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
+ 	 (hist/add-step @pn/PNET @wm/NODES @CODERACK codelet)
  	 (println "Tick" @ITERATIONS)
  	 ))))
 
