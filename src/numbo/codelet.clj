@@ -21,6 +21,7 @@
 ; :urgency
 ; :fn
 ; :type (one of codelet-types)
+; :desc description
 
 (defn -noop
  [] nil)
@@ -58,11 +59,11 @@
 
 (defn activate-pnet
 	[n]
-	(cr/add-codelet (new-codelet :type :activate-pnet :urgency URGENCY_MEDIUM :fn (fn [] (pn/activate-node n)))))
+	(cr/add-codelet (new-codelet :type :activate-pnet :desc (str "Active PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (pn/activate-node n)))))
 
 (defn inc-attraction
 	[n]
-	(cr/add-codelet (new-codelet :type :inc-attraction :urgency URGENCY_MEDIUM :fn (fn [] (wm/pump-node n)))))
+	(cr/add-codelet (new-codelet :type :inc-attraction :desc (str "Pump PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (wm/pump-node n)))))
 
 
 ; load-target - (high urgency) when a target is loaded, the pnet landmark closest is activated.
@@ -73,7 +74,7 @@
 	"Add target node, activate closest number in Pnet, and operands (* if target is larger than largest brick)"
  [v]
  (cr/add-codelet
- 	(new-codelet :type :load-target :urgency URGENCY_HIGH
+ 	(new-codelet :type :load-target :desc (str "Load target: " v) :urgency URGENCY_HIGH
 	 	:fn (fn []
 		 	(do
 		 		(wm/add-node :target v))
@@ -105,7 +106,7 @@
 (defn load-brick
  "Loads a new brick into memory"
  [v]
-	(cr/add-codelet (new-codelet :type :new-node :urgency URGENCY_HIGH :fn (fn [] (wm/add-node :brick v)))))
+	(cr/add-codelet (new-codelet :type :load-brick :desc (str "Load brick: " v) :urgency URGENCY_HIGH :fn (fn [] (wm/add-node :brick v)))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
 ; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
@@ -116,7 +117,7 @@
  (let [b1 (wm/get-random-brick false)
  						b2 (wm/get-random-brick false)
  						op (pn/get-random-op)]
- 						(cr/add-codelet (new-codelet :type :new-block :urgency URGENCY_HIGH
+ 						(cr/add-codelet (new-codelet :type :new-block :desc (str "Random op: " op b1 b2) :urgency URGENCY_HIGH
  							:fn (fn [] (wm/add-node :block b1 b2 op))))))
 
 ;----- END OF CODELETS -----

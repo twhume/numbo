@@ -5,7 +5,7 @@
 											[numbo.working :as wm]))
 
 (def CODERACK (atom '()))
-(def ITERATIONS (atom 0))
+(def ITERATIONS (atom 1))
 
 (defn -select-next-codelet
  "Grabs the next codelet from the rack r, probabilistically according to its urgency"
@@ -24,11 +24,11 @@
  ([]
  	(let [codelet (-select-next-codelet @CODERACK)]
  	(do
- 		(swap! ITERATIONS inc)
  	 (-execute (:fn codelet))
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
  	 (hist/add-step @pn/PNET @wm/NODES @CODERACK codelet @ITERATIONS)
  	 (println "Tick" @ITERATIONS)
+ 		(swap! ITERATIONS inc)
  	 ))))
 
 (defn add-codelet

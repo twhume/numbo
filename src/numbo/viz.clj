@@ -24,14 +24,12 @@
 (defn -activation-to-color
 	"Handles coloring nodes by activation"
 	[a]
-	(cond
-		(< a 1) "white"
-		(< a 2) "bisque"
-		(< a 4) "gold1"
-		(< a 8) "darkorange"
-		(> a 8) "firebrick1"
-		)	
-)
+	(let [normalized-a (dec a)
+							r (int ( * 255 (float (/ (- 3 normalized-a) 3))))
+							g (- 255 r)
+							b (- 255 r)
+	]
+	(format "#FF%02X%02X", r r )))
 
 (def -link-style-map
 	{:param "solid"
@@ -127,9 +125,11 @@
 			(and (>= i 0) (< i (count @hist/HISTORY)))
 				(do
 					(reset! CURRENT i)
-					(println "painting " @CURRENT "out of" (count @hist/HISTORY))
+					(println "painting " (:iteration (nth @hist/HISTORY @CURRENT)) "out of" (count @hist/HISTORY))
 					(re-render-pnet)
-					(repaint! (select r [:#pnet-canvas] ))
+					(repaint! (select r [:#pnet-canvas]))
+					(println (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
+					(text! (select r [:#codelet]) (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
 	)))
 
 (defn back [f]
@@ -143,7 +143,7 @@
   (let [{:keys [quit prev next]} (group-by-id f)]
 
     (listen prev :action (fn [_] (back f)))
-    (listen next :action (fn [_] (fn [_] (forward f))))
+    (listen next :action (fn [_] (forward f)))
     (listen quit :action (fn [e] (System/exit 0) ))
 
     (map-key f "LEFT" (fn [_] (back f)) :scope :global)

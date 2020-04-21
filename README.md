@@ -28,7 +28,6 @@ TODO list
 
 Immediate
 - add a display of the current iteration
-- display the current codelet in the text field
 - plot a working memory and switch to that when needed
 - implement quit
 - make a lein command to run it

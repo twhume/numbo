@@ -44,3 +44,7 @@
 (println "done")
 
 ))
+
+;(-main)
+;(require '[numbo.viz :as viz] :reload)
+;(viz/-main)
