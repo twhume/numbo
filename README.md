@@ -26,10 +26,17 @@ at https://www.gnu.org/software/classpath/license.html.
 
 TODO list
 
+Immediate
+- work out map-key in the viz.clj app - or just forget it
+- add a display of the current iteration
+- display the current codelet in the text field
+- plot a working memory and switch to that when needed
+- implement quit
+
 Big next tasks
 
 * Finish implementing cl/rand-op - the creation of a new brick in wm
-* Create a GUI for all this, it's unfathomable.  Write a visualizer for the WM (highlight nodes, connections, additions), PNet (highlight activations); and Coderack (just a table). Let it step through a run (i.e record state at each step and refresh fwd/back); Means recording that history (log WM, CR, PN and the selected codelet each time) and mutating each of the displayable entries into a UI element
+* Create a GUI for all this, it's unfathomable.  Write a visualizer for the WM (highlight nodes, connections, additions); and Coderack (just a table). Let it step through a run (i.e record state at each step and refresh fwd/back); Means recording that history (log WM, CR, PN and the selected codelet each time) and mutating each of the displayable entries into a UI element
 
 Necessary
 
