@@ -96,6 +96,7 @@
     :title "Numbojure Visualizer"
     :size [1024 :by 768]
     :id :main
+    :on-close :exit
     :content
     	(vertical-panel
     		:items [
@@ -108,7 +109,7 @@
 			    (horizontal-panel
 			    	:items [
 
-			    		(scrollable (text :id :codelet :multi-line? true :wrap-lines? true))
+			    		(scrollable (text :id :codelet :multi-line? true :editable? false :focusable? false :wrap-lines? true))
 
 			    		(vertical-panel
 			    			:items [
@@ -139,18 +140,16 @@
 
 
 (defn add-behaviors [f]
-  (let [{:keys [main prev next]} (group-by-id f)]
+  (let [{:keys [quit prev next]} (group-by-id f)]
 
-    (listen
-      prev
-      :action (fn [_] (back f)))
+    (listen prev :action (fn [_] (back f)))
+    (listen next :action (fn [_] (fn [_] (forward f))))
+    (listen quit :action (fn [e] (System/exit 0) ))
 
-;    (map-key f "ESCAPE" (back f) :scope :global)
-;    (map-key f "ESCAPE" (forward f) :scope :global)
+    (map-key f "LEFT" (fn [_] (back f)) :scope :global)
+    (map-key f "RIGHT" (fn [_] (forward f)) :scope :global)
 
-    (listen 
-      next 
-      :action (fn [_] (go-history (inc @CURRENT) f)))
+;    (request-focus! f)
   f))
 
 ; Takes a run history and visualizes it

@@ -27,11 +27,14 @@ at https://www.gnu.org/software/classpath/license.html.
 TODO list
 
 Immediate
-- work out map-key in the viz.clj app - or just forget it
 - add a display of the current iteration
 - display the current codelet in the text field
 - plot a working memory and switch to that when needed
 - implement quit
+- make a lein command to run it
+- input target and initial bricks
+- kick off a run then display it
+
 
 Big next tasks
 
