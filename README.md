@@ -28,8 +28,9 @@ TODO list
 
 Immediate
 - add a display of the current iteration
+- change textfield to smaller status bar
 - plot a working memory and switch to that when needed
-- implement quit
+- made a coderack table and switch to that when needed 
 - make a lein command to run it
 - input target and initial bricks
 - kick off a run then display it

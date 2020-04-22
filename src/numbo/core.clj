@@ -25,13 +25,9 @@
 (pn/initialize-pnet)
 
 (cl/load-brick 1)
-(cr/process-next-codelet)
 (cl/load-brick 2)
-(cr/process-next-codelet)
 (cl/load-brick 3)
-(cr/process-next-codelet)
 (cl/load-brick 2)
-(cr/process-next-codelet)
 (cl/load-target 10)
 
 (println @pn/PNET)
@@ -45,6 +41,6 @@
 
 ))
 
-;(-main)
-;(require '[numbo.viz :as viz] :reload)
-;(viz/-main)
+(-main)
+(require '[numbo.viz :as viz] :reload)
+(viz/-main)

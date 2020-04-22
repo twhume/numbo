@@ -84,10 +84,16 @@
  "Draws the Working Memory tab"
  [] (pn-tab))
 
+(defn -current-coderack
+ []
+ (vector
+ 	:columns [ { :key :iteration :text "Born"} { :key :urgency :text "Urgency"}  	{ :key :desc :text "Description"} ]
+ 	:rows (vec (into '[["Born" "Urgency" "Codelet"]] (:coderack (nth @hist/HISTORY @CURRENT))))))
+
 (defn cr-tab
  "Draws the Coderack tab"
- [] (pn-tab))
-
+ [] 
+ (table :id :coderack-table :model (-current-coderack)))
 
 (defn make-frame []
   (frame
@@ -128,7 +134,7 @@
 					(println "painting " (:iteration (nth @hist/HISTORY @CURRENT)) "out of" (count @hist/HISTORY))
 					(re-render-pnet)
 					(repaint! (select r [:#pnet-canvas]))
-					(println (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
+					(config! (select r [:#coderack-table]) :model (-current-coderack))
 					(text! (select r [:#codelet]) (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
 	)))
 

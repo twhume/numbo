@@ -10,6 +10,12 @@
 (def URGENCY_MEDIUM 2)
 (def URGENCY_LOW 1)
 
+(def urgency-labels '{
+	URGENCY_HIGH "High"
+	URGENCY_MEDIUM "Medium"
+	URGENCY_LOW "Low"
+})
+
 ; Lets us create codelets with a consistent set of fields.
 ; Example usage:
 ;
@@ -29,7 +35,7 @@
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
  [& s]
- (into (hash-map :urgency URGENCY_LOW :fn -noop) (map vec (partition 2 s))))
+ (into (hash-map :urgency URGENCY_LOW :fn -noop :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
 
 (defn -initial-attractiveness
 	"Calculates an initial attractiveness for the number, based on its value"
@@ -59,7 +65,7 @@
 
 (defn activate-pnet
 	[n]
-	(cr/add-codelet (new-codelet :type :activate-pnet :desc (str "Active PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (pn/activate-node n)))))
+	(cr/add-codelet (new-codelet :type :activate-pnet :desc (str "Activate PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (pn/activate-node n)))))
 
 (defn inc-attraction
 	[n]
