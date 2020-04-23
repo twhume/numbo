@@ -27,14 +27,10 @@ at https://www.gnu.org/software/classpath/license.html.
 TODO list
 
 Immediate
-- add a display of the current iteration
-- change textfield to smaller status bar
 - plot a working memory and switch to that when needed
-- made a coderack table and switch to that when needed 
-- make a lein command to run it
-- input target and initial bricks
-- kick off a run then display it
+ 
 
+- Why does activation of :times not spread? Because it's got no pnet links
 
 Big next tasks
 
@@ -50,4 +46,7 @@ Tidy-ups/small improvements
 * In pn/activate-node, take into account the weights of nodes
 * Rationale wm/new-node and cl/new-codelet - are they eerily similar?
 * cl/rand-op can in theory pick the same brick twice, which would be bad but could just result in the created block being considered invalid later. To fix this, I think I need a version of the random sampler which returns a sequence instead of a single value
+- make a lein command to run vizualizer
+- input target and initial bricks
+- write function to kick off a run then display it
 

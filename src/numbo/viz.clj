@@ -4,13 +4,12 @@
 	(:require [numbo.pnet :as pn])
 	(:require [numbo.working :as wm])
 	(:require [rhizome.viz :as rh])
- (:use [seesaw.core]
+ (:use [seesaw.border]
+       [seesaw.core]
  						[seesaw.graphics]
  						[seesaw.keymap]
- 						[seesaw.keystroke]
-        [seesaw.invoke :only [signaller]]
-        [seesaw.options :only [apply-options]])
-  (:require [seesaw.dev :as dev]))
+ 						[seesaw.keystroke])
+ (:require [seesaw.dev :as dev]))
 
 
 
@@ -110,23 +109,27 @@
 				           {:title "Working Memory" :content (wm-tab)}
 				           {:title "Coderack"   :content (cr-tab)}])
 
-			    (horizontal-panel
-			    	:items [
-
-			    		(scrollable (text :id :codelet :multi-line? true :editable? false :focusable? false :wrap-lines? true))
-
-			    		(vertical-panel
+			    (border-panel
+			    		:border [10 "" (empty-border :thickness 15)]
+			    		:maximum-size [Integer/MAX_VALUE :by 200]
+			    		:west (grid-panel
+			    			:columns 3
+			    			:maximum-size [300 :by Integer/MAX_VALUE ]
 			    			:items [
-			    				(button :id :prev :text "Previous")
-			    				(button :id :next :text "Next")
-			    				(button :id :quit :text "Quit")
-
+					    		(label :text "Iteration") (label :text "0 / 100" :id :iteration) ""
+					    		(label :text "Codelet")  (label :text "fred" :id :codelet) ""
+					    		(label :text "Temperature") (label :text "96%" :id :codelet) ""
 			    			])
-			    	])])))
+			    		:east (vertical-panel
+					    	:items [
+				    				(button :id :prev :text "Previous")
+				    				(button :id :next :text "Next")
+				    				(button :id :quit :text "Quit")
+			    			]))])))
 
 (defn go-history
 	"Go to item i in history, and repaint using root r"
-	[i r]
+	[r i]
 		(if
 			(and (>= i 0) (< i (count @hist/HISTORY)))
 				(do
@@ -135,14 +138,16 @@
 					(re-render-pnet)
 					(repaint! (select r [:#pnet-canvas]))
 					(config! (select r [:#coderack-table]) :model (-current-coderack))
+					(config! (select r [:#iteration]) :text (str (inc @CURRENT) "/" (count @hist/HISTORY)))
+
 					(text! (select r [:#codelet]) (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
 	)))
 
 (defn back [f]
-	(go-history (dec @CURRENT) f))
+	(go-history f (dec @CURRENT)))
 
 (defn forward [f]
-	(go-history (inc @CURRENT) f))
+	(go-history f (inc @CURRENT)))
 
 
 (defn add-behaviors [f]
@@ -180,13 +185,14 @@
          (config! f# :on-close on-close#)
          (when (= (java.awt.Dimension.) (.getSize f#))
            (pack! f#))
-         (show! f#)))
+         (show! f#)
+         (go-history f# 0)))
 
      (defn ~'-main [& args#]
        (apply ~'run :exit args#))))
 
 (defexample show-numbo
  []
-  (-> (make-frame)
-    add-behaviors))
+	  (-> (make-frame)
+	    add-behaviors))
 ;(run :dispose)
