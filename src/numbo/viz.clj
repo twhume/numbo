@@ -8,10 +8,7 @@
        [seesaw.core]
  						[seesaw.graphics]
  						[seesaw.keymap]
- 						[seesaw.keystroke])
- (:require [seesaw.dev :as dev]))
-
-
+ 						[seesaw.keystroke]))
 
 ; Helper method to visualize the pnet. Plot all links, label them, color by activation
 
@@ -38,7 +35,7 @@
 )
 
 (defn -pnet-into-rh
-	"Convert a complete pnet into a rhizome representation, removing bidi links"
+	"Convert a complete pnet into a rhizome representation"
 	[p]
 	(into {} (map -pnet-node-to-rh (vals p)))
 )
@@ -54,9 +51,35 @@
  		:edge->descriptor (fn [n1 n2] {:style (get -link-style-map (pn/get-link-type p n1 n2))})
  	)))
 
+(defn -attractiveness-to-color
+	"Handles coloring nodes by attractiveness"
+	[a]
+	(let [normalized-a a
+							r (int ( * 255 (float (/ (- 3 normalized-a) 3))))
+							g (- 255 r)
+							b (- 255 r)
+	]
+	(format "#FF%02X%02X", r r )))
+
+(defn -wm-into-rh
+ "Convert a working memory into a rhizome representation"
+ [w]
+ (into '{} (map-indexed #(vector %1 (hash-map :type (:type %2) :value (:value %2) :attractiveness (:attractiveness %2))) w)))
+
+(defn plot-wm
+ "Convert a workimg memory to a graph structure suitable for rhizome"
+ [p]
+ (let [rh-graph (-wm-into-rh p)]
+ 	(rh/graph->image (keys rh-graph) rh-graph
+ 	 :directed? false
+ 	 :options {:concentrate true :layout "dot" }
+ 		:node->descriptor (fn [n] {:label (:value (get rh-graph n)) :style "filled" :fillcolor (-attractiveness-to-color (:attractiveness (get rh-graph n)))})
+ 		)))
+
 ; ----- Seesaw GUI hereon -----
 
 (def PNET-IMAGE (atom nil))
+(def WM-IMAGE (atom nil))
 (def CURRENT (atom 0))
 
 (defn re-render-pnet
@@ -72,16 +95,33 @@
 	 (.drawImage g @PNET-IMAGE 0 0 nil)))
 
 (defn pn-tab
- "Draws the PNet  tab"
+ "Draws the PNet tab"
  []
 	(scrollable (canvas :id :pnet-canvas
 		:paint render-pnet
 		:preferred-size [1000 :by 1000]
 		:background :white)))
 
+
+(defn re-render-wm
+ "Rerender the working memory buffer image"
+ []
+ (reset! WM-IMAGE (plot-wm (:working (nth @hist/HISTORY @CURRENT)))))
+
+(defn render-wm
+ "Renders image for the Working memory"
+ [c g]
+ (do 
+	 (if (nil? @WM-IMAGE) (re-render-wm))
+	 (.drawImage g @WM-IMAGE 0 0 nil)))
+
 (defn wm-tab
- "Draws the Working Memory tab"
- [] (pn-tab))
+ "Draws the working memory tab"
+ []
+	(scrollable (canvas :id :wm-canvas
+		:paint render-wm
+		:preferred-size [1000 :by 1000]
+		:background :white)))
 
 (defn -current-coderack
  []
@@ -134,12 +174,12 @@
 			(and (>= i 0) (< i (count @hist/HISTORY)))
 				(do
 					(reset! CURRENT i)
-					(println "painting " (:iteration (nth @hist/HISTORY @CURRENT)) "out of" (count @hist/HISTORY))
 					(re-render-pnet)
 					(repaint! (select r [:#pnet-canvas]))
+					(re-render-wm)
+					(repaint! (select r [:#wm-canvas]))
 					(config! (select r [:#coderack-table]) :model (-current-coderack))
 					(config! (select r [:#iteration]) :text (str (inc @CURRENT) "/" (count @hist/HISTORY)))
-
 					(text! (select r [:#codelet]) (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
 	)))
 
@@ -148,7 +188,6 @@
 
 (defn forward [f]
 	(go-history f (inc @CURRENT)))
-
 
 (defn add-behaviors [f]
   (let [{:keys [quit prev next]} (group-by-id f)]
@@ -160,7 +199,6 @@
     (map-key f "LEFT" (fn [_] (back f)) :scope :global)
     (map-key f "RIGHT" (fn [_] (forward f)) :scope :global)
 
-;    (request-focus! f)
   f))
 
 ; Takes a run history and visualizes it

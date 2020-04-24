@@ -27,15 +27,12 @@ at https://www.gnu.org/software/classpath/license.html.
 TODO list
 
 Immediate
-- plot a working memory and switch to that when needed
- 
 
 - Why does activation of :times not spread? Because it's got no pnet links
 
 Big next tasks
 
 * Finish implementing cl/rand-op - the creation of a new brick in wm
-* Create a GUI for all this, it's unfathomable.  Write a visualizer for the WM (highlight nodes, connections, additions); and Coderack (just a table). Let it step through a run (i.e record state at each step and refresh fwd/back); Means recording that history (log WM, CR, PN and the selected codelet each time) and mutating each of the displayable entries into a UI element
 
 Necessary
 
