@@ -3,7 +3,8 @@
 											[numbo.codelet :as cl]
 											[numbo.history :as hist]
 											[numbo.working :as wm]
-											[numbo.pnet :as pn]))
+											[numbo.pnet :as pn]
+											[numbo.viz :as viz]))
 
 (defn run-until
  [pred]
@@ -38,9 +39,6 @@
 
 
 (println "done")
+(viz/-main)
 
 ))
-
-(-main)
-(require '[numbo.viz :as viz] :reload)
-(viz/-main)
