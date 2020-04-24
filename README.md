@@ -43,7 +43,6 @@ Tidy-ups/small improvements
 * In pn/activate-node, take into account the weights of nodes
 * Rationale wm/new-node and cl/new-codelet - are they eerily similar?
 * cl/rand-op can in theory pick the same brick twice, which would be bad but could just result in the created block being considered invalid later. To fix this, I think I need a version of the random sampler which returns a sequence instead of a single value
-- make a lein command to run vizualizer
-- input target and initial bricks
+- input target and initial bricks in the visualizer
 - write function to kick off a run then display it
 
