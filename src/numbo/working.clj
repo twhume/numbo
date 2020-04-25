@@ -63,12 +63,12 @@
 
 (defn -add-node
  "Private function which adds the node n to the working memory w, returns w"
- [w & s]
- (conj w (apply new-node s)))
+ [w n]
+ (conj w n))
 
 (defn add-node
- "Adds a new node of type t and value v to the working memory"
- ([& s] (reset! NODES (apply -add-node @NODES s))))
+ "Adds a new with default values in the key-value pairs in s to the default working memory"
+ ([& s] (reset! NODES (-add-node @NODES (apply new-node s)))))
 
 (defn pump-node
  "Pump a node n in memory w, by increasing its attractiveness"

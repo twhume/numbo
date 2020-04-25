@@ -7,7 +7,7 @@
 		(is (= nil (wm/get-largest-brick '()))))
 
 	(testing "Get largest brick from memory containing one value"
-	 (let [node-to-add (wm/new-node :brick :value 1)
+	 (let [node-to-add (wm/new-node :type :brick :value 1)
 	 							test-wm (-> '()
 	 												(wm/-add-node node-to-add))]
 	 	(is (= node-to-add (wm/get-largest-brick test-wm)))
@@ -15,9 +15,9 @@
 
 
 	(testing "Get largest brick from a full memory"
-	 (let [node1 (wm/new-node :brick :value 1)
-	 						node2 (wm/new-node :brick :value 2)
-	 						node3 (wm/new-node :brick :value 3)
+	 (let [node1 (wm/new-node :type :brick :value 1)
+	 						node2 (wm/new-node :type :brick :value 2)
+	 						node3 (wm/new-node :type :brick :value 3)
 	 							test-wm (-> '()
 	 												(wm/-add-node node1)
 	 												(wm/-add-node node3)
@@ -27,9 +27,9 @@
 	 )))
 
 	(testing "Get largest free brick from a full memory"
-	 (let [node1 (wm/new-node :brick :value 1)
-	 						node2 (wm/new-node :brick :value 2)
-	 						node3 (wm/new-node :brick :value 3 :status :taken)
+	 (let [node1 (wm/new-node :type :brick :value 1)
+	 						node2 (wm/new-node :type :brick :value 2)
+	 						node3 (wm/new-node :type :brick :value 3 :status :taken)
 	 							test-wm (-> '()
 	 												(wm/-add-node node1)
 	 												(wm/-add-node node3)
@@ -40,9 +40,9 @@
 
 (deftest pump-node-test
 	(testing "Test pumping of nodes"
-	 (let [node1 (wm/new-node :brick :value 1)
-		 					node2 (wm/new-node :brick :value 2)
-		 					node4 (wm/new-node :brick :value 4)
+	 (let [node1 (wm/new-node :type :brick :value 1)
+		 					node2 (wm/new-node :type :brick :value 2)
+		 					node4 (wm/new-node :type :brick :value 4)
 		 					test-wm (-> '()
 		 												(wm/-add-node node1)
 		 												(wm/-add-node node2)
