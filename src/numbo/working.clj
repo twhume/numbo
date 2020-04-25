@@ -20,8 +20,8 @@
 
 (defn new-node 
  "create a new node of type t with optional values s"
- [t & s]
-  (into (hash-map :type t :status :free :attractiveness DEFAULT_ATTRACTION) (map vec (partition 2 s))))
+ [& s]
+  (into (hash-map :status :free :attractiveness DEFAULT_ATTRACTION) (map vec (partition 2 s))))
 
 ; Pulls a random brick from the WM, selected probailistically according to :attractiveness.
 ; If f is true, only select blocks with a status of :free
@@ -63,14 +63,12 @@
 
 (defn -add-node
  "Private function which adds the node n to the working memory w, returns w"
- [w n]
- (conj w n)
- )
+ [w & s]
+ (conj w (apply new-node s)))
 
 (defn add-node
  "Adds a new node of type t and value v to the working memory"
- ([w t v] (-add-node w (new-node t :value v)))
- ([n v] (reset! NODES (add-node @NODES n v))))
+ ([& s] (reset! NODES (apply -add-node @NODES s))))
 
 (defn pump-node
  "Pump a node n in memory w, by increasing its attractiveness"

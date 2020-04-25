@@ -83,7 +83,7 @@
  	(new-codelet :type :load-target :desc (str "Load target: " v) :urgency URGENCY_HIGH
 	 	:fn (fn []
 		 	(do
-		 		(wm/add-node :target v))
+		 		(wm/add-node :type :target :value v))
 		 	 (activate-pnet (keyword (str (closest (pn/get-numbers) v))))
 		 	 (map activate-pnet (pn/get-operators))
 		 	 (if (and 
@@ -112,7 +112,8 @@
 (defn load-brick
  "Loads a new brick into memory"
  [v]
-	(cr/add-codelet (new-codelet :type :load-brick :desc (str "Load brick: " v) :urgency URGENCY_HIGH :fn (fn [] (wm/add-node :brick v)))))
+	(cr/add-codelet (new-codelet :type :load-brick :desc (str "Load brick: " v) :urgency URGENCY_HIGH
+	:fn (fn [] (wm/add-node :type :brick :value v :attractiveness (-initial-attractiveness v))))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
 ; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
@@ -124,6 +125,6 @@
  						b2 (wm/get-random-brick false)
  						op (pn/get-random-op)]
  						(cr/add-codelet (new-codelet :type :new-block :desc (str "Random op: " op b1 b2) :urgency URGENCY_HIGH
- 							:fn (fn [] (wm/add-node :block b1 b2 op))))))
+ 							:fn (fn [] (wm/add-node :type :block :value (hash-map :arg1 b1 :arg3 b2 :op op)))))))
 
 ;----- END OF CODELETS -----

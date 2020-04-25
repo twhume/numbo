@@ -34,10 +34,6 @@ Big next tasks
 
 * Finish implementing cl/rand-op - the creation of a new brick in wm
 
-Necessary
-
-* In cl/load-brick, TODO set initial attractiveness, function of numerical value (e.g. mod 5, 10 == 0)
-
 Tidy-ups/small improvements
 
 * In pn/activate-node, take into account the weights of nodes
