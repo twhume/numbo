@@ -41,12 +41,12 @@
 )
 
 (defn plot-pnet
- "Convert a pnet to a graph structure suitable for rhizome"
- [p]
+ "Convert a pnet to a graph structure suitable for rhizome, then to an image"
+ [p w h]
  (let [rh-graph (-pnet-into-rh p)]
  	(rh/graph->image (keys rh-graph) rh-graph
  	 :directed? false
- 	 :options {:concentrate true :layout "dot" }
+ 	 :options {:concentrate true :layout "dot" :dpi (int (/ (min w h) 11))}
  		:node->descriptor (fn [n] {:label n :style "filled" :fillcolor (-activation-to-color (:activation (get p n)))})
  		:edge->descriptor (fn [n1 n2] {:style (get -link-style-map (pn/get-link-type p n1 n2))})
  	)))
@@ -68,11 +68,11 @@
 
 (defn plot-wm
  "Convert a workimg memory to a graph structure suitable for rhizome"
- [p]
+ [p w h]
  (let [rh-graph (-wm-into-rh p)]
  	(rh/graph->image (keys rh-graph) rh-graph
  	 :directed? false
- 	 :options {:concentrate true :layout "dot" }
+ 	 :options {:concentrate true :layout "dot" :dpi (int (/ (min w h) 11))}
  		:node->descriptor (fn [n] {:label (:value (get rh-graph n)) :style "filled" :fillcolor (-attractiveness-to-color (:attractiveness (get rh-graph n)))})
  		)))
 
@@ -83,36 +83,39 @@
 (def CURRENT (atom 0))
 
 (defn re-render-pnet
- "Rerender the pnet buffer image"
- []
- (reset! PNET-IMAGE (plot-pnet (:pnet (nth @hist/HISTORY @CURRENT)))))
+ "Rerender the pnet buffer image to canvas c"
+ [c]
+ (do
+	 (reset! PNET-IMAGE (plot-pnet (:pnet (nth @hist/HISTORY @CURRENT)) (.getWidth c) (.getHeight c)))
+		(repaint! c)))
 
 (defn render-pnet
  "Renders image for the Pnet"
  [c g]
- (do 
-	 (if (nil? @PNET-IMAGE) (re-render-pnet))
+	 (if (nil? @PNET-IMAGE) (re-render-pnet c)
 	 (.drawImage g @PNET-IMAGE 0 0 nil)))
+
 
 (defn pn-tab
  "Draws the PNet tab"
  []
 	(scrollable (canvas :id :pnet-canvas
 		:paint render-pnet
-		:preferred-size [1000 :by 1000]
 		:background :white)))
 
 
 (defn re-render-wm
  "Rerender the working memory buffer image"
- []
- (reset! WM-IMAGE (plot-wm (:working (nth @hist/HISTORY @CURRENT)))))
+ [c]
+ (do
+	 (reset! WM-IMAGE (plot-wm (:working (nth @hist/HISTORY @CURRENT)) (.getWidth c) (.getHeight c))))
+ 	(repaint! c))
 
 (defn render-wm
  "Renders image for the Working memory"
  [c g]
  (do 
-	 (if (nil? @WM-IMAGE) (re-render-wm))
+	 (if (nil? @WM-IMAGE) (re-render-wm c))
 	 (.drawImage g @WM-IMAGE 0 0 nil)))
 
 (defn wm-tab
@@ -120,7 +123,6 @@
  []
 	(scrollable (canvas :id :wm-canvas
 		:paint render-wm
-		:preferred-size [1000 :by 1000]
 		:background :white)))
 
 (defn -current-coderack
@@ -167,6 +169,12 @@
 				    				(button :id :quit :text "Quit")
 			    			]))])))
 
+(defn repaint-images
+	"Redraw all our images"
+ [f]
+	(re-render-pnet (select f [:#pnet-canvas]))
+	(re-render-wm (select f [:#wm-canvas])))
+
 (defn go-history
 	"Go to item i in history, and repaint using root r"
 	[r i]
@@ -174,10 +182,7 @@
 			(and (>= i 0) (< i (count @hist/HISTORY)))
 				(do
 					(reset! CURRENT i)
-					(re-render-pnet)
-					(repaint! (select r [:#pnet-canvas]))
-					(re-render-wm)
-					(repaint! (select r [:#wm-canvas]))
+					(repaint-images r)
 					(config! (select r [:#coderack-table]) :model (-current-coderack))
 					(config! (select r [:#iteration]) :text (str (inc @CURRENT) "/" (count @hist/HISTORY)))
 					(text! (select r [:#codelet]) (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
@@ -195,6 +200,8 @@
     (listen prev :action (fn [_] (back f)))
     (listen next :action (fn [_] (forward f)))
     (listen quit :action (fn [e] (System/exit 0) ))
+
+    (listen f :component-resized (fn [_] (repaint-images f)))
 
     (map-key f "LEFT" (fn [_] (back f)) :scope :global)
     (map-key f "RIGHT" (fn [_] (forward f)) :scope :global)
