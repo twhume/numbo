@@ -7,6 +7,13 @@
 (def CODERACK (atom '()))
 (def ITERATIONS (atom 1))
 
+(defn reset
+ "Reset the coderack"
+ []
+ (do
+ 	(reset! CODERACK '())
+ 	(reset! ITERATIONS 1)))
+
 (defn -select-next-codelet
  "Grabs the next codelet from the rack r, probabilistically according to its urgency"
  ([rack]

@@ -10,7 +10,7 @@
  [pred]
  (loop []
  	(cr/process-next-codelet)
- 	(wm/print-state)
+; 	(wm/print-state)
  	(if (not (pred)) (recur))))
 
 (defn run-until-empty-cr
@@ -21,9 +21,12 @@
   []
   (do
 
-(println "Starting")
+; re-init everything every time so we can run from the REPL
 
 (pn/initialize-pnet)
+(wm/reset)
+(hist/reset)
+(cr/reset)
 
 (cl/load-brick 1)
 (cl/load-brick 2)
@@ -31,14 +34,8 @@
 (cl/load-brick 2)
 (cl/load-target 10)
 
-(println @pn/PNET)
+(cl/rand-block)
 
 (run-until-empty-cr)
-(println "-----")
-(println @pn/PNET)
-
-
-(println "done")
 (viz/-main)
-
 ))

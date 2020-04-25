@@ -12,6 +12,11 @@
 
 (def NODES (atom '()))
 
+(defn reset
+	"Reset the memory to empty"
+	[]
+	(reset! NODES '()))
+
 ; Nodes are a map of:
 ; :type - one of :brick :target :target2 (secondary target) :block
 ; :status - one of :free :taken

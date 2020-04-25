@@ -10,6 +10,11 @@
 
 (def HISTORY (atom '[]))
 
+(defn reset 
+ "Restart history"
+ []
+ (reset! HISTORY '[]))
+
 (defn add-step
  ([h p w r l i]
  	(conj h (hash-map :pnet p :working w :coderack r :codelet l :iteration i)))
