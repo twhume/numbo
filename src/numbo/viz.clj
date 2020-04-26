@@ -61,6 +61,16 @@
 	]
 	(format "#FF%02X%02X", r r )))
 
+(defn -get-wm-style
+ "Works out appropriate style for a node n in graph g"
+ [g n]
+ (case (:type (get g n))
+ 	:target "bold"
+ 	:brick "solid"
+ 	:block "dashed"
+  "dotted"
+ ))
+
 (defn -wm-into-rh
  "Convert a working memory into a rhizome representation"
  [w]
@@ -73,7 +83,7 @@
  	(rh/graph->image (keys rh-graph) rh-graph
  	 :directed? false
  	 :options {:concentrate true :layout "dot" :dpi (int (/ (min w h) 11))}
- 		:node->descriptor (fn [n] {:label (:value (get rh-graph n)) :style "filled" :fillcolor (-attractiveness-to-color (:attractiveness (get rh-graph n)))})
+ 		:node->descriptor (fn [n] {:label (:value (get rh-graph n)) :style (str "filled," (-get-wm-style rh-graph n)) :fillcolor (-attractiveness-to-color (:attractiveness (get rh-graph n)))})
  		)))
 
 ; ----- Seesaw GUI hereon -----
