@@ -32,7 +32,7 @@ Immediate
 
 Big next tasks
 
-* Finish implementing cl/rand-op - the creation of a new brick in wm
+* Ensure blocks in WM can be visualized
 
 Tidy-ups/small improvements
 

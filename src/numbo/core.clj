@@ -34,8 +34,10 @@
 (cl/load-brick 2)
 (cl/load-target 10)
 
-(cl/rand-block)
 
 (run-until-empty-cr)
+(cl/rand-block)
+(run-until-empty-cr)
+
 (viz/-main)
 ))

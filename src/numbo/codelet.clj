@@ -40,7 +40,7 @@
 (defn -initial-attractiveness
 	"Calculates an initial attractiveness for the number, based on its value"
  [n]
- (cond-> 0
+ (cond-> 1
  	(= 0 (mod n 5)) (+ 5)
  	(= 0 (mod n 10)) (+ 5)
  	(= 0 (mod n 100)) (+ 5)
@@ -118,13 +118,20 @@
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
 ; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
 
-(defn rand-op
+(defn rand-block
  "Make a new block out of sampled random bricks and ops"
  []
  (let [b1 (wm/get-random-brick false)
  						b2 (wm/get-random-brick false)
  						op (pn/get-random-op)]
- 						(cr/add-codelet (new-codelet :type :new-block :desc (str "Random op: " op b1 b2) :urgency URGENCY_HIGH
- 							:fn (fn [] (wm/add-node :type :block :value (hash-map :arg1 b1 :arg3 b2 :op op)))))))
+ 						(println b1)
+ 						(cr/add-codelet (new-codelet :type :new-block
+ 							:desc (str "Random op: " (:name op) " " (:value b1) "," (:value b2))
+ 							:urgency URGENCY_HIGH
+ 							:fn (fn [] (wm/add-node :type :block :value ( ((:name op) pn/operator-map) (:value b1) (:value b2))
+ 								:bricks (list
+ 									(list (:value b1) :param)
+ 									(list (:value b2) :param)
+ 									(list (:name op) :operator))))))))
 
 ;----- END OF CODELETS -----
