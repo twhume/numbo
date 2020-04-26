@@ -95,14 +95,12 @@
 	 (if (nil? @PNET-IMAGE) (re-render-pnet c)
 	 (.drawImage g @PNET-IMAGE 0 0 nil)))
 
-
 (defn pn-tab
  "Draws the PNet tab"
  []
 	(scrollable (canvas :id :pnet-canvas
 		:paint render-pnet
 		:background :white)))
-
 
 (defn re-render-wm
  "Rerender the working memory buffer image"
