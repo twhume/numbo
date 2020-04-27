@@ -1,8 +1,22 @@
 (ns numbo.wm2
-	(:require [rhizome.viz :as rh])
-	(:require [clojure.zip :as zip]))
+ (:require [clojure.zip :as zip])
+ (:require [numbo.misc :as misc])
+	(:require [rhizome.viz :as rh]))
 
-; Playing with new working memory implementation
+; Zipper-based working memory implementation;
+; once you add blocks in the graph complexity justifies this.
+;
+; An entry in memory is a map, keys are:
+;
+; :type - :brick, :target, :secondary (target) or :block
+; :value - the value of a brick, target or secondary-target. For a block, same as its result
+; :attract - the attractiveness of this entry
+; :status - tracks whether a brick is :free or :taken
+;
+; :uuid - an internally-used UUID. We need these because we may have bricks or blocks
+; with the same value that need to be graphed differently
+;
+
 
 (def MEMORY (atom (zip/seq-zip '())))
 
@@ -11,10 +25,18 @@
 	[m]
 	(filter (complement zip/branch?) (take-while (complement zip/end?) (iterate zip/next m))))
 
-(defn -new-node
- "Eventually will create a new node. Right now just takes an int"
+(defn -initial-attract
+ "Give values an initial attractiveness"
  [v]
- v)
+ 1
+ )
+
+; By default new :brick entries are status :free, all entries have an initial attractiveness
+
+(defn -new-entry
+ "Creates a new data structure for a memory entry, type t value v"
+ [t v]
+ { :type t :value v :attract (-initial-attract v) :status :free :uuid (misc/uuid) })
 
 (defn get-vals
 	"Return a sequence of all the items in memory"
@@ -22,15 +44,15 @@
  (map zip/node (-get-nodes m)))
 
 (defn find-node
- "Returns the loc of a given node in a memory"
- [mem node]
- (filter #(= node (zip/node %1)) (-get-nodes mem)))
+ "Returns the loc of a given uuid u in a memory"
+ [mem u]
+ (first (filter #(= u (:uuid (zip/node %1))) (-get-nodes mem))))
 
 ; Puts it in the set of children below the root - i.e. top level nodes
 
 (defn add-target
  "Adds a target to the memory"
-	([mem value] (zip/insert-child mem (-new-node value)))
+	([mem value] (zip/insert-child mem (-new-entry :target value)))
  ([value] (reset! MEMORY (add-brick @MEMORY value))))
 
 ; Same as add-target right now
@@ -39,18 +61,42 @@
 
 (defn add-brick
  "Adds a brick to the memory"
-	([mem value] (zip/insert-child mem (-new-node value)))
+	([mem value] (zip/insert-child mem (-new-entry :brick value)))
  ([value] (reset! MEMORY (add-brick @MEMORY value))))
 
+
+; ----- Below here, functions will end up in viz.clj -----
+
+(defn -list-child-uuids
+ "Given a node n, return a list of UUIDs of its children, if any"
+ [n]
+ (if (zip/branch? n)
+ 			(map #(:uuid (zip/node %)) (zip/children n))
+ 			'[]))
 
 (defn -to-graph
  "Convert a working memory structure into a graph for Rhizome"
  [m]
  (into '{}
- 	(map #(vector (zip/node %)
- 		(if (zip/branch? %)
- 			(map zip/node (zip/children %))
- 			'[])) (-get-nodes m))))
+ 	(map #(vector (:uuid (zip/node %)) (-list-child-uuids %)) (-get-nodes m))))
+
+(defn -attractiveness-to-color
+	"Handles coloring nodes by attractiveness"
+	[a]
+	(let [r (int ( * 255 (float (/ (- 3 a) 3))))
+							g (- 255 r)
+							b (- 255 r)]
+		(format "#FF%02X%02X" r r)))
+
+(defn -get-wm-style
+ "Works out appropriate style for a type t"
+ [t]
+ (case t
+ 	:target "bold"
+ 	:secondary "bold"
+ 	:brick "solid"
+ 	:block "dashed"
+ ))
 
 (defn view-graph
  "Show the graph for a memory structure m"
@@ -59,13 +105,13 @@
 	 (rh/view-graph (keys g) g
 	 	:directed? false
  	 :options {:concentrate true}
- 		:node->descriptor (fn [n]
- 			{:label n})
+ 		:node->descriptor (fn [u]
+ 			(let [n (zip/node (find-node m u))]
+	 			{:label (:value n)
+	 			 :style (str "filled," (-get-wm-style (:type n)))
+	 			 :fillcolor (-attractiveness-to-color (:attract n))})
+ ))))
 
- )))
-
-; change to use data structures for nodes, instead of ints
-; fix graph
 ; add blocks with children which are ints
 ; add-block() method with root node as target
 ; add blocks with children which are blocks
@@ -86,3 +132,4 @@
 (add-brick 1)
 (add-brick 2)
 (add-brick 3)
+
