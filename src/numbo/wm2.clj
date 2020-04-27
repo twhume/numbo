@@ -11,8 +11,16 @@
 ; :type - :brick, :target, :secondary (target) or :block
 ; :value - the value of a brick, target or secondary-target. For a block, same as its result
 ; :attract - the attractiveness of this entry
+;
+; Bricks also have:
 ; :status - tracks whether a brick is :free or :taken
 ;
+; Blocks also have
+; :param1 - the first parameter
+; :param2 - the second parameter
+; :op - the operator, one of :plus :times :minus
+;
+; Internal values needed for graphing:
 ; :uuid - an internally-used UUID. We need these because we may have bricks or blocks
 ; with the same value that need to be graphed differently
 ;
@@ -31,12 +39,20 @@
  1
  )
 
-; By default new :brick entries are status :free, all entries have an initial attractiveness
+; By default new :brick entries are status :free, all entries have an initial attractiveness,
+; :blocks have details of their parameters
 
 (defn -new-entry
  "Creates a new data structure for a memory entry, type t value v"
- [t v]
- { :type t :value v :attract (-initial-attract v) :status :free :uuid (misc/uuid) })
+ ([t v p1 p2 op]
+ (let [initial { :type t :value v :attract (-initial-attract v) :uuid (misc/uuid) }]
+	 (case t
+	 	:brick (assoc initial :status :free)
+	 	:block (assoc initial :param1 p1 :param2 p2 :op op)
+	 	initial
+ )))
+ ([t v] (-new-entry t v nil nil nil)))
+
 
 (defn get-vals
 	"Return a sequence of all the items in memory"
@@ -65,20 +81,62 @@
  ([value] (reset! MEMORY (add-brick @MEMORY value))))
 
 
+(defn add-block
+ "Adds a new block to the memory, with op param1 param2 assuming it's off the root node"
+ ([mem v p1 p2 op] (zip/insert-child mem (-new-entry :block v p1 p2 op)))
+ ([v p1 p2 op] (reset! MEMORY (add-block @MEMORY v p1 p2 op))))
+
+
 ; ----- Below here, functions will end up in viz.clj -----
+
+; When we're plotting the child node of a node can be either another node, referenced by its UUID,
+; or a set of values (for a :block). To create a coherent plot we have to give these values virtual
+; UUIDs, of the form PARENT-UUID_param1, PARENT-UUID_param2, PARENT-UUID_op
+
+(defn -mk-virt-uuid
+ "Makes a string for a virtual UUID from entry e, given keyword k"
+ [e k]
+ (str (:uuid e) "_" (name k)))
+
+; Later we will need to find these UUIDs, so make a filter for them
+
+(defn is-virt-uuid?
+	[s]
+	(cond
+		(.endsWith s "_param1") true
+		(.endsWith s "_param2") true
+		(.endsWith s "_op") true
+		:else false
+))
+
+(defn get-virt-uuid
+ "Returns the UUID part of a virtual node UUID"
+ [u]
+ (clojure.string/replace u #"_.*$" ""))
+
+(defn get-virt-param
+ "Returns the param part of a virtual node UUID"
+ [u]
+ (clojure.string/replace u #"^.*_" ""))
 
 (defn -list-child-uuids
  "Given a node n, return a list of UUIDs of its children, if any"
  [n]
- (if (zip/branch? n)
- 			(map #(:uuid (zip/node %)) (zip/children n))
- 			'[]))
+ (let [e (zip/node n)]
+	 (cond
+	  (zip/branch? n) (map #(:uuid (zip/node %)) (zip/children n))
+		 (= :block (:type e)) (vector (-mk-virt-uuid e :param1) (-mk-virt-uuid e :param2) (-mk-virt-uuid e :op)) 			
+	 	:else '[])))
 
 (defn -to-graph
  "Convert a working memory structure into a graph for Rhizome"
  [m]
- (into '{}
- 	(map #(vector (:uuid (zip/node %)) (-list-child-uuids %)) (-get-nodes m))))
+ (let [initial-tree (map #(vector (:uuid (zip/node %)) (-list-child-uuids %)) (-get-nodes m))
+ 						virtual-nodes (map #(vector %1 '[]) (filter is-virt-uuid? (mapcat second initial-tree)))]
+
+ 	(into '{} (concat initial-tree virtual-nodes))))
+ 	
+; add root nodes for all the MAGIC child IDs
 
 (defn -attractiveness-to-color
 	"Handles coloring nodes by attractiveness"
@@ -106,11 +164,23 @@
 	 	:directed? false
  	 :options {:concentrate true}
  		:node->descriptor (fn [u]
- 			(let [n (zip/node (find-node m u))]
-	 			{:label (:value n)
-	 			 :style (str "filled," (-get-wm-style (:type n)))
-	 			 :fillcolor (-attractiveness-to-color (:attract n))})
- ))))
+ 		 (if (is-virt-uuid? u)
+					(let [n (zip/node (find-node m (get-virt-uuid u)))
+											k (keyword (get-virt-param u))]
+		 			{:label (k n)
+		 			 :style "filled,solid"
+		 			 :fixedsize false
+		 			 :width 0.5
+		 			 :height 0.25
+		 			 :fontsize 10
+		 			 :fillcolor (-attractiveness-to-color (:attract n))})
+
+
+	 			(let [n (zip/node (find-node m u))]
+		 			{:label (:value n)
+		 			 :style (str "filled," (-get-wm-style (:type n)))
+		 			 :fillcolor (-attractiveness-to-color (:attract n))})
+ )))))
 
 ; add blocks with children which are ints
 ; add-block() method with root node as target
@@ -132,4 +202,6 @@
 (add-brick 1)
 (add-brick 2)
 (add-brick 3)
+(add-block 10 2 5 :times)
+(add-target 20)
 
