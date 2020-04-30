@@ -17,7 +17,7 @@
 
 ; BRICKS and TARGETS are lists of Entries.
 ; Entries are maps with a :value, a random :uuid and an :attr(activeness)
-; Entries in BLOCKS can also have an :op(erator) and a seq of 2 children, each themselves block entries
+; Entries in BLOCKS can also have an :op(erator) and a vector of 2 children, each ints or block entries
 ; (so Entries in BLOCKS are each trees)
 
 (defn -initial-attr
@@ -73,9 +73,47 @@
  ([par-uuid par-param value op p]
  	(reset! BLOCKS (add-child-block @BLOCKS par-uuid par-param value op p))))
 
+(defn -make-blocktree-zipper
+ "Make a clojure zipper from the blocktree bt"
+	[bt]
+	(zip/zipper #(not (empty? (:params %1)))
+		:params  (fn [n s] (assoc n :params (vec s)))
+		bt))
 
-;TODO: extend add-child-block to look inside sub-nodes of all blocks, as well as at the root level
-; (means recursing in -find-block?)
+(defn -find-blocktree-loc
+ "Given a blocktree zipper z, find the entry with UUID u"
+	[z u]
+	(loop [cur z]
+	 (cond
+	 	(zip/end? cur) nil
+	 	(= u (:uuid (zip/node cur))) cur
+	 	:else (recur (zip/next cur))))) 
+
+(defn -add-blocktree-entry
+ "Add the supplied block entry be to the block tree bt as the p child of block u"
+ [u p be bt]
+ (let [zipper (-make-blocktree-zipper bt)
+ 						node (-find-blocktree-loc zipper u)]
+ 						(if (nil? node) bt ; If we can't add to the tree, just return it as is
+ 							 (zip/root 
+	 							 (cond
+	 							  (= p 0) (zip/replace (zip/down node) be)
+	 							  (= p 1) (zip/replace (zip/right (zip/down node)) be)
+	 							  :else (do 
+	 							  	(println "Bad child position " p)
+	 							  	node
+	 							 ))
+ 							))))
+
+(defn add-child-blocks
+ "Adds a child to a block in memory bl, by its uuid"
+ ([blocks par-uuid par-param value op p]
+		(let [new-entry (-new-entry value op p)]
+			(map (partial -add-blocktree-entry par-uuid par-param new-entry) blocks)))
+ ([par-uuid par-param value op p]
+ 	(reset! BLOCKS (add-child-blocks @BLOCKS par-uuid par-param value op p))))
+
+
 ;TODO: write graph converter for resulting structures, using PROPER Hofstadter notation!
 
 
