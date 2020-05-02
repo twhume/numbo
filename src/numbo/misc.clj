@@ -32,3 +32,7 @@
  [s k]
  	 (map #(list %1 %2) (reductions + (map k s)) s))
 
+(defn uuid
+ "Generate a new Java UUID"
+ []
+	(.toString (java.util.UUID/randomUUID)))
