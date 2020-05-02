@@ -22,11 +22,12 @@
 ; :status - one of :free :taken
 ; :attractiveness - how attractive it is right now
 ; :value - value of any bricks
+; :uuid - unique ID for each node
 
 (defn new-node 
  "create a new node of type t with optional values s"
  [& s]
-  (into (hash-map :status :free :attractiveness DEFAULT_ATTRACTION) (map vec (partition 2 s))))
+  (into (hash-map :status :free :attractiveness DEFAULT_ATTRACTION :uuid (misc/uuid)) (map vec (partition 2 s))))
 
 ; Pulls a random brick from the WM, selected probailistically according to :attractiveness.
 ; If f is true, only select blocks with a status of :free

@@ -130,8 +130,8 @@
  							:urgency URGENCY_HIGH
  							:fn (fn [] (wm/add-node :type :block :value ( ((:name op) pn/operator-map) (:value b1) (:value b2))
  								:bricks (list
- 									(list (:value b1) :param)
- 									(list (:value b2) :param)
- 									(list (:name op) :operator))))))))
+ 								 (wm/new-node :type :brick :value (:value b1))
+ 								 (wm/new-node :type :brick :value (:value b1))
+ 								 (wm/new-node :type :operator :value (:name op)))))))))
 
 ;----- END OF CODELETS -----

@@ -74,7 +74,7 @@
 
 (defn add-brick
 	"Adds a single brick to memory"
-	([br v] (conj br (-new-entry v)))
+	([br v] (conj br (assoc (-new-entry v) :free true)))
  ([v] (reset! BRICKS (add-brick @BRICKS v))))
 
 (defn set-target
@@ -93,6 +93,20 @@
 			(map (partial -add-blocktree-entry par-uuid par-param new-entry) blocks)))
  ([par-uuid par-param value op p]
  	(reset! BLOCKS (add-child-block @BLOCKS par-uuid par-param value op p))))
+
+(defn get-random-brick
+ "Return a random brick, only free ones if f"
+ ([br f] (let [possibles (if f (filter :free br) br)]
+ 									(if (empty? possibles) nil
+ 									 (rand-nth possibles))))
+ ([f] (get-random-brick @BRICKS f)))
+
+(defn get-largest-brick
+	"Return the value of the largest free brick in memory, nil if there's none"
+	([br]
+	 (let [free-bricks (filter :free br)]
+	 	(if (empty? free-bricks) nil (apply max-key :value free-bricks))))
+	([] (get-largest-brick @BRICKS)))
 
 ;----- all this should go into viz.clj eventually -----
 
@@ -152,8 +166,7 @@
 					  		node-op-uuid node-children
 					  		(first node-children) '[]
 					  		(second node-children) '[]
-			  		))
-			 	)))))))
+			  		)))))))))
 
 (defn -to-graph
  "Convert a target, bricks and blocks into a graph for Rhizome"
@@ -181,16 +194,14 @@
  	:block "dashed"
  ))
 
-
 (def -op-names '{ :times "X" :plus "+" :minus "-"})
 
 (defn -get-node-label
- "Given the UUID u of a block in the list of blocks bl, return its label"
+ "Given the UUID u of a block in the list of blocks bl, return a pair of its [label,type]"
 	[bl u]
 
 	(let [node-uuid (if (-is-virt-uuid? u) (-get-virt-uuid u) u)
 							entry (zip/node (first (filter (complement nil?) (map #(-find-blocktree-loc (-make-blocktree-zipper %) node-uuid) bl))))]
-
 							(if (-is-virt-uuid? u)
 								(condp = (-get-virt-param u)
 									"op" [((:op entry) -op-names) :op]
@@ -218,6 +229,8 @@
 
 
 ;TODO: write unit tests
+;TODO: also graph TARGET and BRICKS
+;TODO: integrate and replace existing WM implementation
 
 (set-target 100)
 (add-brick 1)

@@ -16,8 +16,9 @@
 ; :status - tracks whether a brick is :free or :taken
 ;
 ; Blocks also have
-; :param1 - the first parameter
-; :param2 - the second parameter
+; :iam - whether this block is the param1 or param2 of its parent - nil if it has no parent
+; :param1 - their first parameter
+; :param2 - their second parameter
 ; :op - the operator, one of :plus :times :minus
 ;
 ; Internal values needed for graphing:
@@ -44,14 +45,15 @@
 
 (defn -new-entry
  "Creates a new data structure for a memory entry, type t value v"
- ([t v p1 p2 op]
+ ([t v p1 p2 op iam]
  (let [initial { :type t :value v :attract (-initial-attract v) :uuid (misc/uuid) }]
 	 (case t
 	 	:brick (assoc initial :status :free)
-	 	:block (assoc initial :param1 p1 :param2 p2 :op op)
+	 	:block (assoc initial :param1 p1 :param2 p2 :op op :iam iam)
 	 	initial
  )))
- ([t v] (-new-entry t v nil nil nil)))
+ ([t v p1 p2 op] (-new-entry t v nil nil nil nil))
+ ([t v] (-new-entry t v nil nil nil nil)))
 
 
 (defn get-vals
@@ -86,6 +88,11 @@
  ([mem v p1 p2 op] (zip/insert-child mem (-new-entry :block v p1 p2 op)))
  ([v p1 p2 op] (reset! MEMORY (add-block @MEMORY v p1 p2 op))))
 
+(defn add-block-as-child
+ "Adds a new block to the memory under loc, with k = param1 or param2, with op param1 param2"
+ ([mem loc k v p1 p2 op] (zip/insert-child loc (-new-entry :block v p1 p2 op k)))
+ ([loc k v p1 p2 op] (reset! MEMORY (add-block-as-child @MEMORY loc k v p1 p2 op))))
+
 
 ; ----- Below here, functions will end up in viz.clj -----
 
@@ -101,6 +108,7 @@
 ; Later we will need to find these UUIDs, so make a filter for them
 
 (defn is-virt-uuid?
+ "Is the supplied string a virtual UUID?"
 	[s]
 	(cond
 		(.endsWith s "_param1") true
@@ -118,6 +126,11 @@
  "Returns the param part of a virtual node UUID"
  [u]
  (clojure.string/replace u #"^.*_" ""))
+
+; There's 3 cases we need to handle here:
+; 1. Where the children of a node are another node (e.g. a block may have one of its params be another block)
+; 2. Where the children of a node are the parameters of a block 
+; 3. The mixed case, where one child is a node, another is a parameter
 
 (defn -list-child-uuids
  "Given a node n, return a list of UUIDs of its children, if any"
@@ -182,8 +195,6 @@
 		 			 :fillcolor (-attractiveness-to-color (:attract n))})
  )))))
 
-; add blocks with children which are ints
-; add-block() method with root node as target
 ; add blocks with children which are blocks
 ; add-block() method with a child node as target (check the node type to ensure it's valid!)
 ; add blocks with children which are a mix of blocks and ints
@@ -194,14 +205,22 @@
 ;get-secondary-targets
 ;get-blocks
 
-; Create a graph from a simple case
-; make it more complex
-; add methods to manipulate it
-; ensure graph still works
 
 (add-brick 1)
 (add-brick 2)
 (add-brick 3)
-(add-block 10 2 5 :times)
-(add-target 20)
+(add-block 20 2 10 :times)
+(def block-uuid (:uuid (first (filter #(= :block (:type %)) (get-vals @MEMORY)))))
+(def block-node (find-node @MEMORY block-uuid))
+(println (zip/node block-node))
+(println (zip/make-node block-node (zip/node block-node) '[]))
+
+
+; I suspect that find-node is returning only a node and not the entire memory structure, i.e. not a loc;
+; which stops us adding to it
+
+
+;(add-block-as-child block-node :param2 10 2 5 :times)
+
+;(add-target 20)
 
