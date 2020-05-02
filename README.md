@@ -32,7 +32,7 @@ Immediate
 
 Big next tasks
 
-* complete cl/rand-block - ensure it randomly runs, more likely at high temperature
+* complete cl/rand-block - ensure it randomly runs, more likely at high temperature (means implementing temperature)
 * Ensure blocks in WM can be visualized
 
 Tidy-ups/small improvements

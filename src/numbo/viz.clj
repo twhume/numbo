@@ -1,4 +1,5 @@
 (ns numbo.viz
+	(:require [clojure.zip :as zip])
 	(:require [numbo.coderack :as cr])
 	(:require [numbo.history :as hist])
 	(:require [numbo.pnet :as pn])
@@ -51,40 +52,122 @@
  		:edge->descriptor (fn [n1 n2] {:style (get -link-style-map (pn/get-link-type p n1 n2))})
  	)))
 
+; ----- Functions to plot a working memory -----
+
+(defn -is-virt-uuid?
+ "Is the supplied string a virtual UUID?"
+	[s]
+	(cond
+		(.endsWith s "_param0") true
+		(.endsWith s "_param1") true
+		(.endsWith s "_op") true
+		:else false
+))
+
+(defn -get-virt-uuid
+ "Returns the UUID part of a virtual node UUID"
+ [u]
+ (clojure.string/replace u #"_.*$" ""))
+
+(defn -get-virt-param
+ "Returns the param part of a virtual node UUID"
+ [u]
+ (clojure.string/replace u #"^.*_" ""))
+
+(defn -node-to-graph
+	"Converts the node at a zipper loc to its Rhizome representation"
+	[loc]
+	(let [node (zip/node loc)]
+		(list (:uuid node) (vector (str (:uuid node) "_op") (:params node))))
+)
+
+; Either the UUIDs of sub-blocks or "virtual UUIDs" referring to params
+
+(defn -block-children
+	"Returns vector of UUID representations of node n"
+	[n]
+	(let [children (:params n)
+							uuid (:uuid n)]
+		(vec (map-indexed #(if (int? %2) (str uuid "_param" %1) (:uuid %2)) children))))
+
+(defn -blocktree-to-graph
+	"Convert a single blocktree into a Rhizome-format graph"
+	[bt]
+	(let [zipper (wm/-make-blocktree-zipper bt)]
+		(loop [cur zipper out '{}]
+		 (if (zip/end? cur) out
+		 	(let [node (zip/node cur)
+		 							node-uuid (:uuid node)
+		 							node-op-uuid (str node-uuid "_op")
+		 							node-children (-block-children node)
+		 							]
+			  	(recur
+			  		(zip/next cur)
+			  		(do
+			  			(if (int? node) out
+					  	(assoc out
+					  		node-uuid (vector node-op-uuid)
+					  		node-op-uuid node-children
+					  		(first node-children) '[]
+					  		(second node-children) '[]
+			  		)))))))))
+
+(defn -to-graph
+ "Convert a target, bricks and blocks into a graph for Rhizome"
+ [ta br bl]
+ (let [bt-graphs (map -blocktree-to-graph bl)]
+ 	(apply merge bt-graphs)))
+
+; add root nodes for all the MAGIC child IDs
+
 (defn -attractiveness-to-color
 	"Handles coloring nodes by attractiveness"
 	[a]
-	(let [normalized-a a
-							r (int ( * 255 (float (/ (- 3 normalized-a) 3))))
+	(let [r (int ( * 255 (float (/ (- 3 a) 3))))
 							g (- 255 r)
-							b (- 255 r)
-	]
-	(format "#FF%02X%02X", r r )))
+							b (- 255 r)]
+		(format "#FF%02X%02X" r r)))
 
 (defn -get-wm-style
- "Works out appropriate style for a node n in graph g"
- [g n]
- (case (:type (get g n))
+ "Works out appropriate style for a type t"
+ [t]
+ (case t
  	:target "bold"
+ 	:secondary "bold"
  	:brick "solid"
  	:block "dashed"
-  "dotted"
  ))
 
-(defn -wm-into-rh
- "Convert a working memory into a rhizome representation"
- [w]
- (into '{} (map-indexed #(vector %1 (hash-map :type (:type %2) :value (:value %2) :attractiveness (:attractiveness %2))) w)))
+(def -op-names '{ :times "X" :plus "+" :minus "-"})
+
+(defn -get-node-label
+ "Given the UUID u of a block in the list of blocks bl, return a pair of its [label,type]"
+	[bl u]
+	(let [node-uuid (if (-is-virt-uuid? u) (-get-virt-uuid u) u)
+							entry (zip/node (first (filter (complement nil?) (map #(wm/-find-blocktree-loc (wm/-make-blocktree-zipper %) node-uuid) bl))))]
+							(if (-is-virt-uuid? u)
+								(condp = (-get-virt-param u)
+									"op" [((:op entry) -op-names) :op]
+									"param0" [(first (:params entry)) :param]
+									"param1" [(second (:params entry)) :param]
+									"ERROR")
+							[(:value entry) :result])))
 
 (defn plot-wm
- "Convert a workimg memory to a graph structure suitable for rhizome"
- [p w h]
- (let [rh-graph (-wm-into-rh p)]
- 	(rh/graph->image (keys rh-graph) rh-graph
- 	 :directed? false
- 	 :options {:concentrate true :layout "dot" :dpi (int (/ (min w h) 11))}
- 		:node->descriptor (fn [n] {:label (:value (get rh-graph n)) :style (str "filled," (-get-wm-style rh-graph n)) :fillcolor (-attractiveness-to-color (:attractiveness (get rh-graph n)))})
- 		)))
+ "Show the graph for the working memory target, bricks and blocks"
+ ([ta br bl w h]
+ (let [g (-to-graph ta br bl)]
+	 (rh/graph->image (keys g) g
+	 	:directed? false
+ 	 :options {:concentrate true :layout "neato" :mode "hier" :model "circuit" :dpi (int (/ (min w h) 8))}
+ 		:node->descriptor (fn [u]
+ 		  (let [[label type] (-get-node-label bl u)]
+ 		  		(condp = type
+ 		  		 :op (hash-map :label label :style "rounded,filled" :fontcolor "white" :fontsize 12 :fixedsize "true" :labelloc "c" :width 0.4 :height 0.4 :color "black" )
+ 		  		 :param (hash-map :label label :style "solid" :fontcolor "black" :fontsize 12 :fixedsize "false" :labelloc "c" :width 0.4 :height 0.4 :color "red" )
+ 		  		 :result (hash-map :label label :style "rounded,filled" :fontcolor "white" :fontsize 12 :fixedsize "false" :labelloc "c" :width 0.4 :height 0.4 :color "black" )
+ 		  		 :else (println "WEIRD TYPE" type)))))))
+ ([] (plot-wm @wm/TARGET @wm/BRICKS @wm/BLOCKS)))
 
 ; ----- Seesaw GUI hereon -----
 
@@ -116,7 +199,11 @@
  "Rerender the working memory buffer image"
  [c]
  (do
-	 (reset! WM-IMAGE (plot-wm (:working (nth @hist/HISTORY @CURRENT)) (.getWidth c) (.getHeight c))))
+	 (reset! WM-IMAGE (plot-wm
+	 	(:target (nth @hist/HISTORY @CURRENT))
+	 	(:bricks (nth @hist/HISTORY @CURRENT))
+	 	(:blocks (nth @hist/HISTORY @CURRENT))
+	 	 (.getWidth c) (.getHeight c))))
  	(repaint! c))
 
 (defn render-wm

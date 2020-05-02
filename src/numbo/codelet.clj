@@ -37,14 +37,7 @@
  [& s]
  (into (hash-map :urgency URGENCY_LOW :fn -noop :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
 
-(defn -initial-attractiveness
-	"Calculates an initial attractiveness for the number, based on its value"
- [n]
- (cond-> 1
- 	(= 0 (mod n 5)) (+ 5)
- 	(= 0 (mod n 10)) (+ 5)
- 	(= 0 (mod n 100)) (+ 5)
- ))
+
 
 ;----- HELPER FUNCTIONS USED BY CODELETS -----
 ; move these into their files
@@ -67,9 +60,10 @@
 	[n]
 	(cr/add-codelet (new-codelet :type :activate-pnet :desc (str "Activate PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (pn/activate-node n)))))
 
-(defn inc-attraction
-	[n]
-	(cr/add-codelet (new-codelet :type :inc-attraction :desc (str "Pump PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (wm/pump-node n)))))
+;TODO commented out during memory refactor
+;(defn inc-attraction
+;	[n]
+;	(cr/add-codelet (new-codelet :type :inc-attraction :desc (str "Pump PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (wm/pump-node n)))))
 
 
 ; load-target - (high urgency) when a target is loaded, the pnet landmark closest is activated.
@@ -83,37 +77,38 @@
  	(new-codelet :type :load-target :desc (str "Load target: " v) :urgency URGENCY_HIGH
 	 	:fn (fn []
 		 	(do
-		 		(wm/add-node :type :target :value v))
+		 		(wm/set-target v)
 		 	 (activate-pnet (keyword (str (closest (pn/get-numbers) v))))
 		 	 (map activate-pnet (pn/get-operators))
 		 	 (if (and 
 		 	 	(not (nil? (wm/get-largest-brick)))
 		 	 	(> v (:value (wm/get-largest-brick))))
 		 	 		(activate-pnet :times))
-		 	))))
+		 	)))))
 
 ; syntactic-comparison (mid urgency) There is a type of codeliet which inspects various nodes and
 ; notices syntactic similarities, increases attractiveness of them - e.g. if brick 11 shares digits 
 ; with target 114, increase attractiveness of 11 (p141)
 
+;TODO commented out during refactor of working memory as this fires inc-attraction via pump-node
 
-(defn syntactic-comparison
- "Looks for syntactic similarities between nodes and increases their attractiveness accordingly"
- [n1 n2]
- (let [v1 (str (:value n1))
- 						v2 (str (:value n2))]
-	 (cond
+;(defn syntactic-comparison
+; "Looks for syntactic similarities between nodes and increases their attractiveness accordingly"
+; [n1 n2]
+; (let [v1 (str (:value n1))
+; 						v2 (str (:value n2))]
+;	 (cond
 
 	  ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
 
-	  (or (str/includes? v1 v2) (str/includes? v2 v1)) (do (inc-attraction n1) (inc-attraction n2))
-	 )))
+;	  (or (str/includes? v1 v2) (str/includes? v2 v1)) (do (inc-attraction n1) (inc-attraction n2))
+;	 )))
 
 (defn load-brick
  "Loads a new brick into memory"
  [v]
 	(cr/add-codelet (new-codelet :type :load-brick :desc (str "Load brick: " v) :urgency URGENCY_HIGH
-	:fn (fn [] (wm/add-node :type :brick :value v :attractiveness (-initial-attractiveness v))))))
+	:fn (fn [] (wm/add-brick v)))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
 ; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
@@ -122,16 +117,13 @@
  "Make a new block out of sampled random bricks and ops"
  []
  (let [b1 (wm/get-random-brick false)
+ 						v1 (:value b1)
  						b2 (wm/get-random-brick false)
+ 						v2 (:value b2)
  						op (pn/get-random-op)]
- 						(println b1)
  						(cr/add-codelet (new-codelet :type :new-block
- 							:desc (str "Random op: " (:name op) " " (:value b1) "," (:value b2))
+ 							:desc (str "Random op: " (:name op) " " v1 "," v2)
  							:urgency URGENCY_HIGH
- 							:fn (fn [] (wm/add-node :type :block :value ( ((:name op) pn/operator-map) (:value b1) (:value b2))
- 								:bricks (list
- 								 (wm/new-node :type :brick :value (:value b1))
- 								 (wm/new-node :type :brick :value (:value b1))
- 								 (wm/new-node :type :operator :value (:name op)))))))))
+ 							:fn (fn [] (wm/add-block (((:name op) pn/operator-map) v1 v2) (:name op) (vector v1 v2)))))))
 
 ;----- END OF CODELETS -----
