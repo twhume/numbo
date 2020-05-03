@@ -112,11 +112,18 @@
 					  		(second node-children) '[]
 			  		)))))))))
 
+(defn -brick-to-graph
+ "Convert a single brick (or target) to a Rhizome graph entry"
+	[br]
+	(hash-map (:uuid br) '[]))
+
 (defn -to-graph
  "Convert a target, bricks and blocks into a graph for Rhizome"
  [ta br bl]
- (let [bt-graphs (map -blocktree-to-graph bl)]
- 	(apply merge bt-graphs)))
+ (let [bt-graphs (map -blocktree-to-graph bl)
+ 						ta-graph (if (nil? ta) '{} (-brick-to-graph ta))
+ 						br-graphs (apply merge (map -brick-to-graph br))]
+ 	(apply merge (first bt-graphs) ta-graph br-graphs)))
 
 ; add root nodes for all the MAGIC child IDs
 
@@ -140,35 +147,47 @@
 
 (def -op-names '{ :times "X" :plus "+" :minus "-"})
 
+(defn -find-anywhere
+	"Look in the target, bricks list or blocks for the UUID, and return the [node, where_found] if found"
+	[ta br bl uuid]
+
+		(if (= (:uuid ta) uuid) [ta :target]
+			(let [brick-matches (filter #(= (:uuid %1) uuid) br)]
+				(if (not-empty brick-matches) [(first brick-matches) :bricks]
+					[(zip/node (first (filter (complement nil?) (map #(wm/-find-blocktree-loc (wm/-make-blocktree-zipper %) uuid) bl)))) :blocks]))))
+
 (defn -get-node-label
  "Given the UUID u of a block in the list of blocks bl, return a pair of its [label,type]"
-	[bl u]
+	[ta br bl u]
 	(let [node-uuid (if (-is-virt-uuid? u) (-get-virt-uuid u) u)
-							entry (zip/node (first (filter (complement nil?) (map #(wm/-find-blocktree-loc (wm/-make-blocktree-zipper %) node-uuid) bl))))]
+							[entry src] (-find-anywhere ta br bl node-uuid)]
 							(if (-is-virt-uuid? u)
 								(condp = (-get-virt-param u)
 									"op" [((:op entry) -op-names) :op]
 									"param0" [(first (:params entry)) :param]
 									"param1" [(second (:params entry)) :param]
 									"ERROR")
-							[(:value entry) :result])))
+							[(:value entry) src])))
 
 (defn plot-wm
  "Show the graph for the working memory target, bricks and blocks"
  ([ta br bl w h]
  (let [g (-to-graph ta br bl)]
+
 	 (rh/graph->image (keys g) g
 	 	:directed? false
- 	 :options {:concentrate true :layout "neato" :mode "hier" :model "circuit" :dpi (int (/ (min w h) 8))}
+ 	 :options {:concentrate true :layout "dot" :model "circuit" :dpi (int (/ (min w h) 8))}
  		:node->descriptor (fn [u]
- 		  (let [[label type] (-get-node-label bl u)]
+ 		  (let [[label type] (-get-node-label ta br bl u)]
  		  		(condp = type
- 		  		 :op (hash-map :label label :style "rounded,filled" :fontcolor "white" :fontsize 12 :fixedsize "true" :labelloc "c" :width 0.4 :height 0.4 :color "black" )
- 		  		 :param (hash-map :label label :style "solid" :fontcolor "black" :fontsize 12 :fixedsize "false" :labelloc "c" :width 0.4 :height 0.4 :color "red" )
- 		  		 :result (hash-map :label label :style "rounded,filled" :fontcolor "white" :fontsize 12 :fixedsize "false" :labelloc "c" :width 0.4 :height 0.4 :color "black" )
+ 		  		 :op (hash-map :label label :style "rounded,filled" :fontcolor "white" :fontsize 12 :fixedsize "true" :color "black" )
+ 		  		 :param (hash-map :label label :style "solid" :fontcolor "black" :fontsize 12 :fixedsize "false" :color "red" )
+ 		  		 :blocks (hash-map :label label :style "rounded,filled" :fontcolor "white" :fontsize 12 :fixedsize "false" :color "black" )
+ 		  		 :bricks (hash-map :label label :style "rounded" :fontcolor "black" :fontsize 12 :fixedsize "false" :color "black" )
+ 		  		 :target (hash-map :label label :style "rounded,filled" :fontcolor "red" :fontsize 12 :fixedsize "false" :color "black" )
  		  		 :else (println "WEIRD TYPE" type)))))))
  ([] (plot-wm @wm/TARGET @wm/BRICKS @wm/BLOCKS)))
-
+ 
 ; ----- Seesaw GUI hereon -----
 
 (def PNET-IMAGE (atom nil))
