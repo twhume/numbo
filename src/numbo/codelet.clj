@@ -58,13 +58,18 @@
 
 (defn activate-pnet
 	[n]
-	(cr/add-codelet (new-codelet :type :activate-pnet :desc (str "Activate PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (pn/activate-node n)))))
+	(cr/add-codelet (new-codelet :type :activate-pnet
+																														:desc (str "Activate PNet: " n)
+																														:urgency URGENCY_MEDIUM
+																														:fn (fn [] (pn/activate-node n)))))
 
-;TODO commented out during memory refactor
-;(defn inc-attraction
-;	[n]
-;	(cr/add-codelet (new-codelet :type :inc-attraction :desc (str "Pump PNet: " n) :urgency URGENCY_MEDIUM :fn (fn [] (wm/pump-node n)))))
-
+(defn pump-node
+ "Pumps the attractiveness of a brick or block with UUID u"
+	[u]
+	(cr/add-codelet (new-codelet :type :inc-attraction
+																														:desc (str "Pump brick/block: " u)
+																														:urgency URGENCY_MEDIUM :fn
+																														(fn [] (wm/pump-node u)))))
 
 ; load-target - (high urgency) when a target is loaded, the pnet landmark closest is activated.
 ; operands (* - +) are activated. If it’s larger than the largest brick, * is activated more.
@@ -90,19 +95,20 @@
 ; notices syntactic similarities, increases attractiveness of them - e.g. if brick 11 shares digits 
 ; with target 114, increase attractiveness of 11 (p141)
 
-;TODO commented out during refactor of working memory as this fires inc-attraction via pump-node
-
-;(defn syntactic-comparison
-; "Looks for syntactic similarities between nodes and increases their attractiveness accordingly"
-; [n1 n2]
-; (let [v1 (str (:value n1))
-; 						v2 (str (:value n2))]
-;	 (cond
+(defn rand-syntactic-comparison
+ "Examine a random brick or block, compare to the target, pump it if promising"
+ []
+ (let [blocks (list (wm/get-random-brick false) (wm/get-random-block))
+ 						block (rand-nth blocks)
+ 						val (str (:value block))
+ 						tval (str (:value @wm/TARGET))]
+	 (cond
 
 	  ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
-
-;	  (or (str/includes? v1 v2) (str/includes? v2 v1)) (do (inc-attraction n1) (inc-attraction n2))
-;	 )))
+	  (or
+	  	(str/includes? val tval)
+	  	(str/includes? tval val)) (pump-node (:uuid block))
+	 )))
 
 (defn load-brick
  "Loads a new brick into memory"

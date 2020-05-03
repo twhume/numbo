@@ -37,6 +37,16 @@
 
 (run-until-empty-cr)
 (cl/rand-block)
+(cl/rand-syntactic-comparison)
+(run-until-empty-cr)
+(cl/rand-block)
+(cl/rand-syntactic-comparison)
+(run-until-empty-cr)
+(cl/rand-block)
+(cl/rand-syntactic-comparison)
+(run-until-empty-cr)
+(cl/rand-block)
+(cl/rand-syntactic-comparison)
 (run-until-empty-cr)
 
 (viz/-main)

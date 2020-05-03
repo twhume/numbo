@@ -28,12 +28,12 @@ TODO list
 
 Immediate
 
-- Why does activation of :times not spread? Because it's got no pnet links
 
 Big next tasks
 
+* pump-node seems to trigger something breaking in visualization, fix it
+* Return to the codelets - make them, starting with rand-op and playing fwd
 * complete cl/rand-block - ensure it randomly runs, more likely at high temperature (means implementing temperature)
-* Ensure blocks in WM can be visualized
 
 Tidy-ups/small improvements
 
@@ -42,4 +42,5 @@ Tidy-ups/small improvements
 * cl/rand-op can in theory pick the same brick twice, which would be bad but could just result in the created block being considered invalid later. To fix this, I think I need a version of the random sampler which returns a sequence instead of a single value
 - input target and initial bricks in the visualizer
 - write function to kick off a run then display it
+- Why does activation of :times not spread? Because it's got no pnet links
 

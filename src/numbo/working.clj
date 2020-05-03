@@ -13,6 +13,11 @@
 (def TARGET (atom nil))
 (def BLOCKS (atom '()))
 
+; default amount by which to increase attractiveness of a node, when it's pumped
+(def DEFAULT_ATTRACTION_INC 5)
+; default starting attraction
+(def DEFAULT_ATTRACTION 1)
+
 ; BRICKS is a list of Entries, TARGET is an Entry
 ; Entries are maps with a :value, a random :uuid and an :attr(activeness)
 ;
@@ -24,7 +29,7 @@
 (defn -initial-attr
 	"Calculates an initial attractiveness for the number, based on its value"
  [n]
- (cond-> 1
+ (cond-> DEFAULT_ATTRACTION
  	(= 0 (mod n 5)) (+ 5)
  	(= 0 (mod n 10)) (+ 5)
  	(= 0 (mod n 100)) (+ 5)
@@ -66,6 +71,13 @@
 	 							  	node
 	 							 ))))))
 
+(defn -update-blocktree
+ "Updates the supplied block bl into the blocktree bt, if it exists there"
+ [bt bl]
+ (let [zipper (-make-blocktree-zipper bt)
+ 						found (-find-blocktree-loc zipper (:uuid bl))]
+ 	(if found (zip/root (zip/replace found bl)) bt)))
+
 ; ----- Public functions -----
 
 (defn reset
@@ -82,6 +94,11 @@
 	([br val] (add-brick br val true))
  ([val] (reset! BRICKS (add-brick @BRICKS val))))
 
+(defn update-brick
+ "Updates the supplied brick br into the bricks list bl"
+ ([bl br] (map #(if (= (:uuid br) (:uuid %1)) br %1) bl))
+ ([br] (update-brick @BRICKS br)))
+
 (defn set-target
  "Sets the target value in memory"
  ([v] (reset! TARGET (-new-entry v))))
@@ -90,6 +107,11 @@
  "Adds a new block to memory"
 	([bl value op p] (conj bl (-new-entry value op p)))
 	([value op p] (reset! BLOCKS (add-block @BLOCKS value op p))))
+
+(defn update-blocks
+	"Updates the supplied block bl into appropriate blocktree in the list btl"
+	([btl bl] (map #(-update-blocktree %1 bl) btl))
+	([bl] (update-blocks @BLOCKS bl)))
 
 (defn add-child-block
  "Adds a child to a block in memory bl, by its uuid"
@@ -106,6 +128,13 @@
  									 (rand-nth possibles))))
  ([f] (get-random-brick @BRICKS f)))
 
+(defn get-random-block
+ "Return a random block"
+ ([bl]
+ 	((if (empty? bl) nil
+			(rand-nth bl))))
+ ([] (get-random-brick @BLOCKS)))
+
 (defn get-largest-brick
 	"Return the value of the largest free brick in memory, nil if there's none"
 	([br]
@@ -121,13 +150,19 @@
 	 (println "BRICKS:" @BRICKS)
 	 (println "BLOCKS:" @BLOCKS)))
 
+(defn find-anywhere
+	"Look in the target, bricks list or blocks for the UUID, and return the [node, where_found] if found"
+	[ta br bl uuid]
+		(if (= (:uuid ta) uuid) [ta :target] ; the UUID is that of the target block
+			(let [brick-matches (filter #(= (:uuid %1) uuid) br)]
+				(if (not-empty brick-matches) [(first brick-matches) :bricks] ; the UUID is found in our bricks
+				 (let [blocks-matches (filter (complement nil?) (map #(-find-blocktree-loc (-make-blocktree-zipper %) uuid) bl))]
+				 	(if (not-empty blocks-matches) [blocks-matches :blocks]))))))
+
 ;------ OLD STUFF BELOW HERE ----
 
 
-; default amount by which to increase attractiveness of a node, when it's pumped
-;(def DEFAULT_ATTRACTION_INC 5)
-; default starting attraction
-;(def DEFAULT_ATTRACTION 1)
+
 
 
 ; Contributors to temperature:
@@ -142,10 +177,16 @@
  "What's the temperature of the working memory m?"
  [m])
 
-;(defn pump-node
-; "Pump a node n in memory w, by increasing its attractiveness"
-; ([w n]
-;	 (let [pumped-n (assoc n :attractiveness (+ (:attractiveness n) DEFAULT_ATTRACTION_INC))]
-; 		(conj (remove #{n} w) pumped-n))))
+(defn pump-node
+ "Pump a node with uuid u in memory w, by increasing its attractiveness"
+ ([ta br bl u]
+	 (let [[entry src] (find-anywhere ta br bl u)]
+	  (if (nil? entry) nil
+			 (let [pumped-entry (assoc entry :attr (+ (:attr entry) DEFAULT_ATTRACTION_INC))]
+			  (condp = src
+			  	:target (set-target pumped-entry)
+			  	:bricks (update-brick pumped-entry)
+			  	:blocks (update-blocks pumped-entry))))))
+ ([u] (pump-node @TARGET @BRICKS @BLOCKS u)))
 
 

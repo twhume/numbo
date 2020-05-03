@@ -147,20 +147,11 @@
 
 (def -op-names '{ :times "X" :plus "+" :minus "-"})
 
-(defn -find-anywhere
-	"Look in the target, bricks list or blocks for the UUID, and return the [node, where_found] if found"
-	[ta br bl uuid]
-
-		(if (= (:uuid ta) uuid) [ta :target]
-			(let [brick-matches (filter #(= (:uuid %1) uuid) br)]
-				(if (not-empty brick-matches) [(first brick-matches) :bricks]
-					[(zip/node (first (filter (complement nil?) (map #(wm/-find-blocktree-loc (wm/-make-blocktree-zipper %) uuid) bl)))) :blocks]))))
-
 (defn -get-node-label
  "Given the UUID u of a block in the list of blocks bl, return a pair of its [label,type]"
 	[ta br bl u]
 	(let [node-uuid (if (-is-virt-uuid? u) (-get-virt-uuid u) u)
-							[entry src] (-find-anywhere ta br bl node-uuid)]
+							[entry src] (wm/find-anywhere ta br bl node-uuid)]
 							(if (-is-virt-uuid? u)
 								(condp = (-get-virt-param u)
 									"op" [((:op entry) -op-names) :op]
