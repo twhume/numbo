@@ -157,7 +157,7 @@
 			(let [brick-matches (filter #(= (:uuid %1) uuid) br)]
 				(if (not-empty brick-matches) [(first brick-matches) :bricks] ; the UUID is found in our bricks
 				 (let [blocks-matches (filter (complement nil?) (map #(-find-blocktree-loc (-make-blocktree-zipper %) uuid) bl))]
-				 	(if (not-empty blocks-matches) [blocks-matches :blocks]))))))
+				 	(if (not-empty blocks-matches) [(zip/node (first blocks-matches)) :blocks]))))))
 
 ;------ OLD STUFF BELOW HERE ----
 

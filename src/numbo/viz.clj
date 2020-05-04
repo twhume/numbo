@@ -164,7 +164,6 @@
  "Show the graph for the working memory target, bricks and blocks"
  ([ta br bl w h]
  (let [g (-to-graph ta br bl)]
-
 	 (rh/graph->image (keys g) g
 	 	:directed? false
  	 :options {:concentrate true :layout "dot" :model "circuit" :dpi (int (/ (min w h) 8))}
