@@ -120,10 +120,10 @@
 (defn -to-graph
  "Convert a target, bricks and blocks into a graph for Rhizome"
  [ta br bl]
- (let [bt-graphs (map -blocktree-to-graph bl)
+ (let [bt-graphs (apply merge (map -blocktree-to-graph bl))
  						ta-graph (if (nil? ta) '{} (-brick-to-graph ta))
  						br-graphs (apply merge (map -brick-to-graph br))]
- 	(apply merge (first bt-graphs) ta-graph br-graphs)))
+ 	(apply merge bt-graphs ta-graph br-graphs)))
 
 ; add root nodes for all the MAGIC child IDs
 
