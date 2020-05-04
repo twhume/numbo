@@ -31,7 +31,8 @@ Immediate
 
 Big next tasks
 
-* pump-node seems to trigger something breaking in visualization, fix it
+* color WM nodes by :attrs
+* unit tests for WM
 * Return to the codelets - make them, starting with rand-op and playing fwd
 * complete cl/rand-block - ensure it randomly runs, more likely at high temperature (means implementing temperature)
 

@@ -97,7 +97,7 @@
 (defn update-brick
  "Updates the supplied brick br into the bricks list bl"
  ([bl br] (map #(if (= (:uuid br) (:uuid %1)) br %1) bl))
- ([br] (update-brick @BRICKS br)))
+ ([br] (reset! BRICKS (update-brick @BRICKS br))))
 
 (defn set-target
  "Sets the target value in memory"
@@ -111,7 +111,7 @@
 (defn update-blocks
 	"Updates the supplied block bl into appropriate blocktree in the list btl"
 	([btl bl] (map #(-update-blocktree %1 bl) btl))
-	([bl] (update-blocks @BLOCKS bl)))
+	([bl] (reset! BLOCKS (update-blocks @BLOCKS bl))))
 
 (defn add-child-block
  "Adds a child to a block in memory bl, by its uuid"
@@ -181,12 +181,16 @@
  "Pump a node with uuid u in memory w, by increasing its attractiveness"
  ([ta br bl u]
 	 (let [[entry src] (find-anywhere ta br bl u)]
-	  (if (nil? entry) nil
+	  (if (nil? entry) (do
+	  	(println "Couldn't find node" u)
+	  	nil)
 			 (let [pumped-entry (assoc entry :attr (+ (:attr entry) DEFAULT_ATTRACTION_INC))]
 			  (condp = src
 			  	:target (set-target pumped-entry)
 			  	:bricks (update-brick pumped-entry)
-			  	:blocks (update-blocks pumped-entry))))))
+			  	:blocks (update-blocks pumped-entry)
+			  	(println "Couldn't find a type to pump for" src)
+			  )))))
  ([u] (pump-node @TARGET @BRICKS @BLOCKS u)))
 
 

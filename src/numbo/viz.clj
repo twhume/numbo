@@ -127,10 +127,10 @@
 
 ; add root nodes for all the MAGIC child IDs
 
-(defn -attractiveness-to-color
+(defn -attr-to-color
 	"Handles coloring nodes by attractiveness"
 	[a]
-	(let [r (int ( * 255 (float (/ (- 3 a) 3))))
+	(let [r (int ( * 255 (float (/ (- 20 a) 20))))
 							g (- 255 r)
 							b (- 255 r)]
 		(format "#FF%02X%02X" r r)))
@@ -148,7 +148,7 @@
 (def -op-names '{ :times "X" :plus "+" :minus "-"})
 
 (defn -get-node-label
- "Given the UUID u of a block in the list of blocks bl, return a pair of its [label,type]"
+ "Given the UUID u of a block in the list of blocks bl, return a tuple of its [label,type,attr]"
 	[ta br bl u]
 	(let [node-uuid (if (-is-virt-uuid? u) (-get-virt-uuid u) u)
 							[entry src] (wm/find-anywhere ta br bl node-uuid)]
@@ -158,7 +158,7 @@
 									"param0" [(first (:params entry)) :param]
 									"param1" [(second (:params entry)) :param]
 									"ERROR")
-							[(:value entry) src])))
+							[(:value entry) src (:attr entry)])))
 
 (defn plot-wm
  "Show the graph for the working memory target, bricks and blocks"
@@ -166,15 +166,15 @@
  (let [g (-to-graph ta br bl)]
 	 (rh/graph->image (keys g) g
 	 	:directed? false
- 	 :options {:concentrate true :layout "dot" :model "circuit" :dpi (int (/ (min w h) 8))}
+ 	 :options {:concentrate true :layout "neato" :model "circuit" :dpi (int (/ (min w h) 8))}
  		:node->descriptor (fn [u]
- 		  (let [[label type] (-get-node-label ta br bl u)]
+ 		  (let [[label type attr] (-get-node-label ta br bl u)]
  		  		(condp = type
- 		  		 :op (hash-map :label label :style "rounded,filled" :fontcolor "white" :fontsize 12 :fixedsize "true" :color "black" )
- 		  		 :param (hash-map :label label :style "solid" :fontcolor "black" :fontsize 12 :fixedsize "false" :color "red" )
- 		  		 :blocks (hash-map :label label :style "rounded,filled" :fontcolor "white" :fontsize 12 :fixedsize "false" :color "black" )
- 		  		 :bricks (hash-map :label label :style "rounded" :fontcolor "black" :fontsize 12 :fixedsize "false" :color "black" )
- 		  		 :target (hash-map :label label :style "rounded,filled" :fontcolor "red" :fontsize 12 :fixedsize "false" :color "black" )
+ 		  		 :op (hash-map :label label :style "filled" :fontcolor "white"  :color "black" :fixedsize true :width 0.4 :height 0.4 )
+ 		  		 :param (hash-map :label label :style "solid" :fontcolor "black" :color "black" )
+ 		  		 :blocks (hash-map :label label :style "filled" :color "black" :penwidth 1 :fontcolor "black" :fillcolor (-attr-to-color attr))
+ 		  		 :bricks (hash-map :label label :style "filled" :color "black" :penwidth 2 :fontcolor "black" :fillcolor (-attr-to-color attr) )
+ 		  		 :target (hash-map :label label :style "solid,filled" :color "red" :penwidth 2 :fontcolor "black" :fillcolor (-attr-to-color attr) )
  		  		 :else (println "WEIRD TYPE" type)))))))
  ([] (plot-wm @wm/TARGET @wm/BRICKS @wm/BLOCKS)))
  

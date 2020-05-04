@@ -27,3 +27,9 @@
 	 												(wm/add-brick 2))]
 	 	(is (= 2 (:value (wm/get-largest-brick test-wm))))
 	 ))
+
+
+; pump-node
+; update-brick
+; set-target
+; update-block
