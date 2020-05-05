@@ -5,11 +5,13 @@ See Fluid Concepts & Creative Analogies, p.131 onwards (Chapter 3)
 
 ## Usage
 
-FIXME
+lein run - kicks off and starts the GUI
+lein test - unit tests
+lein repl - loads all code, run (-main) to trigger the GUI and leave a REPL open
 
 ## License
 
-Copyright © 2020 FIXME
+Copyright © 2020 Tom Hume
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
@@ -26,15 +28,16 @@ at https://www.gnu.org/software/classpath/license.html.
 
 TODO list
 
-Immediate
-
 
 Big next tasks
 
-* color WM nodes by :attrs
 * unit tests for WM
-* Return to the codelets - make them, starting with rand-op and playing fwd
-* complete cl/rand-block - ensure it randomly runs, more likely at high temperature (means implementing temperature)
+* make attraction (WM), attractivness (PNet) and temperature (WM) all 0..1 scale
+* implement randomness such that there is a temp% chance of a rand-block or rand-syntactic-comparison being scheduled each iteration
+* implement X% decay of attraction each n iterations
+* start using target 114, blocks 11 20 7 1 6 as per example
+* Add in more of the PNet
+* --- THE ABOVE TAKES US TO STEP 4 OF THE SAMPLE RUN ON P142 WOOOO ---
 
 Tidy-ups/small improvements
 
