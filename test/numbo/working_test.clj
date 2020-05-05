@@ -30,11 +30,13 @@
 
 
 (deftest set-target-test
+
 	(testing "Set target when memory is empty"
 		(do
 			(wm/reset)
 			(wm/set-target 999)
 			(is (= 999 (:value @wm/TARGET)))))
+
 	(testing "Set target when memory is not empty")
 		(do
 			(wm/reset)
@@ -43,18 +45,81 @@
 			(is (= 998 (:value @wm/TARGET)))))
 
 (deftest bricks-test
-	(testing "Add first brick")
-	(testing "Add second brick")
+
+	(testing "Add first brick"
+		(let [test-wm (-> '()
+																(wm/add-brick 1))]
+		(is (= 1 (count test-wm)))
+		(is (= 1 (:value (first test-wm))))))
+
+	(testing "Add second brick"
+		(let [test-wm (-> '()
+			 												(wm/add-brick 1)
+			 												(wm/add-brick 9))]
+		(is (= 2 (count test-wm)))
+		(is (= 9 (:value (first test-wm))))))
+
 	(testing "Update existing brick")
-)
+		(let [test-wm (-> '()
+			 												(wm/add-brick 1)
+			 												(wm/add-brick 9))
+								brick9 (first test-wm)
+								brick10 (assoc brick9 :value 10)
+								res-wm (wm/update-brick test-wm brick10)]
+		(is (= 2 (count res-wm)))
+		(is (= 10 (:value (first res-wm))))))
 
 (deftest blocks-test
-	(testing "Add first block")
-	(testing "Add second block")
-	(testing "Update existing block")
-	(testing "Add child block")
-	(testing "Update child block")
-)
+
+	(testing "Add first brick"
+		(let [test-wm (-> '()
+																(wm/add-block 10 :plus [6 4]))]
+			(is (= 1 (count test-wm)))
+			(is (= 10 (:value (first test-wm))))))
+
+	(testing "Add second block"
+		(let [test-wm (-> '()
+															(wm/add-block 10 :plus [6 4])
+															(wm/add-block 20 :times [5 4])
+															)]
+		(is (= 2 (count test-wm)))
+		(is (= 20 (:value (first test-wm))))))
+
+	(testing "Update existing block"
+		(let [test-wm (-> '()
+															(wm/add-block 10 :plus [6 4])
+															(wm/add-block 20 :times [5 4]))
+								block20 (first test-wm)
+								block21 (assoc block20 :value 21)
+								res-wm (wm/update-blocks test-wm block21)]
+		(is (= 2 (count res-wm)))
+		(is (= 21 (:value (first res-wm))))))
+
+	(testing "Add child block"
+		(let [test-wm (-> '()
+															 (wm/add-block 10 :plus [6 4])
+															 (wm/add-block 20 :times [5 4]))
+								block20 (first test-wm)
+								res-wm  (wm/add-child-block test-wm (:uuid block20) 1 4 :plus [2 2])
+								res-bl  (first res-wm)  
+								]
+		(is (= 2 (count res-wm)))
+		(is (= 20 (:value res-bl)))
+		(is (= 4 (:value (second (:params res-bl)))))))
+
+	(testing "Update child block"
+		(let [test-wm (-> '()
+															 (wm/add-block 10 :plus [6 4])
+															 (wm/add-block 20 :times [5 4]))
+								block20 (first test-wm)
+								test-wm (wm/add-child-block test-wm (:uuid block20) 1 4 :plus [2 2])
+								child-bl (second (:params (first test-wm)))
+								new-ch   (assoc child-bl :value 6 :params [3 3])
+								res-wm	 (wm/update-blocks test-wm new-ch)
+								]
+		(is (= 2 (count res-wm)))
+		(is (= 6 (:value (second (:params (first res-wm))))))
+		(is (= [3 3] (:params (second (:params (first res-wm)))))))))
 
 (deftest random-test
 	(testing "Get random brick")
