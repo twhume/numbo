@@ -20,6 +20,7 @@
 
 ; BRICKS is a list of Entries, TARGET is an Entry
 ; Entries are maps with a :value, a random :uuid and an :attr(activeness)
+; Bricks have a :free field which indicates if the brick has been used. It's unused by target.
 ;
 ; Entries in BLOCKS can also have an :op(erator) and a vector of 2 children, each ints or block entries
 ; (so Entries in BLOCKS are each "BlockTrees")
@@ -37,7 +38,7 @@
 
 (defn -new-entry
  "Creates a new memory entry structure"
- ([v] (hash-map :value v :uuid (misc/uuid) :attr (-initial-attr v)))
+ ([v] (hash-map :value v :uuid (misc/uuid) :attr (-initial-attr v) :free true))
  ([v o p] (assoc (-new-entry v) :op o :params p)))
 
 (defn -make-blocktree-zipper
@@ -123,17 +124,15 @@
 
 (defn get-random-brick
  "Return a random brick, only free ones if f"
- ([br f] (let [possibles (if f (filter :free br) br)]
+ ([br f] (let [possibles (if f (filter #(= true (:free %1)) br) br)]
  									(if (empty? possibles) nil
  									 (rand-nth possibles))))
  ([f] (get-random-brick @BRICKS f)))
 
 (defn get-random-block
  "Return a random block"
- ([bl]
- 	((if (empty? bl) nil
-			(rand-nth bl))))
- ([] (get-random-brick @BLOCKS)))
+ ([bl] (if (empty? bl) nil (rand-nth bl)))
+ ([] (get-random-block @BLOCKS)))
 
 (defn get-largest-brick
 	"Return the value of the largest free brick in memory, nil if there's none"
@@ -152,12 +151,13 @@
 
 (defn find-anywhere
 	"Look in the target, bricks list or blocks for the UUID, and return the [node, where_found] if found"
-	[ta br bl uuid]
+	([ta br bl uuid]
 		(if (= (:uuid ta) uuid) [ta :target] ; the UUID is that of the target block
 			(let [brick-matches (filter #(= (:uuid %1) uuid) br)]
 				(if (not-empty brick-matches) [(first brick-matches) :bricks] ; the UUID is found in our bricks
 				 (let [blocks-matches (filter (complement nil?) (map #(-find-blocktree-loc (-make-blocktree-zipper %) uuid) bl))]
 				 	(if (not-empty blocks-matches) [(zip/node (first blocks-matches)) :blocks]))))))
+ ([uuid] (find-anywhere @TARGET @BRICKS @BLOCKS uuid)))
 
 ;------ OLD STUFF BELOW HERE ----
 

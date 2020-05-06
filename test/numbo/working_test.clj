@@ -122,18 +122,72 @@
 		(is (= [3 3] (:params (second (:params (first res-wm)))))))))
 
 (deftest random-test
-	(testing "Get random brick")
-	(testing "Get random brick (free)")
-	(testing "Get random brick (none matches)")
-	(testing "Get random block"))
+
+	(testing "Get random brick"
+		(let [test-wm (-> '()
+			 												(wm/add-brick 1))]
+		(is (= nil (wm/get-random-brick '() false)))
+		(is (= 1 (count test-wm)))
+		(is (= 1 (:value (wm/get-random-brick test-wm false))))
+		(is (= 1 (:value (wm/get-random-brick test-wm false))))
+		(is (= 1 (:value (wm/get-random-brick test-wm false))))))
+
+	(testing "Get random brick (free)"
+		(let [test-wm (-> '()
+			 												(wm/add-brick 1)
+			 												(wm/add-brick 9))
+								brick9 (assoc (first test-wm) :free false)
+								test-wm (wm/update-brick test-wm brick9)]
+		(is (= 2 (count test-wm)))
+		(is (= 1 (:value (wm/get-random-brick test-wm true))))
+		(is (= 1 (:value (wm/get-random-brick test-wm true))))
+		(is (= 1 (:value (wm/get-random-brick test-wm true))))))
+
+	(testing "Get random brick (none matches)"
+		(let [test-wm (-> '()
+			 												(wm/add-brick 1)
+			 												(wm/add-brick 9))
+								brick9 (assoc (first test-wm) :free false)
+								brick1 (assoc (second test-wm) :free false)
+								test-wm (wm/update-brick test-wm brick9)
+								test-wm (wm/update-brick test-wm brick1)]
+		(is (= 2 (count test-wm)))
+		(is (= nil (wm/get-random-brick test-wm true)))))
+
+	(testing "Get random block")
+
+			(let [test-wm (-> '()
+			 												(wm/add-block 10 :plus [6 4]))]
+			(is (= 1 (count test-wm)))
+			(is (= nil (wm/get-random-block '())))
+			(is (= 10 (:value (wm/get-random-block test-wm))))
+))
+
 
 
 (deftest find-anywhere-test
-	(testing "Find if target")
-	(testing "Find if brick")
-	(testing "Find if block")
-	(testing "Find if child block")
-	(testing "No matches"))
+		(do 
+			(wm/reset)
+			(wm/set-target 114)
+			(wm/add-brick 15)
+			(wm/add-brick 10)
+			(wm/add-brick 2)
+			(wm/add-brick 7)
+			(wm/add-block 9 :plus [2 7])
+			(wm/add-block 30 :times [15 2])
+			(wm/add-child-block (:uuid (first @wm/BLOCKS)) 1 7 :minus [10 2])
+
+			(testing "Find if target"
+				(is (= [@wm/TARGET :target] (wm/find-anywhere (:uuid @wm/TARGET)))))
+			(testing "Find if brick")
+				(is (= [(first @wm/BRICKS) :bricks] (wm/find-anywhere (:uuid (first @wm/BRICKS)))))
+			(testing "Find if block")
+				(is (= [(first @wm/BLOCKS) :blocks] (wm/find-anywhere (:uuid (first @wm/BLOCKS)))))
+			(testing "Find if child block")
+				(is (= [(second (:params (first @wm/BLOCKS))) :blocks] (wm/find-anywhere (:uuid (second (:params (first @wm/BLOCKS)))))))
+			(testing "No matches"
+					(is (= nil (wm/find-anywhere "dummy-uuid"))))
+			))
 
 (deftest pump-node-test
 	(testing "Pump if target")
