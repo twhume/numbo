@@ -25,8 +25,7 @@
 	 												(wm/add-brick 1)
 	 												(wm/add-brick 3 false)
 	 												(wm/add-brick 2))]
-	 	(is (= 2 (:value (wm/get-largest-brick test-wm))))
-	 ))
+	 	(is (= 2 (:value (wm/get-largest-brick test-wm))))))
 
 
 (deftest set-target-test
@@ -160,23 +159,25 @@
 			 												(wm/add-block 10 :plus [6 4]))]
 			(is (= 1 (count test-wm)))
 			(is (= nil (wm/get-random-block '())))
-			(is (= 10 (:value (wm/get-random-block test-wm))))
-))
+			(is (= 10 (:value (wm/get-random-block test-wm))))))
 
-
+(defn reset-wm
+ "Resets WM to a known-good state"
+ []
+	(do 
+		(wm/reset)
+		(wm/set-target 114)
+		(wm/add-brick 15)
+		(wm/add-brick 10)
+		(wm/add-brick 2)
+		(wm/add-brick 7)
+		(wm/add-block 9 :plus [2 7])
+		(wm/add-block 30 :times [15 2])
+		(wm/add-child-block (:uuid (first @wm/BLOCKS)) 1 7 :minus [10 2])))
 
 (deftest find-anywhere-test
 		(do 
-			(wm/reset)
-			(wm/set-target 114)
-			(wm/add-brick 15)
-			(wm/add-brick 10)
-			(wm/add-brick 2)
-			(wm/add-brick 7)
-			(wm/add-block 9 :plus [2 7])
-			(wm/add-block 30 :times [15 2])
-			(wm/add-child-block (:uuid (first @wm/BLOCKS)) 1 7 :minus [10 2])
-
+			(reset-wm)
 			(testing "Find if target"
 				(is (= [@wm/TARGET :target] (wm/find-anywhere (:uuid @wm/TARGET)))))
 			(testing "Find if brick")
@@ -186,16 +187,31 @@
 			(testing "Find if child block")
 				(is (= [(second (:params (first @wm/BLOCKS))) :blocks] (wm/find-anywhere (:uuid (second (:params (first @wm/BLOCKS)))))))
 			(testing "No matches"
-					(is (= nil (wm/find-anywhere "dummy-uuid"))))
-			))
+					(is (= nil (wm/find-anywhere "dummy-uuid"))))))
 
 (deftest pump-node-test
-	(testing "Pump if target")
-	(testing "Pump if brick")
-	(testing "Pump if block")
-	(testing "Pump if child block")
-	(testing "No matches"))
+	(testing "Pump if target"
+		(do
+			(reset-wm)
+			(wm/pump-node (:uuid @wm/TARGET))
+			(is (= (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION) (:attr @wm/TARGET)))))
 
+	(testing "Pump if brick"
+		(do
+			(reset-wm)
+			(wm/pump-node (:uuid (first @wm/BRICKS)))
+			(is (= (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION) (:attr (first @wm/BRICKS))))))
 
+	(testing "Pump if block"
+		(do
+			(reset-wm)
+			(wm/pump-node (:uuid (first @wm/BLOCKS)))
+			(is (= (+ wm/DEFAULT_ATTRACTION_INC (wm/-initial-attr (:value (first @wm/BLOCKS)))) (:attr (first @wm/BLOCKS))))))
 
-; pump-node
+	(testing "Pump if child block"
+		(do
+			(reset-wm)
+			(let [parent (first @wm/BLOCKS)
+									child (second (:params parent))]
+				(wm/pump-node (:uuid child))
+				(is (= (+ (wm/-initial-attr (:value child)) wm/DEFAULT_ATTRACTION_INC) (:attr (second (:params (first @wm/BLOCKS))))))))))

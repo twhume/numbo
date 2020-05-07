@@ -104,6 +104,10 @@
  "Sets the target value in memory"
  ([v] (reset! TARGET (-new-entry v))))
 
+(defn update-target
+ "Sets the target entry in memory"
+ ([e] (reset! TARGET e)))
+
 (defn add-block
  "Adds a new block to memory"
 	([bl value op p] (conj bl (-new-entry value op p)))
@@ -159,24 +163,6 @@
 				 	(if (not-empty blocks-matches) [(zip/node (first blocks-matches)) :blocks]))))))
  ([uuid] (find-anywhere @TARGET @BRICKS @BLOCKS uuid)))
 
-;------ OLD STUFF BELOW HERE ----
-
-
-
-
-
-; Contributors to temperature:
-; # secondary targets
-; # nodes which are highly attractive
-; # free nodes
-;
-; High temperature --> less promising; dismantler codelets loaded into coderack, to dismantle probabilistically chosen targets
-
-
-(defn get-temperature
- "What's the temperature of the working memory m?"
- [m])
-
 (defn pump-node
  "Pump a node with uuid u in memory w, by increasing its attractiveness"
  ([ta br bl u]
@@ -186,11 +172,21 @@
 	  	nil)
 			 (let [pumped-entry (assoc entry :attr (+ (:attr entry) DEFAULT_ATTRACTION_INC))]
 			  (condp = src
-			  	:target (set-target pumped-entry)
+			  	:target (update-target pumped-entry)
 			  	:bricks (update-brick pumped-entry)
 			  	:blocks (update-blocks pumped-entry)
 			  	(println "Couldn't find a type to pump for" src)
 			  )))))
  ([u] (pump-node @TARGET @BRICKS @BLOCKS u)))
 
+; Contributors to temperature:
+; # secondary targets
+; # nodes which are highly attractive
+; # free nodes
+;
+; High temperature --> less promising; dismantler codelets loaded into coderack, to dismantle probabilistically chosen targets
+
+(defn get-temperature
+ "What's the temperature of the working memory m?"
+ [m])
 
