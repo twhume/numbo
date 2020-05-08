@@ -31,8 +31,6 @@ TODO list
 
 Big next tasks
 
-* unit tests for WM
-* make attraction (WM), attractivness (PNet) and temperature (WM) all 0..1 scale
 * implement randomness such that there is a temp% chance of a rand-block or rand-syntactic-comparison being scheduled each iteration
 * implement X% decay of attraction each n iterations
 * start using target 114, blocks 11 20 7 1 6 as per example

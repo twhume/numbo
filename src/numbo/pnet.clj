@@ -250,7 +250,7 @@
 (defn initialize-pnet
  "Fill in the default values"
  ([pnet]
-	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation 1 :weight 1)))]
+	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation 0.1 :weight 1)))]
 	 	(apply assoc '{} (mapcat #(list %1 (assoc (get weights-and-activations %1) :name %1)) (keys weights-and-activations)))))
  ([] (reset! PNET (initialize-pnet initial-pnet))))
 
@@ -262,7 +262,7 @@
 (defn -update-activation
  "Update the activation of node n by a factor f"
  [f n]
- (update n :activation (partial * f)))
+ (update n :activation (fn [x] (misc/normalized (* f x)))))
 
 (defn -map-values
 	[m keys f & args]
@@ -291,9 +291,9 @@
  						node-and-neighbors (set (conj neighbors n))
  						neighbors-2 (remove node-and-neighbors (distinct (mapcat (partial -get-neighbors p) neighbors)))]
  (-> p
-	 (update n (partial -update-activation 2))
-  (-map-values neighbors (partial -update-activation 1.5))
-  (-map-values neighbors-2 (partial -update-activation 1.1))
+	 (update n (partial -update-activation 3))
+  (-map-values neighbors (partial -update-activation 2))
+  (-map-values neighbors-2 (partial -update-activation 1.5))
  )))
  ([n] (reset! PNET (activate-node @PNET n))))
 

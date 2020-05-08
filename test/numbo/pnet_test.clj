@@ -18,32 +18,32 @@
 								activated (activate-node p :1)]
 
 				; Did it get activated?
-				(is (= 2 (get-in activated [:1 :activation])))
+				(is (= 0.2 (get-in activated [:1 :activation])))
 				; Did nothing else get activated?
-				(is (= #{:1} (-set-with-activation activated 2)))
+				(is (= #{:1} (-set-with-activation activated 0.2)))
 				
 
 				; Did its neighbors (:plus-1-1, :plus-1-2, :plus-1-3) get activated a bit less?
-				(is (= 1.5 (get-in activated [:plus-1-1 :activation])))
-				(is (= 1.5 (get-in activated [:plus-1-2 :activation])))
-				(is (= 1.5 (get-in activated [:plus-1-3 :activation])))
+				(is (= 0.15 (get-in activated [:plus-1-1 :activation])))
+				(is (= 0.15 (get-in activated [:plus-1-2 :activation])))
+				(is (= 0.15 (get-in activated [:plus-1-3 :activation])))
 
 				; Did no-one else get activated a bit less?
-				(is (= #{:plus-1-1 :plus-1-2 :plus-1-3} (-set-with-activation activated 1.5)))
+				(is (= #{:plus-1-1 :plus-1-2 :plus-1-3} (-set-with-activation activated 0.15)))
 
 				; Did their neighbors (:2, :3, :4 but not :1) get activated?
-				(is (= 1.1 (get-in activated [:2 :activation])))
-				(is (= 1.1 (get-in activated [:3 :activation])))
-				(is (= 1.1 (get-in activated [:4 :activation])))
+				(is (= 0.11 (get-in activated [:2 :activation])))
+				(is (= 0.11 (get-in activated [:3 :activation])))
+				(is (= 0.11 (get-in activated [:4 :activation])))
 
 				; Did no-one else get activated a bit less?
-				(is (= #{:2 :3 :4 :plus} (-set-with-activation activated 1.1)))
+				(is (= #{:2 :3 :4 :plus} (-set-with-activation activated 0.11)))
 
 				; Is everyone else's activation unaltered?
 				; we have 8 nodes with altered activations. So (count of nodes)-8 should have activations 1.0
 
 				(is (=
 					(- (count (keys activated)) 8)
-					(count (-set-with-activation activated 1))
+					(count (-set-with-activation activated 0.1))
 					))
 )))

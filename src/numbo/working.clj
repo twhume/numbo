@@ -14,9 +14,9 @@
 (def BLOCKS (atom '()))
 
 ; default amount by which to increase attractiveness of a node, when it's pumped
-(def DEFAULT_ATTRACTION_INC 5)
+(def DEFAULT_ATTRACTION_INC 0.5)
 ; default starting attraction
-(def DEFAULT_ATTRACTION 1)
+(def DEFAULT_ATTRACTION 0.1)
 
 ; BRICKS is a list of Entries, TARGET is an Entry
 ; Entries are maps with a :value, a random :uuid and an :attr(activeness)
@@ -31,9 +31,9 @@
 	"Calculates an initial attractiveness for the number, based on its value"
  [n]
  (cond-> DEFAULT_ATTRACTION
- 	(= 0 (mod n 5)) (+ 5)
- 	(= 0 (mod n 10)) (+ 5)
- 	(= 0 (mod n 100)) (+ 5)
+ 	(= 0 (mod n 5)) (+ 0.1)
+ 	(= 0 (mod n 10)) (+ 0.1)
+ 	(= 0 (mod n 100)) (+ 0.1)
  ))
 
 (defn -new-entry
@@ -170,7 +170,7 @@
 	  (if (nil? entry) (do
 	  	(println "Couldn't find node" u)
 	  	nil)
-			 (let [pumped-entry (assoc entry :attr (+ (:attr entry) DEFAULT_ATTRACTION_INC))]
+			 (let [pumped-entry (assoc entry :attr (misc/normalized (:attr entry) DEFAULT_ATTRACTION_INC))]
 			  (condp = src
 			  	:target (update-target pumped-entry)
 			  	:bricks (update-brick pumped-entry)
@@ -185,6 +185,7 @@
 ; # free nodes
 ;
 ; High temperature --> less promising; dismantler codelets loaded into coderack, to dismantle probabilistically chosen targets
+; Temperature is on a scale of 0..1
 
 (defn get-temperature
  "What's the temperature of the working memory m?"

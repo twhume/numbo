@@ -36,3 +36,18 @@
  "Generate a new Java UUID"
  []
 	(.toString (java.util.UUID/randomUUID)))
+
+(defn round-to
+  "Round a double to the given precision (number of significant digits)"
+  [precision d]
+  (let [factor (Math/pow 10 precision)]
+    (/ (Math/round (* d factor)) factor)))
+
+(defn normalized
+ "Give an input value v and optional modified m return a pumped value capped at 1"
+ ([v] (cond
+ 	(< v 0) 0
+ 	(> v 1) 1
+ 	:else (round-to 2 v)
+ ))
+ ([v m] (normalized (+ (if v v 0) (if m m 0)))))

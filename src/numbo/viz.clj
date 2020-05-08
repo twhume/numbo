@@ -21,8 +21,7 @@
 (defn -activation-to-color
 	"Handles coloring nodes by activation"
 	[a]
-	(let [normalized-a (dec a)
-							r (int ( * 255 (float (/ (- 3 normalized-a) 3))))
+	(let [r (int ( * 255 (- 1 a)))
 							g (- 255 r)
 							b (- 255 r)
 	]
@@ -130,7 +129,7 @@
 (defn -attr-to-color
 	"Handles coloring nodes by attractiveness"
 	[a]
-	(let [r (int ( * 255 (float (/ (- 20 a) 20))))
+	(let [r (int ( * 255 (- 1 a)))
 							g (- 255 r)
 							b (- 255 r)]
 		(format "#FF%02X%02X" r r)))
