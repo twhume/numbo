@@ -15,6 +15,8 @@
 
 ; default amount by which to increase attractiveness of a node, when it's pumped
 (def DEFAULT_ATTRACTION_INC 0.5)
+; default amount by which to decay attractiveness of a node, each timestep
+(def DEFAULT_ATTRACTION_DEC 0.05)
 ; default starting attraction
 (def DEFAULT_ATTRACTION 0.1)
 
@@ -78,6 +80,22 @@
  (let [zipper (-make-blocktree-zipper bt)
  						found (-find-blocktree-loc zipper (:uuid bl))]
  	(if found (zip/root (zip/replace found bl)) bt)))
+
+
+(defn -decay-attr
+ "Decay the attractiveness of the map br"
+ [br]
+ (assoc br :attr (misc/normalized (:attr br) (* -1 DEFAULT_ATTRACTION_DEC))))
+
+(defn -decay-blocktree
+	"Decay the attractiveness of all nodes in the blocktree bl"
+	[bl]
+	(misc/zip-walk
+		(fn [x] 
+			(let [n (zip/node x)]
+				(if (int? n) x ; some nodes are just values w/o an :attr 
+					(zip/replace x (-decay-attr (zip/node x))))))
+		(-make-blocktree-zipper bl)))
 
 ; ----- Public functions -----
 
@@ -188,6 +206,16 @@
 ; Temperature is on a scale of 0..1
 
 (defn get-temperature
- "What's the temperature of the working memory m?"
- [m])
+ "What's the temperature of the working memory?"
+ ([ta br bl] 1)
+ ([] (get-temperature @TARGET @BRICKS @BLOCKS)))
 
+(defn decay
+ "Causes all attractiveness of all blocks to drop"
+ []
+ (do
+ 	(reset! TARGET (-decay-attr @TARGET))
+	 (reset! BRICKS (map -decay-attr @BRICKS))
+	 (reset! BLOCKS (map -decay-blocktree @BLOCKS))
+
+	 ))

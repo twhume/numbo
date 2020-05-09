@@ -1,4 +1,5 @@
-(ns numbo.misc)
+(ns numbo.misc
+	(:require [clojure.zip :as zip]))
 
 ; Useful functions I want to avoid duplicating across files
 
@@ -51,3 +52,13 @@
  	:else (round-to 2 v)
  ))
  ([v m] (normalized (+ (if v v 0) (if m m 0)))))
+
+;; zip-walk takes a transformation function f and a zipper z.
+;; f takes a location and returns location. Applies f
+;; to the nodes in the zipper maintaining the original nesting.
+;; From https://clojuredocs.org/clojure.zip/next
+
+(defn zip-walk [f z]
+  (if (zip/end? z)
+    (zip/root z)
+    (recur f (zip/next (f z)))))

@@ -6,12 +6,32 @@
 											[numbo.pnet :as pn]
 											[numbo.viz :as viz]))
 
+; Tick is called every n iterations and takes charge of starting random tasks. Each tick:
+; - there is a temp% chance that a rand-block codelet gets added to the coderack
+; - there is a temp% chance that a rand-syntactic-comparison codelet gets added to the coderack
+; - attraction of all nodes in WM decays
+; - activation of all nodes in PNet decays
+
+(defn tick
+	"Schedule random regular tasks"
+	[]
+	(do
+		(println "TICK")
+		(if (> (* 100 (rand)) (wm/get-temperature)) (cl/rand-block))
+		(if (> (* 100 (rand)) (wm/get-temperature)) (cl/rand-syntactic-comparison))
+  (wm/decay)
+		(pn/decay)
+	))
+
 (defn run-until
  [pred]
  (loop []
- 	(cr/process-next-codelet)
-; 	(wm/print-state)
- 	(if (not (pred)) (recur))))
+  (do
+	 	(cr/process-next-codelet)
+
+	 	(if (= 0 (mod @cr/ITERATIONS 5)) (tick))
+	; 	(wm/print-state)
+	 	(if (not (pred)) (recur)))))
 
 (defn run-until-empty-cr
  []

@@ -313,3 +313,9 @@
  (let [src (get p n1)
  						link (first (filter #(= n2 (first %1))(:links src)))]
  						(second link)))
+
+
+(defn decay
+ "Reduce the :activation of all nodes in the PNet"
+ []
+)
