@@ -31,11 +31,12 @@ TODO list
 
 Big next tasks
 
-* implement randomness such that there is a temp% chance of a rand-block or rand-syntactic-comparison being scheduled each iteration
-* implement X% decay of attraction each n iterations
+* pump-node() sometimes tries topump an int...
+* add temperature calculation
 * start using target 114, blocks 11 20 7 1 6 as per example
 * Add in more of the PNet
 * --- THE ABOVE TAKES US TO STEP 4 OF THE SAMPLE RUN ON P142 WOOOO ---
+* start making stuff to eval and remove blocks from the WM
 
 Tidy-ups/small improvements
 

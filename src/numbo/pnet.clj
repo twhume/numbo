@@ -12,6 +12,8 @@
 
 (def PNET (atom '{}))
 
+(def DEFAULT_DECAY 0.05)
+
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
 
 (def initial-pnet '{
@@ -317,5 +319,5 @@
 
 (defn decay
  "Reduce the :activation of all nodes in the PNet"
- []
-)
+ ([pn] (-update-values pn (fn [x] (assoc x :activation (misc/normalized (:activation x) (- 0 DEFAULT_DECAY))))))
+ ([] (reset! PNET (decay @PNET))))
