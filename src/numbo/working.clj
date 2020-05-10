@@ -185,10 +185,10 @@
  "Pump a node with uuid u in memory w, by increasing its attractiveness"
  ([ta br bl u]
 	 (let [[entry src] (find-anywhere ta br bl u)]
-	  (if (nil? entry) (do
-	  	(println "Couldn't find node" u)
-	  	nil)
-			 (let [pumped-entry (assoc entry :attr (misc/normalized (:attr entry) DEFAULT_ATTRACTION_INC))]
+	  (cond
+	   (if (nil? entry)
+	   	(do (println "Couldn't find node" u) nil)
+			 	(let [pumped-entry (assoc entry :attr (misc/normalized (:attr entry) DEFAULT_ATTRACTION_INC))]
 			  (condp = src
 			  	:target (update-target pumped-entry)
 			  	:bricks (update-brick pumped-entry)

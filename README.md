@@ -31,7 +31,6 @@ TODO list
 
 Big next tasks
 
-* pump-node() sometimes tries topump an int...
 * add temperature calculation
 * start using target 114, blocks 11 20 7 1 6 as per example
 * Add in more of the PNet

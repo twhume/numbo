@@ -103,7 +103,7 @@
  						val (str (:value block))
  						tval (str (:value @wm/TARGET))]
 	 (cond
-
+	 	(nil? block) nil ; if we couldn't find a block to compare to the target, just do nothing
 	  ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
 	  (or
 	  	(str/includes? val tval)
