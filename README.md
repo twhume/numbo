@@ -31,7 +31,7 @@ TODO list
 
 Big next tasks
 
-* add temperature calculation
+* add unit tests for decay
 * HOW DO I REPRESENT SECONDARY TARGETS
 * start using target 114, blocks 11 20 7 1 6 as per example
 * Add in more of the PNet
