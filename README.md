@@ -34,15 +34,16 @@ Big next tasks
 * add unit tests for decay
 * HOW DO I REPRESENT SECONDARY TARGETS
 * Add in more of the PNet
-* rand-syntactic-comparison needs to come from codelets loaded onto the coderack, not just be function
+
 * --- THE ABOVE TAKES US TO STEP 4 OF THE SAMPLE RUN ON P142 WOOOO ---
 * start making stuff to eval and remove blocks from the WM
+* cl/rand-op can in theory pick the same brick twice, which would be bad but could just result in the created block being considered invalid later. To fix this, I think I need a version of the random sampler which returns a sequence instead of a single value. This is bad because an active brick will likely get picked twice.
 
 Tidy-ups/small improvements
 
 * In pn/activate-node, take into account the weights of nodes
 * Rationale wm/new-node and cl/new-codelet - are they eerily similar?
-* cl/rand-op can in theory pick the same brick twice, which would be bad but could just result in the created block being considered invalid later. To fix this, I think I need a version of the random sampler which returns a sequence instead of a single value
+* cl/rand-op can multiply by 1, which doesn't seem so useful
 - input target and initial bricks in the visualizer
 - write function to kick off a run then display it
 - Why does activation of :times not spread? Because it's got no pnet links

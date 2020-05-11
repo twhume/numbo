@@ -102,13 +102,15 @@
  						block (rand-nth blocks)
  						val (str (:value block))
  						tval (str (:value @wm/TARGET))]
-	 (cond
-	 	(nil? block) nil ; if we couldn't find a block to compare to the target, just do nothing
-	  ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
-	  (or
-	  	(str/includes? val tval)
-	  	(str/includes? tval val)) (pump-node (:uuid block))
-	 )))
+ 						(cr/add-codelet (new-codelet :type :syntactic-comparison :desc (str "Compare " val " to target " tval) :urgency URGENCY_LOW
+ 						:fn (fn []
+							 (cond
+							 	(nil? block) nil ; if we couldn't find a block to compare to the target, just do nothing
+							  ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
+							  (or
+							  	(str/includes? val tval)
+							  	(str/includes? tval val)) (pump-node (:uuid block))
+							 ))))))
 
 (defn load-brick
  "Loads a new brick into memory"

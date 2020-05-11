@@ -215,3 +215,24 @@
 									child (second (:params parent))]
 				(wm/pump-node (:uuid child))
 				(is (= (+ (wm/-initial-attr (:value child)) wm/DEFAULT_ATTRACTION_INC) (:attr (second (:params (first @wm/BLOCKS))))))))))
+
+(deftest decay-test
+	(do
+		(reset-wm)
+		(let [old-target @wm/TARGET
+								old-bricks @wm/BRICKS
+								old-blocks @wm/BLOCKS]
+								(do
+									(wm/decay)
+							 	(testing "Target attr decays"
+							 		(is (< (:attr @wm/TARGET) (:attr old-target))))
+
+							 	(testing "Bricks attr decays"
+							 		(is (every? #(< (first %1) (second %1)) (map #(map :attr %&) @wm/BRICKS old-bricks))))
+
+							 	(testing "Blocks attr decays"
+							 		(is (every? #(< (first %1) (second %1))
+							 			(map list
+							 				(map :attr (filter (complement (and nil? int?)) (mapcat wm/-blocktree-nodes @wm/BLOCKS)))
+							 				(map :attr (filter (complement (and nil? int?)) (mapcat wm/-blocktree-nodes old-blocks)))))))
+	))))

@@ -47,3 +47,13 @@
 					(count (-set-with-activation activated 0.1))
 					))
 )))
+
+(deftest pnet-activation-test
+	(testing "Validates that spreading activation works as expected"
+		(let [original (initialize-pnet initial-pnet)
+								decayed (decay original)]
+								(is (every? #(> (first %1) (second %1))
+									(map list
+										(map :activation (vals original))
+										(map :activation (vals decayed))))))))
+

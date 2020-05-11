@@ -97,6 +97,12 @@
 					(zip/replace x (-decay-attr (zip/node x))))))
 		(-make-blocktree-zipper bl)))
 
+(defn -blocktree-nodes
+ "Takes a blocktree, returns a sequence of all its nodes"
+ [bl]
+ (map zip/node
+ 	(take-while (complement zip/end?) (iterate zip/next (-make-blocktree-zipper bl)))))
+
 ; ----- Public functions -----
 
 (defn reset
@@ -210,9 +216,7 @@
  (+
  	(* 0.1 (count (filter :free br))) ; Add 0.1 for each free brick
  	(* -0.05 (count (filter (partial < 0.3) ; Subtract 0.05 for each node with an :attr > 0.3
- 										(mapcat #(filter (complement nil?)
- 																		  (map :attr (map zip/node
- 																					(take-while (complement zip/end?) (iterate zip/next (-make-blocktree-zipper %1)))))) bl))))
+ 										(mapcat #(filter (complement (and nil? int?)) (-blocktree-nodes %1)) bl))))
  	; TODO add secondary targets stuff in
  	
  ))
