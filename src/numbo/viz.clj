@@ -289,7 +289,7 @@
 					(config! (select r [:#coderack-table]) :model (-current-coderack))
 					(config! (select r [:#iteration]) :text (str (inc @CURRENT) "/" (count @hist/HISTORY)))
 					(text! (select r [:#codelet]) (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
-					(text! (select r [:#temperature]) (:temperature (nth @hist/HISTORY @CURRENT)))
+					(text! (select r [:#temperature]) (format "%3.0f%%" (* 100 (:temperature (nth @hist/HISTORY @CURRENT)))))
 	)))
 
 (defn back [f]
