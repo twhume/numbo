@@ -37,39 +37,54 @@
  []
  (run-until (fn[] (empty? @cr/CODERACK))))
 
+(defn dump
+	"Dump state to console"
+	[]
+	(do
+		(println "BLOCKS=" @wm/BLOCKS)
+		(println "BRICKS=" @wm/BRICKS)
+		(println "TARGET=" @wm/TARGET)
+		(println "PNET=" @pn/PNET)
+		(println "CODERACK=" @cr/CODERACK)
+	))
+
 (defn -main
   []
   (do
 
 ; re-init everything every time so we can run from the REPL
+(try
+	(pn/initialize-pnet)
+	(wm/reset)
+	(hist/reset)
+	(cr/reset)
 
-(pn/initialize-pnet)
-(wm/reset)
-(hist/reset)
-(cr/reset)
+	(cl/load-target 114)
 
-(cl/load-target 114)
-
-(cl/load-brick 11)
-(cl/load-brick 20)
-(cl/load-brick 7)
-(cl/load-brick 1)
-(cl/load-brick 6)
+	(cl/load-brick 11)
+	(cl/load-brick 20)
+	(cl/load-brick 7)
+	(cl/load-brick 1)
+	(cl/load-brick 6)
 
 
-(run-until-empty-cr)
-(cl/rand-block)
-(cl/rand-syntactic-comparison)
-(run-until-empty-cr)
-(cl/rand-block)
-(cl/rand-syntactic-comparison)
-(run-until-empty-cr)
-(cl/rand-block)
-(cl/rand-syntactic-comparison)
-(run-until-empty-cr)
-(cl/rand-block)
-(cl/rand-syntactic-comparison)
-(run-until-empty-cr)
+	(run-until-empty-cr)
+	(cl/rand-block)
+	(cl/rand-syntactic-comparison)
+	(run-until-empty-cr)
+	(cl/rand-block)
+	(cl/rand-syntactic-comparison)
+	(run-until-empty-cr)
+	(cl/rand-block)
+	(cl/rand-syntactic-comparison)
+	(run-until-empty-cr)
+	(cl/rand-block)
+	(cl/rand-syntactic-comparison)
+	(run-until-empty-cr)
 
-(viz/-main)
-))
+	(viz/-main)
+	(catch Exception e
+	 (do
+			(println "Caught " e)
+			(dump)
+)))))
