@@ -31,7 +31,6 @@ TODO list
 
 Big next tasks
 
-* add unit tests for decay
 * HOW DO I REPRESENT SECONDARY TARGETS
 * Add in more of the PNet
 
