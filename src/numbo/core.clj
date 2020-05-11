@@ -48,11 +48,13 @@
 (hist/reset)
 (cr/reset)
 
+(cl/load-target 114)
+
+(cl/load-brick 11)
+(cl/load-brick 20)
+(cl/load-brick 7)
 (cl/load-brick 1)
-(cl/load-brick 2)
-(cl/load-brick 3)
-(cl/load-brick 2)
-(cl/load-target 10)
+(cl/load-brick 6)
 
 
 (run-until-empty-cr)

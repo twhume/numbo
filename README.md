@@ -33,8 +33,8 @@ Big next tasks
 
 * add unit tests for decay
 * HOW DO I REPRESENT SECONDARY TARGETS
-* start using target 114, blocks 11 20 7 1 6 as per example
 * Add in more of the PNet
+* rand-syntactic-comparison needs to come from codelets loaded onto the coderack, not just be function
 * --- THE ABOVE TAKES US TO STEP 4 OF THE SAMPLE RUN ON P142 WOOOO ---
 * start making stuff to eval and remove blocks from the WM
 
