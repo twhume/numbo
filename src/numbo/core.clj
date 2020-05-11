@@ -17,8 +17,8 @@
 	[]
 	(do
 		(println "TICK")
-		(if (> (* 100 (rand)) (wm/get-temperature)) (cl/rand-block))
-		(if (> (* 100 (rand)) (wm/get-temperature)) (cl/rand-syntactic-comparison))
+		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
+		(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
   (wm/decay)
 		(pn/decay)
 	))

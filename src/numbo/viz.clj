@@ -263,7 +263,7 @@
 			    			:items [
 					    		(label :text "Iteration") (label :text "0 / 100" :id :iteration) ""
 					    		(label :text "Codelet")  (label :text "fred" :id :codelet) ""
-					    		(label :text "Temperature") (label :text "96%" :id :codelet) ""
+					    		(label :text "Temperature") (label :text "96%" :id :temperature) ""
 			    			])
 			    		:east (vertical-panel
 					    	:items [
@@ -289,6 +289,7 @@
 					(config! (select r [:#coderack-table]) :model (-current-coderack))
 					(config! (select r [:#iteration]) :text (str (inc @CURRENT) "/" (count @hist/HISTORY)))
 					(text! (select r [:#codelet]) (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
+					(text! (select r [:#temperature]) (:temperature (nth @hist/HISTORY @CURRENT)))
 	)))
 
 (defn back [f]

@@ -32,7 +32,7 @@
  	(let [codelet (-select-next-codelet @CODERACK)]
  	(do
  	 (-execute (:fn codelet))
- 	 (hist/add-step @pn/PNET @wm/TARGET @wm/BRICKS @wm/BLOCKS @CODERACK codelet @ITERATIONS)
+ 	 (hist/add-step @pn/PNET @wm/TARGET @wm/BRICKS @wm/BLOCKS @CODERACK codelet @ITERATIONS (wm/get-temperature))
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
  		(swap! ITERATIONS inc)
  	 ))))

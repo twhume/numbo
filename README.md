@@ -32,6 +32,7 @@ TODO list
 Big next tasks
 
 * add temperature calculation
+* HOW DO I REPRESENT SECONDARY TARGETS
 * start using target 114, blocks 11 20 7 1 6 as per example
 * Add in more of the PNet
 * --- THE ABOVE TAKES US TO STEP 4 OF THE SAMPLE RUN ON P142 WOOOO ---

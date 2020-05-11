@@ -185,16 +185,15 @@
  "Pump a node with uuid u in memory w, by increasing its attractiveness"
  ([ta br bl u]
 	 (let [[entry src] (find-anywhere ta br bl u)]
-	  (cond
 	   (if (nil? entry)
 	   	(do (println "Couldn't find node" u) nil)
 			 	(let [pumped-entry (assoc entry :attr (misc/normalized (:attr entry) DEFAULT_ATTRACTION_INC))]
-			  (condp = src
-			  	:target (update-target pumped-entry)
-			  	:bricks (update-brick pumped-entry)
-			  	:blocks (update-blocks pumped-entry)
-			  	(println "Couldn't find a type to pump for" src)
-			  )))))
+				  (condp = src
+				  	:target (update-target pumped-entry)
+				  	:bricks (update-brick pumped-entry)
+				  	:blocks (update-blocks pumped-entry)
+				  	(println "Couldn't find a type to pump for" src)
+				  )))))
  ([u] (pump-node @TARGET @BRICKS @BLOCKS u)))
 
 ; Contributors to temperature:
@@ -207,7 +206,16 @@
 
 (defn get-temperature
  "What's the temperature of the working memory?"
- ([ta br bl] 1)
+ ([ta br bl] 
+ (+
+ 	(* 0.1 (count (filter :free br))) ; Add 0.1 for each free brick
+ 	(* -0.05 (count (filter (partial < 0.3) ; Subtract 0.05 for each node with an :attr > 0.3
+ 										(mapcat #(filter (complement nil?)
+ 																		  (map :attr (map zip/node
+ 																					(take-while (complement zip/end?) (iterate zip/next (-make-blocktree-zipper %1)))))) bl))))
+ 	; TODO add secondary targets stuff in
+ 	
+ ))
  ([] (get-temperature @TARGET @BRICKS @BLOCKS)))
 
 (defn decay
