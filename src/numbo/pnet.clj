@@ -302,7 +302,7 @@
 (defn get-random-op
 	"Get a random operator, sampled probabilistically by activation"
  ([p]
- 	(let [op-range (misc/make-ranges (filter #(= :operator (:type %)) (vals p)) :activation)]
+ 	(let [op-range (misc/make-percent-ranges (filter #(= :operator (:type %)) (vals p)) :activation)]
  	 (if (not-empty op-range)
  	  (misc/random-val-in-range op-range))))
  ([] (get-random-op @PNET)))
@@ -315,7 +315,6 @@
  (let [src (get p n1)
  						link (first (filter #(= n2 (first %1))(:links src)))]
  						(second link)))
-
 
 (defn decay
  "Reduce the :activation of all nodes in the PNet"

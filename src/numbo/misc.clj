@@ -33,6 +33,19 @@
  [s k]
  	 (map #(list %1 %2) (reductions + (map k s)) s))
 
+(defn -make-percent
+ [k m]
+
+ (if (= (k m) 0) 1
+ 	(int (* (k m) 100))))
+
+; A version of make-ranges which assumes the value pointed at by k is 0..1
+; This value is commuted into 1..100
+
+(defn make-percent-ranges
+ [s k]
+ 	 (map #(list %1 %2) (reductions + (map (partial -make-percent k) s)) s))
+
 (defn uuid
  "Generate a new Java UUID"
  []

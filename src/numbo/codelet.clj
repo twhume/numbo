@@ -132,6 +132,9 @@
  						(cr/add-codelet (new-codelet :type :new-block
  							:desc (str "Random op: " (:name op) " " v1 "," v2)
  							:urgency URGENCY_HIGH
- 							:fn (fn [] (wm/add-block (((:name op) pn/operator-map) v1 v2) (:name op) (vector v1 v2)))))))
+ 							:fn (fn [] (wm/add-block
+ 																			(((:name op) pn/operator-map) v1 v2)
+ 																			(:name op)
+ 																			(vector v1 v2)))))))
 
 ;----- END OF CODELETS -----
