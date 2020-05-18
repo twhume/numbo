@@ -13,6 +13,8 @@
 (def PNET (atom '{}))
 
 (def DEFAULT_DECAY 0.05)
+(def DEFAULT_ACTIVATION 0)
+(def DEFAULT_INC 0.2)
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
 
@@ -24,7 +26,13 @@
 		 (:plus-1-1 :param)
 			(:plus-1-2 :param)
 			(:plus-1-3 :param)
-			)
+			(:plus-1-4 :param)
+			(:plus-1-5 :param)
+			(:plus-1-6 :param)
+			(:plus-1-7 :param)
+			(:plus-1-8 :param)
+			(:plus-1-9 :param)
+		)
 	}
 
 	:2 {
@@ -33,10 +41,20 @@
 		 (:plus-1-2 :param)
 			(:plus-2-2 :param)
 			(:plus-2-3 :param)
+			(:plus-2-4 :param)
+			(:plus-2-5 :param)
+			(:plus-2-6 :param)
+			(:plus-2-7 :param)
+			(:plus-2-8 :param)
 			(:times-2-2 :param)
 			(:times-2-3 :param)
+			(:times-2-4 :param)
+			(:times-2-5 :param)
+			(:times-2-10 :param)
+			(:times-2-12 :param)
+			(:times-2-20 :param)
 		 (:plus-1-1 :result)
-			)
+		)
 	}
 
 	:3 {
@@ -45,8 +63,14 @@
 		 (:plus-1-3 :param)
 			(:plus-2-3 :param)
 			(:plus-3-3 :param)
+			(:plus-3-4 :param)
+			(:plus-3-5 :param)
+			(:plus-3-6 :param)
+			(:plus-3-7 :param)
 			(:times-2-3 :param)
 			(:times-3-3 :param)
+			(:times-3-10 :param)
+			(:times-3-20 :param)
 		 (:plus-1-2 :result)
 		 (:4 :similar)
 		)
@@ -55,6 +79,16 @@
 	:4 {
 		:type :number
 		:links (
+			(:plus-1-4 :param)
+			(:plus-2-4 :param)
+			(:plus-3-4 :param)
+			(:plus-4-4 :param)
+			(:plus-4-5 :param)
+			(:plus-4-6 :param)
+			(:times-2-4 :param)
+			(:times-4-4 :param)
+			(:times-4-10 :param)
+			(:times-4-20 :param)
 			(:plus-1-3 :result)
 			(:plus-2-2 :result)
 			(:times-2-2 :result)
@@ -66,6 +100,18 @@
 	:5 {
 		:type :number
 		:links (
+			(:plus-1-5 :param)
+			(:plus-2-5 :param)
+			(:plus-3-5 :param)
+			(:plus-4-5 :param)
+			(:plus-5-5 :param)
+			(:plus-5-10 :param)
+			(:times-2-5 :param)
+			(:times-5-5 :param)
+			(:times-5-6 :param)
+			(:times-5-10 :param)
+			(:times-5-20 :param)
+			(:plus-1-4 :result)
 			(:plus-2-3 :result)
 		 (:4 :similar)
 		 (:6 :similar)
@@ -75,7 +121,16 @@
 	:6 {
 		:type :number
 		:links (
+			(:plus-1-6 :param)
+			(:plus-2-6 :param)
+			(:plus-3-6 :param)
+			(:plus-4-6 :param)
 			(:times-2-3 :result)
+			(:plus-3-3 :result)
+			(:plus-2-4 :result)
+			(:plus-1-5 :result)
+			(:times-5-6 :param)
+			(:times-6-10 :param)
 		 (:5 :similar)
 		 (:7 :similar)
 		)
@@ -105,6 +160,187 @@
 		)
 	}
 
+	:10 {
+		:type :number
+		:links (
+			(:times-2-10 :param)
+			(:times-3-10 :param)
+			(:times-4-10 :param)
+			(:times-5-10 :param)
+			(:times-6-10 :param)
+			(:times-7-10 :param)
+			(:times-8-10 :param)
+			(:times-9-10 :param)
+			(:times-10-10 :param)
+			(:plus-1-9 :result)
+			(:plus-2-8 :result)
+			(:plus-3-7 :result)
+			(:plus-4-6 :result)
+			(:plus-5-5 :result)
+			(:times-2-5 :result)
+			(:9 :similar)
+		)
+	}
+
+	:12 {
+		:type :number
+		:links (
+			(:times-2-6 :result)
+			(:times-3-4 :result)
+			(:times-2-12 :param)
+			(:15 :similar)
+		)
+	}
+
+	:15 {
+		:type :number
+		:links (
+			(:plus-7-8 :result)
+			(:plus-5-10 :result)
+			(:times-3-5 :result)
+			(:times-10-15 :param)
+			(:12 :similar)
+			(:16 :similar)
+			(:20 :similar)
+		)
+	}
+
+	:16 {
+		:type :number
+		:links (
+			(:times-4-4 :result)
+			(:15 :similar)
+		)
+	}
+
+	:20 {
+		:type :number
+		:links (
+			(:times-4-5 :result)
+			(:times-2-10 :result)
+			(:times-2-20 :param)
+			(:times-3-20 :param)
+			(:times-4-20 :param)
+			(:times-5-20 :param)
+			(:15 :similar)
+			(:25 :similar)
+		)
+	}
+
+	:25 {
+		:type :number
+		:links (
+			(:times-5-5 :result)
+			(:times-2-12 :similar)
+			(:20 :similar)
+			(:30 :similar)
+		)
+	}
+
+	:30 {
+		:type :number
+		:links (
+			(:times-3-10 :result)
+			(:times-5-6 :similar)
+			(:25 :similar)
+			(:40 :similar)
+		)
+	}
+
+	:40 {
+		:type :number
+		:links (
+			(:times-4-10 :result)
+			(:times-2-20 :result)
+			(:times-5-6 :similar)
+			(:30 :similar)
+			(:50 :similar)
+		)
+	}
+
+	:49 {
+		:type :number
+		:links (
+			(:times-7-7 :result)
+			(:50 :similar)
+		)
+	}
+
+	:50 {
+		:type :number
+		:links (
+			(:times-5-10 :result)
+			(:times-7-7 :similar)
+			(:40 :similar)
+			(:49 :similar)
+			(:60 :similar)
+		)
+	}
+
+	:60 {
+		:type :number
+		:links (
+			(:times-6-10 :result)
+			(:times-3-20 :result)
+			(:50 :similar)
+			(:70 :similar)
+		)
+	}
+
+	:70 {
+		:type :number
+		:links (
+			(:times-7-10 :result)
+			(:60 :similar)
+			(:80 :similar)
+		)
+	}
+
+	:80 {
+		:type :number
+		:links (
+			(:times-4-20 :result)
+			(:times-8-10 :result)
+			(:70 :similar)
+			(:81 :similar)
+			(:90 :similar)
+		)
+	}
+
+	:81 {
+		:type :number
+		:links (
+			(:times-9-9 :result)
+			(:80 :similar)
+		)
+	}
+
+	:90 {
+		:type :number
+		:links (
+			(:times-9-10 :result)
+			(:80 :similar)
+			(:100 :similar)
+		)
+	}
+
+	:100 {
+		:type :number
+		:links (
+			(:times-5-20 :result)
+			(:times-10-10 :result)
+			(:90 :similar)
+			(:150 :similar)
+		)
+	}
+
+	:150 {
+		:type :number
+		:links (
+			(:times-10-15 :result)
+			(:100 :similar)
+		)
+	}
 
 	:plus-1-1 {
 		:type :calculation
@@ -135,6 +371,66 @@
 		)
 	}
 
+	:plus-1-4 {
+		:type :calculation
+		:links (
+			(:1 :param)
+			(:4 :param)
+			(:5 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-1-5 {
+		:type :calculation
+		:links (
+			(:1 :param)
+			(:5 :param)
+			(:6 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-1-6 {
+		:type :calculation
+		:links (
+			(:1 :param)
+			(:6 :param)
+			(:7 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-1-7 {
+		:type :calculation
+		:links (
+			(:1 :param)
+			(:7 :param)
+			(:8 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-1-8 {
+		:type :calculation
+		:links (
+			(:1 :param)
+			(:8 :param)
+			(:9 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-1-9 {
+		:type :calculation
+		:links (
+			(:1 :param)
+			(:9 :param)
+			(:10 :result)
+			(:plus :operator)
+		)
+	}
+
 	:plus-2-2 {
 		:type :calculation
 		:links (
@@ -154,11 +450,159 @@
 		)
 	}
 
+	:plus-2-4 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:4 :param)
+			(:6 :result)				
+			(:plus :operator)
+		)
+	}
+
+	:plus-2-5 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:5 :param)
+			(:7 :result)				
+			(:plus :operator)
+		)
+	}
+
+	:plus-2-6 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:6 :param)
+			(:8 :result)				
+			(:plus :operator)
+		)
+	}
+
+	:plus-2-7 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:7 :param)
+			(:9 :result)				
+			(:plus :operator)
+		)
+	}
+
+	:plus-2-8 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:8 :param)
+			(:10 :result)				
+			(:plus :operator)
+		)
+	}
+
 	:plus-3-3 {
 		:type :calculation
 		:links (
 			(:3 :param)
 			(:6 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-3-4 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:4 :param)
+			(:7 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-3-5 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:5 :param)
+			(:8 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-3-6 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:6 :param)
+			(:9 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-3-7 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:7 :param)
+			(:10 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-4-4 {
+		:type :calculation
+		:links (
+			(:4 :param)
+			(:8 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-4-5 {
+		:type :calculation
+		:links (
+			(:4 :param)
+			(:5 :param)
+			(:9 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-4-6 {
+		:type :calculation
+		:links (
+			(:4 :param)
+			(:6 :param)
+			(:10 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-5-5 {
+		:type :calculation
+		:links (
+			(:5 :param)
+			(:10 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-5-10 {
+		:type :calculation
+		:links (
+			(:5 :param)
+			(:10 :param)
+			(:15 :result)
+			(:plus :operator)
+		)
+	}
+
+	:plus-7-8 {
+		:type :calculation
+		:links (
+			(:7 :param)
+			(:8 :param)
+			(:15 :result)
 			(:plus :operator)
 		)
 	}
@@ -182,11 +626,268 @@
 		)
 	}
 
+	:times-2-4 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:4 :param)
+			(:8 :result)
+			(:times :operator)
+		)
+	}
+
+	:times-2-5 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:5 :param)
+			(:10 :result)
+			(:times :operator)
+		)
+	}
+
+	:times-2-6 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:6 :param)
+			(:12 :result)
+			(:times :operator)
+		)
+	}
+
+	:times-2-10 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:10 :param)
+			(:20 :result)
+			(:times :operator)
+		)
+	}
+
+	:times-2-12 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:12 :param)
+			(:times :operator)
+		)
+	}
+
+	:times-2-20 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:20 :param)
+			(:40 :result)
+			(:times :operator)
+  )
+	}
+
 	:times-3-3 {
 		:type :calculation
 		:links (
 			(:3 :param)
 			(:9 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-3-4 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:4 :param)
+			(:12 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-3-5 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:5 :param)
+			(:15 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-3-10 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:10 :param)
+			(:30 :result)
+			(:times :operator)
+		)
+	}
+
+	:times-3-20 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:20 :param)
+			(:60 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-4-4 {
+		:type :calculation
+		:links (
+			(:4 :param)
+			(:16 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-4-5 {
+		:type :calculation
+		:links (
+			(:4 :param)
+			(:5 :param)
+			(:20 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-4-10 {
+		:type :calculation
+		:links (
+			(:4 :param)
+			(:10 :param)
+			(:40 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-4-20 {
+		:type :calculation
+		:links (
+			(:4 :param)
+			(:20 :param)
+			(:80 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-5-5 {
+		:type :calculation
+		:links (
+			(:5 :param)
+			(:25 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-5-6 {
+		:type :calculation
+		:links (
+			(:5 :param)
+			(:6 :param)
+			(:30 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-5-10 {
+		:type :calculation
+		:links (
+			(:5 :param)
+			(:10 :param)
+			(:50 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-5-20 {
+		:type :calculation
+		:links (
+			(:5 :param)
+			(:20 :param)
+			(:100 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-6-10 {
+		:type :calculation
+		:links (
+			(:6 :param)
+			(:10 :param)
+			(:60 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-7-7 {
+		:type :calculation
+		:links (
+			(:7 :param)
+			(:7 :param)
+			(:49 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-7-10 {
+		:type :calculation
+		:links (
+			(:7 :param)
+			(:10 :param)
+			(:70 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-8-10 {
+		:type :calculation
+		:links (
+			(:8 :param)
+			(:10 :param)
+			(:80 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-9-9 {
+		:type :calculation
+		:links (
+			(:9 :param)
+			(:9 :param)
+			(:81 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-9-10 {
+		:type :calculation
+		:links (
+			(:9 :param)
+			(:10 :param)
+			(:90 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-10-10 {
+		:type :calculation
+		:links (
+			(:10 :param)
+			(:10 :param)
+			(:100 :result)
+			(:times :operator)
+  )
+	}
+
+	:times-10-15 {
+		:type :calculation
+		:links (
+			(:10 :param)
+			(:15 :param)
+			(:150 :result)
 			(:times :operator)
   )
 	}
@@ -252,7 +953,7 @@
 (defn initialize-pnet
  "Fill in the default values"
  ([pnet]
-	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation 0.1 :weight 1)))]
+	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation DEFAULT_ACTIVATION :weight 1)))]
 	 	(apply assoc '{} (mapcat #(list %1 (assoc (get weights-and-activations %1) :name %1)) (keys weights-and-activations)))))
  ([] (reset! PNET (initialize-pnet initial-pnet))))
 
@@ -262,9 +963,9 @@
 	(map first (:links (get p n))))
 
 (defn -update-activation
- "Update the activation of node n by a factor f"
- [f n]
- (update n :activation (fn [x] (misc/normalized (* f x)))))
+ "Update the activation of node n by an increment i"
+ [i n]
+ (update n :activation (fn [x] (misc/normalized (+ (* i DEFAULT_INC) x)))))
 
 (defn -map-values
 	[m keys f & args]

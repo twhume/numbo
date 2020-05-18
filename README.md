@@ -32,7 +32,6 @@ TODO list
 Big next tasks
 
 * HOW DO I REPRESENT SECONDARY TARGETS
-* Add in more of the PNet
 
 * --- THE ABOVE TAKES US TO STEP 4 OF THE SAMPLE RUN ON P142 WOOOO ---
 * start making stuff to eval and remove blocks from the WM

@@ -43,10 +43,11 @@
 (defn plot-pnet
  "Convert a pnet to a graph structure suitable for rhizome, then to an image"
  [p w h]
- (let [rh-graph (-pnet-into-rh p)]
+ (let [just-activated (filter #(> (:activation (second %1)) 0) p)
+ 						rh-graph (-pnet-into-rh just-activated)]
  	(rh/graph->image (keys rh-graph) rh-graph
  	 :directed? false
- 	 :options {:concentrate true :layout "dot" :dpi (int (/ (min w h) 11))}
+ 	 :options {:concentrate true :layout "dot" }
  		:node->descriptor (fn [n] {:label n :style "filled" :fillcolor (-activation-to-color (:activation (get p n)))})
  		:edge->descriptor (fn [n1 n2] {:style (get -link-style-map (pn/get-link-type p n1 n2))})
  	)))
