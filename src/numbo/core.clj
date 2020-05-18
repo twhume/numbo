@@ -16,7 +16,6 @@
 	"Schedule random regular tasks"
 	[]
 	(do
-		(println "TICK")
 		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
 		(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
   (wm/decay)
@@ -36,6 +35,11 @@
 (defn run-until-empty-cr
  []
  (run-until (fn[] (empty? @cr/CODERACK))))
+
+(defn run-for-iterations
+ [n]
+ (run-until (fn[] (>= @cr/ITERATIONS n))))
+
 
 (defn dump
 	"Dump state to console"
@@ -80,7 +84,7 @@
 	(run-until-empty-cr)
 	(cl/rand-block)
 	(cl/rand-syntactic-comparison)
-	(run-until-empty-cr)
+	(run-for-iterations 100)
 
 	(viz/-main)
 	(catch Exception e
