@@ -116,7 +116,13 @@
  "Loads a new brick into memory"
  [v]
 	(cr/add-codelet (new-codelet :type :load-brick :desc (str "Load brick: " v) :urgency URGENCY_HIGH
-	:fn (fn [] (wm/add-brick v)))))
+	:fn (fn [] 
+		(do
+			(wm/add-brick v)
+			(activate-pnet (keyword (str (closest (pn/get-numbers) v)))))))))
+
+; Tries to build a block which makes something close to a 
+;(defn seek-reasonable-facsimile)
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
 ; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
