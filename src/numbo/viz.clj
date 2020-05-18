@@ -47,9 +47,11 @@
  						rh-graph (-pnet-into-rh just-activated)]
  	(rh/graph->image (keys rh-graph) rh-graph
  	 :directed? false
- 	 :options {:concentrate true :layout "dot" }
+ 	 :options {:concentrate true :layout "fdp" :dpi 50 }
+ 	 :node->cluster (fn [n] (:type (get p n)))
  		:node->descriptor (fn [n] {:label n :style "filled" :fillcolor (-activation-to-color (:activation (get p n)))})
- 		:edge->descriptor (fn [n1 n2] {:style (get -link-style-map (pn/get-link-type p n1 n2))})
+; 		:edge->descriptor (fn [n1 n2] {:style (get -link-style-map (pn/get-link-type p n1 n2))})
+ 		:edge->descriptor (fn [n1 n2] {:style :invis})
  	)))
 
 ; ----- Functions to plot a working memory -----
