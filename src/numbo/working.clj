@@ -202,6 +202,13 @@
 				  )))))
  ([u] (pump-node @TARGET @BRICKS @BLOCKS u)))
 
+(defn get-brick-by-val
+ "Get a random brick with the value v"
+ ([br v]
+  (let [vals (filter #(= v (:value %1)) br)]
+  	(if (not-empty vals) (rand-nth vals) nil)))
+ ([v] (get-brick-by-val @BRICKS v)))
+
 ; Contributors to temperature:
 ; # secondary targets
 ; # nodes which are highly attractive
