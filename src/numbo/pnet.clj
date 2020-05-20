@@ -1000,13 +1000,23 @@
  )))
  ([n] (reset! PNET (activate-node @PNET n))))
 
+
+(defn -get-random-by-type
+	"Get a random node, sampled probabilistically by activation from all nodes of :type t"
+ [p t]
+	(let [op-range (misc/make-percent-ranges (filter #(= t (:type %)) (vals p)) :activation)]
+	 (if (not-empty op-range)
+	  (misc/random-val-in-range op-range))))
+
 (defn get-random-op
 	"Get a random operator, sampled probabilistically by activation"
- ([p]
- 	(let [op-range (misc/make-percent-ranges (filter #(= :operator (:type %)) (vals p)) :activation)]
- 	 (if (not-empty op-range)
- 	  (misc/random-val-in-range op-range))))
+ ([p] (-get-random-by-type p :operator))
  ([] (get-random-op @PNET)))
+
+(defn get-random-calc
+	"Get a random calculation, sampled probabilistically by activation"
+ ([p] (-get-random-by-type p :calculation))
+ ([] (get-random-calc @PNET)))
 
 ; Used in graphing
 
