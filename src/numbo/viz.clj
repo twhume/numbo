@@ -45,13 +45,14 @@
  [p w h]
  (let [just-activated (filter #(> (:activation (second %1)) 0) p)
  						rh-graph (-pnet-into-rh just-activated)]
+; (let [rh-graph (-pnet-into-rh p)]
  	(rh/graph->image (keys rh-graph) rh-graph
  	 :directed? false
  	 :options {:concentrate true :layout "fdp" :dpi 50 }
  	 :node->cluster (fn [n] (:type (get p n)))
  		:node->descriptor (fn [n] {:label n :style "filled" :fillcolor (-activation-to-color (:activation (get p n)))})
-; 		:edge->descriptor (fn [n1 n2] {:style (get -link-style-map (pn/get-link-type p n1 n2))})
- 		:edge->descriptor (fn [n1 n2] {:style :invis})
+ ;		:edge->descriptor (fn [n1 n2] {:style (get -link-style-map (pn/get-link-type p n1 n2))})
+  		:edge->descriptor (fn [n1 n2] {:style :invis})
  	)))
 
 ; ----- Functions to plot a working memory -----
@@ -168,7 +169,8 @@
  (let [g (-to-graph ta br bl)]
 	 (rh/graph->image (keys g) g
 	 	:directed? false
- 	 :options {:concentrate true :layout "neato" :model "circuit" :dpi (int (/ (min w h) 8))}
+ 	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60}
+
  		:node->descriptor (fn [u]
  		  (let [[label type attr] (-get-node-label ta br bl u)]
  		  		(condp = type
@@ -247,7 +249,7 @@
     :title "Numbojure Visualizer"
     :size [1024 :by 768]
     :id :main
-    :on-close :exit
+    :on-close :hide
     :content
     	(vertical-panel
     		:items [
