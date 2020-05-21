@@ -209,6 +209,13 @@
   	(if (not-empty vals) (rand-nth vals) nil)))
  ([v] (get-brick-by-val @BRICKS v)))
 
+(defn get-block-by-result
+ "Get a random brick with the value v"
+ ([bl v]
+  (let [vals (filter #(= v (:value %1)) bl)]
+  	(if (not-empty vals) (rand-nth vals) nil)))
+ ([v] (get-block-by-result @BLOCKS v)))
+
 ; Contributors to temperature:
 ; # secondary targets
 ; # nodes which are highly attractive
