@@ -49,11 +49,17 @@
 )))
 
 (deftest pnet-activation-test
-	(testing "Validates that spreading activation works as expected"
-		(let [original (initialize-pnet initial-pnet)
+	(testing "Validates that decaying activation works as expected"
+		(let [original (activate-node (initialize-pnet initial-pnet) :times-5-20)
 								decayed (decay original)]
-								(is (every? #(> (first %1) (second %1))
-									(map list
-										(map :activation (vals original))
-										(map :activation (vals decayed))))))))
+								(is
+								 (and
+										(every? #(>= (first %1) (second %1)) ; No entry is in the original is lower than the entry in the decayed
+											(map list
+												(map :activation (vals original))
+												(map :activation (vals decayed))))
+										(some #(> (first %1) (second %1)) ; Some entries in the original are higher than in the decayed
+											(map list
+												(map :activation (vals original))
+												(map :activation (vals decayed)))))))))
 
