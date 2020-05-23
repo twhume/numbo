@@ -16,8 +16,9 @@
 	"Schedule random regular tasks"
 	[]
 	(do
-		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
-		(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
+;		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
+;		(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
+		(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile))
   (wm/decay)
 		(pn/decay)
 	))

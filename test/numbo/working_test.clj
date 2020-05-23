@@ -72,22 +72,22 @@
 
 	(testing "Add first brick"
 		(let [test-wm (-> '()
-																(wm/add-block 10 :plus [6 4]))]
+																(wm/add-block (wm/new-entry 10 :plus [6 4])))]
 			(is (= 1 (count test-wm)))
 			(is (= 10 (:value (first test-wm))))))
 
 	(testing "Add second block"
 		(let [test-wm (-> '()
-															(wm/add-block 10 :plus [6 4])
-															(wm/add-block 20 :times [5 4])
+															(wm/add-block (wm/new-entry 10 :plus [6 4]))
+															(wm/add-block (wm/new-entry 20 :times [5 4]))
 															)]
 		(is (= 2 (count test-wm)))
 		(is (= 20 (:value (first test-wm))))))
 
 	(testing "Update existing block"
 		(let [test-wm (-> '()
-															(wm/add-block 10 :plus [6 4])
-															(wm/add-block 20 :times [5 4]))
+															(wm/add-block (wm/new-entry 10 :plus [6 4]))
+															(wm/add-block (wm/new-entry 20 :times [5 4])))
 								block20 (first test-wm)
 								block21 (assoc block20 :value 21)
 								res-wm (wm/update-blocks test-wm block21)]
@@ -96,8 +96,8 @@
 
 	(testing "Add child block"
 		(let [test-wm (-> '()
-															 (wm/add-block 10 :plus [6 4])
-															 (wm/add-block 20 :times [5 4]))
+															 (wm/add-block (wm/new-entry 10 :plus [6 4]))
+															 (wm/add-block (wm/new-entry 20 :times [5 4])))
 								block20 (first test-wm)
 								res-wm  (wm/add-child-block test-wm (:uuid block20) 1 4 :plus [2 2])
 								res-bl  (first res-wm)  
@@ -108,8 +108,8 @@
 
 	(testing "Update child block"
 		(let [test-wm (-> '()
-															 (wm/add-block 10 :plus [6 4])
-															 (wm/add-block 20 :times [5 4]))
+															 (wm/add-block (wm/new-entry 10 :plus [6 4]))
+															 (wm/add-block (wm/new-entry 20 :times [5 4])))
 								block20 (first test-wm)
 								test-wm (wm/add-child-block test-wm (:uuid block20) 1 4 :plus [2 2])
 								child-bl (second (:params (first test-wm)))
@@ -156,7 +156,7 @@
 	(testing "Get random block")
 
 			(let [test-wm (-> '()
-			 												(wm/add-block 10 :plus [6 4]))]
+			 												(wm/add-block (wm/new-entry 10 :plus [6 4])))]
 			(is (= 1 (count test-wm)))
 			(is (= nil (wm/get-random-block '())))
 			(is (= 10 (:value (wm/get-random-block test-wm))))))
@@ -171,8 +171,8 @@
 		(wm/add-brick 10)
 		(wm/add-brick 2)
 		(wm/add-brick 7)
-		(wm/add-block 9 :plus [2 7])
-		(wm/add-block 30 :times [15 2])
+		(wm/add-block (wm/new-entry 9 :plus [2 7]))
+		(wm/add-block (wm/new-entry 30 :times [15 2]))
 		(wm/add-child-block (:uuid (first @wm/BLOCKS)) 1 7 :minus [10 2])))
 
 (deftest find-anywhere-test

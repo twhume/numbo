@@ -75,3 +75,8 @@
   (if (zip/end? z)
     (zip/root z)
     (recur f (zip/next (f z)))))
+
+(defn int-k
+ "Turn keyword into an integer"
+ [k]
+ (Integer/parseInt (name k)))

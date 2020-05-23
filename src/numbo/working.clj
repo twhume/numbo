@@ -38,10 +38,10 @@
  	(= 0 (mod n 100)) (+ 0.1)
  ))
 
-(defn -new-entry
+(defn new-entry
  "Creates a new memory entry structure"
  ([v] (hash-map :value v :uuid (misc/uuid) :attr (-initial-attr v) :free true))
- ([v o p] (assoc (-new-entry v) :op o :params p)))
+ ([v o p] (assoc (new-entry v) :op o :params p)))
 
 (defn -make-blocktree-zipper
  "Make a clojure zipper from the blocktree bt"
@@ -115,7 +115,7 @@
 
 (defn add-brick
 	"Adds a single brick to memory"
-	([br val free] (conj br (assoc (-new-entry val) :free free)))
+	([br val free] (conj br (assoc (new-entry val) :free free)))
 	([br val] (add-brick br val true))
  ([val] (reset! BRICKS (add-brick @BRICKS val))))
 
@@ -126,7 +126,7 @@
 
 (defn set-target
  "Sets the target value in memory"
- ([v] (reset! TARGET (-new-entry v))))
+ ([v] (reset! TARGET (new-entry v))))
 
 (defn update-target
  "Sets the target entry in memory"
@@ -134,8 +134,8 @@
 
 (defn add-block
  "Adds a new block to memory"
-	([bl value op p] (conj bl (-new-entry value op p)))
-	([value op p] (reset! BLOCKS (add-block @BLOCKS value op p))))
+	([bl b] (conj bl b))
+	([b] (reset! BLOCKS (add-block @BLOCKS b))))
 
 (defn update-blocks
 	"Updates the supplied block bl into appropriate blocktree in the list btl"
@@ -145,7 +145,7 @@
 (defn add-child-block
  "Adds a child to a block in memory bl, by its uuid"
  ([blocks par-uuid par-param value op p]
-		(let [new-entry (-new-entry value op p)]
+		(let [new-entry (new-entry value op p)]
 			(map (partial -add-blocktree-entry par-uuid par-param new-entry) blocks)))
  ([par-uuid par-param value op p]
  	(reset! BLOCKS (add-child-block @BLOCKS par-uuid par-param value op p))))

@@ -241,7 +241,6 @@
 		:type :number
 		:links (
 			(:times-3-10 :result)
-			(:times-5-6 :similar)
 			(:25 :similar)
 			(:40 :similar)
 		)
@@ -252,7 +251,6 @@
 		:links (
 			(:times-4-10 :result)
 			(:times-2-20 :result)
-			(:times-5-6 :similar)
 			(:30 :similar)
 			(:50 :similar)
 		)
@@ -270,7 +268,6 @@
 		:type :number
 		:links (
 			(:times-5-10 :result)
-			(:times-7-7 :similar)
 			(:40 :similar)
 			(:49 :similar)
 			(:60 :similar)
@@ -1017,7 +1014,6 @@
 	"Get a random calculation, sampled probabilistically by activation"
  ([p] (-get-random-by-type p :calculation))
  ([] (get-random-calc @PNET)))
-
 
 (defn get-similar
  "Get a list of nodes which have :similar links from n"

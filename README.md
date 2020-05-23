@@ -26,18 +26,18 @@ at https://www.gnu.org/software/classpath/license.html.
 
 
 
-TODO list
-
-
 Big next tasks
 
+GOAL THIS WEEK: have codelets removing as well as adding to WM
+
+* write seek-reasonable-facsimile (p145) - continue building cr/-best-match-for
 * start making stuff to eval and remove blocks from the WM
-* add seek-reasonable-facsimile (p145)
 * HOW DO I REPRESENT SECONDARY TARGETS
 * cl/rand-op can in theory pick the same brick twice, which would be bad but could just result in the created block being considered invalid later. To fix this, I think I need a version of the random sampler which returns a sequence instead of a single value. This is bad because an active brick will likely get picked twice.
 
 Tidy-ups/small improvements
 
+* work out how to make scroll bars appear on canvas
 * In pn/activate-node, take into account the weights of nodes
 * Rationale wm/new-node and cl/new-codelet - are they eerily similar?
 * cl/rand-op can multiply by 1, which doesn't seem so useful

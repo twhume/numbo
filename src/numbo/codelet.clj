@@ -1,6 +1,7 @@
 (ns numbo.codelet
 	(:require [clojure.string :as str]
 											[numbo.coderack :as cr]
+											[numbo.misc :as misc]
 											[numbo.pnet :as pn]
 											[numbo.working :as wm]))
 
@@ -121,8 +122,59 @@
 			(wm/add-brick v)
 			(activate-pnet (keyword (str (closest (pn/get-numbers) v)))))))))
 
-; Tries to build a block which makes something close to a 
-;(defn seek-reasonable-facsimile)
+; Tries to build a block which makes something close to a biped in the pnet
+; Find a biped: i.e. a randomly highly activated node of type :calculation
+; Make a block for this calculation, by looking for  brick/block-results for each param, or :similar :params if not
+; Load a test-if-possible-and-desirable codelet on this block
+
+(defn -filter-links-for 
+ [l t]
+ (map first (filter #(= t (second %)) l)))
+
+
+; Best matches might be an exact match of the brick/block, or the exact match for a brick/block which is
+; :similar in the Pnet to the node n. If there's no best match, return nil
+
+(defn -best-match-for
+ "Given a Pnet node n, find the best match for it in bricks or blocks, returning the UUID"
+ [n]
+ (let [val (misc/int-k n)
+ 						perfect-block (wm/get-block-by-result val)
+ 						perfect-brick (wm/get-brick-by-val val)
+ 						similar (map misc/int-k (pn/get-similar n))
+ 						similar-blocks (map wm/get-block-by-result similar)
+ 						similar-bricks (map wm/get-brick-by-val similar)
+ 						similar-list (filter (complement nil?) (concat similar-blocks similar-bricks))
+ 						]
+	 (cond 
+	 	perfect-block (:uuid perfect-block)
+	 	perfect-brick (:uuid perfect-brick)
+	 	(not-empty similar-list) (:uuid (rand-nth similar-list))
+	 	:else nil
+)))
+
+(defn test-block
+	"Schedule a test of a given block UUID u"
+	[u]
+)
+
+(defn seek-facsimile
+ "Find a highly activated calculation, make a block for it, and schedule a test of it"
+ []
+ (let [calc (pn/get-random-calc)]
+	 (cr/add-codelet (new-codelet :type :seek-facsimile :desc (str "Seek facsimile: " calc) :urgency URGENCY_MEDIUM
+	 :fn (fn []
+	  (let [links (:links calc)
+	        params (-filter-links-for links :param)
+	        op (first (-filter-links-for links :operator))
+	        result (first (-filter-links-for links :result))
+	        new-block (wm/new-entry (misc/int-k result) op (mapv misc/int-k params))]
+	        (do
+	        	(wm/add-block new-block) ; Add a new block for the calculation to WM
+	        	(test-block (:uuid new-block))) ; Schedule a new test of it in future
+	  ))))))
+
+
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
 ; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
@@ -138,9 +190,9 @@
  						(cr/add-codelet (new-codelet :type :new-block
  							:desc (str "Random op: " (:name op) " " v1 "," v2)
  							:urgency URGENCY_HIGH
- 							:fn (fn [] (wm/add-block
+ 							:fn (fn [] (wm/add-block (wm/new-entry 
  																			(((:name op) pn/operator-map) v1 v2)
  																			(:name op)
- 																			(vector v1 v2)))))))
+ 																			(vector v1 v2))))))))
 
 ;----- END OF CODELETS -----
