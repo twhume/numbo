@@ -9,6 +9,8 @@
 (def node-types '(:number :calculation :operator))
 (def link-types '(:operator :result :similar :param))
 (def operator-map (hash-map :plus + :minus - :times *))
+(def operator-name-map (hash-map :plus "+" :minus "-" :times "*"))
+
 
 (def PNET (atom '{}))
 
@@ -227,12 +229,21 @@
 		)
 	}
 
+	:24 {
+		:type :number
+		:links (
+			(:times-2-12 :result)
+			(:25 :similar)
+		)
+	}
+
 	:25 {
 		:type :number
 		:links (
 			(:times-5-5 :result)
 			(:times-2-12 :similar)
 			(:20 :similar)
+			(:24 :similar)
 			(:30 :similar)
 		)
 	}
@@ -343,6 +354,7 @@
 		:type :calculation
 		:links (
 			(:1 :param)
+			(:1 :param)
 			(:2 :result)
 			(:plus :operator)
 		)
@@ -432,6 +444,7 @@
 		:type :calculation
 		:links (
 			(:2 :param)
+			(:2 :param)
 			(:4 :result)
 			(:plus :operator)
 	 )
@@ -501,6 +514,7 @@
 		:type :calculation
 		:links (
 			(:3 :param)
+			(:3 :param)
 			(:6 :result)
 			(:plus :operator)
 		)
@@ -550,6 +564,7 @@
 		:type :calculation
 		:links (
 			(:4 :param)
+			(:4 :param)
 			(:8 :result)
 			(:plus :operator)
 		)
@@ -579,6 +594,7 @@
 		:type :calculation
 		:links (
 			(:5 :param)
+			(:5 :param)
 			(:10 :result)
 			(:plus :operator)
 		)
@@ -607,6 +623,7 @@
 	:times-2-2 {
 		:type :calculation
 		:links (
+			(:2 :param)
 			(:2 :param)
 			(:4 :result)
 			(:times :operator)
@@ -669,6 +686,7 @@
 			(:2 :param)
 			(:12 :param)
 			(:times :operator)
+			(:24 :result)
 		)
 	}
 
@@ -685,6 +703,7 @@
 	:times-3-3 {
 		:type :calculation
 		:links (
+			(:3 :param)
 			(:3 :param)
 			(:9 :result)
 			(:times :operator)
@@ -735,6 +754,7 @@
 		:type :calculation
 		:links (
 			(:4 :param)
+			(:4 :param)
 			(:16 :result)
 			(:times :operator)
   )
@@ -773,6 +793,7 @@
 	:times-5-5 {
 		:type :calculation
 		:links (
+			(:5 :param)
 			(:5 :param)
 			(:25 :result)
 			(:times :operator)
@@ -1014,6 +1035,25 @@
 	"Get a random calculation, sampled probabilistically by activation"
  ([p] (-get-random-by-type p :calculation))
  ([] (get-random-calc @PNET)))
+
+(defn filter-links-for 
+ [l t]
+ (map first (filter #(= t (second %)) l)))
+
+(defn format-calc
+ "Turn a calculation into a string"
+ [c]
+ (do
+ 	(println "DEBUG=" c)
+ (let [l (:links c)]
+	 (str (misc/int-k (first (filter-links-for l :param))) 
+	 	(get operator-name-map (first (filter-links-for l :operator)))
+	 	(misc/int-k (second (filter-links-for l :param)))
+	 	"="
+	 	(misc/int-k (first (filter-links-for l :result)))
+ 	))
+))
+
 
 (defn get-similar
  "Get a list of nodes which have :similar links from n"
