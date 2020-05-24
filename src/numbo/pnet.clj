@@ -1043,17 +1043,13 @@
 (defn format-calc
  "Turn a calculation into a string"
  [c]
- (do
- 	(println "DEBUG=" c)
  (let [l (:links c)]
 	 (str (misc/int-k (first (filter-links-for l :param))) 
 	 	(get operator-name-map (first (filter-links-for l :operator)))
 	 	(misc/int-k (second (filter-links-for l :param)))
 	 	"="
 	 	(misc/int-k (first (filter-links-for l :result)))
- 	))
-))
-
+ 	)))
 
 (defn get-similar
  "Get a list of nodes which have :similar links from n"
