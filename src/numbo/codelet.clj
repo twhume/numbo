@@ -127,16 +127,14 @@
 ; Make a block for this calculation, by looking for  brick/block-results for each param, or :similar :params if not
 ; Load a test-if-possible-and-desirable codelet on this block
 
-(defn -filter-links-for 
- [l t]
- (map first (filter #(= t (second %)) l)))
+
 
 
 ; Best matches might be an exact match of the brick/block, or the exact match for a brick/block which is
 ; :similar in the Pnet to the node n. If there's no best match, return nil
 
 (defn -best-match-for
- "Given a Pnet node n, find the best match for it in bricks or blocks, returning the UUID"
+ "Given a Pnet node n, find the best match for it in bricks or blocks, returning the brick/block"
  [n]
  (let [val (misc/int-k n)
  						perfect-block (wm/get-block-by-result val)
@@ -147,9 +145,9 @@
  						similar-list (filter (complement nil?) (concat similar-blocks similar-bricks))
  						]
 	 (cond 
-	 	perfect-block (:uuid perfect-block)
-	 	perfect-brick (:uuid perfect-brick)
-	 	(not-empty similar-list) (:uuid (rand-nth similar-list))
+	 	perfect-block perfect-block
+	 	perfect-brick perfect-brick
+	 	(not-empty similar-list) (rand-nth similar-list)
 	 	:else nil
 )))
 
@@ -162,19 +160,18 @@
  "Find a highly activated calculation, make a block for it, and schedule a test of it"
  []
  (let [calc (pn/get-random-calc)]
-	 (cr/add-codelet (new-codelet :type :seek-facsimile :desc (str "Seek facsimile: " calc) :urgency URGENCY_MEDIUM
+	 (cr/add-codelet (new-codelet :type :seek-facsimile :desc (str "Seek facsimile: " (pn/format-calc calc)) :urgency URGENCY_MEDIUM
 	 :fn (fn []
 	  (let [links (:links calc)
-	        params (-filter-links-for links :param)
-	        op (first (-filter-links-for links :operator))
-	        result (first (-filter-links-for links :result))
-	        new-block (wm/new-entry (misc/int-k result) op (mapv misc/int-k params))]
-	        (do
-	        	(wm/add-block new-block) ; Add a new block for the calculation to WM
-	        	(test-block (:uuid new-block))) ; Schedule a new test of it in future
-	  ))))))
-
-
+	        params (filter (complement nil?) (mapv #(:value (-best-match-for %1)) (pn/filter-links-for links :param))) ; TODO need to get the -best-match-for here
+	        op (first (pn/filter-links-for links :operator))
+	        result (apply (op pn/operator-map) params) ; Remember, result may not be the original one from the calculation...
+	        new-block (wm/new-entry result op params)]
+	        (if (= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
+		        	(wm/add-block new-block) ; Add a new block for the calculation to WM
+		        	(test-block (:uuid new-block))) ; Schedule a new test of it in future
+	        	)
+	  )))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
 ; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
