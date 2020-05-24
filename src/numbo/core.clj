@@ -6,6 +6,18 @@
 											[numbo.pnet :as pn]
 											[numbo.viz :as viz]))
 
+(defn dump
+	"Dump state to console"
+	[]
+	(do
+		(println "ITERATION=" @cr/ITERATIONS)
+		(println "BLOCKS=" @wm/BLOCKS)
+		(println "BRICKS=" @wm/BRICKS)
+		(println "TARGET=" @wm/TARGET)
+		(println "PNET=" @pn/PNET)
+		(println "CODERACK=" @cr/CODERACK)
+	))
+
 ; Tick is called every n iterations and takes charge of starting random tasks. Each tick:
 ; - there is a temp% chance that a rand-block codelet gets added to the coderack
 ; - there is a temp% chance that a rand-syntactic-comparison codelet gets added to the coderack
@@ -29,6 +41,8 @@
   (do
 	 	(cr/process-next-codelet)
 
+;	 	(dump)
+
 	 	(if (= 0 (mod @cr/ITERATIONS 5)) (tick))
 	; 	(wm/print-state)
 	 	(if (not (pred)) (recur)))))
@@ -41,17 +55,6 @@
  [n]
  (run-until (fn[] (>= @cr/ITERATIONS n))))
 
-
-(defn dump
-	"Dump state to console"
-	[]
-	(do
-		(println "BLOCKS=" @wm/BLOCKS)
-		(println "BRICKS=" @wm/BRICKS)
-		(println "TARGET=" @wm/TARGET)
-		(println "PNET=" @pn/PNET)
-		(println "CODERACK=" @cr/CODERACK)
-	))
 
 (defn -main
   []
