@@ -181,7 +181,15 @@
 			(:plus-5-5 :result)
 			(:times-2-5 :result)
 			(:9 :similar)
+			(:11 :similar)
 		)
+	}
+
+	:11 {
+		:type :number
+		:links (
+			(:10 :similar)
+			(:12 :similar))
 	}
 
 	:12 {
@@ -190,6 +198,7 @@
 			(:times-2-6 :result)
 			(:times-3-4 :result)
 			(:times-2-12 :param)
+			(:11 :similar)
 			(:15 :similar)
 		)
 	}
