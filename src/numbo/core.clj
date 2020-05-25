@@ -41,9 +41,7 @@
   (do
 	 	(cr/process-next-codelet)
 
-;	 	(dump)
-
-	 	(if (= 0 (mod @cr/ITERATIONS 5)) (tick))
+	 	(if (= 0 (mod @cr/ITERATIONS 1)) (tick))
 	; 	(wm/print-state)
 	 	(if (not (pred)) (recur)))))
 
