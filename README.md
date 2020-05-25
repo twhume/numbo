@@ -30,7 +30,7 @@ Big next tasks
 
 GOAL THIS WEEK: have codelets removing as well as adding to WM
 
-* write seek-reasonable-facsimile (p145) - continue building cr/-best-match-for
+* write test-facsimile (p145)
 * start making stuff to eval and remove blocks from the WM
 * HOW DO I REPRESENT SECONDARY TARGETS
 * cl/rand-op can in theory pick the same brick twice, which would be bad but could just result in the created block being considered invalid later. To fix this, I think I need a version of the random sampler which returns a sequence instead of a single value. This is bad because an active brick will likely get picked twice.

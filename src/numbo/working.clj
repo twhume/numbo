@@ -85,7 +85,8 @@
 (defn -decay-attr
  "Decay the attractiveness of the map br"
  [br]
- (assoc br :attr (misc/normalized (:attr br) (* -1 DEFAULT_ATTRACTION_DEC))))
+ (if (nil? br) nil ; nil in, nil out - useful because before being set our TARGET is nil
+ 	(assoc br :attr (misc/normalized (:attr br) (* -1 DEFAULT_ATTRACTION_DEC)))))
 
 (defn -decay-blocktree
 	"Decay the attractiveness of all nodes in the blocktree bl"
