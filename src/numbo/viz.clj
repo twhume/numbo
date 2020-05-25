@@ -170,7 +170,6 @@
 	 (rh/graph->image (keys g) g
 	 	:directed? false
  	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60}
-
  		:node->descriptor (fn [u]
  		  (let [[label type attr] (-get-node-label ta br bl u)]
  		  		(condp = type
