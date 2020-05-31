@@ -1,5 +1,6 @@
 (ns numbo.codelet
-	(:require [clojure.string :as str]
+	(:require [clojure.tools.logging :as log]
+											[clojure.string :as str]
 											[numbo.coderack :as cr]
 											[numbo.misc :as misc]
 											[numbo.pnet :as pn]
@@ -152,7 +153,7 @@
 )))
 
 ; Search bricks and blocks to find an entry which is free and has the given value
-(defn -find-free-value
+(defn -find-free-values
  "Find a free brick or block with the given value"
  [br bl v]
  (filter #(and (= v (:value %1)) (:free %1)) (concat br bl)))
@@ -165,20 +166,34 @@
 			(nil? block) (println "test-block couldn't find UUID " u) ; Blocks may have been dismantled
 			(= :target src) (println "test-block resolved UUID to target " u) ; Should be impossible
 			(= :brick src) (println "test-block resolved UUID to brick " u)
-			:else	(cr/add-codelet (new-codelet :type :test-block :desc (str "Test block: " block) :urgency URGENCY_MEDIUM 
+			:else	(cr/add-codelet (new-codelet :type :test-block :desc (str "Test block: " block) :urgency URGENCY_HIGH
 				:fn (fn []
-				(let [p1-entry (-find-free-value @wm/BRICKS @wm/BLOCKS (first (:params block)))
-										p2-entry (-find-free-value @wm/BRICKS @wm/BLOCKS (second (:params block)))]
+
+				(let [params (:params block)
+										p1-entry (first (-find-free-values @wm/BRICKS @wm/BLOCKS (first params)))
+										p2-entry (if (= (first params) (second params)) ; cope with the case where both params are the same
+																				(second (-find-free-values @wm/BRICKS @wm/BLOCKS (first params)))
+																				(first (-find-free-values @wm/BRICKS @wm/BLOCKS (second params))))]
+										(log/debug "test-block p1-entry=" p1-entry " p2-entry=" p2-entry)
 					(if
 						(and
 						 p1-entry ; if there is a free entry for each parameter
 						 p2-entry
+						 (not= p1-entry p2-entry)
 						 (> 0.2 (:activation (get @pn/PNET (keyword (str (closest (pn/get-numbers) (:value block)))))))) ; and  nearest value in the Pnet is active (i.e. this is worthy)
 								(do
-;									(wm/mark-taken p1-entry)
-;									(wm/mark-taken p2-entry)
-								))
-				)))))))
+								 (log/info "test-block " u " has params available and is worthy")
+									(wm/mark-taken (:uuid p1-entry))
+									(wm/mark-taken (:uuid p2-entry))
+								)
+								(do
+								 (log/info "test-block " u " judged unworthy")
+								 (log/debug "test-block before delete " @wm/BLOCKS)
+									(wm/delete-block u)
+								 (log/debug "test-block after delete " @wm/BLOCKS)
+
+									) ; otherwise it hasn't proved useful... remove it
+				))))))))
 
 (defn seek-facsimile
  "Find a highly activated calculation, make a block for it, and schedule a test of it"

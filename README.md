@@ -30,13 +30,18 @@ Big next tasks
 
 GOAL THIS WEEK: have codelets removing as well as adding to WM
 
-* write test-facsimile (p145)
+* finish moving to tools.logging from println, and understanding how to vary log level at runtime
+
+
 * start making stuff to eval and remove blocks from the WM
+* add more tests to rand-syntactic-comparison
 * HOW DO I REPRESENT SECONDARY TARGETS
 * cl/rand-op can in theory pick the same brick twice, which would be bad but could just result in the created block being considered invalid later. To fix this, I think I need a version of the random sampler which returns a sequence instead of a single value. This is bad because an active brick will likely get picked twice.
 
 Tidy-ups/small improvements
 
+* remove redundant (do) per https://www.quora.com/Why-and-when-should-I-use-the-do-expression-in-Clojure-instead-of-just-writing-multiple-expressions-sequentially
+* Allow provision of a random seed to make entire runs reproducible
 * work out how to make scroll bars appear on canvas
 * In pn/activate-node, take into account the weights of nodes
 * Rationale wm/new-node and cl/new-codelet - are they eerily similar?
