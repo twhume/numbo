@@ -227,7 +227,6 @@
 							 				(map :attr (filter (complement (and nil? int?)) (mapcat wm/-blocktree-nodes old-blocks)))))))
 	))
 
-
 (deftest mark-taken-test
 	(testing "Mark taken - brick"
 			(reset-wm)
@@ -253,3 +252,31 @@
 					(wm/mark-taken uuid-to-take)
 					(is (= blocks-before @wm/BLOCKS))
 					(is (= bricks-before @wm/BRICKS)))))
+
+(deftest delete-block-test
+ 	(testing "Delete - first block"
+			(reset-wm)
+			(let [block-to-delete (first @wm/BLOCKS)
+									other-block (second @wm/BLOCKS)
+									uuid-to-delete (:uuid block-to-delete)]
+				(wm/delete-block uuid-to-delete)
+				(is (= 1 (count @wm/BLOCKS)))
+				(is (= other-block (first @wm/BLOCKS)))))
+
+ 	(testing "Delete - second block"
+			(reset-wm)
+			(let [block-to-delete (second @wm/BLOCKS)
+									other-block (first @wm/BLOCKS)
+									uuid-to-delete (:uuid block-to-delete)]
+				(wm/delete-block uuid-to-delete)
+				(is (= 1 (count @wm/BLOCKS)))
+				(is (= other-block (first @wm/BLOCKS)))))
+
+ 	(testing "Delete - invalid block"
+			(reset-wm)
+			(let [old-blocks @wm/BLOCKS
+									uuid-to-delete "random-uuid"]
+				(wm/delete-block uuid-to-delete)
+				(is (= old-blocks @wm/BLOCKS)))))
+
+

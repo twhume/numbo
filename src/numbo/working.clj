@@ -221,7 +221,9 @@
 (defn mark-taken
  "Mark the brick or block with uuid u as taken (:free false)"
  ([ta br bl u]
+  (log/debug "mark-taken u=" u)
 	 (let [[entry src] (find-anywhere ta br bl u)]
+	   (log/debug "mark-taken entry=" entry "src=" src)
 	 	(if (nil? entry) (log/warn "mark-taken can't find entry with UUID " u)
 	 	 (let [taken-entry (assoc entry :free false)]
 		 	 (condp = src
@@ -233,8 +235,8 @@
 
 (defn delete-block
 	"Remove the block with UUID u from the blocks-list"
-	([btl u] (filter #(not= u (:uuid %1)) btl)
-	([u] (reset! BLOCKS (delete-block @BLOCKS u)))))
+	([btl u] (filter #(not= u (:uuid %1)) btl))
+	([u] (reset! BLOCKS (delete-block @BLOCKS u))))
 
 
 
