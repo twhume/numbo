@@ -71,7 +71,7 @@
 	 							  (= p 0) (zip/replace (zip/down node) be)
 	 							  (= p 1) (zip/replace (zip/right (zip/down node)) be)
 	 							  :else (do 
-	 							  	(println "Bad child position " p)
+	 							  	(log/warn "Bad child position " p)
 	 							  	node
 	 							 ))))))
 
@@ -175,9 +175,9 @@
  "(for debug purposes) print the current WM state"
  []
  (do
-	 (println "TARGET:" @TARGET)
-	 (println "BRICKS:" @BRICKS)
-	 (println "BLOCKS:" @BLOCKS)))
+	 (log/debug "TARGET:" @TARGET)
+	 (log/debug "BRICKS:" @BRICKS)
+	 (log/debug "BLOCKS:" @BLOCKS)))
 
 (defn find-anywhere
 	"Look in the target, bricks list or blocks for the UUID, and return the [node, where_found] if found"
@@ -194,13 +194,13 @@
  ([ta br bl u]
 	 (let [[entry src] (find-anywhere ta br bl u)]
 	   (if (nil? entry)
-	   	(do (println "Couldn't find node" u) nil)
+	   	(do (log/warn "Couldn't find node" u) nil)
 			 	(let [pumped-entry (assoc entry :attr (misc/normalized (:attr entry) DEFAULT_ATTRACTION_INC))]
 				  (condp = src
 				  	:target (update-target pumped-entry)
 				  	:bricks (update-brick pumped-entry)
 				  	:blocks (update-blocks pumped-entry)
-				  	(println "Couldn't find a type to pump for" src)
+				  	(log/warn "Couldn't find a type to pump for" src)
 				  )))))
  ([u] (pump-node @TARGET @BRICKS @BLOCKS u)))
 

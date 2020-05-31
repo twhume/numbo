@@ -1,5 +1,6 @@
 (ns numbo.coderack
-	(:require [numbo.misc :as misc]
+	(:require [clojure.tools.logging :as log]
+											[numbo.misc :as misc]
 											[numbo.history :as hist]
 											[numbo.pnet :as pn]
 											[numbo.working :as wm]))
@@ -24,7 +25,7 @@
 (defn -execute
  "Executes the function f, warning and doing nothing if f is nil"
  [f]
- (if f (f) (println "Warning: skipping nil function")))
+ (if f (f) (log/warn "Warning: skipping nil function")))
 
 (defn process-next-codelet
  "Grabs and executes a codelet from the rack, removing it afterwards"

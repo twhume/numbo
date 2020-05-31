@@ -1,5 +1,6 @@
 (ns numbo.pnet
-	(:require [numbo.misc :as misc]))
+	(:require [clojure.tools.logging :as log]
+											[numbo.misc :as misc]))
 
 ; Pnet is a map of name -> node, where name is a keyword name of the node, and node is a map:
 ; :activation - default 0
@@ -960,10 +961,10 @@
 							numbers (get-numbers p) ; just here so it's run on validation
 							]
 							(cond
-								(not-every? (set node-types) used-node-types) (do (println "Bad node types:" (remove (set node-types) used-node-types)) false)
-								(not-every? (set link-types) used-types) (do (println "Bad link types:" (remove (set link-types) used-types)) false)
-								(not-every? (set all-nodes) used-links) (do (println "Unknown nodes referenced in links:" (remove (set all-nodes) used-links)) false)
-								(not= (count numbers) (count (filter #(= :number (:type %)) (vals p)))) (do (println "Not every :number node resolves to a number") false)
+								(not-every? (set node-types) used-node-types) (do (log/warn "Bad node types:" (remove (set node-types) used-node-types)) false)
+								(not-every? (set link-types) used-types) (do (log/warn "Bad link types:" (remove (set link-types) used-types)) false)
+								(not-every? (set all-nodes) used-links) (do (log/warn "Unknown nodes referenced in links:" (remove (set all-nodes) used-links)) false)
+								(not= (count numbers) (count (filter #(= :number (:type %)) (vals p)))) (do (log/warn "Not every :number node resolves to a number") false)
 									:else true								
 							)))
 

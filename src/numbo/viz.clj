@@ -1,4 +1,5 @@
 (ns numbo.viz
+	(:require [clojure.tools.logging :as log])
 	(:require [clojure.zip :as zip])
 	(:require [numbo.coderack :as cr])
 	(:require [numbo.history :as hist])
@@ -178,7 +179,7 @@
  		  		 :blocks (hash-map :label label :style "filled" :color "black" :penwidth 1 :fontcolor "black" :fillcolor (-attr-to-color attr))
  		  		 :bricks (hash-map :label label :style "filled" :color "black" :penwidth 2 :fontcolor "black" :fillcolor (-attr-to-color attr) )
  		  		 :target (hash-map :label label :style "solid,filled" :color "red" :penwidth 2 :fontcolor "black" :fillcolor (-attr-to-color attr) )
- 		  		 :else (println "WEIRD TYPE" type)))))))
+ 		  		 :else (log/warn "WEIRD TYPE" type)))))))
  ([] (plot-wm @wm/TARGET @wm/BRICKS @wm/BLOCKS)))
  
 ; ----- Seesaw GUI hereon -----
