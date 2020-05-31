@@ -1,5 +1,6 @@
 (ns numbo.core
-	(:require [numbo.coderack :as cr]
+	(:require [clojure.tools.logging :as log]
+											[numbo.coderack :as cr]
 											[numbo.codelet :as cl]
 											[numbo.history :as hist]
 											[numbo.working :as wm]
@@ -10,12 +11,12 @@
 	"Dump state to console"
 	[]
 	(do
-		(println "ITERATION=" @cr/ITERATIONS)
-		(println "BLOCKS=" @wm/BLOCKS)
-		(println "BRICKS=" @wm/BRICKS)
-		(println "TARGET=" @wm/TARGET)
-		(println "PNET=" @pn/PNET)
-		(println "CODERACK=" @cr/CODERACK)
+		(log/debug "ITERATION=" @cr/ITERATIONS)
+		(log/debug "BLOCKS=" @wm/BLOCKS)
+		(log/debug "BRICKS=" @wm/BRICKS)
+		(log/debug "TARGET=" @wm/TARGET)
+		(log/debug "PNET=" @pn/PNET)
+		(log/debug "CODERACK=" @cr/CODERACK)
 	))
 
 ; Tick is called every n iterations and takes charge of starting random tasks. Each tick:
@@ -29,7 +30,8 @@
 	[]
 	(do
 ;		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
-;		(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
+		(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
+		(log/debug "tick")
 		(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile))
   (wm/decay)
 		(pn/decay)
@@ -41,7 +43,7 @@
   (do
 	 	(cr/process-next-codelet)
 
-	 	(if (= 0 (mod @cr/ITERATIONS 1)) (tick))
+	 	(if (= 0 (mod @cr/ITERATIONS 3)) (tick))
 	; 	(wm/print-state)
 	 	(if (not (pred)) (recur)))))
 
@@ -74,23 +76,11 @@
 	(cl/load-brick 6)
 
 
-	(run-until-empty-cr)
-	(cl/rand-block)
-	(cl/rand-syntactic-comparison)
-	(run-until-empty-cr)
-	(cl/rand-block)
-	(cl/rand-syntactic-comparison)
-	(run-until-empty-cr)
-	(cl/rand-block)
-	(cl/rand-syntactic-comparison)
-	(run-until-empty-cr)
-	(cl/rand-block)
-	(cl/rand-syntactic-comparison)
 	(run-for-iterations 100)
 
 	(viz/-main)
 	(catch Exception e
 	 (do
-			(println "Caught " e)
+			(log/error "Caught " e)
 			(dump)
 )))))
