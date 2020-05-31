@@ -151,10 +151,34 @@
 	 	:else nil
 )))
 
+; Search bricks and blocks to find an entry which is free and has the given value
+(defn -find-free-value
+ "Find a free brick or block with the given value"
+ [br bl v]
+ (filter #(and (= v (:value %1)) (:free %1)) (concat br bl)))
+
 (defn test-block
-	"Schedule a test of a given block UUID u"
+	"Schedule a test of a given block UUID u, if it can be found"
 	[u]
-)
+	(let [[block src] (wm/find-anywhere u)]
+		(cond
+			(nil? block) (println "test-block couldn't find UUID " u) ; Blocks may have been dismantled
+			(= :target src) (println "test-block resolved UUID to target " u) ; Should be impossible
+			(= :brick src) (println "test-block resolved UUID to brick " u)
+			:else	(cr/add-codelet (new-codelet :type :test-block :desc (str "Test block: " block) :urgency URGENCY_MEDIUM 
+				:fn (fn []
+				(let [p1-entry (-find-free-value @wm/BRICKS @wm/BLOCKS (first (:params block)))
+										p2-entry (-find-free-value @wm/BRICKS @wm/BLOCKS (second (:params block)))]
+					(if
+						(and
+						 p1-entry ; if there is a free entry for each parameter
+						 p2-entry
+						 (> 0.2 (:activation (get @pn/PNET (keyword (str (closest (pn/get-numbers) (:value block)))))))) ; and  nearest value in the Pnet is active (i.e. this is worthy)
+								(do
+;									(wm/mark-taken p1-entry)
+;									(wm/mark-taken p2-entry)
+								))
+				)))))))
 
 (defn seek-facsimile
  "Find a highly activated calculation, make a block for it, and schedule a test of it"
@@ -167,9 +191,9 @@
 	        op (first (pn/filter-links-for links :operator))
 	        result (apply (op pn/operator-map) params) ; Remember, result may not be the original one from the calculation...
 	        new-block (wm/new-entry result op params)]
-	        (if (= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
+	        (if (= (count params) 2) (do ; It's possible we don't find enough best matches - in which case the seek has failed
 		        	(wm/add-block new-block) ; Add a new block for the calculation to WM
-		        	(test-block (:uuid new-block))) ; Schedule a new test of it in future
+		        	(test-block (:uuid new-block)))) ; Schedule a new test of it in future
 	        	)
 	  )))))
 

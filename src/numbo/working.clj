@@ -1,4 +1,5 @@
 (ns numbo.working
+ (:require [clojure.tools.logging :as log])
 	(:require [clojure.zip :as zip])
  (:require [numbo.misc :as misc])
 	(:require [rhizome.viz :as rh]))
@@ -22,7 +23,7 @@
 
 ; BRICKS is a list of Entries, TARGET is an Entry
 ; Entries are maps with a :value, a random :uuid and an :attr(activeness)
-; Bricks have a :free field which indicates if the brick has been used. It's unused by target.
+; Bricks and blocks have a :free field which indicates if the brick has been used. It's unused by target.
 ;
 ; Entries in BLOCKS can also have an :op(erator) and a vector of 2 children, each ints or block entries
 ; (so Entries in BLOCKS are each "BlockTrees")
@@ -216,6 +217,26 @@
   (let [vals (filter #(= v (:value %1)) bl)]
   	(if (not-empty vals) (rand-nth vals) nil)))
  ([v] (get-block-by-result @BLOCKS v)))
+
+(defn mark-taken
+ "Mark the brick or block with uuid u as taken (:free false)"
+ ([ta br bl u]
+	 (let [[entry src] (find-anywhere ta br bl u)]
+	 	(if (nil? entry) (log/warn "mark-taken can't find entry with UUID " u)
+	 	 (let [taken-entry (assoc entry :free false)]
+		 	 (condp = src
+		 	 	:target (log/warn "mark-taken called on the target") ; I'm not sure when we would do this, if we ever do it's (update-target taken-entry)
+		 	 	:blocks (update-blocks taken-entry)
+		 	 	:bricks (update-brick taken-entry)
+		 	 	:else	(log/error "find-anywhere returned source of " src))))))
+ ([u] (mark-taken @TARGET @BRICKS @BLOCKS u)))
+
+(defn delete-block
+	"Remove the block with UUID u from the blocks-list"
+	([btl u] (filter #(not= u (:uuid %1)) btl)
+	([u] (reset! BLOCKS (delete-block @BLOCKS u)))))
+
+
 
 ; Contributors to temperature:
 ; # secondary targets

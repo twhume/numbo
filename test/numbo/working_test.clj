@@ -31,17 +31,15 @@
 (deftest set-target-test
 
 	(testing "Set target when memory is empty"
-		(do
 			(wm/reset)
 			(wm/set-target 999)
-			(is (= 999 (:value @wm/TARGET)))))
+			(is (= 999 (:value @wm/TARGET))))
 
 	(testing "Set target when memory is not empty")
-		(do
 			(wm/reset)
 			(wm/set-target 999)
 			(wm/set-target 998)
-			(is (= 998 (:value @wm/TARGET)))))
+			(is (= 998 (:value @wm/TARGET))))
 
 (deftest bricks-test
 
@@ -164,7 +162,6 @@
 (defn reset-wm
  "Resets WM to a known-good state"
  []
-	(do 
 		(wm/reset)
 		(wm/set-target 114)
 		(wm/add-brick 15)
@@ -173,10 +170,9 @@
 		(wm/add-brick 7)
 		(wm/add-block (wm/new-entry 9 :plus [2 7]))
 		(wm/add-block (wm/new-entry 30 :times [15 2]))
-		(wm/add-child-block (:uuid (first @wm/BLOCKS)) 1 7 :minus [10 2])))
+		(wm/add-child-block (:uuid (first @wm/BLOCKS)) 1 7 :minus [10 2]))
 
 (deftest find-anywhere-test
-		(do 
 			(reset-wm)
 			(testing "Find if target"
 				(is (= [@wm/TARGET :target] (wm/find-anywhere (:uuid @wm/TARGET)))))
@@ -187,42 +183,36 @@
 			(testing "Find if child block")
 				(is (= [(second (:params (first @wm/BLOCKS))) :blocks] (wm/find-anywhere (:uuid (second (:params (first @wm/BLOCKS)))))))
 			(testing "No matches"
-					(is (= nil (wm/find-anywhere "dummy-uuid"))))))
+					(is (= nil (wm/find-anywhere "dummy-uuid")))))
 
 (deftest pump-node-test
 	(testing "Pump if target"
-		(do
 			(reset-wm)
 			(wm/pump-node (:uuid @wm/TARGET))
-			(is (= (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION) (:attr @wm/TARGET)))))
+			(is (= (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION) (:attr @wm/TARGET))))
 
 	(testing "Pump if brick"
-		(do
 			(reset-wm)
 			(wm/pump-node (:uuid (first @wm/BRICKS)))
-			(is (= (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION) (:attr (first @wm/BRICKS))))))
+			(is (= (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION) (:attr (first @wm/BRICKS)))))
 
 	(testing "Pump if block"
-		(do
 			(reset-wm)
 			(wm/pump-node (:uuid (first @wm/BLOCKS)))
-			(is (= (+ wm/DEFAULT_ATTRACTION_INC (wm/-initial-attr (:value (first @wm/BLOCKS)))) (:attr (first @wm/BLOCKS))))))
+			(is (= (+ wm/DEFAULT_ATTRACTION_INC (wm/-initial-attr (:value (first @wm/BLOCKS)))) (:attr (first @wm/BLOCKS)))))
 
 	(testing "Pump if child block"
-		(do
 			(reset-wm)
 			(let [parent (first @wm/BLOCKS)
 									child (second (:params parent))]
 				(wm/pump-node (:uuid child))
-				(is (= (+ (wm/-initial-attr (:value child)) wm/DEFAULT_ATTRACTION_INC) (:attr (second (:params (first @wm/BLOCKS))))))))))
+				(is (= (+ (wm/-initial-attr (:value child)) wm/DEFAULT_ATTRACTION_INC) (:attr (second (:params (first @wm/BLOCKS)))))))))
 
 (deftest decay-test
-	(do
 		(reset-wm)
 		(let [old-target @wm/TARGET
 								old-bricks @wm/BRICKS
 								old-blocks @wm/BLOCKS]
-								(do
 									(wm/decay)
 							 	(testing "Target attr decays"
 							 		(is (< (:attr @wm/TARGET) (:attr old-target))))
@@ -235,4 +225,31 @@
 							 			(map list
 							 				(map :attr (filter (complement (and nil? int?)) (mapcat wm/-blocktree-nodes @wm/BLOCKS)))
 							 				(map :attr (filter (complement (and nil? int?)) (mapcat wm/-blocktree-nodes old-blocks)))))))
-	))))
+	))
+
+
+(deftest mark-taken-test
+	(testing "Mark taken - brick"
+			(reset-wm)
+			(let [brick-to-take (second @wm/BRICKS)
+									uuid-to-take (:uuid brick-to-take)]
+				(wm/mark-taken uuid-to-take)
+			(is (= false (:free (first (filter #(= uuid-to-take (:uuid %1)) @wm/BRICKS))))) ; the one we updated, was
+			(is (every? #(= true (:free %1)) (filter #(not= uuid-to-take (:uuid %1)) @wm/BRICKS))))) ; the others, weren't
+
+ 	(testing "Mark taken - block"
+			(reset-wm)
+			(let [block-to-take (second @wm/BLOCKS)
+									uuid-to-take (:uuid block-to-take)]
+				(wm/mark-taken uuid-to-take)
+			(is (= false (:free (first (filter #(= uuid-to-take (:uuid %1)) @wm/BLOCKS))))) ; the one we updated, was
+			(is (every? #(= true (:free %1)) (filter #(not= uuid-to-take (:uuid %1)) @wm/BLOCKS))))) ; the others, weren't
+
+ 	(testing "Mark taken - invalid uuid"
+			(reset-wm)
+				(let [uuid-to-take "random-uuid"
+										blocks-before @wm/BLOCKS
+										bricks-before @wm/BRICKS]
+					(wm/mark-taken uuid-to-take)
+					(is (= blocks-before @wm/BLOCKS))
+					(is (= bricks-before @wm/BRICKS)))))
