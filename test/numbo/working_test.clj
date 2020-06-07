@@ -1,5 +1,6 @@
 (ns numbo.working-test
 	(:require [clojure.test :refer :all]
+											[numbo.misc :as misc]
 											[numbo.working :as wm]))
 
 (deftest get-largest-brick-test
@@ -189,24 +190,24 @@
 	(testing "Pump if target"
 			(reset-wm)
 			(wm/pump-node (:uuid @wm/TARGET))
-			(is (= (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION) (:attr @wm/TARGET))))
+			(is (= (misc/normalized (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION)) (:attr @wm/TARGET))))
 
 	(testing "Pump if brick"
 			(reset-wm)
 			(wm/pump-node (:uuid (first @wm/BRICKS)))
-			(is (= (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION) (:attr (first @wm/BRICKS)))))
+			(is (= (misc/normalized (+ wm/DEFAULT_ATTRACTION_INC wm/DEFAULT_ATTRACTION)) (:attr (first @wm/BRICKS)))))
 
 	(testing "Pump if block"
 			(reset-wm)
 			(wm/pump-node (:uuid (first @wm/BLOCKS)))
-			(is (= (+ wm/DEFAULT_ATTRACTION_INC (wm/-initial-attr (:value (first @wm/BLOCKS)))) (:attr (first @wm/BLOCKS)))))
+			(is (= (misc/normalized (+ wm/DEFAULT_ATTRACTION_INC (wm/-initial-attr (:value (first @wm/BLOCKS))))) (:attr (first @wm/BLOCKS)))))
 
 	(testing "Pump if child block"
 			(reset-wm)
 			(let [parent (first @wm/BLOCKS)
 									child (second (:params parent))]
 				(wm/pump-node (:uuid child))
-				(is (= (+ (wm/-initial-attr (:value child)) wm/DEFAULT_ATTRACTION_INC) (:attr (second (:params (first @wm/BLOCKS)))))))))
+				(is (= (misc/normalized (+ (wm/-initial-attr (:value child)) wm/DEFAULT_ATTRACTION_INC)) (:attr (second (:params (first @wm/BLOCKS)))))))))
 
 (deftest decay-test
 		(reset-wm)

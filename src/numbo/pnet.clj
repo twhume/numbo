@@ -17,7 +17,7 @@
 
 (def DEFAULT_DECAY 0.05)
 (def DEFAULT_ACTIVATION 0)
-(def DEFAULT_INC 0.2)
+(def DEFAULT_INC 0.4)
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
 

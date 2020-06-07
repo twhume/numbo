@@ -44,11 +44,6 @@
 ;----- HELPER FUNCTIONS USED BY CODELETS -----
 ; move these into their files
 
-(defn closest
-	"Return the element of sequence s which is closest to the input value n"
-[s n]
-(nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))
-
 (defn wm-get-random-free-bricks
  "Returns a sequence of randomly chosen free bricks (probabilistically chosen)"
 	[]
@@ -60,11 +55,13 @@
 
 (defn activate-pnet
 	[n]
+	(do
+	(log/debug "activate-pnet n=" n)
 	(cr/add-codelet (new-codelet :type :activate-pnet
 																														:desc (str "Activate PNet: " n)
 																														:urgency URGENCY_MEDIUM
 																														:fn (fn [] (pn/activate-node n)))))
-
+)
 (defn pump-node
  "Pumps the attractiveness of a brick or block with UUID u"
 	[u]
@@ -85,7 +82,7 @@
 	 	:fn (fn []
 		 	(do
 		 		(wm/set-target v)
-		 	 (activate-pnet (keyword (str (closest (pn/get-numbers) v))))
+		 	 (activate-pnet (keyword (str (misc/closest (pn/get-numbers) v))))
 		 	 (map activate-pnet (pn/get-operators))
 		 	 (if (and 
 		 	 	(not (nil? (wm/get-largest-brick)))
@@ -121,7 +118,7 @@
 	:fn (fn [] 
 		(do
 			(wm/add-brick v)
-			(activate-pnet (keyword (str (closest (pn/get-numbers) v)))))))))
+			(activate-pnet (keyword (str (misc/closest (pn/get-numbers) v)))))))))
 
 ; Tries to build a block which makes something close to a biped in the pnet
 ; Find a biped: i.e. a randomly highly activated node of type :calculation
@@ -180,7 +177,7 @@
 						 p1-entry ; if there is a free entry for each parameter
 						 p2-entry
 						 (not= p1-entry p2-entry)
-						 (> 0.2 (:activation (get @pn/PNET (keyword (str (closest (pn/get-numbers) (:value block)))))))) ; and  nearest value in the Pnet is active (i.e. this is worthy)
+						 (> 0.2 (:activation (get @pn/PNET (keyword (str (misc/closest (pn/get-numbers) (:value block)))))))) ; and  nearest value in the Pnet is active (i.e. this is worthy)
 								(do
 								 (log/info "test-block " u " has params available and is worthy")
 									(wm/mark-taken (:uuid p1-entry))
@@ -225,10 +222,22 @@
  						op (pn/get-random-op)]
  						(cr/add-codelet (new-codelet :type :new-block
  							:desc (str "Random op: " (:name op) " " v1 "," v2)
- 							:urgency URGENCY_HIGH
+ 							:urgency URGENCY_MEDIUM
  							:fn (fn [] (wm/add-block (wm/new-entry 
  																			(((:name op) pn/operator-map) v1 v2)
  																			(:name op)
  																			(vector v1 v2))))))))
+
+(defn dismantler
+ "Picks a random low-attractiveness block and removes it, returning taken bricks"
+ []
+ (let [block (wm/get-unattractive-block)
+ 						uuid (:uuid block)]
+ (cr/add-codelet (new-codelet :type :dismantler
+ 	:desc (str "Dismantle " uuid)
+ 	:urgency URGENCY_LOW
+ 	:fn (fn [] (wm/delete-block uuid)) ; TODO: also undo any mark-takens
+ )
+)))
 
 ;----- END OF CODELETS -----

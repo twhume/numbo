@@ -15,11 +15,11 @@
 (def BLOCKS (atom '()))
 
 ; default amount by which to increase attractiveness of a node, when it's pumped
-(def DEFAULT_ATTRACTION_INC 0.5)
+(def DEFAULT_ATTRACTION_INC 0.7)
 ; default amount by which to decay attractiveness of a node, each timestep
 (def DEFAULT_ATTRACTION_DEC 0.05)
 ; default starting attraction
-(def DEFAULT_ATTRACTION 0.1)
+(def DEFAULT_ATTRACTION 0.4)
 
 ; BRICKS is a list of Entries, TARGET is an Entry
 ; Entries are maps with a :value, a random :uuid and an :attr(activeness)
@@ -212,11 +212,32 @@
  ([v] (get-brick-by-val @BRICKS v)))
 
 (defn get-block-by-result
- "Get a random brick with the value v"
+ "Get a random block with the result v"
  ([bl v]
   (let [vals (filter #(= v (:value %1)) bl)]
   	(if (not-empty vals) (rand-nth vals) nil)))
  ([v] (get-block-by-result @BLOCKS v)))
+
+(defn invert-val
+ "Invert the value of key k in map m"
+ [k m]
+ (assoc m k (- 1 (k m))))
+
+(defn get-unattractive-block
+ "Get a random block with the result v"
+ ([bl]
+  (let [bl-range (misc/make-percent-ranges (map (partial invert-val :attr) bl) :attr)]
+  	(if (not-empty bl-range) (invert-val :attr (misc/random-val-in-range bl-range)))))
+ ([] (get-unattractive-block @BLOCKS)))
+
+(defn -get-random-by-type
+	"Get a random node, sampled probabilistically by activation from all nodes of :type t"
+ [p t]
+	(let [op-range (misc/make-percent-ranges (filter #(= t (:type %)) (vals p)) :activation)]
+	 (if (not-empty op-range)
+	  (misc/random-val-in-range op-range))))
+
+
 
 (defn mark-taken
  "Mark the brick or block with uuid u as taken (:free false)"

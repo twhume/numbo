@@ -1,5 +1,6 @@
 (ns numbo.misc
-	(:require [clojure.zip :as zip]))
+	(:require [clojure.tools.logging :as log]
+											[clojure.zip :as zip]))
 
 ; Useful functions I want to avoid duplicating across files
 
@@ -80,3 +81,10 @@
  "Turn keyword into an integer"
  [k]
  (Integer/parseInt (name k)))
+
+(defn closest
+	"Return the element of sequence s which is closest to the input value n"
+[s n]
+(do (log/debug "closest s=" s " n=" n)
+(nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))
+)
