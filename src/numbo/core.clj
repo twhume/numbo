@@ -3,6 +3,7 @@
 											[numbo.coderack :as cr]
 											[numbo.codelet :as cl]
 											[numbo.history :as hist]
+											[numbo.misc :as misc]
 											[numbo.working :as wm]
 											[numbo.pnet :as pn]
 											[numbo.viz :as viz]))
@@ -29,12 +30,26 @@
 	"Schedule random regular tasks"
 	[]
 	(do
-;		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
-		(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
 		(log/debug "tick")
-		(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile))
+
+		(cond
+			(= 0 (mod @cr/ITERATIONS 3)) (do
+	;		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
+				(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
+				(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile))
+				(if (> (rand) (wm/get-temperature)) (cl/rand-block))
+				(if (< (rand) (wm/get-temperature)) (cl/dismantler)))
+
+			(= 0 (mod @cr/ITERATIONS 2)) (do 
+				(if (> (rand) (wm/get-temperature)) (cl/activate-pnet (keyword (str (misc/closest (pn/get-numbers) (:value (wm/get-random-brick false)))))))
+				(if (and
+					(> (rand) 0.9)
+					(not (nil? @wm/TARGET)))
+						(cl/activate-pnet (keyword (str (misc/closest (pn/get-numbers) (:value @wm/TARGET))))))))
+
   (wm/decay)
 		(pn/decay)
+
 	))
 
 (defn run-until
@@ -43,7 +58,7 @@
   (do
 	 	(cr/process-next-codelet)
 
-	 	(if (= 0 (mod @cr/ITERATIONS 3)) (tick))
+	 	(tick)
 	; 	(wm/print-state)
 	 	(if (not (pred)) (recur)))))
 
@@ -71,12 +86,12 @@
 
 	(cl/load-brick 11)
 	(cl/load-brick 20)
-	(cl/load-brick 7)
 	(cl/load-brick 1)
 	(cl/load-brick 6)
+	(cl/load-brick 7)
 
 
-	(run-for-iterations 100)
+	(run-for-iterations 250)
 
 	(viz/-main)
 	(catch Exception e

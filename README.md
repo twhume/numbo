@@ -30,8 +30,14 @@ Big next tasks
 
 GOAL THIS WEEK: have codelets removing as well as adding to WM
 
-* finish moving to tools.logging from println, and understanding how to vary log level at runtime
+* more codelets to create/try stuff, I get into a local maxima
+* add a test-block after a random-block?
+* add a dismantler codelet to dismantle a low-used block (step 7, p233 of paper)
+* add a compare-to-target codelet which creates secondary targets (if close). activate-node on the secondary target (step 6, p232 of paper)
+* add a tie-block-to-secondary-target codelet which takes a block and connects it to the secondary target?
+* add a check-target-achieved codelet
 
+see also p234 of paper for more. I think we could do more target comparisons (B)
 
 * start making stuff to eval and remove blocks from the WM
 * add more tests to rand-syntactic-comparison
