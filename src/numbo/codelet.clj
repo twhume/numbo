@@ -89,10 +89,11 @@
 (defn rand-syntactic-comparison
  "Examine a random brick or block, compare to the target, pump it if promising"
  []
- (let [blocks (list (wm/get-random-brick false) (wm/get-random-block))
+ (let [blocks (filter (complement nil?) (list (wm/get-random-brick false) (wm/get-random-block)))
  						block (rand-nth blocks)
  						val (str (:value block))
  						tval (str (:value @wm/TARGET))]
+ 						(log/debug "rand-syntactic-comparison val=" val ",blocks=" blocks)
  						(cr/add-codelet (new-codelet :type :rand-syntactic-comparison :desc (str "Compare " val " to target " tval) :urgency URGENCY_LOW
  						:fn (fn []
 							 (cond
@@ -106,7 +107,12 @@
 (defn create-secondary-target
  "Create a target block with value of tval, one arm is the child block with UUID child-u, the other a secondary value (pump!)"
 	[tval child-u secondary]
-)
+ (cr/add-codelet (new-codelet :type :create-secondary-target :desc (str "Create 2target:" child-u " off by" secondary) :urgency URGENCY_HIGH
+ :fn (fn [] 
+ 	(let [[child-b src] (wm/find-anywhere child-u)]
+ 		(if child-b (do
+ 			(log/debug "Adding block for 2target")
+		 	(wm/add-block (wm/new-entry tval :plus [child-b secondary])))))))))
 
 ; Run on newly created blocks; compares them to the target and if they're close, kick off
 ; a create-secondary-target codelet
@@ -114,14 +120,14 @@
 (defn probe-secondary-target
  "Probes a newly created block with uuid u to see if it justifies a secondary target"
  [u]
- (cr/add-codelet (new-codelet :type :probe-secondary-target :desc (str "Secondary target? " u) :urgency URGENCY_HIGH
+ (cr/add-codelet (new-codelet :type :probe-secondary-target :desc (str "Probe 2target:" u) :urgency URGENCY_HIGH
  :fn (fn []
  	(let [[bl src] (wm/find-anywhere u)
  								blval (:value bl)
  								tval (if @wm/TARGET (:value @wm/TARGET))
  	]
  		(log/debug "probe-secondary-target found in" src ":" bl)
- 		(if (misc/within tval blval 0.3) (do
+ 		(if (misc/within tval blval 0.4) (do
  			(log/debug "probe-secondary-target" blval "close enough to" tval)
  			(create-secondary-target tval u (Math/abs (- blval tval))))))))))
 
@@ -232,21 +238,22 @@
  						(cr/add-codelet (new-codelet :type :new-block
  							:desc (str "Random op: " (:name op) " " v1 "," v2)
  							:urgency URGENCY_MEDIUM
- 							:fn (fn [] (wm/add-block (wm/new-entry 
- 																			(((:name op) pn/operator-map) v1 v2)
- 																			(:name op)
- 																			(vector v1 v2))))))))
+ 							:fn (fn [] (let [entry (wm/new-entry	(((:name op) pn/operator-map) v1 v2) (:name op) (vector v1 v2))]
+	 								(wm/add-block entry)
+	 								(test-block (:uuid entry))
+ 								))))))
 
 (defn dismantler
  "Picks a random low-attractiveness block and removes it, returning taken bricks"
  []
  (let [block (wm/get-unattractive-block)
  						uuid (:uuid block)]
- (cr/add-codelet (new-codelet :type :dismantler
- 	:desc (str "Dismantle " uuid)
- 	:urgency URGENCY_LOW
- 	:fn (fn [] (wm/delete-block-and-free uuid)) 
- )
-)))
+ 						(if uuid
+							 (cr/add-codelet (new-codelet :type :dismantler
+							 	:desc (str "Dismantle " uuid)
+							 	:urgency URGENCY_LOW
+							 	:fn (fn [] (wm/delete-block-and-free uuid)) 
+							 )
+))))
 
 ;----- END OF CODELETS -----
