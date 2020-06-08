@@ -82,7 +82,7 @@
 		 	 		(activate-pnet :times))
 		 	)))))
 
-; syntactic-comparison (mid urgency) There is a type of codeliet which inspects various nodes and
+; syntactic-comparison (low urgency) There is a type of codeliet which inspects various nodes and
 ; notices syntactic similarities, increases attractiveness of them - e.g. if brick 11 shares digits 
 ; with target 114, increase attractiveness of 11 (p141)
 
@@ -93,7 +93,7 @@
  						block (rand-nth blocks)
  						val (str (:value block))
  						tval (str (:value @wm/TARGET))]
- 						(cr/add-codelet (new-codelet :type :syntactic-comparison :desc (str "Compare " val " to target " tval) :urgency URGENCY_LOW
+ 						(cr/add-codelet (new-codelet :type :rand-syntactic-comparison :desc (str "Compare " val " to target " tval) :urgency URGENCY_LOW
  						:fn (fn []
 							 (cond
 							 	(nil? block) nil ; if we couldn't find a block to compare to the target, just do nothing
@@ -102,6 +102,28 @@
 							  	(str/includes? val tval)
 							  	(str/includes? tval val)) (pump-node (:uuid block))
 							 ))))))
+
+(defn create-secondary-target
+ "Create a target block with value of tval, one arm is the child block with UUID child-u, the other a secondary value (pump!)"
+	[tval child-u secondary]
+)
+
+; Run on newly created blocks; compares them to the target and if they're close, kick off
+; a create-secondary-target codelet
+
+(defn probe-secondary-target
+ "Probes a newly created block with uuid u to see if it justifies a secondary target"
+ [u]
+ (cr/add-codelet (new-codelet :type :probe-secondary-target :desc (str "Secondary target? " u) :urgency URGENCY_HIGH
+ :fn (fn []
+ 	(let [[bl src] (wm/find-anywhere u)
+ 								blval (:value bl)
+ 								tval (if @wm/TARGET (:value @wm/TARGET))
+ 	]
+ 		(log/debug "probe-secondary-target found in" src ":" bl)
+ 		(if (misc/within tval blval 0.3) (do
+ 			(log/debug "probe-secondary-target" blval "close enough to" tval)
+ 			(create-secondary-target tval u (Math/abs (- blval tval))))))))))
 
 (defn load-brick
  "Loads a new brick into memory"
@@ -166,6 +188,7 @@
 								 (log/info "test-block " u " has params available and is worthy")
 									(wm/mark-free (:uuid p1-entry) false)
 									(wm/mark-free (:uuid p2-entry) false)
+									(probe-secondary-target u)
 								)
 								(do
 								 (log/info "test-block " u " judged unworthy")

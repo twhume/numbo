@@ -71,6 +71,19 @@
  ))
  ([v m] (normalized (+ (if v v 0) (if m m 0)))))
 
+(defn within
+	"is the value v1 within p% of v2?"
+	[v1 v2 p]
+	(do
+		(log/debug "within" v1 v2 p)
+	(cond
+		(nil? v1) false
+		(nil? v2) false
+		(and
+			(>= v1 (* v2 (- 1 p)))
+			(<= v1 (* v2 (+ 1 p)))) true
+		:else false))
+)
 ;; zip-walk takes a transformation function f and a zipper z.
 ;; f takes a location and returns location. Applies f
 ;; to the nodes in the zipper maintaining the original nesting.
