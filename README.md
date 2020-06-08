@@ -30,15 +30,19 @@ Big next tasks
 
 GOAL THIS WEEK: have codelets removing as well as adding to WM
 
-* more codelets to create/try stuff, I get into a local maxima
+* [WIP] add a dismantler codelet to dismantle a low-used block (step 7, p233 of paper)
+
 * add a test-block after a random-block?
-* add a dismantler codelet to dismantle a low-used block (step 7, p233 of paper)
 * add a compare-to-target codelet which creates secondary targets (if close). activate-node on the secondary target (step 6, p232 of paper)
 * add a tie-block-to-secondary-target codelet which takes a block and connects it to the secondary target?
 * add a check-target-achieved codelet
+* dismantler - takes a random unattractive block and break it up, marking any claimed bricks free. fire this from the core/tick when temperature is high
 
 see also p234 of paper for more. I think we could do more target comparisons (B)
 
+* fix up the temperature calculation - number of blocks should be a contributor, so when we have a ton we start dismantling...
+
+* skipping through steps in the vizualizer is super slow. Have an accelerator to go to the end, also am I repainting too often? - need to keep track of the current tab and only repaint that?
 * start making stuff to eval and remove blocks from the WM
 * add more tests to rand-syntactic-comparison
 * HOW DO I REPRESENT SECONDARY TARGETS
@@ -47,7 +51,6 @@ see also p234 of paper for more. I think we could do more target comparisons (B)
 Tidy-ups/small improvements
 
 * remove redundant (do) per https://www.quora.com/Why-and-when-should-I-use-the-do-expression-in-Clojure-instead-of-just-writing-multiple-expressions-sequentially
-* Allow provision of a random seed to make entire runs reproducible
 * work out how to make scroll bars appear on canvas
 * In pn/activate-node, take into account the weights of nodes
 * Rationale wm/new-node and cl/new-codelet - are they eerily similar?

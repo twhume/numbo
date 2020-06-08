@@ -9,6 +9,7 @@
                                               com.sun.jmx/jmxri]]
   															[org.clojure/clojure "1.10.0"]
   															[org.clojure/tools.logging "1.1.0"]
+  															[random-seed "1.0.0"]
   															[rhizome "0.2.9"]
   															[seesaw/seesaw "1.5.0"]]
   :main ^:skip-aot numbo.core

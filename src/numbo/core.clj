@@ -6,7 +6,14 @@
 											[numbo.misc :as misc]
 											[numbo.working :as wm]
 											[numbo.pnet :as pn]
-											[numbo.viz :as viz]))
+											[numbo.viz :as viz]
+											[random-seed.core :refer :all])
+	(:refer-clojure :exclude [rand rand-int rand-nth]))
+
+(let [seed (rand-int Integer/MAX_VALUE)]
+	(log/info "Starting with random seed" seed)
+	(set-random-seed! seed)
+)
 
 (defn dump
 	"Dump state to console"

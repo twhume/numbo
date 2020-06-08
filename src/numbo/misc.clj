@@ -1,6 +1,10 @@
 (ns numbo.misc
 	(:require [clojure.tools.logging :as log]
-											[clojure.zip :as zip]))
+											[clojure.zip :as zip]
+											[random-seed.core :refer :all])
+	(:refer-clojure :exclude [rand rand-int rand-nth]))
+
+
 
 ; Useful functions I want to avoid duplicating across files
 

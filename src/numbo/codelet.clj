@@ -4,7 +4,9 @@
 											[numbo.coderack :as cr]
 											[numbo.misc :as misc]
 											[numbo.pnet :as pn]
-											[numbo.working :as wm]))
+											[numbo.working :as wm]
+											[random-seed.core :refer :all])
+	(:refer-clojure :exclude [rand rand-int rand-nth]))
 
 (def codelet-types :load-target)
 
@@ -38,16 +40,6 @@
  "Create a skeleton of a new codelet, with optional modified fields"
  [& s]
  (into (hash-map :urgency URGENCY_LOW :fn -noop :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
-
-
-
-;----- HELPER FUNCTIONS USED BY CODELETS -----
-; move these into their files
-
-(defn wm-get-random-free-bricks
- "Returns a sequence of randomly chosen free bricks (probabilistically chosen)"
-	[]
-	)
 
 ;----- CODELETS HEREON -----
 
@@ -120,14 +112,6 @@
 			(wm/add-brick v)
 			(activate-pnet (keyword (str (misc/closest (pn/get-numbers) v)))))))))
 
-; Tries to build a block which makes something close to a biped in the pnet
-; Find a biped: i.e. a randomly highly activated node of type :calculation
-; Make a block for this calculation, by looking for  brick/block-results for each param, or :similar :params if not
-; Load a test-if-possible-and-desirable codelet on this block
-
-
-
-
 ; Best matches might be an exact match of the brick/block, or the exact match for a brick/block which is
 ; :similar in the Pnet to the node n. If there's no best match, return nil
 
@@ -189,6 +173,11 @@
 									) ; otherwise it hasn't proved useful... remove it
 				))))))))
 
+; Tries to build a block which makes something close to a biped in the pnet
+; Find a biped: i.e. a randomly highly activated node of type :calculation
+; Make a block for this calculation, by looking for  brick/block-results for each param, or :similar :params if not
+; Load a test-if-possible-and-desirable codelet on this block
+
 (defn seek-facsimile
  "Find a highly activated calculation, make a block for it, and schedule a test of it"
  []
@@ -233,7 +222,7 @@
  (cr/add-codelet (new-codelet :type :dismantler
  	:desc (str "Dismantle " uuid)
  	:urgency URGENCY_LOW
- 	:fn (fn [] (wm/delete-block uuid)) ; TODO: also undo any mark-takens
+ 	:fn (fn [] (wm/delete-block-and-free uuid)) 
  )
 )))
 

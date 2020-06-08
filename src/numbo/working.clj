@@ -1,8 +1,10 @@
 (ns numbo.working
- (:require [clojure.tools.logging :as log])
-	(:require [clojure.zip :as zip])
- (:require [numbo.misc :as misc])
-	(:require [rhizome.viz :as rh]))
+ (:require [clojure.tools.logging :as log]
+ 										[clojure.zip :as zip]
+ 										[numbo.misc :as misc]
+ 										[random-seed.core :refer :all]
+ 										[rhizome.viz :as rh])
+ (:refer-clojure :exclude [rand rand-int rand-nth]))
 
 ; 3rd iteration of working memory.
 ;
@@ -237,8 +239,6 @@
 	 (if (not-empty op-range)
 	  (misc/random-val-in-range op-range))))
 
-
-
 (defn mark-free
  "Mark the brick or block with uuid u as :free = v"
  ([ta br bl u v]
@@ -259,6 +259,13 @@
 	([btl u] (filter #(not= u (:uuid %1)) btl))
 	([u] (reset! BLOCKS (delete-block @BLOCKS u))))
 
+(defn delete-block-and-free
+ "Remove the block with UUID u from the blocks-list, and mark any bricks it uses as free"
+ ([u] (let [[bl src] (find-anywhere u)
+ 												uuids (filter (complement nil?) (map :uuid (-blocktree-nodes bl)))]
+ 	(map #(mark-free %1 true) uuids)
+ 	(reset! BLOCKS (delete-block @BLOCKS u)))
+ ))
 
 ; Contributors to temperature:
 ; # secondary targets
