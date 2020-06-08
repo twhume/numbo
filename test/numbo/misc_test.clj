@@ -88,12 +88,24 @@
 		; outside the ranges
 		(is (= false (misc/within 0.4 1 0.5)))
 		(is (= false (misc/within 1.6 1 0.5)))
+
+		(is (= false (misc/within 4 10 0.5)))
+		(is (= false (misc/within 16 10 0.5)))
+
 		; within the ranges
 		(is (= true (misc/within 0.6 1 0.5)))
 		(is (= true (misc/within 1.4 1 0.5)))
+
+		(is (= true (misc/within 6 10 0.5)))
+		(is (= true (misc/within 14 10 0.5)))
+
 		; on the border
 		(is (= true (misc/within 0.5 1 0.5)))
 		(is (= true (misc/within 1.5 1 0.5)))
+
+		(is (= true (misc/within 5 10 0.5)))
+		(is (= true (misc/within 15 10 0.5)))
+
 		; nil inputs
 		(is (= false (misc/within nil 1 0.5)))
 		(is (= false (misc/within 1.5 nil 0.5)))
