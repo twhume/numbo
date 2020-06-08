@@ -180,15 +180,12 @@
 						 (> 0.2 (:activation (get @pn/PNET (keyword (str (misc/closest (pn/get-numbers) (:value block)))))))) ; and  nearest value in the Pnet is active (i.e. this is worthy)
 								(do
 								 (log/info "test-block " u " has params available and is worthy")
-									(wm/mark-taken (:uuid p1-entry))
-									(wm/mark-taken (:uuid p2-entry))
+									(wm/mark-free (:uuid p1-entry) false)
+									(wm/mark-free (:uuid p2-entry) false)
 								)
 								(do
 								 (log/info "test-block " u " judged unworthy")
-								 (log/debug "test-block before delete " @wm/BLOCKS)
 									(wm/delete-block u)
-								 (log/debug "test-block after delete " @wm/BLOCKS)
-
 									) ; otherwise it hasn't proved useful... remove it
 				))))))))
 

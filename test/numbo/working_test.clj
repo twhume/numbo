@@ -228,12 +228,12 @@
 							 				(map :attr (filter (complement (and nil? int?)) (mapcat wm/-blocktree-nodes old-blocks)))))))
 	))
 
-(deftest mark-taken-test
-	(testing "Mark taken - brick"
+(deftest mark-free-test
+	(testing "Mark free - brick"
 			(reset-wm)
 			(let [brick-to-take (second @wm/BRICKS)
 									uuid-to-take (:uuid brick-to-take)]
-				(wm/mark-taken uuid-to-take)
+				(wm/mark-free uuid-to-take false)
 			(is (= false (:free (first (filter #(= uuid-to-take (:uuid %1)) @wm/BRICKS))))) ; the one we updated, was
 			(is (every? #(= true (:free %1)) (filter #(not= uuid-to-take (:uuid %1)) @wm/BRICKS))))) ; the others, weren't
 
@@ -241,7 +241,7 @@
 			(reset-wm)
 			(let [block-to-take (second @wm/BLOCKS)
 									uuid-to-take (:uuid block-to-take)]
-				(wm/mark-taken uuid-to-take)
+				(wm/mark-free uuid-to-take false)
 			(is (= false (:free (first (filter #(= uuid-to-take (:uuid %1)) @wm/BLOCKS))))) ; the one we updated, was
 			(is (every? #(= true (:free %1)) (filter #(not= uuid-to-take (:uuid %1)) @wm/BLOCKS))))) ; the others, weren't
 
@@ -250,7 +250,7 @@
 				(let [uuid-to-take "random-uuid"
 										blocks-before @wm/BLOCKS
 										bricks-before @wm/BRICKS]
-					(wm/mark-taken uuid-to-take)
+					(wm/mark-free uuid-to-take false)
 					(is (= blocks-before @wm/BLOCKS))
 					(is (= bricks-before @wm/BRICKS)))))
 

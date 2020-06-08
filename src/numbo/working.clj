@@ -239,26 +239,25 @@
 
 
 
-(defn mark-taken
- "Mark the brick or block with uuid u as taken (:free false)"
- ([ta br bl u]
+(defn mark-free
+ "Mark the brick or block with uuid u as :free = v"
+ ([ta br bl u v]
   (log/debug "mark-taken u=" u)
 	 (let [[entry src] (find-anywhere ta br bl u)]
 	   (log/debug "mark-taken entry=" entry "src=" src)
 	 	(if (nil? entry) (log/warn "mark-taken can't find entry with UUID " u)
-	 	 (let [taken-entry (assoc entry :free false)]
+	 	 (let [taken-entry (assoc entry :free v)]
 		 	 (condp = src
 		 	 	:target (log/warn "mark-taken called on the target") ; I'm not sure when we would do this, if we ever do it's (update-target taken-entry)
 		 	 	:blocks (update-blocks taken-entry)
 		 	 	:bricks (update-brick taken-entry)
 		 	 	:else	(log/error "find-anywhere returned source of " src))))))
- ([u] (mark-taken @TARGET @BRICKS @BLOCKS u)))
+ ([u v] (mark-free @TARGET @BRICKS @BLOCKS u v)))
 
 (defn delete-block
 	"Remove the block with UUID u from the blocks-list"
 	([btl u] (filter #(not= u (:uuid %1)) btl))
 	([u] (reset! BLOCKS (delete-block @BLOCKS u))))
-
 
 
 ; Contributors to temperature:
