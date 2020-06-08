@@ -40,15 +40,21 @@
 		(log/debug "tick")
 
 		(cond
+			(= 0 (mod @cr/ITERATIONS 5)) (do
+				(if (> (rand) (wm/get-temperature)) (cl/rand-block)))
+
 			(= 0 (mod @cr/ITERATIONS 3)) (do
 	;		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
 				(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
 				(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile))
-				(if (> (rand) (wm/get-temperature)) (cl/rand-block))
 				(if (< (rand) (wm/get-temperature)) (cl/dismantler)))
 
 			(= 0 (mod @cr/ITERATIONS 2)) (do 
-				(if (> (rand) (wm/get-temperature)) (cl/activate-pnet (keyword (str (misc/closest (pn/get-numbers) (:value (wm/get-random-brick false)))))))
+				(if (> (rand) (wm/get-temperature))
+					(let [br (wm/get-random-brick false)]
+						(if br
+							(cl/activate-pnet (keyword (str (misc/closest (pn/get-numbers) (:value br))))))))
+
 				(if (and
 					(> (rand) 0.9)
 					(not (nil? @wm/TARGET)))
@@ -98,7 +104,7 @@
 	(cl/load-brick 7)
 
 
-	(run-for-iterations 250)
+	(run-for-iterations 1000)
 
 	(viz/-main)
 	(catch Exception e
