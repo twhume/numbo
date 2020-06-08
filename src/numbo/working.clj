@@ -279,6 +279,7 @@
  "What's the temperature of the working memory?"
  ([ta br bl] 
  (+
+  (* 0.05 (count bl)) ; Add 0.05 for each block we have; lots of blocks --> trigger dismantlers
  	(* 0.1 (count (filter :free br))) ; Add 0.1 for each free brick
  	(* -0.05 (count (filter (partial < 0.3) ; Subtract 0.05 for each node with an :attr > 0.3
  								(filter (complement nil?) (mapcat #(map :attr (-blocktree-nodes %1)) bl)))))
