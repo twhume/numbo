@@ -106,13 +106,13 @@
 
 (defn create-secondary-target
  "Create a target block with value of tval, one arm is the child block with UUID child-u, the other a secondary value (pump!)"
-	[tval child-u secondary]
+	[tval child-u op secondary]
  (cr/add-codelet (new-codelet :type :create-secondary-target :desc (str "Create 2target:" child-u " off by" secondary) :urgency URGENCY_HIGH
  :fn (fn [] 
  	(let [[child-b src] (wm/find-anywhere child-u)]
  		(if child-b (do
  			(log/debug "Adding block for 2target")
-		 	(wm/add-block (wm/new-entry tval :plus [child-b secondary])))))))))
+		 	(wm/add-block (wm/new-entry tval op [child-b secondary])))))))))
 
 ; Run on newly created blocks; compares them to the target and if they're close, kick off
 ; a create-secondary-target codelet
@@ -129,7 +129,9 @@
  		(log/debug "probe-secondary-target found in" src ":" bl)
  		(if (misc/within tval blval 0.4) (do
  			(log/debug "probe-secondary-target" blval "close enough to" tval)
- 			(create-secondary-target tval u (Math/abs (- blval tval))))))))))
+ 			(create-secondary-target tval u
+ 				(if (< blval tval) :plus :minus)
+ 			 (Math/abs (- blval tval))))))))))
 
 (defn load-brick
  "Loads a new brick into memory"

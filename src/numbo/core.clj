@@ -12,7 +12,7 @@
 
 (let [seed (rand-int Integer/MAX_VALUE)]
 	(log/info "Starting with random seed" seed)
-	(set-random-seed! seed)
+	(set-random-seed! 1699998207)
 )
 
 (defn dump
@@ -40,10 +40,10 @@
 		(log/debug "tick")
 
 		(cond
-			(= 0 (mod @cr/ITERATIONS 5)) (do
-				(if (> (rand) (wm/get-temperature)) (cl/rand-block)))
+;			(= 0 (mod @cr/ITERATIONS 5)) (do
+;				(if (< (rand) (wm/get-temperature)) (cl/rand-block)))
 
-			(= 0 (mod @cr/ITERATIONS 3)) (do
+			(= 0 (mod @cr/ITERATIONS 2)) (do
 	;		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
 				(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
 				(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile))
@@ -104,7 +104,7 @@
 	(cl/load-brick 7)
 
 
-	(run-for-iterations 1000)
+	(run-for-iterations 5000)
 
 	(viz/-main)
 	(catch Exception e

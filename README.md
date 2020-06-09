@@ -30,17 +30,14 @@ Big next tasks
 
 GOAL THIS WEEK: have codelets removing as well as adding to WM
 
-* [WIP] add a dismantler codelet to dismantle a low-used block (step 7, p233 of paper)
+* Complete create-secondary-target - add a new block, then activate the secondary bit
+
 
 * add a test-block after a random-block?
-* add a compare-to-target codelet which creates secondary targets (if close). activate-node on the secondary target (step 6, p232 of paper)
 * add a tie-block-to-secondary-target codelet which takes a block and connects it to the secondary target?
 * add a check-target-achieved codelet
-* dismantler - takes a random unattractive block and break it up, marking any claimed bricks free. fire this from the core/tick when temperature is high
 
 see also p234 of paper for more. I think we could do more target comparisons (B)
-
-* fix up the temperature calculation - number of blocks should be a contributor, so when we have a ton we start dismantling...
 
 * skipping through steps in the vizualizer is super slow. Have an accelerator to go to the end, also am I repainting too often? - need to keep track of the current tab and only repaint that?
 * start making stuff to eval and remove blocks from the WM
