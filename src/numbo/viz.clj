@@ -158,9 +158,9 @@
 							[entry src] (wm/find-anywhere ta br bl node-uuid)]
 							(if (-is-virt-uuid? u)
 								(condp = (-get-virt-param u)
-									"op" [((:op entry) -op-names) :op]
-									"param0" [(first (:params entry)) :param]
-									"param1" [(second (:params entry)) :param]
+									"op" [((:op entry) -op-names) :op (:attr entry)]
+									"param0" [(first (:params entry)) :param (:attr entry)]
+									"param1" [(second (:params entry)) :param (:attr entry)]
 									"ERROR")
 							[(:value entry) src (:attr entry)])))
 
@@ -175,7 +175,7 @@
  		  (let [[label type attr] (-get-node-label ta br bl u)]
  		  		(condp = type
  		  		 :op (hash-map :label label :style "filled" :fontcolor "white"  :color "black" :fixedsize true :width 0.4 :height 0.4 )
- 		  		 :param (hash-map :label label :style "solid" :fontcolor "black" :color "black" )
+ 		  		 :param (hash-map :label label :style "filled" :fontcolor "black" :color "black" :fillcolor (-attr-to-color attr))
  		  		 :blocks (hash-map :label label :style "filled" :color "black" :penwidth 1 :fontcolor "black" :fillcolor (-attr-to-color attr))
  		  		 :bricks (hash-map :label label :style "filled" :color "black" :penwidth 2 :fontcolor "black" :fillcolor (-attr-to-color attr) )
  		  		 :target (hash-map :label label :style "solid,filled" :color "red" :penwidth 2 :fontcolor "black" :fillcolor (-attr-to-color attr) )
@@ -242,7 +242,8 @@
 (defn cr-tab
  "Draws the Coderack tab"
  [] 
- (table :id :coderack-table :model (-current-coderack)))
+ (scrollable (table :id :coderack-table
+ 							:model (-current-coderack))))
 
 (defn make-frame []
   (frame
@@ -272,9 +273,11 @@
 			    			])
 			    		:east (vertical-panel
 					    	:items [
-				    				(button :id :prev :text "Previous")
-				    				(button :id :next :text "Next")
-				    				(button :id :quit :text "Quit")
+				    				(button :id :btn-last :text "Last")
+				    				(button :id :btn-next :text "Next")
+				    				(button :id :btn-prev :text "Previous")
+				    				(button :id :btn-first :text "First")
+				    				(button :id :btn-quit :text "Quit")
 			    			]))])))
 
 (defn repaint-images
@@ -297,23 +300,32 @@
 					(text! (select r [:#temperature]) (format "%3.0f%%" (* 100 (:temperature (nth @hist/HISTORY @CURRENT)))))
 	)))
 
-(defn back [f]
+(defn go-back [f]
 	(go-history f (dec @CURRENT)))
 
-(defn forward [f]
+(defn go-forward [f]
 	(go-history f (inc @CURRENT)))
 
-(defn add-behaviors [f]
-  (let [{:keys [quit prev next]} (group-by-id f)]
+(defn go-first [f]
+	(go-history f 0))
 
-    (listen prev :action (fn [_] (back f)))
-    (listen next :action (fn [_] (forward f)))
-    (listen quit :action (fn [e] (System/exit 0) ))
+(defn go-last [f]
+	(go-history f (dec (count @hist/HISTORY))))
+
+
+(defn add-behaviors [f]
+  (let [{:keys [btn-quit btn-prev btn-next btn-first btn-last]} (group-by-id f)]
+
+    (listen btn-prev :action (fn [_] (go-back f)))
+    (listen btn-next :action (fn [_] (go-forward f)))
+    (listen btn-first :action (fn [_] (go-first f)))
+    (listen btn-last :action (fn [_] (go-last f)))
+    (listen btn-quit :action (fn [e] (System/exit 0) ))
 
     (listen f :component-resized (fn [_] (repaint-images f)))
 
-    (map-key f "LEFT" (fn [_] (back f)) :scope :global)
-    (map-key f "RIGHT" (fn [_] (forward f)) :scope :global)
+    (map-key f "LEFT" (fn [_] (go-back f)) :scope :global)
+    (map-key f "RIGHT" (fn [_] (go-forward f)) :scope :global)
 
   f))
 
