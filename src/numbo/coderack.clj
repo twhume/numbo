@@ -34,7 +34,7 @@
  	(do
  		(log/info  "Iteration" @ITERATIONS ":" (:desc codelet))
  	 (if ((complement nil?) codelet) (-execute (:fn codelet)))
- 	 (hist/add-step @pn/PNET @wm/TARGET @wm/BRICKS @wm/BLOCKS @CODERACK codelet @ITERATIONS (wm/get-temperature))
+ 	 (hist/add-step @pn/PNET @wm/TARGET @wm/BRICKS @wm/BLOCKS @CODERACK codelet @ITERATIONS (wm/get-temperature) @wm/TARGET2)
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
  		(swap! ITERATIONS inc)
  	 ))))

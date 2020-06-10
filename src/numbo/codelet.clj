@@ -48,19 +48,22 @@
 (defn activate-pnet
 	[n]
 	(do
-	(log/debug "activate-pnet n=" n)
 	(cr/add-codelet (new-codelet :type :activate-pnet
 																														:desc (str "Activate PNet: " n)
 																														:urgency URGENCY_MEDIUM
-																														:fn (fn [] (pn/activate-node n)))))
-)
+																														:fn (fn [] (do
+																												 		(log/info "activate-pnet" n)
+																												 		(pn/activate-node n)))))))
+
 (defn pump-node
  "Pumps the attractiveness of a brick or block with UUID u"
 	[u]
 	(cr/add-codelet (new-codelet :type :inc-attraction
 																														:desc (str "Pump brick/block: " u)
 																														:urgency URGENCY_MEDIUM :fn
-																														(fn [] (wm/pump-node u)))))
+																														(fn [] (do
+																												 		(log/info "pump-node" u)
+																															(wm/pump-node u))))))
 
 ; load-target - (high urgency) when a target is loaded, the pnet landmark closest is activated.
 ; operands (* - +) are activated. If it’s larger than the largest brick, * is activated more.
@@ -73,6 +76,7 @@
  	(new-codelet :type :load-target :desc (str "Load target: " v) :urgency URGENCY_HIGH
 	 	:fn (fn []
 		 	(do
+		 		(log/info "load-target" v)
 		 		(wm/set-target v)
 		 	 (activate-pnet (keyword (str (misc/closest (pn/get-numbers) v))))
 		 	 (map activate-pnet (pn/get-operators))
@@ -90,46 +94,56 @@
  "Examine a random brick or block, compare to the target, pump it if promising"
  []
  (let [blocks (filter (complement nil?) (list (wm/get-random-brick false) (wm/get-random-block)))
- 						block (rand-nth blocks)
+ 						block (if (empty? blocks) nil (rand-nth blocks))
  						val (str (:value block))
  						tval (str (:value @wm/TARGET))]
- 						(log/debug "rand-syntactic-comparison val=" val ",blocks=" blocks)
- 						(cr/add-codelet (new-codelet :type :rand-syntactic-comparison :desc (str "Compare " val " to target " tval) :urgency URGENCY_LOW
- 						:fn (fn []
-							 (cond
-							 	(nil? block) nil ; if we couldn't find a block to compare to the target, just do nothing
-							  ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
-							  (or
-							  	(str/includes? val tval)
-							  	(str/includes? tval val)) (pump-node (:uuid block))
-							 ))))))
+ 						(if block
+	 						(cr/add-codelet (new-codelet :type :rand-syntactic-comparison :desc (str "Compare " val " to target " tval) :urgency URGENCY_LOW
+	 						:fn (fn []
+	 						 (do
+	 	 						(log/info "rand-syntactic-comparison val=" val ",blocks=" blocks)
+									 (cond
+									 	(nil? block) nil ; if we couldn't find a block to compare to the target, just do nothing
+									  ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
+									  (or
+									  	(str/includes? val tval)
+									  	(str/includes? tval val)) (do
+									  		(log/debug "rand-syntactic-comparison pumping " (:uuid block))
+									  		(pump-node (:uuid block)))
+									 ))))))))
 
-(defn create-secondary-target
+(defn create-target2
  "Create a target block with value of tval, one arm is the child block with UUID child-u, the other a secondary value (pump!)"
 	[tval child-u op secondary]
- (cr/add-codelet (new-codelet :type :create-secondary-target :desc (str "Create 2target:" child-u " off by" secondary) :urgency URGENCY_HIGH
+ (cr/add-codelet (new-codelet :type :create-secondary-target :desc (str "Create target2:" child-u " off by " secondary) :urgency URGENCY_HIGH
  :fn (fn [] 
  	(let [[child-b src] (wm/find-anywhere child-u)]
- 		(if child-b (do
- 			(log/debug "Adding block for 2target")
-		 	(wm/add-block (wm/new-entry tval op [child-b secondary])))))))))
+ 		(if child-b
+ 			(let [new-block (wm/new-entry tval op [child-b secondary])]
+ 				(log/info "create-target2 " tval child-u op secondary)
+	 			(log/debug "Adding block for target2")
+			 	(wm/add-block new-block)
+			 	(activate-pnet (keyword (str (misc/closest (pn/get-numbers) tval))))
+			 	(wm/add-target2 (:uuid new-block))
+			 	)))))))
 
 ; Run on newly created blocks; compares them to the target and if they're close, kick off
 ; a create-secondary-target codelet
 
-(defn probe-secondary-target
+(defn probe-target2
  "Probes a newly created block with uuid u to see if it justifies a secondary target"
  [u]
- (cr/add-codelet (new-codelet :type :probe-secondary-target :desc (str "Probe 2target:" u) :urgency URGENCY_HIGH
+ (cr/add-codelet (new-codelet :type :probe-target2 :desc (str "Probe target2:" u) :urgency URGENCY_HIGH
  :fn (fn []
  	(let [[bl src] (wm/find-anywhere u)
  								blval (:value bl)
  								tval (if @wm/TARGET (:value @wm/TARGET))
  	]
- 		(log/debug "probe-secondary-target found in" src ":" bl)
+ 		(log/info "probe-target2 " u)
+ 		(log/debug "probe-target2 found in" src ":" bl)
  		(if (misc/within tval blval 0.4) (do
- 			(log/debug "probe-secondary-target" blval "close enough to" tval)
- 			(create-secondary-target tval u
+ 			(log/debug "probe-target2" blval "close enough to" tval)
+ 			(create-target2 tval u
  				(if (< blval tval) :plus :minus)
  			 (Math/abs (- blval tval))))))))))
 
@@ -139,6 +153,7 @@
 	(cr/add-codelet (new-codelet :type :load-brick :desc (str "Load brick: " v) :urgency URGENCY_HIGH
 	:fn (fn [] 
 		(do
+	  (log/info "load-brick " v)
 			(wm/add-brick v)
 			(activate-pnet (keyword (str (misc/closest (pn/get-numbers) v)))))))))
 
@@ -185,7 +200,7 @@
 										p2-entry (if (= (first params) (second params)) ; cope with the case where both params are the same
 																				(second (-find-free-values @wm/BRICKS @wm/BLOCKS (first params)))
 																				(first (-find-free-values @wm/BRICKS @wm/BLOCKS (second params))))]
-										(log/debug "test-block p1-entry=" p1-entry " p2-entry=" p2-entry)
+										(log/info "test-block uuid=" u " p1-entry=" p1-entry " p2-entry=" p2-entry)
 					(if
 						(and
 						 p1-entry ; if there is a free entry for each parameter
@@ -193,13 +208,13 @@
 						 (not= p1-entry p2-entry)
 						 (> 0.2 (:activation (get @pn/PNET (keyword (str (misc/closest (pn/get-numbers) (:value block)))))))) ; and  nearest value in the Pnet is active (i.e. this is worthy)
 								(do
-								 (log/info "test-block " u " has params available and is worthy")
+								 (log/debug "test-block " u " has params available and is worthy")
 									(wm/mark-free (:uuid p1-entry) false)
 									(wm/mark-free (:uuid p2-entry) false)
-									(probe-secondary-target u)
+									(probe-target2 u)
 								)
 								(do
-								 (log/info "test-block " u " judged unworthy")
+								 (log/debug "test-block " u " judged unworthy")
 									(wm/delete-block u)
 									) ; otherwise it hasn't proved useful... remove it
 				))))))))
@@ -220,7 +235,10 @@
 	        op (first (pn/filter-links-for links :operator))
 	        result (apply (op pn/operator-map) params) ; Remember, result may not be the original one from the calculation...
 	        new-block (wm/new-entry result op params)]
+	       	(log/info "seek-facsimile for " calc)
+
 	        (if (= (count params) 2) (do ; It's possible we don't find enough best matches - in which case the seek has failed
+			       	(log/debug "seek-facsimile adding " new-block)
 		        	(wm/add-block new-block) ; Add a new block for the calculation to WM
 		        	(test-block (:uuid new-block)))) ; Schedule a new test of it in future
 	        	)
@@ -237,10 +255,11 @@
  						b2 (wm/get-random-brick false)
  						v2 (:value b2)
  						op (pn/get-random-op)]
- 						(cr/add-codelet (new-codelet :type :new-block
+ 						(cr/add-codelet (new-codelet :type :rand-block
  							:desc (str "Random op: " (:name op) " " v1 "," v2)
  							:urgency URGENCY_MEDIUM
  							:fn (fn [] (let [entry (wm/new-entry	(((:name op) pn/operator-map) v1 v2) (:name op) (vector v1 v2))]
+ 									(log/info "rand-block adding " entry)
 	 								(wm/add-block entry)
 	 								(test-block (:uuid entry))
  								))))))
@@ -252,9 +271,11 @@
  						uuid (:uuid block)]
  						(if uuid
 							 (cr/add-codelet (new-codelet :type :dismantler
-							 	:desc (str "Dismantle " uuid)
+							 	:desc (str "dismantler " uuid)
 							 	:urgency URGENCY_LOW
-							 	:fn (fn [] (wm/delete-block-and-free uuid)) 
+							 	:fn (fn [] (do
+							 		(log/info "dismantler " uuid)
+							 		(wm/delete-block-and-free uuid)))
 							 )
 ))))
 

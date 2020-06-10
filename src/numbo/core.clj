@@ -10,10 +10,11 @@
 											[random-seed.core :refer :all])
 	(:refer-clojure :exclude [rand rand-int rand-nth]))
 
-(let [seed (rand-int Integer/MAX_VALUE)]
-	(log/info "Starting with random seed" seed)
-	(set-random-seed! 1699998207)
-)
+(def seed (rand-int Integer/MAX_VALUE))
+(def seed 1572254847)
+
+(log/info "Starting with random seed" seed)
+(set-random-seed! seed)
 
 (defn dump
 	"Dump state to console"
@@ -23,6 +24,7 @@
 		(log/debug "BLOCKS=" @wm/BLOCKS)
 		(log/debug "BRICKS=" @wm/BRICKS)
 		(log/debug "TARGET=" @wm/TARGET)
+		(log/debug "TARGET2=" @wm/TARGET2)
 		(log/debug "PNET=" @pn/PNET)
 		(log/debug "CODERACK=" @cr/CODERACK)
 	))
@@ -43,27 +45,41 @@
 ;			(= 0 (mod @cr/ITERATIONS 5)) (do
 ;				(if (< (rand) (wm/get-temperature)) (cl/rand-block)))
 
-			(= 0 (mod @cr/ITERATIONS 2)) (do
-	;		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
-				(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
-				(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile))
-				(if (< (rand) (wm/get-temperature)) (cl/dismantler)))
+			(= 0 (mod @cr/ITERATIONS 4)) (do
+																														 		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
+																																	(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
+																																	(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile)))
 
-			(= 0 (mod @cr/ITERATIONS 2)) (do 
-				(if (> (rand) (wm/get-temperature))
-					(let [br (wm/get-random-brick false)]
-						(if br
-							(cl/activate-pnet (keyword (str (misc/closest (pn/get-numbers) (:value br))))))))
+			; Pump a random brick every few iterations
 
-				(if (and
-					(> (rand) 0.9)
-					(not (nil? @wm/TARGET)))
-						(cl/activate-pnet (keyword (str (misc/closest (pn/get-numbers) (:value @wm/TARGET))))))))
+			(= 0 (mod @cr/ITERATIONS 3)) (do 
+																																	(if (< (rand) (wm/get-temperature)) (cl/dismantler)) ; if it's getting too hot, dismantle something
+																																	(if (> (rand) (wm/get-temperature)) ; When it's not so hot, pump a brick target
+																																		(let [br (wm/get-random-brick false)]
+																																			(if br
+																																				(cl/activate-pnet (keyword (str (misc/closest (pn/get-numbers) (:value br)))))))))
+
+		; Pump a target (chosen randomly from the primary and secondary targets) 1 in 10 iterations
+
+			(= 0 (mod @cr/ITERATIONS 10)) (do 
+																																		(if (not (nil? @wm/TARGET))
+																																			(let [uuids (conj @wm/TARGET2 (:uuid @wm/TARGET))
+																																									rand-uuid (rand-nth (seq uuids))
+																																									[rand-entry rand-src] (wm/find-anywhere rand-uuid)
+																																									pn-node (keyword (str (misc/closest (pn/get-numbers) (:value rand-entry))))]
+																																			(log/debug "tick activating pnet for" pn-node rand-src)
+																																			(cl/activate-pnet pn-node))))
+
+			)
+
+
+		
 
   (wm/decay)
 		(pn/decay)
+		(wm/flush-target2)
 
-	))
+))
 
 (defn run-until
  [pred]

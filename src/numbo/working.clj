@@ -1,5 +1,6 @@
 (ns numbo.working
  (:require [clojure.tools.logging :as log]
+ 										[clojure.set :as set]
  										[clojure.zip :as zip]
  										[numbo.misc :as misc]
  										[random-seed.core :refer :all]
@@ -15,6 +16,7 @@
 (def BRICKS (atom '()))
 (def TARGET (atom nil))
 (def BLOCKS (atom '()))
+(def TARGET2 (atom '#{})) ; secondary targets
 
 ; default amount by which to increase attractiveness of a node, when it's pumped
 (def DEFAULT_ATTRACTION_INC 0.7)
@@ -115,6 +117,7 @@
 	(do
 		(reset! BRICKS '())
 		(reset! TARGET nil)
+		(reset! TARGET2 '#{})
 		(reset! BLOCKS '())))
 
 (defn add-brick
@@ -266,6 +269,22 @@
  	(map #(mark-free %1 true) uuids)
  	(reset! BLOCKS (delete-block @BLOCKS u)))
  ))
+
+(defn add-target2
+ "Add the UUID of a block to a list of secondary targets"
+ ([t u] (conj t u))
+ ([u] (reset! TARGET2 (add-target2 @TARGET2 u))))
+
+(defn flush-target2
+	"Clean the list of secondary targets, to remove blocks which no longer exist"
+	([bl t2] (set/intersection t2 (set (map :uuid bl))))
+	([] (reset! TARGET2 (flush-target2 @BLOCKS @TARGET2))))
+
+(defn add-brick
+	"Adds a single brick to memory"
+	([br val free] (conj br (assoc (new-entry val) :free free)))
+	([br val] (add-brick br val true))
+ ([val] (reset! BRICKS (add-brick @BRICKS val))))
 
 ; Contributors to temperature:
 ; # secondary targets

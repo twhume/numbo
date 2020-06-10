@@ -18,8 +18,8 @@
  (reset! HISTORY '[]))
 
 (defn add-step
- ([h p t br bl r l i te]
- 	(conj h (hash-map :pnet p :target t :bricks br :blocks bl :coderack r :codelet l :iteration i :temperature te)))
- ([p t br bl r l i te]
- 	(reset! HISTORY (add-step @HISTORY p t br bl r l i te))))
+ ([h p t br bl r l i te t2]
+ 	(conj h (hash-map :pnet p :target t :bricks br :blocks bl :coderack r :codelet l :iteration i :temperature te :target2 t2)))
+ ([p t br bl r l i te t2]
+ 	(reset! HISTORY (add-step @HISTORY p t br bl r l i te t2))))
 
