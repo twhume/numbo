@@ -45,15 +45,13 @@
 ;			(= 0 (mod @cr/ITERATIONS 5)) (do
 ;				(if (< (rand) (wm/get-temperature)) (cl/rand-block)))
 
-			(= 0 (mod @cr/ITERATIONS 4)) (do
-																														 		(if (> (rand) (wm/get-temperature)) (cl/rand-block))
-																																	(if (> (rand) (wm/get-temperature)) (cl/rand-syntactic-comparison))
-																																	(if (> (rand) (wm/get-temperature)) (cl/seek-facsimile)))
+			(= 0 (mod @cr/ITERATIONS 2)) (do
+																																	(if (< (rand) (wm/get-temperature)) (cl/dismantler)) ; if it's getting too hot, dismantle something
+																														 		(if (> (rand) (wm/get-temperature)) ((rand-nth (list cl/rand-block cl/rand-syntactic-comparison cl/seek-facsimile)))))
 
 			; Pump a random brick every few iterations
 
-			(= 0 (mod @cr/ITERATIONS 3)) (do 
-																																	(if (< (rand) (wm/get-temperature)) (cl/dismantler)) ; if it's getting too hot, dismantle something
+			(= 0 (mod @cr/ITERATIONS 10)) (do 
 																																	(if (> (rand) (wm/get-temperature)) ; When it's not so hot, pump a brick target
 																																		(let [br (wm/get-random-brick false)]
 																																			(if br
@@ -61,7 +59,7 @@
 
 		; Pump a target (chosen randomly from the primary and secondary targets) 1 in 10 iterations
 
-			(= 0 (mod @cr/ITERATIONS 10)) (do 
+			(= 0 (mod @cr/ITERATIONS 15)) (do 
 																																		(if (not (nil? @wm/TARGET))
 																																			(let [uuids (conj @wm/TARGET2 (:uuid @wm/TARGET))
 																																									rand-uuid (rand-nth (seq uuids))
