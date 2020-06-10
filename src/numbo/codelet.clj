@@ -189,7 +189,7 @@
 	[u]
 	(let [[block src] (wm/find-anywhere u)]
 		(cond
-			(nil? block) (log/info "test-block couldn't find UUID " u) ; Blocks may have been dismantled
+			(nil? block) (log/warn "test-block couldn't find UUID " u) ; Blocks may have been dismantled
 			(= :target src) (log/warn "test-block resolved UUID to target " u) ; Should be impossible
 			(= :brick src) (log/warn "test-block resolved UUID to brick " u) ; Should be impossible
 			:else	(cr/add-codelet (new-codelet :type :test-block :desc (str "Test block: " block) :urgency URGENCY_HIGH

@@ -31,7 +31,20 @@ Big next tasks
 GOAL THIS WEEK: have codelets removing as well as adding to WM
 
 * Complete create-secondary-target - add a new block, then activate the secondary bit
+-- ARGH how do we ensure efforts to generate that secondary target?
+-- 1. Pump the Pnet for this target2 immediately, and for secondary targets in repeatedly, to generate ops which might lead to them
 
+* I can't see a secondary target ever getting pumped - are they not lasting long enough? Tried lengthening decays
+* Temperature drops to zero and never recovers. BUG: bricks are never being marked free again - delete-block-and-free isn't freeing bricks up
+
+See debugging notes
+
+
+-- 2. Have a codelet which tries to match a new block to a target2
+-- 3. have the syntactic test also look at target2s
+
+
+Q: can secondary nodes themselves have secondary nodes?
 
 * add a test-block after a random-block?
 * add a tie-block-to-secondary-target codelet which takes a block and connects it to the secondary target?

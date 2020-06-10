@@ -21,7 +21,7 @@
 ; default amount by which to increase attractiveness of a node, when it's pumped
 (def DEFAULT_ATTRACTION_INC 0.7)
 ; default amount by which to decay attractiveness of a node, each timestep
-(def DEFAULT_ATTRACTION_DEC 0.05)
+(def DEFAULT_ATTRACTION_DEC 0.02)
 ; default starting attraction
 (def DEFAULT_ATTRACTION 0.4)
 
@@ -266,6 +266,7 @@
  "Remove the block with UUID u from the blocks-list, and mark any bricks it uses as free"
  ([u] (let [[bl src] (find-anywhere u)
  												uuids (filter (complement nil?) (map :uuid (-blocktree-nodes bl)))]
+ 												(log/debug "delete-block-and-free freeing " uuids)
  	(map #(mark-free %1 true) uuids)
  	(reset! BLOCKS (delete-block @BLOCKS u)))
  ))
