@@ -245,13 +245,13 @@
 (defn mark-free
  "Mark the brick or block with uuid u as :free = v"
  ([ta br bl u v]
-  (log/debug "mark-taken u=" u)
+  (log/debug "mark-free u=" u "v=" v)
 	 (let [[entry src] (find-anywhere ta br bl u)]
-	   (log/debug "mark-taken entry=" entry "src=" src)
-	 	(if (nil? entry) (log/warn "mark-taken can't find entry with UUID " u)
+	   (log/debug "mark-free entry=" entry "src=" src)
+	 	(if (nil? entry) (log/warn "mark-free can't find entry with UUID " u)
 	 	 (let [taken-entry (assoc entry :free v)]
 		 	 (condp = src
-		 	 	:target (log/warn "mark-taken called on the target") ; I'm not sure when we would do this, if we ever do it's (update-target taken-entry)
+		 	 	:target (log/warn "mark-free called on the target") ; I'm not sure when we would do this, if we ever do it's (update-target taken-entry)
 		 	 	:blocks (update-blocks taken-entry)
 		 	 	:bricks (update-brick taken-entry)
 		 	 	:else	(log/error "find-anywhere returned source of " src))))))
@@ -266,10 +266,10 @@
  "Remove the block with UUID u from the blocks-list, and mark any bricks it uses as free"
  ([u] (let [[bl src] (find-anywhere u)
  												uuids (filter (complement nil?) (map :uuid (-blocktree-nodes bl)))]
- 												(log/debug "delete-block-and-free freeing " uuids)
- 	(map #(mark-free %1 true) uuids)
+ 	(log/debug "delete-block-and-free freeing " uuids)
+ 	(doall (map #(mark-free %1 true) uuids))
  	(reset! BLOCKS (delete-block @BLOCKS u)))
- ))
+	))
 
 (defn add-target2
  "Add the UUID of a block to a list of secondary targets"

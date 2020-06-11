@@ -1,5 +1,6 @@
 (ns numbo.working-test
-	(:require [clojure.test :refer :all]
+	(:require [clojure.tools.logging :as log]
+											[clojure.test :refer :all]
 											[numbo.misc :as misc]
 											[numbo.working :as wm]))
 
@@ -280,4 +281,37 @@
 				(wm/delete-block uuid-to-delete)
 				(is (= old-blocks @wm/BLOCKS)))))
 
+(defn reset-wm-markfree
+ "Resets WM to a known-good state for mark-free test"
+ []
+		(wm/reset)
+		(wm/set-target 114)
+		(wm/add-brick 15)
+		(wm/add-brick 10)
+		(wm/add-brick 2)
+		(wm/add-brick 7)
+		(wm/add-block (wm/new-entry 9 :plus [2 7]))
+		(wm/add-block (wm/new-entry 30 :times [15 2]))
+		(wm/add-child-block (:uuid (first @wm/BLOCKS)) 1 7 :minus [10 2]))
 
+ ; test that all bricks are free
+ ; add a block X that uses brick Y - check Y is marked taken
+ ; delete X - check Y is marked free
+
+(deftest mark-free-brick-test
+ 	(testing "Marking free for bricks"
+ 	 (reset-wm-markfree)
+ 	 (let [brick-2 (wm/get-brick-by-val 2)
+ 	 						brick-10 (wm/get-brick-by-val 10)
+ 	 						new-block (wm/new-entry 12 :plus [brick-2 brick-10])]
+ 	 		(is (= 4 (count (filter :free @wm/BRICKS)))) ; initially all bricks are free
+ 	 		(is (= 2 (count @wm/BLOCKS))) ; we start with 2 blocks
+ 	 		(wm/mark-free (:uuid brick-2) false)
+ 	 		(wm/mark-free (:uuid brick-10) false)
+ 	 		(wm/add-block new-block)
+ 	 		(is (= 2 (count (filter :free @wm/BRICKS)))) ; now only bricks are free
+ 	 		(is (= 3 (count @wm/BLOCKS))) ; now we have a new block
+ 	 		(wm/delete-block-and-free (:uuid new-block))
+ 	 		(is (= 4 (count (filter :free @wm/BRICKS)))) ; now only bricks are free
+ 	 		(is (= 2 (count @wm/BLOCKS))) ; we are back with 2 blocks
+)))

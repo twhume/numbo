@@ -200,7 +200,7 @@
 										p2-entry (if (= (first params) (second params)) ; cope with the case where both params are the same
 																				(second (-find-free-values @wm/BRICKS @wm/BLOCKS (first params)))
 																				(first (-find-free-values @wm/BRICKS @wm/BLOCKS (second params))))]
-										(log/info "test-block uuid=" u " p1-entry=" p1-entry " p2-entry=" p2-entry)
+										(log/info "test-block block=" block "src=" src)
 					(if
 						(and
 						 p1-entry ; if there is a free entry for each parameter
@@ -211,6 +211,8 @@
 								 (log/debug "test-block " u " has params available and is worthy")
 									(wm/mark-free (:uuid p1-entry) false)
 									(wm/mark-free (:uuid p2-entry) false)
+									(wm/update-blocks (assoc block :params (vector p1-entry p2-entry))) ; rewrite the block so it refers to the bricks it uses.
+									; update these parameters in the block
 									(probe-target2 u)
 								)
 								(do

@@ -105,15 +105,18 @@
 		 							node-op-uuid (str node-uuid "_op")
 		 							node-children (-block-children node)
 		 							]
+		 							(log/debug "-blocktree-to-graph out=" out "node=" node "node-uuid=" node-uuid "node-op-uuid=" node-op-uuid "node-children=" node-children)
 			  	(recur
 			  		(zip/next cur)
 			  		(do
-			  			(if (int? node) out
-					  	(assoc out
-					  		node-uuid (vector node-op-uuid)
-					  		node-op-uuid node-children
-					  		(first node-children) '[]
-					  		(second node-children) '[]
+			  			(cond
+			  				(int? node) out
+			  				(or (nil? node-children) (empty? node-children)) (assoc out node-uuid (vector node-op-uuid))
+					  		:else (assoc out
+													  		node-uuid (vector node-op-uuid)
+													  		node-op-uuid node-children
+													  		(first node-children) '[]
+													  		(second node-children) '[]
 			  		)))))))))
 
 (defn -brick-to-graph
@@ -127,6 +130,10 @@
  (let [bt-graphs (apply merge (map -blocktree-to-graph bl))
  						ta-graph (if (nil? ta) '{} (-brick-to-graph ta))
  						br-graphs (apply merge (map -brick-to-graph br))]
+ 						  (log/debug "-to-graph bt-graphs=" bt-graphs)
+ 						  (log/debug "-to-graph ta-graph=" ta-graph)
+ 						  (log/debug "-to-graph br-graphs=" br-graphs)
+
  	(apply merge bt-graphs ta-graph br-graphs)))
 
 ; add root nodes for all the MAGIC child IDs
