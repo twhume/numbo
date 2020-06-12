@@ -151,6 +151,11 @@
 	([c v] (-closest-node (:blocks c) eval v))
 	([v] (closest-block @CYTO v)))
 
+(defn block-result
+	"Return all blocks which have result v"
+ ([c v] (filter #(= v (eval (:val %1))) (:blocks c)))
+ ([v] (block-result @CYTO v)))
+
 
 ;(defn add-brick
 ;	"Adds a single brick to memory"
