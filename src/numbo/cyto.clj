@@ -4,17 +4,12 @@
  										[random-seed.core :refer :all])
  (:refer-clojure :exclude [rand rand-int rand-nth]))
 
-
-
-
 ; default amount by which to increase attractiveness of a node, when it's pumped
 (def DEFAULT_ATTRACTION_INC 0.7)
 ; default amount by which to decay attractiveness of a node, each timestep
 (def DEFAULT_ATTRACTION_DEC 0.02)
 ; default starting attraction
 (def DEFAULT_ATTRACTION 0.4)
-
-
 
 ; ----- Private functions -----
 
@@ -42,7 +37,6 @@
  [s v]
  (let [[n m] (split-with #(not= v (:val %1)) s)] (concat n (rest m))))
 
-
 (defn -third
 	"Return the third item in the sequence s"
 	[s]
@@ -52,6 +46,13 @@
  "Takes a potentially nested block and returns all the bricks"
  [b]
  (filter (and (complement sequential?) int?) (tree-seq sequential? seq b)))
+
+; Not exactly efficient but we'll be going over ~5 nodes at most.
+
+(defn -closest-node
+	"Given a sequence s of nodes, apply function f to the value of each and return one with the nearest result to v"
+	[s f v]
+	(ffirst (sort-by val (into '{} (map #(hash-map (:val %1) (Math/abs (- v (f (:val %1))))) s)))))
 
 ;(defn -decay-attr
 ; "Decay the attractiveness of the map br"
@@ -107,11 +108,9 @@
  ([n] (random-brick @CYTO n))
 	([] (random-brick @CYTO 1)))
 
-; Not efficient but we'll be going over 5 bricks tops...
-
 (defn closest-brick
 	"Returns the closest brick to the value v"
-	([c v] (ffirst (sort-by val (into '{} (map #(hash-map (:val %1) (Math/abs (- v (:val %1)))) (:bricks c))))))
+	([c v] (-closest-node (:bricks c) identity v))
 	([v] (closest-brick @CYTO v)))
 
 ; ----- Functions for blocks -----
@@ -126,7 +125,7 @@
 (defn add-block
 	"Add a new block b to the cytoplasm c"
 	([c b]
-		(if (every? true? (map (partial brick-free?) (-bricks-for-block b))) ; if all the parameters are free bricks
+		(if (every? true? (map (partial brick-free?) (-bricks-for-block b))) ; if all the parameters of the block are free bricks
 		 (-> c
 				(update-in [:blocks] (partial conj) (-new-node b)) ; add the new block to the cyto
 				(update-in [:bricks] (partial reduce -remove-first) (-bricks-for-block b))) ; remove all the bricks from the free list
@@ -147,10 +146,10 @@
  		 	c))); otherwise don't
  ([b] (reset! CYTO (del-block @CYTO b))))
 
-; where '(7 9) is a list of all the blocks to return'
-; (update-in @cy/CYTO [:bricks] (partial apply conj) (map cy/-new-node '(7 9)))
-
-
+(defn closest-block
+ "Return the block which most closely produces v"
+	([c v] (-closest-node (:blocks c) eval v))
+	([v] (closest-block @CYTO v)))
 
 
 ;(defn add-brick
