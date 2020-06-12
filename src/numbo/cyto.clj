@@ -54,6 +54,7 @@
 	[s f v]
 	(ffirst (sort-by val (into '{} (map #(hash-map (:val %1) (Math/abs (- v (f (:val %1))))) s)))))
 
+
 ;(defn -decay-attr
 ; "Decay the attractiveness of the map br"
 ; [br]
@@ -156,6 +157,13 @@
  ([c v] (filter #(= v (eval (:val %1))) (:blocks c)))
  ([v] (block-result @CYTO v)))
 
+(defn unworthy-block
+ "Return a random block, weighted by the inverse of its attractiveness"
+ ([c]
+		(misc/invert-val :attr ; invert it back again once we have it
+			(misc/random-val-in-range
+				(misc/make-percent-ranges (map (partial misc/invert-val :attr) (:blocks c)) :attr))))
+	([] (unworthy-block @CYTO)))
 
 ;(defn add-brick
 ;	"Adds a single brick to memory"
@@ -224,10 +232,7 @@
 ;  	(if (not-empty vals) (rand-nth vals) nil)))
 ; ([v] (get-block-by-result @BLOCKS v)))
 
-;(defn invert-val
-; "Invert the value of key k in map m"
-; [k m]
-; (assoc m k (- 1 (k m))))
+
 
 ;(defn get-unattractive-block
 ; "Get a random block with the result v"

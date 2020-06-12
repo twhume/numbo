@@ -84,6 +84,12 @@
 			(<= v1 (* v2 (+ 1 p)))) true
 		:else false))
 )
+
+(defn invert-val
+ "Invert the value of key k in map m"
+ [k m]
+ (assoc m k (round-to 2 (- 1 (k m)))))
+
 ;; zip-walk takes a transformation function f and a zipper z.
 ;; f takes a location and returns location. Applies f
 ;; to the nodes in the zipper maintaining the original nesting.
