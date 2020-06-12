@@ -105,3 +105,8 @@
 (do (log/debug "closest s=" s " n=" n)
 (nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))
 )
+
+(defn seq-remove
+ "Return sequence s without the first instance of value v"
+ [s v]
+ (let [[n m] (split-with (partial not= v) s)] (concat n (rest m))))
