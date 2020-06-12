@@ -35,7 +35,8 @@
 (defn -remove-first
  "Return sequence s without the first instance of a node with value v"
  [s v]
- (let [[n m] (split-with #(not= v (:val %1)) s)] (concat n (rest m))))
+ ((if (vector? s) vec identity) ; preserve vectorhood in inputs, as we rely on it for ordering purposes
+ 	(let [[n m] (split-with #(not= v (:val %1)) s)] (concat n (rest m)))))
 
 (defn -third
 	"Return the third item in the sequence s"
@@ -54,7 +55,6 @@
 	[s f v]
 	(ffirst (sort-by val (into '{} (map #(hash-map (:val %1) (Math/abs (- v (f (:val %1))))) s)))))
 
-
 ;(defn -decay-attr
 ; "Decay the attractiveness of the map br"
 ; [br]
@@ -69,7 +69,7 @@
 	[]
 	'{:bricks ()
 	  :blocks ()
-	  :targets ()}
+	  :targets []} ; Vector because the first entry is the primary target
 )
 
 (def CYTO (atom (new-cyto)))
@@ -78,6 +78,41 @@
 	"Resets the cytoplasm"
 	[]
 	(reset! CYTO (new-cyto)))
+
+; ----- Functions for targets -----
+
+(defn set-target
+ "Sets the primary target to t"
+ ([c t] (if (empty? (:targets c))
+ 	(update-in c [:targets] (partial conj) (-new-node t))
+ 	(do
+ 		(log/warn "set-target" t "but there's already a target in " (:targets c))
+ 		c)))
+ ([t] (reset! CYTO (set-target @CYTO t))))
+
+(defn get-target
+	"Returns the current primary target"
+	([c] (:val (first (:targets c))))
+	([] (get-target @CYTO)))
+
+(defn add-target2
+ "Adds a secondary target t"
+ ([c t] (if (> (count (:targets c)) 0)
+ 	(update-in c [:targets] (partial conj) (-new-node t))
+ 	(do
+ 		(log/warn "add-target2" t "but no primary target set")
+ 		c)))
+ ([t] (reset! CYTO (add-target2 @CYTO t))))
+
+(defn del-target2
+ "Removes the first instance of a secondary target t"
+ ([c t]
+ (cond
+  (= t (get-target)) (do (log/warn "del-target2 called on primary target" t) c)
+  (empty? (rest (:targets c))) (do (log/warn "del-target2 called but no secondary targets set") c)
+  :else (update-in c [:targets] (partial -remove-first) t)))
+ ([t] (reset! CYTO (del-target2 @CYTO t))))
+
 
 ; ----- Functions for bricks -----
 

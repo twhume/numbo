@@ -114,5 +114,6 @@
 
 (defn seq-remove
  "Return sequence s without the first instance of value v"
- [s v]
- (let [[n m] (split-with (partial not= v) s)] (concat n (rest m))))
+ [s v] ((if (vector? s) vec identity) ; preserve vectorhood!
+ 	(let [[n m] (split-with (partial not= v) s)] (concat n (rest m)))))
+
