@@ -43,6 +43,16 @@
  (let [[n m] (split-with #(not= v (:val %1)) s)] (concat n (rest m))))
 
 
+(defn -third
+	"Return the third item in the sequence s"
+	[s]
+	(nth s 2))
+
+(defn -bricks-for-block
+ "Takes a potentially nested block and returns all the bricks"
+ [b]
+ (filter (and (complement sequential?) int?) (tree-seq sequential? seq b)))
+
 ;(defn -decay-attr
 ; "Decay the attractiveness of the map br"
 ; [br]
@@ -106,25 +116,42 @@
 
 ; ----- Functions for blocks -----
 
-; b should be a list of [op b1 b2] where b1 and b2 can be blocks themselves, or integers
-
-(defn add-block
-	"Add a new block b to the cytoplasm c"
-	([c b]
-		(if (every? true? (map (partial brick-free?) (rest b))) ; if all the parameters are free bricks
-		 (-> c
-				(update-in [:blocks] (partial conj) (-new-node b)) ; add the new block to the cyto
-				(update-in [:bricks] (partial -remove-first) (second b)) ; remove the first brick, because it's taken
-				(update-in [:bricks] (partial -remove-first) (nth b 2))) ; remove the second brick, because it's taken
-		 (do
-		 	(log/warn "add-block failed, bricks not free for " b)
-		 c))) ; otherwise don't
-	([b] (reset! CYTO (add-block @CYTO b))))
+; Herein, block b should be a list of [op b1 b2] where b1 and b2 can be blocks themselves, or integers
 
 (defn block-exists?
  "Does the cytoplasm contain the supplied block b?"
  ([c b] (-contains-n-vals? (:blocks c) b 1))
  ([b] (block-exists? @CYTO b)))
+
+(defn add-block
+	"Add a new block b to the cytoplasm c"
+	([c b]
+		(if (every? true? (map (partial brick-free?) (-bricks-for-block b))) ; if all the parameters are free bricks
+		 (-> c
+				(update-in [:blocks] (partial conj) (-new-node b)) ; add the new block to the cyto
+				(update-in [:bricks] (partial reduce -remove-first) (-bricks-for-block b))) ; remove all the bricks from the free list
+		 (do
+		 	(log/warn "add-block failed, bricks not free for " b)
+		 	c))) ; otherwise don't
+	([b] (reset! CYTO (add-block @CYTO b))))
+
+(defn del-block
+ "Removes the block b from the cytoplasm c, returning its bricks"
+ ([c b]
+ 	(if (block-exists? c b) ; if the cytoplasm still contains this block
+ 		(-> c
+ 			(update-in [:blocks] (partial -remove-first) b) ; remove the block
+ 			(update-in [:bricks] (partial apply conj) (map -new-node (-bricks-for-block b)))) ; return all its bricks
+ 		(do
+ 		 (log/warn "del-block failed, block not in cytoplasm " b)
+ 		 	c))); otherwise don't
+ ([b] (reset! CYTO (del-block @CYTO b))))
+
+; where '(7 9) is a list of all the blocks to return'
+; (update-in @cy/CYTO [:bricks] (partial apply conj) (map cy/-new-node '(7 9)))
+
+
+
 
 ;(defn add-brick
 ;	"Adds a single brick to memory"
