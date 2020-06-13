@@ -69,6 +69,13 @@
 															updates (map #(assoc %1 :attr (misc/normalized i (:attr %1))) matches)]
 															(replace  (apply hash-map (interleave matches updates)) m)))
 
+(defn -dec-attr
+ "Decay the :attr of each entry in the sequence s by i"
+ [i s]
+ (map #(assoc %1 :attr (misc/normalized (:attr %1) (* -1 i))) s))
+
+
+
 ;(defn -decay-attr
 ; "Decay the attractiveness of the map br"
 ; [br]
@@ -239,6 +246,18 @@
 	([c v] (-closest-node (concat (:bricks c) (:blocks c)) eval v))
 	([v] (closest-node @CYTO v)))
 
+; ----- Other functions -----
+
+(defn decay
+ "Causes all attractiveness of all bricks, blocks, targets to drop"
+ ([c]
+	 (-> c
+	 	(update-in [:blocks] (partial -dec-attr DEFAULT_ATTRACTION_DEC))
+	 	(update-in [:bricks] (partial -dec-attr DEFAULT_ATTRACTION_DEC))
+	 	(update-in [:targets] (partial -dec-attr DEFAULT_ATTRACTION_DEC))))
+ ([] (reset! CYTO (decay @CYTO))))
+
+
 ; Contributors to temperature:
 ; # secondary targets
 ; # nodes which are highly attractive
@@ -259,17 +278,6 @@
  	
  ))
  ([] (get-temperature @CYTO)))
-
-(defn decay
- "Causes all attractiveness of all blocks to drop"
- []
-; (do
-; 	(reset! TARGET (-decay-attr @TARGET))
-;	 (reset! BRICKS (map -decay-attr @BRICKS))
-;	 (reset! BLOCKS (map -decay-blocktree @BLOCKS))
-
-	 )
-
 
 
 (add-brick 1)
