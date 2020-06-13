@@ -74,15 +74,6 @@
  [i s]
  (map #(assoc %1 :attr (misc/normalized (:attr %1) (* -1 i))) s))
 
-
-
-;(defn -decay-attr
-; "Decay the attractiveness of the map br"
-; [br]
-; (if (nil? br) nil ; nil in, nil out - useful because before being set our TARGET is nil
-; 	(assoc br :attr (misc/normalized (:attr br) (* -1 DEFAULT_ATTRACTION_DEC)))))
-
-
 ; ----- Public functions -----
 
 (defn new-cyto
@@ -165,6 +156,20 @@
 	"Returns the closest brick to the value v"
 	([c v] (-closest-node (:bricks c) identity v))
 	([v] (closest-brick @CYTO v)))
+
+; Used when going from (target=100) (* 24 4) --> (+ (* 24 4) 4)
+; (combine-target '(* 24 4) 4)
+
+(defn combine-target2
+ "Combine the block b with an existing secondary target t, using operator o"
+ ([c b t o]
+ 	(let [bl (first (filter #(= b (:val %1)) (:blocks c))) ; look up the block entry
+ 							new-bl (assoc bl :val (list o (:val bl) t))] ; update it to the new form
+	 	(if (nil? bl) (do
+	 		(log/warn "combine-target2 couldn't find block" b)
+	 		c)
+	 	(update-in c [:blocks] (partial replace (hash-map bl new-bl))))))
+ ([b t o] (reset! CYTO (combine-target2 @CYTO b t o))))
 
 ; ----- Functions for blocks -----
 
