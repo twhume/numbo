@@ -55,6 +55,20 @@
 	[s f v]
 	(ffirst (sort-by val (into '{} (map #(hash-map (:val %1) (Math/abs (- v (f (:val %1))))) s)))))
 
+(defn -n-random-nodes
+ "Return n nodes, weighted by attraction, from the supplied list s"
+ [s n]
+ (loop [ranges (misc/make-percent-ranges s :attr) ret '()]
+			(let [entry (first (filter #(< (rand-int (first (last ranges))) (first %)) ranges))]
+				(if (or (empty? ranges) (= n (count ret))) ret
+					(recur (misc/seq-remove ranges entry) (conj ret (:val (second entry))))))))
+
+(defn -inc-attr
+ "Up the :attr value of nodes with :val n in the map m by i"
+	[i m n] (let [matches (filter #(= n (:val %1)) m)
+															updates (map #(assoc %1 :attr (misc/normalized i (:attr %1))) matches)]
+															(replace  (apply hash-map (interleave matches updates)) m)))
+
 ;(defn -decay-attr
 ; "Decay the attractiveness of the map br"
 ; [br]
@@ -136,11 +150,7 @@
 
 (defn random-brick
 	"Return a random brick, or n random bricks, probabilistically weighted by attraction"
-	([c n]
-		(loop [ranges (misc/make-percent-ranges (:bricks c) :attr) ret '()]
-			(let [entry (first (filter #(< (rand-int (first (last ranges))) (first %)) ranges))]
-				(if (or (empty? ranges) (= n (count ret))) ret
-					(recur (misc/seq-remove ranges entry) (conj ret (:val (second entry))))))))
+	([c n] (-n-random-nodes (:bricks c) n))
  ([n] (random-brick @CYTO n))
 	([] (random-brick @CYTO 1)))
 
@@ -200,88 +210,34 @@
 				(misc/make-percent-ranges (map (partial misc/invert-val :attr) (:blocks c)) :attr))))
 	([] (unworthy-block @CYTO)))
 
-;(defn add-brick
-;	"Adds a single brick to memory"
-;	([br val free] (conj br (assoc (new-entry val) :free free)))
-;	([br val] (add-brick br val true))
-; ([val] (reset! BRICKS (add-brick @BRICKS val))))
+; ----- Functions for nodes (i.e. blocks AND bricks) -----
 
-;(defn update-brick
-; "Updates the supplied brick br into the bricks list bl"
-; ([bl br] (map #(if (= (:uuid br) (:uuid %1)) br %1) bl))
-; ([br] (reset! BRICKS (update-brick @BRICKS br))))
+(defn random-node
+	"Return a random node, or n random nodes, probabilistically weighted by attraction"
+	([c n] (-n-random-nodes (concat (:bricks c) (:blocks c)) n))
+ ([n] (random-node @CYTO n))
+	([] (random-node @CYTO 1)))
 
+(defn free-nodes
+ "Return all the bricks or blocks with the value v"
+ ([c v] (concat
+ 	(filter #(= v (:val %1)) (:bricks c))
+  (filter #(= v (eval (:val %1))) (:blocks c))))
+ ([v] (free-nodes @CYTO v)))
 
-;(defn add-block
-; "Adds a new block to memory"
-;	([bl b] (conj bl b))
-;	([b] (reset! BLOCKS (add-block @BLOCKS b))))
+(defn pump-node
+ "Pump the attractiveness of the node n"
+ ([c n]
+ 	(-> c
+ 		(update-in [:blocks] (partial -inc-attr DEFAULT_ATTRACTION_INC) n)
+ 		(update-in [:bricks] (partial -inc-attr DEFAULT_ATTRACTION_INC) n)
+ 	))
+ ([v] (reset! CYTO (pump-node @CYTO v))))
 
-
-;(defn get-random-brick
-; "Return a random brick, only free ones if f"
-; ([br f] (let [possibles (if f (filter #(= true (:free %1)) br) br)]
-; 									(if (empty? possibles) nil
-; 									 (rand-nth possibles))))
-; ([f] (get-random-brick @BRICKS f)))
-
-;(defn get-random-block
-; "Return a random block"
-; ([bl] (if (empty? bl) nil (rand-nth bl)))
-; ([] (get-random-block @BLOCKS)))
-
-;(defn get-largest-brick
-;	"Return the value of the largest free brick in memory, nil if there's none"
-;	([br]
-;	 (let [free-bricks (filter :free br)]
-;	 	(if (empty? free-bricks) nil (apply max-key :value free-bricks))))
-;	([] (get-largest-brick @BRICKS)))
-
-
-;(defn pump-node
-; "Pump a node with uuid u in memory w, by increasing its attractiveness"
-; ([ta br bl u]
-;	 (let [[entry src] (find-anywhere ta br bl u)]
-;	   (if (nil? entry)
-;	   	(do (log/warn "Couldn't find node" u) nil)
-;			 	(let [pumped-entry (assoc entry :attr (misc/normalized (:attr entry) DEFAULT_ATTRACTION_INC))]
-;				  (condp = src
-;				  	:target (update-target pumped-entry)
-;				  	:bricks (update-brick pumped-entry)
-;				  	:blocks (update-blocks pumped-entry)
-;				  	(log/warn "Couldn't find a type to pump for" src)
-;				  )))))
-; ([u] (pump-node @TARGET @BRICKS @BLOCKS u)))
-
-;(defn get-brick-by-val
-; "Get a random brick with the value v"
-; ([br v]
-;  (let [vals (filter #(= v (:value %1)) br)]
-;;  	(if (not-empty vals) (rand-nth vals) nil)))
-; ([v] (get-brick-by-val @BRICKS v)))
-
-;(defn get-block-by-result
-; "Get a random block with the result v"
-; ([bl v]
-;  (let [vals (filter #(= v (:value %1)) bl)]
-;  	(if (not-empty vals) (rand-nth vals) nil)))
-; ([v] (get-block-by-result @BLOCKS v)))
-
-
-
-;(defn get-unattractive-block
-; "Get a random block with the result v"
-; ([bl]
-;  (let [bl-range (misc/make-percent-ranges (map (partial invert-val :attr) bl) :attr)]
-;  	(if (not-empty bl-range) (invert-val :attr (misc/random-val-in-range bl-range)))))
-; ([] (get-unattractive-block @BLOCKS)))
-
-;(defn -get-random-by-type
-;	"Get a random node, sampled probabilistically by activation from all nodes of :type t"
-; [p t]
-;	(let [op-range (misc/make-percent-ranges (filter #(= t (:type %)) (vals p)) :activation)]
-;	 (if (not-empty op-range)
-;	  (misc/random-val-in-range op-range))))
+(defn closest-node
+ "Return the node which most closely produces v"
+	([c v] (-closest-node (concat (:bricks c) (:blocks c)) eval v))
+	([v] (closest-node @CYTO v)))
 
 ; Contributors to temperature:
 ; # secondary targets
