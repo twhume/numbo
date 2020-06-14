@@ -2,9 +2,9 @@
 	(:require [clojure.tools.logging :as log])
 	(:require [clojure.zip :as zip])
 	(:require [numbo.coderack :as cr])
+	(:require [numbo.cyto :as cy])
 	(:require [numbo.history :as hist])
 	(:require [numbo.pnet :as pn])
-	(:require [numbo.working :as wm])
 	(:require [rhizome.viz :as rh])
  (:use [seesaw.border]
        [seesaw.core]
@@ -78,63 +78,10 @@
  [u]
  (clojure.string/replace u #"^.*_" ""))
 
-(defn -node-to-graph
-	"Converts the node at a zipper loc to its Rhizome representation"
-	[loc]
-	(let [node (zip/node loc)]
-		(list (:uuid node) (vector (str (:uuid node) "_op") (:params node))))
-)
-
-; Either the UUIDs of sub-blocks or "virtual UUIDs" referring to params
-
-(defn -block-children
-	"Returns vector of UUID representations of node n"
-	[n]
-	(let [children (:params n)
-							uuid (:uuid n)]
-		(vec (map-indexed #(if (int? %2) (str uuid "_param" %1) (:uuid %2)) children))))
-
-(defn -blocktree-to-graph
-	"Convert a single blocktree into a Rhizome-format graph"
-	[bt]
-	(let [zipper (wm/-make-blocktree-zipper bt)]
-		(loop [cur zipper out '{}]
-		 (if (zip/end? cur) out
-		 	(let [node (zip/node cur)
-		 							node-uuid (:uuid node)
-		 							node-op-uuid (str node-uuid "_op")
-		 							node-children (-block-children node)
-		 							]
-		 							(log/debug "-blocktree-to-graph out=" out "node=" node "node-uuid=" node-uuid "node-op-uuid=" node-op-uuid "node-children=" node-children)
-			  	(recur
-			  		(zip/next cur)
-			  		(do
-			  			(cond
-			  				(int? node) out
-			  				(or (nil? node-children) (empty? node-children)) (assoc out node-uuid (vector node-op-uuid))
-					  		:else (assoc out
-													  		node-uuid (vector node-op-uuid)
-													  		node-op-uuid node-children
-													  		(first node-children) '[]
-													  		(second node-children) '[]
-			  		)))))))))
-
-(defn -brick-to-graph
- "Convert a single brick (or target) to a Rhizome graph entry"
-	[br]
-	(hash-map (:uuid br) '[]))
-
 (defn -to-graph
- "Convert a target, bricks and blocks into a graph for Rhizome"
- [ta br bl]
- (let [bt-graphs (apply merge (map -blocktree-to-graph bl))
- 						ta-graph (if (nil? ta) '{} (-brick-to-graph ta))
- 						br-graphs (apply merge (map -brick-to-graph br))]
- 						  (log/debug "-to-graph bt-graphs=" bt-graphs)
- 						  (log/debug "-to-graph ta-graph=" ta-graph)
- 						  (log/debug "-to-graph br-graphs=" br-graphs)
-
- 	(apply merge bt-graphs ta-graph br-graphs)))
+ "Convert a cytoplasm into a graph for Rhizome"
+ [c]
+ '{})
 
 ; add root nodes for all the MAGIC child IDs
 
@@ -158,36 +105,15 @@
 
 (def -op-names '{ :times "X" :plus "+" :minus "-"})
 
-(defn -get-node-label
- "Given the UUID u of a block in the list of blocks bl, return a tuple of its [label,type,attr]"
-	[ta br bl u]
-	(let [node-uuid (if (-is-virt-uuid? u) (-get-virt-uuid u) u)
-							[entry src] (wm/find-anywhere ta br bl node-uuid)]
-							(if (-is-virt-uuid? u)
-								(condp = (-get-virt-param u)
-									"op" [((:op entry) -op-names) :op (:attr entry)]
-									"param0" [(first (:params entry)) :param (:attr entry)]
-									"param1" [(second (:params entry)) :param (:attr entry)]
-									"ERROR")
-							[(:value entry) src (:attr entry)])))
 
 (defn plot-wm
  "Show the graph for the working memory target, bricks and blocks"
- ([ta br bl w h]
- (let [g (-to-graph ta br bl)]
+ ([c] (let [g (-to-graph c)]
 	 (rh/graph->image (keys g) g
 	 	:directed? false
- 	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60}
- 		:node->descriptor (fn [u]
- 		  (let [[label type attr] (-get-node-label ta br bl u)]
- 		  		(condp = type
- 		  		 :op (hash-map :label label :style "filled" :fontcolor "white"  :color "black" :fixedsize true :width 0.4 :height 0.4 )
- 		  		 :param (hash-map :label label :style "filled" :fontcolor "black" :color "black" :fillcolor (-attr-to-color attr))
- 		  		 :blocks (hash-map :label label :style "filled" :color "black" :penwidth 1 :fontcolor "black" :fillcolor (-attr-to-color attr))
- 		  		 :bricks (hash-map :label label :style "filled" :color "black" :penwidth 2 :fontcolor "black" :fillcolor (-attr-to-color attr) )
- 		  		 :target (hash-map :label label :style "solid,filled" :color "red" :penwidth 2 :fontcolor "black" :fillcolor (-attr-to-color attr) )
- 		  		 :else (log/warn "WEIRD TYPE" type)))))))
- ([] (plot-wm @wm/TARGET @wm/BRICKS @wm/BLOCKS)))
+ 	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60})))
+ 	
+ ([] (plot-wm @cy/CYTO)))
  
 ; ----- Seesaw GUI hereon -----
 
@@ -219,11 +145,7 @@
  "Rerender the working memory buffer image"
  [c]
  (do
-	 (reset! WM-IMAGE (plot-wm
-	 	(:target (nth @hist/HISTORY @CURRENT))
-	 	(:bricks (nth @hist/HISTORY @CURRENT))
-	 	(:blocks (nth @hist/HISTORY @CURRENT))
-	 	 (.getWidth c) (.getHeight c))))
+	 (reset! WM-IMAGE (:cyto (nth @hist/HISTORY @CURRENT))))
  	(repaint! c))
 
 (defn render-wm

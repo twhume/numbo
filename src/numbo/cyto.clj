@@ -38,18 +38,13 @@
  ((if (vector? s) vec identity) ; preserve vectorhood in inputs, as we rely on it for ordering purposes
  	(let [[n m] (split-with #(not= v (:val %1)) s)] (concat n (rest m)))))
 
-(defn -third
-	"Return the third item in the sequence s"
-	[s]
-	(nth s 2))
-
 (defn -bricks-for-block
  "Takes a potentially nested block and returns all the bricks"
  [b]
  (filter (and (complement sequential?) int?) (tree-seq sequential? seq b)))
 
 ; Not exactly efficient but we'll be going over ~5 nodes at most.
-
+;TODO: if there are 2 with the same value, return a random one
 (defn -closest-node
 	"Given a sequence s of nodes, apply function f to the value of each and return one with the nearest result to v"
 	[s f v]
@@ -125,6 +120,10 @@
   :else (update-in c [:targets] (partial -remove-first) t)))
  ([t] (reset! CYTO (del-target2 @CYTO t))))
 
+(defn random-target
+ "Return a random target entry"
+	([c] (:val (rand-nth (:targets c))))
+	([] (random-target @CYTO)))
 
 ; ----- Functions for bricks -----
 
@@ -150,7 +149,7 @@
 	"Return a random brick, or n random bricks, probabilistically weighted by attraction"
 	([c n] (-n-random-nodes (:bricks c) n))
  ([n] (random-brick @CYTO n))
-	([] (random-brick @CYTO 1)))
+	([] (first (random-brick @CYTO 1))))
 
 (defn closest-brick
 	"Returns the closest brick to the value v"
@@ -228,7 +227,7 @@
 	"Return a random node, or n random nodes, probabilistically weighted by attraction"
 	([c n] (-n-random-nodes (concat (:bricks c) (:blocks c)) n))
  ([n] (random-node @CYTO n))
-	([] (random-node @CYTO 1)))
+	([] (first (random-node @CYTO 1))))
 
 (defn free-nodes
  "Return all the bricks or blocks with the value v"

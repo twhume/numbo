@@ -26,7 +26,8 @@
 (defn random-val-in-range
  "Given a sequence of (value range, value) r, return a random value"
  [r]
- (select-val-in-range r (rand-int (first (last r)))))
+ (if (empty? r) nil
+	 (select-val-in-range r (rand-int (first (last r))))))
 
 ; Take a sequence of maps s and return a list of (range, node) tuples where range is based on key k.
 ; Used to power probabilistic sampling of elements from a sequence
@@ -88,7 +89,8 @@
 (defn invert-val
  "Invert the value of key k in map m"
  [k m]
- (assoc m k (round-to 2 (- 1 (k m)))))
+ (if (nil? m) nil
+ (assoc m k (round-to 2 (- 1 (k m))))))
 
 ;; zip-walk takes a transformation function f and a zipper z.
 ;; f takes a location and returns location. Applies f
@@ -117,3 +119,7 @@
  [s v] ((if (vector? s) vec identity) ; preserve vectorhood!
  	(let [[n m] (split-with (partial not= v) s)] (concat n (rest m)))))
 
+(defn third
+	"Return the third item in the sequence s"
+	[s]
+	(nth s 2))

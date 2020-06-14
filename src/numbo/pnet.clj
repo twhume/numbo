@@ -1078,3 +1078,9 @@
  "Reduce the :activation of all nodes in the PNet"
  ([pn] (-update-values pn (fn [x] (assoc x :activation (misc/normalized (:activation x) (- 0 DEFAULT_DECAY))))))
  ([] (reset! PNET (decay @PNET))))
+
+
+(defn closest-keyword
+ "Return the keyword of a Pnet node with the closest value to v"
+	[v] 
+	(keyword (str (misc/closest (get-numbers) v))))

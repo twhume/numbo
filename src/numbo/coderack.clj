@@ -3,7 +3,7 @@
 											[numbo.misc :as misc]
 											[numbo.history :as hist]
 											[numbo.pnet :as pn]
-											[numbo.working :as wm]))
+											[numbo.cyto :as cy]))
 
 (def CODERACK (atom '()))
 (def ITERATIONS (atom 1))
@@ -34,7 +34,7 @@
  	(do
  		(log/info  "Iteration" @ITERATIONS ":" (:desc codelet))
  	 (if ((complement nil?) codelet) (-execute (:fn codelet)))
- 	 (hist/add-step @pn/PNET @wm/TARGET @wm/BRICKS @wm/BLOCKS @CODERACK codelet @ITERATIONS (wm/get-temperature) @wm/TARGET2)
+ 	 (hist/add-step @pn/PNET @cy/CYTO @CODERACK codelet @ITERATIONS (cy/get-temperature))
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
  		(swap! ITERATIONS inc)
  	 ))))

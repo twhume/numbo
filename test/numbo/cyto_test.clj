@@ -7,9 +7,8 @@
 (deftest add-block-test)
 
 (deftest block-exists?-test
-	(testing "block-exists? for an entry which is in the cyto"
-		(is (= 5 (count @CODERACK)))
+	(testing "block-exists? for an entry which is in the cyto")
 
-	(testing "block-exists? for an entry which is not in the cyto"
+	(testing "block-exists? for an entry which is not in the cyto")
 
-	(testing "block-exists? for an empty cyto"
+	(testing "block-exists? for an empty cyto"))
