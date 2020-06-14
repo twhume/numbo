@@ -108,12 +108,11 @@
 
 (defn plot-wm
  "Show the graph for the working memory target, bricks and blocks"
- ([c] (let [g (-to-graph c)]
+ ([c w h] (let [g (-to-graph c)]
 	 (rh/graph->image (keys g) g
 	 	:directed? false
  	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60})))
- 	
- ([] (plot-wm @cy/CYTO)))
+)
  
 ; ----- Seesaw GUI hereon -----
 
@@ -145,8 +144,8 @@
  "Rerender the working memory buffer image"
  [c]
  (do
-	 (reset! WM-IMAGE (:cyto (nth @hist/HISTORY @CURRENT))))
- 	(repaint! c))
+	 (reset! WM-IMAGE (plot-wm (:cyto (nth @hist/HISTORY @CURRENT)) (.getWidth c) (.getHeight c)))
+ 	(repaint! c)))
 
 (defn render-wm
  "Renders image for the Working memory"
