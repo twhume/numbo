@@ -1,4 +1,5 @@
 (ns numbo.viz
+	(:require [clojure.string :as str])
 	(:require [clojure.tools.logging :as log])
 	(:require [clojure.zip :as zip])
 	(:require [numbo.coderack :as cr])
@@ -58,32 +59,13 @@
 
 ; ----- Functions to plot a working memory -----
 
-(defn -is-virt-uuid?
- "Is the supplied string a virtual UUID?"
-	[s]
-	(cond
-		(.endsWith s "_param0") true
-		(.endsWith s "_param1") true
-		(.endsWith s "_op") true
-		:else false
-))
-
-(defn -get-virt-uuid
- "Returns the UUID part of a virtual node UUID"
- [u]
- (clojure.string/replace u #"_.*$" ""))
-
-(defn -get-virt-param
- "Returns the param part of a virtual node UUID"
- [u]
- (clojure.string/replace u #"^.*_" ""))
-
 (defn -to-graph
  "Convert a cytoplasm into a graph for Rhizome"
  [c]
- '{})
-
-; add root nodes for all the MAGIC child IDs
+ (-> '{}
+ 	(into (map #(vector (str "bricks-" %1) '[]) (range 0 (count (:bricks c)))))
+ 	(into (map #(vector (str "targets-" %1) '[]) (range 0 (count (:targets c)))))
+ ))
 
 (defn -attr-to-color
 	"Handles coloring nodes by attractiveness"
@@ -91,28 +73,31 @@
 	(let [r (int ( * 255 (- 1 a)))
 							g (- 255 r)
 							b (- 255 r)]
+							(log/debug "-attr-to-color" a)
 		(format "#FF%02X%02X" r r)))
-
-(defn -get-wm-style
- "Works out appropriate style for a type t"
- [t]
- (case t
- 	:target "bold"
- 	:secondary "bold"
- 	:brick "solid"
- 	:block "dashed"
- ))
 
 (def -op-names '{ :times "X" :plus "+" :minus "-"})
 
+(defn -name-val-from-label
+ "Labels are of the form brick-1 - this returns each part"
+ [s]
+ (let [parts (str/split s #"-")]
+ 	(vector (first parts) (Integer/parseInt (second parts)))))
 
 (defn plot-wm
  "Show the graph for the working memory target, bricks and blocks"
  ([c w h] (let [g (-to-graph c)]
 	 (rh/graph->image (keys g) g
 	 	:directed? false
- 	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60})))
-)
+ 	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60}
+ 		:node->descriptor (fn [s]
+ 			(let [[n v] (-name-val-from-label s)]
+	 			{ :label (:val (nth ((keyword n) c) v))
+	 				 :fontcolor "black"
+	 				 :style (if (= n "targets") "bold" "solid")
+	 			  :fillcolor (-attr-to-color (:attr (nth ((keyword n) c) v)))
+	 			 }
+	))))))
  
 ; ----- Seesaw GUI hereon -----
 
