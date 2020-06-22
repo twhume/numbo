@@ -5,6 +5,7 @@
 	(:require [numbo.coderack :as cr])
 	(:require [numbo.cyto :as cy])
 	(:require [numbo.history :as hist])
+	(:require [numbo.misc :as misc])
 	(:require [numbo.pnet :as pn])
 	(:require [rhizome.viz :as rh])
  (:use [seesaw.border]
@@ -59,12 +60,30 @@
 
 ; ----- Functions to plot a working memory -----
 
+(defn -add-blocks
+ "Take a Rhizome graph g, and add new entries for the blocks in sequence-of-blocks s"
+	[s]
+	(do
+		(log/debug "-add-blocks" s)
+	(first (map-indexed #(let [n %1
+																					b (:val %2)
+																					prefix (str "blocks-" n)]
+		(vector (vector (str prefix "-res") (vector (str prefix "-op")))
+										(vector (str prefix "-op") (vector (str prefix "-p1") (str prefix "-p2")))
+										(vector (str prefix "-p1") '[])
+										(vector (str prefix "-p2") '[]))
+
+		)
+		s))
+))
+
 (defn -to-graph
  "Convert a cytoplasm into a graph for Rhizome"
  [c]
  (-> '{}
  	(into (map #(vector (str "bricks-" %1) '[]) (range 0 (count (:bricks c)))))
  	(into (map #(vector (str "targets-" %1) '[]) (range 0 (count (:targets c)))))
+ 	(into (-add-blocks (:blocks c)))
  ))
 
 (defn -attr-to-color
@@ -82,7 +101,26 @@
  "Labels are of the form brick-1 - this returns each part"
  [s]
  (let [parts (str/split s #"-")]
- 	(vector (first parts) (Integer/parseInt (second parts)))))
+ 	(concat (vector (first parts) (Integer/parseInt (second parts))) (drop 2 parts))))
+
+(def -op-lookups {+ "+" - "-" * "*"})
+
+(defn -mk-label
+ "Make a label for the cyto c node with type t, number n, optional part p"
+ [c t n p]
+ (do
+	 (log/debug "-mk-label" c t n p)
+	 (let [node (nth ((keyword t) c) n)]
+		 (cond
+		 	(or
+		 		(= t "targets")
+		 		(= t "bricks")) (:val node)
+		 	(= t "blocks") (cond
+		 																(= p "op") (get -op-lookups (first (:val node)))
+		 																(= p "res") (eval (:val node))
+		 																(= p "p1") (second (:val node))
+		 																(= p "p2") (misc/third (:val node))))))
+)
 
 (defn plot-wm
  "Show the graph for the working memory target, bricks and blocks"
@@ -91,11 +129,11 @@
 	 	:directed? false
  	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60}
  		:node->descriptor (fn [s]
- 			(let [[n v] (-name-val-from-label s)]
-	 			{ :label (:val (nth ((keyword n) c) v))
+ 			(let [[t n p] (-name-val-from-label s)]
+	 			{ :label (-mk-label c t n p)
 	 				 :fontcolor "black"
-	 				 :style (if (= n "targets") "bold" "solid")
-	 			  :fillcolor (-attr-to-color (:attr (nth ((keyword n) c) v)))
+	 				 :style (if (= t "targets") "bold" "solid")
+	 			  :fillcolor (-attr-to-color (:attr (nth ((keyword t) c) n)))
 	 			 }
 	))))))
  
