@@ -11,6 +11,7 @@
 (def link-types '(:operator :result :similar :param))
 (def operator-map (hash-map :plus + :minus - :times *))
 (def operator-name-map (hash-map :plus "+" :minus "-" :times "*"))
+(def op-lookups {+ "+" - "-" * "*"})
 
 
 (def PNET (atom '{}))

@@ -134,9 +134,9 @@
 
 (defn brick-free?
 	"Is a brick with value v free? Are n copies of it free?"
- ([c v n] (-contains-n-vals? (:bricks c) v n))
- ([v n] (brick-free? @CYTO v n))
- ([v] (brick-free? @CYTO v 1)))
+ ([c n v] (-contains-n-vals? (:bricks c) v n))
+ ([n v] (brick-free? @CYTO v n))
+ ([v] (brick-free? @CYTO 1 v)))
 
 (defn largest-brick
  "Return the value of the largest free brick"
@@ -182,7 +182,10 @@
 (defn add-block
 	"Add a new block b to the cytoplasm c"
 	([c b]
-		(if (every? true? (map (partial brick-free?) (-bricks-for-block b))) ; if all the parameters of the block are free bricks
+		(if 
+			(or
+				(and (= (second b) (misc/third b)) (brick-free? c 2 (second b))) ; check we have 2 copies of the parameter free, if they're the same
+				(every? true? (map (partial brick-free? c 1) (-bricks-for-block b)))) ; if all the parameters of the block are free bricks
 		 (-> c
 				(update-in [:blocks] (partial conj) (-new-node b)) ; add the new block to the cyto
 				(update-in [:bricks] (partial reduce -remove-first) (-bricks-for-block b))) ; remove all the bricks from the free list

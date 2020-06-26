@@ -33,13 +33,15 @@
 ; :type (one of codelet-types)
 ; :desc description
 
-(defn -noop
- [] nil)
+(defn -format-block
+ "Make a nice printable version of the calculation in b"
+ [b]
+ (str (second b) (get pn/op-lookups (first b)) (misc/third b) "=" (eval b)))
 
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
  [& s]
- (into (hash-map :urgency URGENCY_LOW :fn -noop :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
+ (into (hash-map :urgency URGENCY_LOW :fn nil :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
 
 ;----- CODELETS HEREON -----
 
@@ -164,7 +166,7 @@
 	"Schedule a test of a given block b, if it can be found"
 	[b]
   (cr/add-codelet (new-codelet :type :test-block
-																									  				:desc (str "Test block: " b)
+																									  				:desc (str "Test block: " (-format-block b))
 																									  				:urgency URGENCY_HIGH
 																															:fn (fn []
 			(let [b1 (second b)
@@ -176,7 +178,7 @@
 						(or
 							(and (= b1 b2) (cy/brick-free? b2 2)) ; either the two params are the same and we have 2 free copies
 							(and (not= b1 b2) (cy/brick-free? b1) (cy/brick-free? b2))) ; or they are different and both are free
-						(> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.2))
+						(> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.25))
 							(do
 							 (log/debug "test-block b=" b " is worthy")
 							 (probe-target2 b))
@@ -201,12 +203,28 @@
 	  (let [ope ((first (pn/filter-links-for (:links calc) :operator)) pn/operator-map)
 	        params (map (comp cy/closest-node misc/int-k) (pn/filter-links-for (:links calc) :param))]
 	       	(log/info "seek-facsimile for " (pn/format-calc calc))
-	        (if (= (count params) 2) (do ; It's possible we don't find enough best matches - in which case the seek has failed
-	        		(log/debug "seek-facsimile START ")
-	        		(log/debug "seek-facsimile DOING " ope params)
-	        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
-		        	(test-block (cons ope params)) ; Schedule a new test of it in future
-	        		(log/debug "seek-facsimile DONE " ope params)
+
+	       	; TODO: check that all the params are within 50% of the desired
+	       	; TODO: check the result is desirable (somewhere)?
+
+	        (if
+	        	(and
+	        		(= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
+	        		(or
+	        			(and
+	        				(= (first params) (second params))
+	        				(cy/brick-free? (first params) 2)) ; either the params are same and free twice
+	        			(and
+	        				(not= (first params) (second params))
+	        				(cy/brick-free? (first params))
+	        				(cy/brick-free? (second params))) ; or they differ and are free
+	        			))
+	        			(do 
+			        		(log/debug "seek-facsimile START ")
+			        		(log/debug "seek-facsimile DOING " ope params)
+			        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
+				        	(test-block (cons ope params)) ; Schedule a new test of it in future
+			        		(log/debug "seek-facsimile DONE " ope params)
 
 		        	 
 	        	))))))))
@@ -221,7 +239,7 @@
  						op (pn/get-random-op)]
  						(if (and b1 b2 op)
 	 						(cr/add-codelet (new-codelet :type :rand-block
-																													 							:desc (str "Random op: " (:name op) " " b1 "," b2)
+																													 							:desc (str "Random block: " (-format-block (list (:name op) b1 b2)))
 																													 							:urgency URGENCY_MEDIUM
 																													 							:fn (fn []
 		(do

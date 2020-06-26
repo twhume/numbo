@@ -61,30 +61,33 @@
 ; ----- Functions to plot a working memory -----
 
 (defn -add-blocks
- "Take a Rhizome graph g, and add new entries for the blocks in sequence-of-blocks s"
+ "Create a vector of new entries for the blocks in sequence-of-blocks s"
 	[s]
 	(do
 		(log/debug "-add-blocks" s)
-	(first (map-indexed #(let [n %1
+	(vec (apply concat (map-indexed #(let [n %1
 																					b (:val %2)
 																					prefix (str "blocks-" n)]
-		(vector (vector (str prefix "-res") (vector (str prefix "-op")))
+																					(vector
+										(vector (str prefix "-res") (vector (str prefix "-op")))
 										(vector (str prefix "-op") (vector (str prefix "-p1") (str prefix "-p2")))
 										(vector (str prefix "-p1") '[])
 										(vector (str prefix "-p2") '[]))
 
 		)
-		s))
-))
+		s))))
+)
 
 (defn -to-graph
  "Convert a cytoplasm into a graph for Rhizome"
  [c]
+ (do
+ 	(log/debug "-to-graph"  (-add-blocks (:blocks c)))
  (-> '{}
  	(into (map #(vector (str "bricks-" %1) '[]) (range 0 (count (:bricks c)))))
  	(into (map #(vector (str "targets-" %1) '[]) (range 0 (count (:targets c)))))
  	(into (-add-blocks (:blocks c)))
- ))
+ )))
 
 (defn -attr-to-color
 	"Handles coloring nodes by attractiveness"
@@ -95,15 +98,11 @@
 							(log/debug "-attr-to-color" a)
 		(format "#FF%02X%02X" r r)))
 
-(def -op-names '{ :times "X" :plus "+" :minus "-"})
-
 (defn -name-val-from-label
  "Labels are of the form brick-1 - this returns each part"
  [s]
  (let [parts (str/split s #"-")]
  	(concat (vector (first parts) (Integer/parseInt (second parts))) (drop 2 parts))))
-
-(def -op-lookups {+ "+" - "-" * "*"})
 
 (defn -mk-label
  "Make a label for the cyto c node with type t, number n, optional part p"
@@ -116,7 +115,7 @@
 		 		(= t "targets")
 		 		(= t "bricks")) (:val node)
 		 	(= t "blocks") (cond
-		 																(= p "op") (get -op-lookups (first (:val node)))
+		 																(= p "op") (get pn/op-lookups (first (:val node)))
 		 																(= p "res") (eval (:val node))
 		 																(= p "p1") (second (:val node))
 		 																(= p "p2") (misc/third (:val node))))))
@@ -127,12 +126,15 @@
  ([c w h] (let [g (-to-graph c)]
 	 (rh/graph->image (keys g) g
 	 	:directed? false
- 	 :options {:concentrate true :layout "neato" :clusterrank "local" :dpi 60}
+ 	 :options {:concentrate true :dpi 60}
  		:node->descriptor (fn [s]
  			(let [[t n p] (-name-val-from-label s)]
 	 			{ :label (-mk-label c t n p)
 	 				 :fontcolor "black"
-	 				 :style (if (= t "targets") "bold" "solid")
+	 				 :style (cond
+	 				 								(= t "targets") "bold"
+	 				 								(and (= t "blocks") (= p "res")) "dotted"
+	 				 								:else "solid")
 	 			  :fillcolor (-attr-to-color (:attr (nth ((keyword t) c) n)))
 	 			 }
 	))))))
