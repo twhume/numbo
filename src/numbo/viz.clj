@@ -110,6 +110,7 @@
  (do
 	 (log/debug "-mk-label" c t n p)
 	 (let [node (nth ((keyword t) c) n)]
+	 	(log/debug "-mk-label node=" node)
 		 (cond
 		 	(or
 		 		(= t "targets")
@@ -118,12 +119,17 @@
 		 																(= p "op") (get pn/op-lookups (first (:val node)))
 		 																(= p "res") (eval (:val node))
 		 																(= p "p1") (second (:val node))
-		 																(= p "p2") (misc/third (:val node))))))
+		 																(= p "p2") (misc/third (:val node)))
+		 	:else "UNKNOWN"
+
+		 	)))
 )
 
 (defn plot-wm
  "Show the graph for the working memory target, bricks and blocks"
  ([c w h] (let [g (-to-graph c)]
+  (log/debug "plot-wm c=" c)
+  (log/debug "plot-wm g=" g)
 	 (rh/graph->image (keys g) g
 	 	:directed? false
  	 :options {:concentrate true :dpi 60}

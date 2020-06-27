@@ -163,7 +163,7 @@
  "Combine the block b with an existing secondary target t, using operator o"
  ([c b t o]
  	(let [bl (first (filter #(= b (:val %1)) (:blocks c))) ; look up the block entry
- 							new-bl (assoc bl :val (list o (:val bl) t))] ; update it to the new form
+ 							new-bl (assoc bl :val (list o (eval (:val bl)) t))] ; update it to the new form
 	 	(if (nil? bl) (do
 	 		(log/warn "combine-target2 couldn't find block" b)
 	 		c)
