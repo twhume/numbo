@@ -171,19 +171,27 @@
 																															:fn (fn []
 			(let [b1 (second b)
 									b2 (misc/third b)
-									op (first b)]
+									op (first b)
+									bstr (-format-block b)]
 				(log/info "test-block b1=" b1 "b2=" b2 "op=" op)
 				(if
-					(and
-						(or
-							(and (= b1 b2) (cy/brick-free? b2 2)) ; either the two params are the same and we have 2 free copies
-							(and (not= b1 b2) (cy/brick-free? b1) (cy/brick-free? b2))) ; or they are different and both are free
-						(> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.25))
+;					(and
+;						(or
+;							(and (= b1 b2) (cy/brick-free? b2 2)) ; either the two params are the same and we have 2 free copies
+;							(and (not= b1 b2) (cy/brick-free? b1) (cy/brick-free? b2))) ; or they are different and both are free
+						(> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.25)
 							(do
-							 (log/debug "test-block b=" b " is worthy")
+							 (log/debug "test-block b=" bstr " is worthy")
 							 (probe-target2 b))
 						 (do
-						 	(log/debug "test-block b=" b " is not worthy")
+						 	(log/debug "test-block b=" bstr " is not worthy")
+						 	(log/debug "test-block b=" str ", (= b1 b2)=" (= b1 b2))
+						 	(log/debug "test-block b=" str ", (cy/brick-free? b2 2)=" (cy/brick-free? b2 2))
+						 	(log/debug "test-block b=" str ", (cy/brick-free? b1)=" (cy/brick-free? b1))
+						 	(log/debug "test-block b=" str ", closest=" ((pn/closest-keyword (eval b)) @pn/PNET))
+						 	(log/debug "test-block b=" str ", activation" (:activation ((pn/closest-keyword (eval b)) @pn/PNET)))
+						 	(log/debug "test-block b=" str ", act-test" (> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.25))
+
 						 	(cy/del-block b))))))))
 
 ; Tries to build a block which makes something close to a biped in the pnet
@@ -239,7 +247,7 @@
  						op (pn/get-random-op)]
  						(if (and b1 b2 op)
 	 						(cr/add-codelet (new-codelet :type :rand-block
-																													 							:desc (str "Random block: " (-format-block (list (:name op) b1 b2)))
+																													 							:desc (str "Random block: " (-format-block (list op b1 b2)))
 																													 							:urgency URGENCY_MEDIUM
 																													 							:fn (fn []
 		(do
@@ -254,11 +262,11 @@
  (let [block (cy/unworthy-block)]
  						(if block
 							 (cr/add-codelet (new-codelet :type :dismantler
-																																			 	:desc (str "dismantler " block)
+																																			 	:desc (str "dismantler " (:val block))
 																																			 	:urgency URGENCY_LOW
 																																			 	:fn (fn []
 		(do
-			(log/info "dismantler " block)
-			(cy/del-block block))))))))
+			(log/info "dismantler " (:val block))
+			(cy/del-block (:val block)))))))))
 
 ;----- END OF CODELETS -----

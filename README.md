@@ -28,12 +28,14 @@ at https://www.gnu.org/software/classpath/license.html.
 
 Big next tasks
 
-GOAL THIS WEEK: have codelets removing as well as adding to WM
 
+* why does dismantler now over-return blocks?
+* why do we never create secondary targets?
+
+Is activation an issue?
 * Complete create-secondary-target - add a new block, then activate the secondary bit
 -- ARGH how do we ensure efforts to generate that secondary target?
 -- 1. Pump the Pnet for this target2 immediately, and for secondary targets in repeatedly, to generate ops which might lead to them
-
 * I can't see a secondary target ever getting pumped - are they not lasting long enough? Tried lengthening decays
 * Temperature drops to zero and never recovers. BUG: bricks are never being marked free again - delete-block-and-free isn't freeing bricks up
 
