@@ -5,7 +5,7 @@
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Appender>
 
-    <Appender type="File" name="File" fileName="logs/numbo.log">
+    <Appender type="File" name="File" fileName="logs/numbo.log" append="false">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Appender>
   </Appenders>

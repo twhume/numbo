@@ -147,7 +147,7 @@
 				(if (misc/within (cy/get-target) (eval b) 0.4)
 					(do
 						(log/debug "probe-target2 b=" b "deserves target2")
-						(create-target2 b (Math/abs (- (eval b) (cy/get-target))) (if (< (eval b) (cy/get-target)) '+ '-)))
+						(create-target2 b (Math/abs (- (eval b) (cy/get-target))) (if (< (eval b) (cy/get-target)) + -)))
 					(log/debug "probe-target2 b=" b "doesn't deserve target2"))))))))
 
 (defn load-brick
@@ -179,7 +179,7 @@
 ;						(or
 ;							(and (= b1 b2) (cy/brick-free? b2 2)) ; either the two params are the same and we have 2 free copies
 ;							(and (not= b1 b2) (cy/brick-free? b1) (cy/brick-free? b2))) ; or they are different and both are free
-						(> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.25)
+						(> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.5)
 							(do
 							 (log/debug "test-block b=" bstr " is worthy")
 							 (probe-target2 b))
@@ -244,16 +244,18 @@
  "Make a new block out of sampled random bricks and ops"
  []
  (let [[b1 b2] (cy/random-brick 2)
- 						op (pn/get-random-op)]
+ 						rand-op (pn/get-random-op)
+ 						op ((:name rand-op) pn/operator-map)
+ 						]
  						(if (and b1 b2 op)
 	 						(cr/add-codelet (new-codelet :type :rand-block
-																													 							:desc (str "Random block: " (-format-block (list op b1 b2)))
+																													 							:desc (str "Random block: " op b1 b2)
 																													 							:urgency URGENCY_MEDIUM
 																													 							:fn (fn []
 		(do
-			(log/info "rand-block adding " ((:name op) pn/operator-map) b1 b2)
-			(cy/add-block (list ((:name op) pn/operator-map) b1 b2))
-			(test-block (list ((:name op) pn/operator-map) b1 b2))
+			(log/info "rand-block adding " op b1 b2)
+			(cy/add-block (list op b1 b2))
+			(test-block (list op b1 b2))
 		)))))))
 
 (defn dismantler
