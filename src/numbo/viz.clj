@@ -59,30 +59,63 @@
  	)))
 
 ; ----- Functions to plot a working memory -----
+(defn -add-block
+ [n bl]
+ (let [prefix (str "blocks-" n)
+ 						p1 (second bl)
+ 						p2 (misc/third bl)
+ ]
+  (log/debug "-add-block n=" n " bl=" bl)
+  (cond-> '[]
+   ; Every block has a result and an operator
+
+	 	true (concat (vector (vector (str prefix "-res") (vector (str prefix "-op")))))
+	 	true (concat (vector (vector (str prefix "-op") (vector (str prefix "-p1") (str prefix "-p2")))))
+
+	 	; first parameter is either a link to a sub-block or an int
+
+	 	(seq? p1) (concat (vector (vector (str prefix "-p1") (vector (str "blocks-" (+ n 1000) "-res")))))
+	 	(not (seq? p1)) (concat (vector (vector (str prefix "-p1") '[])))
+
+	 	; second parameter is either a link to a sub-block or an int
+	 	(seq? p2) (concat (vector (vector (str prefix "-p2") (vector (str "blocks-" (+ n 2000) "-res")))))
+	 	(not (seq? p2)) (concat (vector (vector (str prefix "-p2") '[])))
+
+	 	; if necessary, recursively add entries for sub-blocks
+
+	 	(seq? p1) (concat (-add-block (+ n 1000) p1))
+	 	(seq? p2) (concat (-add-block (+ n 2000) p2))
+
+	 	)))
+
+
+;(defn -add-block
+; [n bl]
+; (let [prefix (str "blocks-" n)]
+;  (log/debug "-add-block n=" n " bl=" bl)
+;  (vector
+;	 	(vector (str prefix "-res") (vector (str prefix "-op")))
+;	 	(vector (str prefix "-op") (vector (str prefix "-p1") (str prefix "-p2")))
+;	 	(if (seq? (second bl))
+;	 		(vector (str prefix "-p1") (str "blocks-" (+ n 1000) "-res"))
+;		 	(vector (str prefix "-p1") '[]))
+;	 	(if (seq? (misc/third bl))
+;	 		(vector (str prefix "-p1") (str "blocks-" (+ n 2000) "-res"))
+;		 	(vector (str prefix "-p2") '[])))))
+
 
 (defn -add-blocks
  "Create a vector of new entries for the blocks in sequence-of-blocks s"
 	[s]
 	(do
 		(log/debug "-add-blocks" s)
-	(vec (apply concat (map-indexed #(let [n %1
-																					b (:val %2)
-																					prefix (str "blocks-" n)]
-																					(vector
-										(vector (str prefix "-res") (vector (str prefix "-op")))
-										(vector (str prefix "-op") (vector (str prefix "-p1") (str prefix "-p2")))
-										(vector (str prefix "-p1") '[])
-										(vector (str prefix "-p2") '[]))
-
-		)
-		s))))
-)
+		(apply concat (map-indexed -add-block (map :val s)))))
 
 (defn -to-graph
  "Convert a cytoplasm into a graph for Rhizome"
  [c]
  (do
- 	(log/debug "-to-graph"  (-add-blocks (:blocks c)))
+ 	(log/debug "-to-graph" c)
  (-> '{}
  	(into (map #(vector (str "bricks-" %1) '[]) (range 0 (count (:bricks c)))))
  	(into (map #(vector (str "targets-" %1) '[]) (range 0 (count (:targets c)))))
@@ -104,12 +137,24 @@
  (let [parts (str/split s #"-")]
  	(concat (vector (first parts) (Integer/parseInt (second parts))) (drop 2 parts))))
 
+; In order to create the Rhizome graph we allocate "virtual" node numbers (1000, 10000 etc)
+; Which means looking up the nth no longer works well for blocks.
+
+(defn -lookup-block-node
+ "Look up the node with value n of type t in cyto c"
+ [c t n]
+ (if
+ 	(or (= t "targets") (= t "bricks") (< n 100)) (nth ((keyword t) c) n)
+		; it's a block with a number > 1000
+ 	'{:attr 123 :val (* 666 666)}))
+
+
 (defn -mk-label
  "Make a label for the cyto c node with type t, number n, optional part p"
  [c t n p]
  (do
 	 (log/debug "-mk-label" c t n p)
-	 (let [node (nth ((keyword t) c) n)]
+	 (let [node (-lookup-block-node c t n)]
 	 	(log/debug "-mk-label node=" node)
 		 (cond
 		 	(or
@@ -118,8 +163,8 @@
 		 	(= t "blocks") (cond
 		 																(= p "op") (get pn/op-lookups (first (:val node)))
 		 																(= p "res") (eval (:val node))
-		 																(= p "p1") (second (:val node))
-		 																(= p "p2") (misc/third (:val node)))
+		 																(= p "p1") (eval (second (:val node)))
+		 																(= p "p2") (eval (misc/third (:val node))))
 		 	:else "UNKNOWN"
 
 		 	)))
@@ -134,14 +179,16 @@
 	 	:directed? false
  	 :options {:concentrate true :dpi 60}
  		:node->descriptor (fn [s]
- 			(let [[t n p] (-name-val-from-label s)]
+ 			(let [[t n p] (-name-val-from-label s)
+ 									node (-lookup-block-node c t n)
+ 			]
 	 			{ :label (-mk-label c t n p)
 	 				 :fontcolor "black"
 	 				 :style (cond
 	 				 								(= t "targets") "bold"
 	 				 								(and (= t "blocks") (= p "res")) "dotted"
 	 				 								:else "solid")
-	 			  :fillcolor (-attr-to-color (:attr (nth ((keyword t) c) n)))
+	 			  :fillcolor (-attr-to-color (:attr node)) ; we are already looking this up for -mk-label, can we dedup?
 	 			 }
 	))))))
  

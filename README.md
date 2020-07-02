@@ -27,35 +27,11 @@ at https://www.gnu.org/software/classpath/license.html.
 
 
 Big next tasks
+* vizualizer isn't able to plot blocks with sub-blocks, so falls apart when we add a secondary target
+* 7 * 20 = 140 was rejected as a block, iteration 139
 
-FAIL at 88 because viz/-mk-label returns something odd like
-combine-target2 is now replacing the node, not adding a sub-block
-
-From logs:
-
-12:44:20.267 [nRepl-session-88d889b2-7098-42c5-812a-447bce8b7185] INFO  numbo.coderack - Iteration 89 : Create target2:(#object[clojure.core$_STAR_ 0x2a06980a "clojure.core$_STAR_@2a06980a"] 6 20) off by 6
-12:44:20.267 [nRepl-session-88d889b2-7098-42c5-812a-447bce8b7185] INFO  numbo.codelet - create-target2 b= (#object[clojure.core$_STAR_ 0x2a06980a clojure.core$_STAR_@2a06980a] 6 20) ,t2= 6 ,op= #object[clojure.core$_ 0x74da5945 clojure.core$_@74da5945]
-12:44:20.267 [nRepl-session-88d889b2-7098-42c5-812a-447bce8b7185] DEBUG numbo.codelet - create-target2 b= (#object[clojure.core$_STAR_ 0x2a06980a clojure.core$_STAR_@2a06980a] 6 20) , adding target2
-12:44:20.268 [nRepl-session-88d889b2-7098-42c5-812a-447bce8b7185] DEBUG numbo.cyto - combine-target2 c= {:bricks ({:val 1, :attr 0} {:val 7, :attr 0} {:val 11, :attr 0}), :blocks ({:val (#object[clojure.core$_STAR_ 0x2a06980a clojure.core$_STAR_@2a06980a] 6 20), :attr 0}), :targets ({:val 6, :attr 0} {:val 114, :attr 0})} b= (#object[clojure.core$_STAR_ 0x2a06980a clojure.core$_STAR_@2a06980a] 6 20) t= 6 o= #object[clojure.core$_ 0x74da5945 clojure.core$_@74da5945]
-12:44:20.268 [nRepl-session-88d889b2-7098-42c5-812a-447bce8b7185] DEBUG numbo.cyto - combine-target2 c= {:bricks ({:val 1, :attr 0} {:val 7, :attr 0} {:val 11, :attr 0}), :blocks ({:val (#object[clojure.core$_STAR_ 0x2a06980a clojure.core$_STAR_@2a06980a] 6 20), :attr 0}), :targets ({:val 6, :attr 0} {:val 114, :attr 0})} b= (#object[clojure.core$_STAR_ 0x2a06980a clojure.core$_STAR_@2a06980a] 6 20) t= 6 o= #object[clojure.core$_ 0x74da5945 clojure.core$_@74da5945] bl= {:val (#object[clojure.core$_STAR_ 0x2a06980a clojure.core$_STAR_@2a06980a] 6 20), :attr 0} new-bl= {:val (#object[clojure.core$_ 0x74da5945 clojure.core$_@74da5945] 120 6), :attr 0}
-
-(def cyto (:cyto (nth @hist/HISTORY 87)))
-
-(cy/add-target2 cyto 6) --> adds it as first one
-(cy/combine-target2 (cy/add-target2 cyto 6) (list * 6 20) 14 -) --> doesn't nest them properly
-
-TODO cy/combine-target2 needs unit tests
-
-
-Failure case:
-cyto = {:bricks ({:val 7, :attr 0} {:val 1, :attr 0.52} {:val 11, :attr 0}), :blocks ({:val (#object[clojure.core$_STAR_ 0x287ccb05 "clojure.core$_STAR_@287ccb05"] 6 20), :attr 0}), :targets ({:val 114, :attr 0})}
-
-
-(cy/combine-target2 cyto '(* 120 6) 6 '-)
-
-{:bricks ({:val 7, :attr 0} {:val 1, :attr 0.52} {:val 11, :attr 0}), :blocks ({:val (#object[clojure.core$_STAR_ 0x287ccb05 "clojure.core$_STAR_@287ccb05"] 6 20), :attr 0}), :targets ({:val 114, :attr 0})}
-
-09:02:43.442 [nRepl-session-9f63d4df-6cbc-44bd-b56a-5e38a2a2440c] DEBUG numbo.cyto - combine-target2 c= {:bricks ({:val 1, :attr 0} {:val 7, :attr 0} {:val 11, :attr 0}), :blocks ({:val (#object[clojure.core$_STAR_ 0x287ccb05 clojure.core$_STAR_@287ccb05] 6 20), :attr 0}), :targets ({:val 6, :attr 0} {:val 114, :attr 0})} b= (#object[clojure.core$_STAR_ 0x287ccb05 clojure.core$_STAR_@287ccb05] 6 20) t= 6 o= -
+So now we need to be able to look up a block-number --> block mapping when plotting
+IDEA: make this mapping when we create the graph and just refer to it later?
 
 
 
