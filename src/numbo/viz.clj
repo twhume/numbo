@@ -61,7 +61,7 @@
 ; ----- Functions to plot a working memory -----
 (defn -add-block
  [n bl]
- (let [prefix (str "blocks-" n)
+ (let [prefix (str "block-" n)
  						p1 (second bl)
  						p2 (misc/third bl)
  ]
@@ -69,16 +69,16 @@
   (cond-> '[]
    ; Every block has a result and an operator
 
-	 	true (concat (vector (vector (str prefix "-res") (vector (str prefix "-op")))))
+	 	(< n 100) (concat (vector (vector (str prefix "-res") (vector (str prefix "-op")))))
 	 	true (concat (vector (vector (str prefix "-op") (vector (str prefix "-p1") (str prefix "-p2")))))
 
 	 	; first parameter is either a link to a sub-block or an int
 
-	 	(seq? p1) (concat (vector (vector (str prefix "-p1") (vector (str "blocks-" (+ n 1000) "-res")))))
+	 	(seq? p1) (concat (vector (vector (str prefix "-p1") (vector (str "block-" (+ n 1000) "-op")))))
 	 	(not (seq? p1)) (concat (vector (vector (str prefix "-p1") '[])))
 
 	 	; second parameter is either a link to a sub-block or an int
-	 	(seq? p2) (concat (vector (vector (str prefix "-p2") (vector (str "blocks-" (+ n 2000) "-res")))))
+	 	(seq? p2) (concat (vector (vector (str prefix "-p2") (vector (str "block-" (+ n 2000) "-op")))))
 	 	(not (seq? p2)) (concat (vector (vector (str prefix "-p2") '[])))
 
 	 	; if necessary, recursively add entries for sub-blocks
@@ -88,21 +88,36 @@
 
 	 	)))
 
+; Creats a map of node-name --> attributes for display of nodes in a Rhizome graph
+(defn -block-map
+ [n bl root]
+ (let [bprefix (str "block-" n) ; maps to the exact block
+ 						rprefix (str "root-" n) ; maps to the root block
+ 						op (first bl)
+ 						p1 (second bl)
+ 						p2 (misc/third bl)
+ ]
+  (log/debug "-add-block n=" n " bl=" bl)
+  (cond-> '{}
+   ; Every block goes in there
 
-;(defn -add-block
-; [n bl]
-; (let [prefix (str "blocks-" n)]
-;  (log/debug "-add-block n=" n " bl=" bl)
-;  (vector
-;	 	(vector (str prefix "-res") (vector (str prefix "-op")))
-;	 	(vector (str prefix "-op") (vector (str prefix "-p1") (str prefix "-p2")))
-;	 	(if (seq? (second bl))
-;	 		(vector (str prefix "-p1") (str "blocks-" (+ n 1000) "-res"))
-;		 	(vector (str prefix "-p1") '[]))
-;	 	(if (seq? (misc/third bl))
-;	 		(vector (str prefix "-p1") (str "blocks-" (+ n 2000) "-res"))
-;		 	(vector (str prefix "-p2") '[])))))
+   true (assoc bprefix (hash-map :label (eval bl) :attr (:attr root) :style "solid"))
+   true (assoc rprefix (hash-map :label (eval (:val root)) :attr (:attr root) :style "solid"))
+   true (assoc (str bprefix "-res") (hash-map :label (eval bl) :attr (:attr root) :style "solid"))
+   true (assoc (str bprefix "-op") (hash-map :label (get pn/op-lookups op) :attr (:attr root) :style "dotted"))
+   true (assoc (str bprefix "-p1") (hash-map :label (eval p1) :attr (:attr root) :style "solid"))
+   true (assoc (str bprefix "-p2") (hash-map :label (eval p2) :attr (:attr root) :style "solid"))
 
+	 	; if necessary, recursively add entries for sub-blocks
+
+	 	(seq? p1) (concat (-block-map (+ n 1000) p1 root))
+	 	(seq? p2) (concat (-block-map (+ n 2000) p2 root))
+
+	 	)))
+
+(defn -blocks-map
+	[s]
+	(apply concat (map-indexed #(-block-map %1 (:val %2) %2) s )))
 
 (defn -add-blocks
  "Create a vector of new entries for the blocks in sequence-of-blocks s"
@@ -111,16 +126,35 @@
 		(log/debug "-add-blocks" s)
 		(apply concat (map-indexed -add-block (map :val s)))))
 
-(defn -to-graph
- "Convert a cytoplasm into a graph for Rhizome"
+(defn -to-graph-and-map
+ "Convert a cytoplasm into a graph,block-map pair for Rhizome"
  [c]
  (do
- 	(log/debug "-to-graph" c)
- (-> '{}
- 	(into (map #(vector (str "bricks-" %1) '[]) (range 0 (count (:bricks c)))))
- 	(into (map #(vector (str "targets-" %1) '[]) (range 0 (count (:targets c)))))
- 	(into (-add-blocks (:blocks c)))
- )))
+ 	(log/debug "-to-graph-and-map" c)
+ 	(vector
+
+ 		; First make the Rhizome graph structure
+ 		
+		 (-> (sorted-map)
+		 	(into (map #(vector (str "brick-" %1) '[]) (range 0 (count (:bricks c)))))
+		 	(into (map #(vector (str "target-" %1) '[]) (range 0 (count (:targets c)))))
+		 	(into (-add-blocks (:blocks c))))
+
+		 ; Then map the "display map", from rhizome node name to {:attr :style :label} for each
+
+		 (-> '{}
+		 	(into (map
+		 									#(vector (str "brick-" %1)
+		 									(hash-map :label (:val (nth (:bricks c) %1)) :attr (:attr (nth (:bricks c) %1)) :style "solid"))
+		 									(range 0 (count (:bricks c)))))
+
+		 	(into (map
+		 									#(vector (str "target-" %1)
+		 									(hash-map :label (:val (nth (:targets c) %1)) :attr (:attr (nth (:targets c) %1)) :style "bold"))
+		 									(range 0 (count (:targets c)))))
+
+			 (into (-blocks-map (:blocks c)))
+ ))))
 
 (defn -attr-to-color
 	"Handles coloring nodes by attractiveness"
@@ -131,64 +165,22 @@
 							(log/debug "-attr-to-color" a)
 		(format "#FF%02X%02X" r r)))
 
-(defn -name-val-from-label
- "Labels are of the form brick-1 - this returns each part"
- [s]
- (let [parts (str/split s #"-")]
- 	(concat (vector (first parts) (Integer/parseInt (second parts))) (drop 2 parts))))
-
-; In order to create the Rhizome graph we allocate "virtual" node numbers (1000, 10000 etc)
-; Which means looking up the nth no longer works well for blocks.
-
-(defn -lookup-block-node
- "Look up the node with value n of type t in cyto c"
- [c t n]
- (if
- 	(or (= t "targets") (= t "bricks") (< n 100)) (nth ((keyword t) c) n)
-		; it's a block with a number > 1000
- 	'{:attr 123 :val (* 666 666)}))
-
-
-(defn -mk-label
- "Make a label for the cyto c node with type t, number n, optional part p"
- [c t n p]
- (do
-	 (log/debug "-mk-label" c t n p)
-	 (let [node (-lookup-block-node c t n)]
-	 	(log/debug "-mk-label node=" node)
-		 (cond
-		 	(or
-		 		(= t "targets")
-		 		(= t "bricks")) (:val node)
-		 	(= t "blocks") (cond
-		 																(= p "op") (get pn/op-lookups (first (:val node)))
-		 																(= p "res") (eval (:val node))
-		 																(= p "p1") (eval (second (:val node)))
-		 																(= p "p2") (eval (misc/third (:val node))))
-		 	:else "UNKNOWN"
-
-		 	)))
-)
-
 (defn plot-wm
  "Show the graph for the working memory target, bricks and blocks"
- ([c w h] (let [g (-to-graph c)]
+ ([c w h] (let [[g bl-map] (-to-graph-and-map c)]
   (log/debug "plot-wm c=" c)
   (log/debug "plot-wm g=" g)
 	 (rh/graph->image (keys g) g
 	 	:directed? false
  	 :options {:concentrate true :dpi 60}
  		:node->descriptor (fn [s]
- 			(let [[t n p] (-name-val-from-label s)
- 									node (-lookup-block-node c t n)
+ 			(let [attrs (get bl-map s)
  			]
-	 			{ :label (-mk-label c t n p)
+ 				(log/debug "plot-wm-descriptor s=" s ",attrs=" attrs)
+	 			{ :label (:label attrs)
 	 				 :fontcolor "black"
-	 				 :style (cond
-	 				 								(= t "targets") "bold"
-	 				 								(and (= t "blocks") (= p "res")) "dotted"
-	 				 								:else "solid")
-	 			  :fillcolor (-attr-to-color (:attr node)) ; we are already looking this up for -mk-label, can we dedup?
+	 				 :style (:style attrs)
+	 			  :fillcolor (-attr-to-color (:attr attrs)) 
 	 			 }
 	))))))
  

@@ -25,16 +25,6 @@ option) any later version, with the GNU Classpath Exception which is available
 at https://www.gnu.org/software/classpath/license.html.
 
 
-
-Big next tasks
-* vizualizer isn't able to plot blocks with sub-blocks, so falls apart when we add a secondary target
-* 7 * 20 = 140 was rejected as a block, iteration 139
-
-So now we need to be able to look up a block-number --> block mapping when plotting
-IDEA: make this mapping when we create the graph and just refer to it later?
-
-
-
 * why does dismantler now over-return blocks?
 * why do we never create secondary targets?
 
