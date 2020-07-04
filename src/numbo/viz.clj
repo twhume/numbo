@@ -134,7 +134,7 @@
  	(vector
 
  		; First make the Rhizome graph structure
- 		
+
 		 (-> (sorted-map)
 		 	(into (map #(vector (str "brick-" %1) '[]) (range 0 (count (:bricks c)))))
 		 	(into (map #(vector (str "target-" %1) '[]) (range 0 (count (:targets c)))))
@@ -262,14 +262,15 @@
 			    		:border [10 "" (empty-border :thickness 15)]
 			    		:maximum-size [Integer/MAX_VALUE :by 200]
 			    		:west (grid-panel
-			    			:columns 3
-			    			:maximum-size [300 :by Integer/MAX_VALUE ]
+			    			:columns 2
+;			    			:maximum-size [300 :by Integer/MAX_VALUE ]
 			    			:items [
-					    		(label :text "Iteration") (label :text "0 / 100" :id :iteration) ""
-					    		(label :text "Codelet")  (label :text "fred" :id :codelet) ""
-					    		(label :text "Temperature") (label :text "96%" :id :temperature) ""
+					    		(label :text "Iteration") (label :text "0 / 100" :id :iteration)
+					    		(label :text "Codelet")  (label :text "fred" :id :codelet)
+					    		(label :text "Temperature") (label :text "96%" :id :temperature)
 			    			])
 			    		:east (vertical-panel
+			    			:maximum-size [100 :by Integer/MAX_VALUE ]
 					    	:items [
 				    				(button :id :btn-last :text "Last")
 				    				(button :id :btn-next :text "Next")

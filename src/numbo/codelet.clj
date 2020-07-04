@@ -117,7 +117,7 @@
  "Create a target block with b as one arm, a secondary target of t2 and an operator op combining them, pump the target2"
 	[b t2 op]
  (cr/add-codelet (new-codelet :type :create-secondary-target
- 																													:desc (str "Create target2:" b " off by " t2)
+ 																													:desc (str "Create target2:" (-format-block b) " off by " t2)
  																													:urgency URGENCY_HIGH
  																													:fn (fn [] 
 		(do
@@ -137,12 +137,12 @@
  "Probes a newly created block b to see if it justifies a secondary target"
  [b]
  (cr/add-codelet (new-codelet :type :probe-target2
-																													 :desc (str "Probe target2:" b)
+																													 :desc (str "Probe target2:" (-format-block b))
 																													 :urgency URGENCY_HIGH
 																													 :fn (fn []
 
 		(do
-			(log/info "probe-target2 b=" b)
+			(log/info "probe-target2 b=" (-format-block b))
 			(if (cy/block-exists? b)
 				(if (misc/within (cy/get-target) (eval b) 0.4)
 					(do
@@ -249,11 +249,11 @@
  						]
  						(if (and b1 b2 op)
 	 						(cr/add-codelet (new-codelet :type :rand-block
-																													 							:desc (str "Random block: " op b1 b2)
+																													 							:desc (str "Random block: " (-format-block (list op b1 b2)))
 																													 							:urgency URGENCY_MEDIUM
 																													 							:fn (fn []
 		(do
-			(log/info "rand-block adding " op b1 b2)
+			(log/info "rand-block adding " (-format-block (list op b1 b2)))
 			(cy/add-block (list op b1 b2))
 			(test-block (list op b1 b2))
 		)))))))
@@ -264,7 +264,7 @@
  (let [block (cy/unworthy-block)]
  						(if block
 							 (cr/add-codelet (new-codelet :type :dismantler
-																																			 	:desc (str "dismantler " (:val block))
+																																			 	:desc (str "dismantler " (-format-block (:val block)))
 																																			 	:urgency URGENCY_LOW
 																																			 	:fn (fn []
 		(do

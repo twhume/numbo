@@ -1,5 +1,6 @@
 (ns numbo.misc
 	(:require [clojure.tools.logging :as log]
+											[clojure.set :as set]
 											[clojure.zip :as zip]
 											[random-seed.core :refer :all])
 	(:refer-clojure :exclude [rand rand-int rand-nth]))
@@ -123,3 +124,48 @@
 	"Return the third item in the sequence s"
 	[s]
 	(nth s 2))
+
+(defn common-elements [& colls]
+  (let [freqs (map frequencies colls)]
+    (mapcat (fn [e] (repeat (apply min (map #(% e) freqs)) e))
+            (apply set/intersection (map (comp set keys) freqs)))))
+
+(defn remove-first
+ "Return sequence s without the first instance of v"
+ [s v]
+ ((if (vector? s) vec identity) ; preserve vectorhood in inputs, as we rely on it for ordering purposes
+ 	(let [[n m] (split-with #(not= v %1) s)] (concat n (rest m)))))
+
+(defn remove-each
+ "Returns sequence s1 removing each instance of s2"
+ [s1 s2]
+ (reduce remove-first s1 s2))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

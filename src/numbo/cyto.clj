@@ -38,6 +38,11 @@
  ((if (vector? s) vec identity) ; preserve vectorhood in inputs, as we rely on it for ordering purposes
  	(let [[n m] (split-with #(not= v (:val %1)) s)] (concat n (rest m)))))
 
+(defn -remove-each
+ "Returns sequence s1 removing nodes with values of each instance of s2"
+ [s1 s2]
+ (reduce -remove-first s1 s2))
+
 (defn -bricks-for-block
  "Takes a potentially nested block and returns all the bricks"
  [b]
@@ -201,12 +206,17 @@
  "Removes the block b from the cytoplasm c, returning its bricks"
  ([c b]
  	(if (block-exists? c b) ; if the cytoplasm still contains this block
- 		(-> c
- 			(update-in [:blocks] (partial -remove-first) b) ; remove the block
- 			(update-in [:bricks] (partial apply conj) (map -new-node (-bricks-for-block b)))) ; return all its bricks
- 		(do
- 		 (log/warn "del-block failed, block not in cytoplasm " b)
- 		 	c))); otherwise don't
+ 	 (let [bricks (-bricks-for-block b)
+ 	 						shared (misc/common-elements (rest (map :val (:targets c))) bricks)
+ 	 						remaining (misc/remove-each bricks shared)]
+ 	 	(log/debug "del-block bricks=" b "shared=" shared "remaining=" remaining)
+	 		(-> c
+	 			(update-in [:blocks] (partial -remove-first) b) ; remove the block from blocks
+	 			(update-in [:targets] (partial -remove-each) shared) ; remove any secondary targets it used
+	 			(update-in [:bricks] (partial apply conj) (map -new-node remaining)))) ; return any remaining bricks
+	 		(do
+	 		 (log/warn "del-block failed, block not in cytoplasm " b)
+	 		 	c))); otherwise don't
  ([b] (reset! CYTO (del-block @CYTO b))))
 
 (defn closest-block

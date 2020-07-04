@@ -33,6 +33,7 @@
  	(let [codelet (-select-next-codelet @CODERACK)]
  	(do
  		(log/info  "Iteration" @ITERATIONS ":" (:desc codelet))
+ 		(log/debug  "Iteration" @ITERATIONS "cyto=" @cy/CYTO)
  	 (if ((complement nil?) codelet) (-execute (:fn codelet)))
  	 (hist/add-step @pn/PNET @cy/CYTO @CODERACK codelet @ITERATIONS (cy/get-temperature))
  	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
