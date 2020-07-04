@@ -108,6 +108,11 @@
 	([c] (:val (first (:targets c))))
 	([] (get-target @CYTO)))
 
+(defn random-target
+	"Returns a random target, probabilistically weighted by attraction"
+	([c] (-n-random-nodes (:targets c) 1))
+ ([] (random-target @CYTO)))
+
 (defn add-target2
  "Adds a secondary target t"
  ([c t] (if (> (count (:targets c)) 0)

@@ -98,7 +98,7 @@
  []
  (let [node (cy/random-node)
  						nval (str (eval node))
- 						tval (str (cy/get-target))]
+ 						tval (str (cy/random-target))]
  						(if node
 	 						(cr/add-codelet (new-codelet :type :rand-syntactic-comparison
 	 																																			:desc (str "Compare " nval " to target " tval)
@@ -127,7 +127,8 @@
 					(log/debug "create-target2 b=" b ", adding target2")
 					(cy/add-target2 t2)
 					(cy/combine-target2 b t2 op)																										
-					(activate-pnet (pn/closest-keyword t2)))
+					(activate-pnet (pn/closest-keyword t2))
+				 (pump-node t2))
 				(log/debug "create-target2 b=" b "no longer exists")))))))
 
 ; Run on newly created blocks; compares them to the target and if they're close, kick off

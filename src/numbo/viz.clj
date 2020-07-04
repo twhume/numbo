@@ -101,12 +101,12 @@
   (cond-> '{}
    ; Every block goes in there
 
-   true (assoc bprefix (hash-map :label (eval bl) :attr (:attr root) :style "solid"))
-   true (assoc rprefix (hash-map :label (eval (:val root)) :attr (:attr root) :style "solid"))
-   true (assoc (str bprefix "-res") (hash-map :label (eval bl) :attr (:attr root) :style "solid"))
+   true (assoc bprefix (hash-map :label (eval bl) :attr (:attr root) :style "filled"))
+   true (assoc rprefix (hash-map :label (eval (:val root)) :attr (:attr root) :style "filled"))
+   true (assoc (str bprefix "-res") (hash-map :label (eval bl) :attr (:attr root) :style "filled"))
    true (assoc (str bprefix "-op") (hash-map :label (get pn/op-lookups op) :attr (:attr root) :style "dotted"))
-   true (assoc (str bprefix "-p1") (hash-map :label (eval p1) :attr (:attr root) :style "solid"))
-   true (assoc (str bprefix "-p2") (hash-map :label (eval p2) :attr (:attr root) :style "solid"))
+   true (assoc (str bprefix "-p1") (hash-map :label (eval p1) :attr (:attr root) :style "filled"))
+   true (assoc (str bprefix "-p2") (hash-map :label (eval p2) :attr (:attr root) :style "filled"))
 
 	 	; if necessary, recursively add entries for sub-blocks
 
@@ -145,7 +145,7 @@
 		 (-> '{}
 		 	(into (map
 		 									#(vector (str "brick-" %1)
-		 									(hash-map :label (:val (nth (:bricks c) %1)) :attr (:attr (nth (:bricks c) %1)) :style "solid"))
+		 									(hash-map :label (:val (nth (:bricks c) %1)) :attr (:attr (nth (:bricks c) %1)) :style "filled"))
 		 									(range 0 (count (:bricks c)))))
 
 		 	(into (map
