@@ -150,7 +150,7 @@
 
 		 	(into (map
 		 									#(vector (str "target-" %1)
-		 									(hash-map :label (:val (nth (:targets c) %1)) :attr (:attr (nth (:targets c) %1)) :style "bold"))
+		 									(hash-map :label (:val (nth (:targets c) %1)) :attr (:attr (nth (:targets c) %1)) :style "solid,filled"))
 		 									(range 0 (count (:targets c)))))
 
 			 (into (-blocks-map (:blocks c)))

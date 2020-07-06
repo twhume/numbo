@@ -43,7 +43,7 @@
 (defn -make-percent
  [k m]
 
- (if (= (k m) 0) 1
+ (if (zero? (k m)) 1
  	(int (* (k m) 100))))
 
 ; A version of make-ranges which assumes the value pointed at by k is 0..1

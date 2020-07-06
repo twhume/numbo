@@ -16,7 +16,7 @@
 
 (def PNET (atom '{}))
 
-(def DEFAULT_DECAY 0.05)
+(def DEFAULT_DECAY 0.2)
 (def DEFAULT_ACTIVATION 0)
 (def DEFAULT_INC 0.4)
 
@@ -36,6 +36,8 @@
 			(:plus-1-7 :param)
 			(:plus-1-8 :param)
 			(:plus-1-9 :param)
+			(:minus-7-1 :param)
+
 		)
 	}
 
@@ -129,6 +131,7 @@
 			(:plus-2-6 :param)
 			(:plus-3-6 :param)
 			(:plus-4-6 :param)
+			(:minus-7-1 :result)
 			(:times-2-3 :result)
 			(:plus-3-3 :result)
 			(:plus-2-4 :result)
@@ -145,6 +148,7 @@
 		:links (
 		 (:6 :similar)
 		 (:8 :similar)
+			(:minus-7-1 :param)
 		 )
 	}
 
@@ -430,6 +434,17 @@
 			(:plus :operator)
 		)
 	}
+
+	:minus-7-1 {
+		:type :calculation
+		:links (
+			(:7 :param)
+			(:1 :param)
+			(:6 :result)
+			(:minus :operator)
+		)
+	}
+
 
 	:plus-1-8 {
 		:type :calculation

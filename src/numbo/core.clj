@@ -38,30 +38,29 @@
 	(do
 		(log/debug "tick")
 
-		(cond
+		
 ;			(= 0 (mod @cr/ITERATIONS 5)) (do
 ;				(if (< (rand) (cy/get-temperature)) (cl/rand-block)))
 
-			(= 0 (mod @cr/ITERATIONS 1)) (do
+		(if(= 0 (mod @cr/ITERATIONS 2)) (do
 																																	(if (< (rand) (cy/get-temperature)) (cl/dismantler)) ; if it's getting too hot, dismantle something
-																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-block cl/rand-syntactic-comparison cl/seek-facsimile)))))
+																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-block cl/rand-syntactic-comparison cl/seek-facsimile))))))
 
 			; Pump a random brick every few iterations
 
-			(= 0 (mod @cr/ITERATIONS 2)) (do 
+		(if (= 0 (mod @cr/ITERATIONS 5)) (do 
 																																	(if (> (rand) (cy/get-temperature)) ; When it's not so hot, pump a brick target
 																																		(let [br (cy/random-brick)]
 																																			(if br
-																																				(cl/activate-pnet (pn/closest-keyword br))))))
+																																				(cl/activate-pnet (pn/closest-keyword br)))))))
 
 		; Pump a target (chosen randomly from the primary and secondary targets) 1 in 10 iterations
 
-			(= 0 (mod @cr/ITERATIONS 1)) (do 
-																																		(let [t (cy/random-target)]
-																																		 (if ((complement nil?) t)
+			(if (= 0 (mod @cr/ITERATIONS 5)) (let [t (cy/random-target)]
+																																		 (if (not (nil? t))
 																																		 	(do
 																																		 		(log/debug "tick activating target" t)
-																																			 	(cl/activate-pnet (pn/closest-keyword t)))))))
+																																			 	(cl/activate-pnet (pn/closest-keyword t))))))
 
   (cy/decay)
 		(pn/decay)

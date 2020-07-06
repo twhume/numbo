@@ -10,8 +10,8 @@
 
 (def codelet-types :load-target)
 
-(def URGENCY_HIGH 3)
-(def URGENCY_MEDIUM 2)
+(def URGENCY_HIGH 5)
+(def URGENCY_MEDIUM 3)
 (def URGENCY_LOW 1)
 
 (def urgency-labels '{
@@ -36,7 +36,9 @@
 (defn -format-block
  "Make a nice printable version of the calculation in b"
  [b]
- (str (second b) (get pn/op-lookups (first b)) (misc/third b) "=" (eval b)))
+ (if (seq? b)
+ 	(str (second b) (get pn/op-lookups (first b)) (misc/third b) "=" (eval b))
+ 	(str b)))
 
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
@@ -61,7 +63,7 @@
  "Pumps the attractiveness of a node"
 	[n]
 	(cr/add-codelet (new-codelet :type :inc-attraction
-																														:desc (str "Pump node: " n)
+																														:desc (str "Pump node: " (-format-block n))
 																														:urgency URGENCY_MEDIUM :fn
 																														(fn [] (do
 																												 		(log/info "pump-node" n)
@@ -127,8 +129,10 @@
 					(log/debug "create-target2 b=" b ", adding target2")
 					(cy/add-target2 t2)
 					(cy/combine-target2 b t2 op)																										
-					(activate-pnet (pn/closest-keyword t2))
-				 (pump-node t2))
+					(activate-pnet (pn/closest-keyword t2)) ; light up the pnet for the target
+					(doall (map activate-pnet (pn/get-operators))) ; activate all operators
+					(pump-node (list op b t2)) ; pump the newly created block, so it's less likely to die
+				 (pump-node t2)) ; pump that secondary target, so it's more likely to be targeted
 				(log/debug "create-target2 b=" b "no longer exists")))))))
 
 ; Run on newly created blocks; compares them to the target and if they're close, kick off
@@ -244,10 +248,11 @@
 (defn rand-block
  "Make a new block out of sampled random bricks and ops"
  []
- (let [[b1 b2] (cy/random-brick 2)
- 						rand-op (pn/get-random-op)
+ (let [rand-op (pn/get-random-op)
  						op ((:name rand-op) pn/operator-map)
+ 						[b1 b2] (cy/random-brick 2)
  						]
+ 						(log/debug "rand-block op=" op "b1=" b1 "b2=" b2)
  						(if (and b1 b2 op)
 	 						(cr/add-codelet (new-codelet :type :rand-block
 																													 							:desc (str "Random block: " (-format-block (list op b1 b2)))

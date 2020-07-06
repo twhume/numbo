@@ -116,7 +116,7 @@
 (defn add-target2
  "Adds a secondary target t"
  ([c t] (if (> (count (:targets c)) 0)
- 	(update-in c [:targets] (partial conj) (-new-node t))
+ 	(update-in c [:targets] (partial conj) (-new-node t (-initial-attr t)))
  	(do
  		(log/warn "add-target2" t "but no primary target set")
  		c)))
@@ -140,7 +140,7 @@
 
 (defn add-brick
  "Add a brick with value v"
- ([c v] (update-in c [:bricks] (partial conj) (-new-node v)))
+ ([c v] (update-in c [:bricks] (partial conj) (-new-node v (-initial-attr v))))
  ([v] (reset! CYTO (add-brick @CYTO v))))
 
 (defn brick-free?
@@ -200,7 +200,7 @@
 				(and (= (second b) (misc/third b)) (brick-free? c 2 (second b))) ; check we have 2 copies of the parameter free, if they're the same
 				(every? true? (map (partial brick-free? c 1) (-bricks-for-block b)))) ; if all the parameters of the block are free bricks
 		 (-> c
-				(update-in [:blocks] (partial conj) (-new-node b)) ; add the new block to the cyto
+				(update-in [:blocks] (partial conj) (-new-node b (-initial-attr (eval b)))) ; add the new block to the cyto
 				(update-in [:bricks] (partial reduce -remove-first) (-bricks-for-block b))) ; remove all the bricks from the free list
 		 (do
 		 	(log/warn "add-block failed, bricks not free for " b)
@@ -218,7 +218,7 @@
 	 		(-> c
 	 			(update-in [:blocks] (partial -remove-first) b) ; remove the block from blocks
 	 			(update-in [:targets] (partial -remove-each) shared) ; remove any secondary targets it used
-	 			(update-in [:bricks] (partial apply conj) (map -new-node remaining)))) ; return any remaining bricks
+	 			(update-in [:bricks] (partial apply conj) (map #(-new-node %1 (-initial-attr %1)) remaining)))) ; return any remaining bricks
 	 		(do
 	 		 (log/warn "del-block failed, block not in cytoplasm " b)
 	 		 	c))); otherwise don't
@@ -263,6 +263,7 @@
  	(-> c
  		(update-in [:blocks] (partial -inc-attr DEFAULT_ATTRACTION_INC) n)
  		(update-in [:bricks] (partial -inc-attr DEFAULT_ATTRACTION_INC) n)
+ 		(update-in [:targets] (partial -inc-attr DEFAULT_ATTRACTION_INC) n)
  	))
  ([v] (reset! CYTO (pump-node @CYTO v))))
 

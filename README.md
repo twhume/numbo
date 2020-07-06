@@ -26,7 +26,7 @@ at https://www.gnu.org/software/classpath/license.html.
 
 
 * WHY IS NOTHING GETTING ACTIVATED
-
+* PNET CONTAINS NO - CALCULATIONS
 
 
 Is activation an issue?
