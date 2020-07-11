@@ -16,9 +16,9 @@
 
 (def PNET (atom '{}))
 
-(def DEFAULT_DECAY 0.2)
+(def DEFAULT_DECAY 0.1)
 (def DEFAULT_ACTIVATION 0)
-(def DEFAULT_INC 0.4)
+(def DEFAULT_INC 0.2)
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
 
@@ -27,6 +27,15 @@
 	:1 {
 		:type :number
 		:links (
+			(:minus-3-1 :param)
+			(:minus-4-1 :param)
+			(:minus-5-1 :param)
+			(:minus-6-1 :param)
+			(:minus-7-1 :param)
+			(:minus-8-1 :param)
+			(:minus-9-1 :param)
+			(:minus-10-1 :param)
+			(:minus-50-1 :param)
 		 (:plus-1-1 :param)
 			(:plus-1-2 :param)
 			(:plus-1-3 :param)
@@ -36,8 +45,6 @@
 			(:plus-1-7 :param)
 			(:plus-1-8 :param)
 			(:plus-1-9 :param)
-			(:minus-7-1 :param)
-
 		)
 	}
 
@@ -59,6 +66,7 @@
 			(:times-2-10 :param)
 			(:times-2-12 :param)
 			(:times-2-20 :param)
+			(:minus-3-1 :result)
 		 (:plus-1-1 :result)
 		)
 	}
@@ -77,6 +85,7 @@
 			(:times-3-3 :param)
 			(:times-3-10 :param)
 			(:times-3-20 :param)
+			(:minus-4-1 :result)
 		 (:plus-1-2 :result)
 		 (:4 :similar)
 		)
@@ -95,6 +104,7 @@
 			(:times-4-4 :param)
 			(:times-4-10 :param)
 			(:times-4-20 :param)
+			(:minus-5-1 :result)
 			(:plus-1-3 :result)
 			(:plus-2-2 :result)
 			(:times-2-2 :result)
@@ -117,6 +127,7 @@
 			(:times-5-6 :param)
 			(:times-5-10 :param)
 			(:times-5-20 :param)
+			(:minus-6-1 :result)
 			(:plus-1-4 :result)
 			(:plus-2-3 :result)
 		 (:4 :similar)
@@ -136,6 +147,7 @@
 			(:plus-3-3 :result)
 			(:plus-2-4 :result)
 			(:plus-1-5 :result)
+			(:minus-7-1 :result)
 			(:times-5-6 :param)
 			(:times-6-10 :param)
 		 (:5 :similar)
@@ -148,6 +160,7 @@
 		:links (
 		 (:6 :similar)
 		 (:8 :similar)
+			(:minus-8-1 :result)
 			(:minus-7-1 :param)
 		 )
 	}
@@ -157,12 +170,14 @@
 		:links (
 		 (:7 :similar)
 		 (:9 :similar)
+			(:minus-9-1 :result)
 		 )
 	}
 
 	:9 {
 		:type :number
 		:links (
+			(:minus-10-1 :result)
 			(:times-3-3 :result)
 			(:8 :similar)
 		)
@@ -285,6 +300,7 @@
 	:49 {
 		:type :number
 		:links (
+			(:minus-50-1 :result)
 			(:times-7-7 :result)
 			(:50 :similar)
 		)
@@ -365,6 +381,97 @@
 		)
 	}
 
+
+	:minus-3-1 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:1 :param)
+			(:2 :result)
+			(:minus :operator)
+		)
+	}
+
+	:minus-4-1 {
+		:type :calculation
+		:links (
+			(:4 :param)
+			(:1 :param)
+			(:3 :result)
+			(:minus :operator)
+		)
+	}
+
+	:minus-5-1 {
+		:type :calculation
+		:links (
+			(:5 :param)
+			(:1 :param)
+			(:4 :result)
+			(:minus :operator)
+		)
+	}
+
+	:minus-6-1 {
+		:type :calculation
+		:links (
+			(:6 :param)
+			(:1 :param)
+			(:5 :result)
+			(:minus :operator)
+		)
+	}
+
+	:minus-7-1 {
+		:type :calculation
+		:links (
+			(:7 :param)
+			(:1 :param)
+			(:6 :result)
+			(:minus :operator)
+		)
+	}
+
+	:minus-8-1 {
+		:type :calculation
+		:links (
+			(:8 :param)
+			(:1 :param)
+			(:7 :result)
+			(:minus :operator)
+		)
+	}
+
+	:minus-9-1 {
+		:type :calculation
+		:links (
+			(:9 :param)
+			(:1 :param)
+			(:8 :result)
+			(:minus :operator)
+		)
+	}
+
+	:minus-10-1 {
+		:type :calculation
+		:links (
+			(:10 :param)
+			(:1 :param)
+			(:9 :result)
+			(:minus :operator)
+		)
+	}
+
+	:minus-50-1 {
+		:type :calculation
+		:links (
+			(:50 :param)
+			(:1 :param)
+			(:49 :result)
+			(:minus :operator)
+		)
+	}
+
 	:plus-1-1 {
 		:type :calculation
 		:links (
@@ -434,17 +541,6 @@
 			(:plus :operator)
 		)
 	}
-
-	:minus-7-1 {
-		:type :calculation
-		:links (
-			(:7 :param)
-			(:1 :param)
-			(:6 :result)
-			(:minus :operator)
-		)
-	}
-
 
 	:plus-1-8 {
 		:type :calculation
@@ -1038,9 +1134,9 @@
  						node-and-neighbors (set (conj neighbors n))
  						neighbors-2 (remove node-and-neighbors (distinct (mapcat (partial -get-neighbors p) neighbors)))]
  (-> p
-	 (update n (partial -update-activation 3))
-  (-map-values neighbors (partial -update-activation 2))
-  (-map-values neighbors-2 (partial -update-activation 1.5))
+	 (update n (partial -update-activation 5))
+  (-map-values neighbors (partial -update-activation 3))
+  (-map-values neighbors-2 (partial -update-activation 1))
  )))
  ([n] (reset! PNET (activate-node @PNET n))))
 

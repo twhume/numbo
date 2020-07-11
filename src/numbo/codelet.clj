@@ -86,10 +86,18 @@
 		 		(cy/set-target v)
 		 	 (activate-pnet (pn/closest-keyword v))
 		 	 (doall (map activate-pnet (pn/get-operators))) ; activate all operators
-		 	 (if (and 
-		 	 	(not (nil? (cy/largest-brick)))
-		 	 	(> v (cy/largest-brick)))
-		 	 		(activate-pnet :times)))))))
+		 	 (cond
+
+		 	 	; if we have an enormous target, get ready to multiply
+		 	 	(and 
+			 	 	(not (nil? (cy/largest-brick))) (> v (cy/largest-brick))) 
+			 	 		(activate-pnet :times)
+
+			 	 	; if we have a small target, prefer to subtract
+		 	 	(< v 10)
+		 	 		(activate-pnet :minus)
+
+			 	 		))))))
 
 ; syntactic-comparison (low urgency) There is a type of codeliet which inspects various nodes and
 ; notices syntactic similarities, increases attractiveness of them - e.g. if brick 11 shares digits 
@@ -195,7 +203,7 @@
 						 	(log/debug "test-block b=" str ", (cy/brick-free? b1)=" (cy/brick-free? b1))
 						 	(log/debug "test-block b=" str ", closest=" ((pn/closest-keyword (eval b)) @pn/PNET))
 						 	(log/debug "test-block b=" str ", activation" (:activation ((pn/closest-keyword (eval b)) @pn/PNET)))
-						 	(log/debug "test-block b=" str ", act-test" (> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.25))
+						 	(log/debug "test-block b=" str ", act-test" (>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) pn/DEFAULT_INC))
 
 						 	(cy/del-block b))))))))
 
