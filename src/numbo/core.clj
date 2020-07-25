@@ -77,7 +77,8 @@
 	 	(cr/process-next-codelet)
 
 	 	(tick)
-	 	(if (not (pred)) (recur)))))
+	 	(if (not (or (pred) @cy/COMPLETE))
+	 		 (recur)))))
 
 (defn run-until-empty-cr
  []
@@ -109,6 +110,8 @@
 
 
 	(run-for-iterations 5000)
+	(if @cy/COMPLETE
+		(println "Solution=" (cy/get-solutions)))
 
 	(viz/-main)
 	(catch Exception e

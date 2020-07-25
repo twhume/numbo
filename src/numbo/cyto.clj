@@ -11,6 +11,10 @@
 ; default starting attraction
 (def DEFAULT_ATTRACTION 0.4)
 
+; has a solution been found?
+(def COMPLETE (atom false))
+
+
 ; ----- Private functions -----
 
 (defn -new-node
@@ -90,7 +94,8 @@
 (defn reset
 	"Resets the cytoplasm"
 	[]
-	(reset! CYTO (new-cyto)))
+	(reset! CYTO (new-cyto))
+	(reset! COMPLETE false))
 
 ; ----- Functions for targets -----
 
@@ -326,6 +331,17 @@
 	 	(update-in [:targets] (partial -dec-attr DEFAULT_ATTRACTION_DEC))))
  ([] (reset! CYTO (decay @CYTO))))
 
+(defn get-solutions
+ "Return all blocks which are complete and valid solutions"
+ ([c]
+	(filter
+		#(and
+			(= (get-target c) (eval (:val %1))) ; block evaluates to the target
+			(empty?
+				(clojure.set/intersection
+					(set (-bricks-for-block (:val %1)))
+					(set (get-target2 c))))) (:blocks c))) ; there's no bricks used which are secondary targets
+ ([] (get-solutions @CYTO)))
 
 ; Contributors to temperature:
 ; # secondary targets

@@ -152,10 +152,10 @@
  																													:fn (fn [] 
 		(do
 			(log/info "check-done")
-			; Does there exist a block which evaluates to the target,
-			; and for whom there are no bricks which are in the secondary targets?
-			; if so, it is the solution
-)))))
+			(if (not (empty? (cy/get-solutions)))
+				(do
+					(log/info "check-done SOLVED! " (first (cy/get-solutions)))
+					(reset! cy/COMPLETE true))))))))
 
 (defn fulfil-target2
  "Given a target block b which we believe to resolve to value of a secondary target, plug it in"
