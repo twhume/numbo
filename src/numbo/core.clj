@@ -43,9 +43,12 @@
 ;			(= 0 (mod @cr/ITERATIONS 5)) (do
 ;				(if (< (rand) (cy/get-temperature)) (cl/rand-block)))
 
+		(if(= 0 (mod @cr/ITERATIONS 5)) (do
+																																	(if (< (rand) (cy/get-temperature)) (cl/dismantler))) ; if it's getting too hot, dismantle something
+
 		(if(= 0 (mod @cr/ITERATIONS 2)) (do
-																																	(if (< (rand) (cy/get-temperature)) (cl/dismantler)) ; if it's getting too hot, dismantle something
-																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-block cl/rand-syntactic-comparison cl/seek-facsimile))))))
+
+																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-block cl/rand-syntactic-comparison cl/seek-facsimile)))))))
 
 			; Pump a random brick every few iterations
 

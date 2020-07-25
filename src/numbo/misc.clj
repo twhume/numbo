@@ -141,8 +141,13 @@
  [s1 s2]
  (reduce remove-first s1 s2))
 
-
-
+(defn replace-first
+ "Return sequence s with the first instance of a replaced by b"
+ [a b s]
+ (if (some #{a} s)
+	 ((if (vector? s) vec identity) ; preserve vectorhood in inputs, as we rely on it for ordering purposes
+	 	(let [[n m] (split-with #(not= a %1) s)] (concat n (cons b (rest m)))))
+	 s))
 
 
 

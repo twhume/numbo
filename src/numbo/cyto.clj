@@ -108,6 +108,11 @@
 	([c] (:val (first (:targets c))))
 	([] (get-target @CYTO)))
 
+(defn get-target2
+	"Returns all secondary targets"
+	([c] (map :val (rest (:targets c))))
+	([] (get-target2 @CYTO)))
+
 (defn random-target
 	"Returns a random target, probabilistically weighted by attraction"
 	([c] (-n-random-nodes (:targets c) 1))
@@ -135,6 +140,39 @@
  "Return a random target entry"
 	([c] (:val (rand-nth (:targets c))))
 	([] (random-target @CYTO)))
+
+(defn -plug-block
+ "In block a, find a leaf node where block b can provide the value and substitute b for that node"
+ [a b]
+ (do
+ 	(log/debug "-plug-block" a b)
+ 	(assoc a :val (misc/replace-first (eval b) b (:val a)))
+ ))
+
+(defn -can-plug?
+ "Can the expression b be plugged into the block a?"
+ [a b]
+ (some #(= (eval b) %1) (:val a)))
+
+; Forgive me father for I have sinned, there must be an idiomatic method of doing this.
+
+(defn -plug-blocks
+ "In list-of-blocks s substitute b in for a value in the first place it can apply"
+ [s b]
+ (loop [blocks s ret '()]
+ 	(let [cur (first blocks)]
+ 		(cond
+ 			(empty? blocks) s ; if we never found a match, return the original
+ 			(-can-plug? cur b) (concat ret (cons (-plug-block cur b) (rest blocks))) ; plug in & return where we can
+ 			(= (:val cur) b) (recur (rest blocks) ret) ; don't add the block we're plugging in
+ 			:else (recur (rest blocks) (conj ret cur))))))
+
+(defn plug-target2
+	"Given the block b, which evals to a secondary target, find the first block where it might plug in, and plug it in"
+	([c b] (do
+		(log/debug "plug-target2 c=" c "b="b)
+		(update-in c [:blocks] -plug-blocks b)))
+ ([b] (reset! CYTO (plug-target2 @CYTO b))))
 
 ; ----- Functions for bricks -----
 
@@ -241,6 +279,11 @@
 			(misc/random-val-in-range
 				(misc/make-percent-ranges (map (partial misc/invert-val :attr) (:blocks c)) :attr))))
 	([] (unworthy-block @CYTO)))
+
+(defn get-block
+	"Read the block b from cyto c"
+	([c b] (first (filter #(= b (:val %1)) (:blocks c))))
+	([b] (get-block @CYTO b)))
 
 ; ----- Functions for nodes (i.e. blocks AND bricks) -----
 

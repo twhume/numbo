@@ -126,7 +126,7 @@
 (defn create-target2
  "Create a target block with b as one arm, a secondary target of t2 and an operator op combining them, pump the target2"
 	[b t2 op]
- (cr/add-codelet (new-codelet :type :create-secondary-target
+ (cr/add-codelet (new-codelet :type :create-target2
  																													:desc (str "Create target2:" (-format-block b) " off by " t2)
  																													:urgency URGENCY_HIGH
  																													:fn (fn [] 
@@ -143,11 +143,43 @@
 				 (pump-node t2)) ; pump that secondary target, so it's more likely to be targeted
 				(log/debug "create-target2 b=" b "no longer exists")))))))
 
+(defn check-done
+	"Is there a block in the cytoplasm which is complete and == target?"
+	[]
+ (cr/add-codelet (new-codelet :type :check-done
+ 																													:desc (str "Check done")
+ 																													:urgency URGENCY_HIGH
+ 																													:fn (fn [] 
+		(do
+			(log/info "check-done")
+			; Does there exist a block which evaluates to the target,
+			; and for whom there are no bricks which are in the secondary targets?
+			; if so, it is the solution
+)))))
+
+(defn fulfil-target2
+ "Given a target block b which we believe to resolve to value of a secondary target, plug it in"
+ [b]
+ (cr/add-codelet (new-codelet :type :fulfil-target2
+ 																													:desc (str "Fulfil target2:" (-format-block b))
+ 																													:urgency URGENCY_HIGH
+ 																													:fn (fn [] 
+		(do
+			(log/info "fulfil-target2 b=" b)
+			(if (and (cy/block-exists? b) (some #{(eval b)} (cy/get-target2)))
+				(do
+					(log/debug "fulfil-target2 b=" b ", fulfilling target2")
+					(cy/plug-target2 b)
+					(cy/del-target2 (eval b))
+					(check-done))
+				(log/debug "fulfil-target2 b=" b "or target2 no longer exists")))))))
+
 ; Run on newly created blocks; compares them to the target and if they're close, kick off
-; a create-secondary-target codelet
+; a create-secondary-target codelet. Also compare to secondary targets and if there's a
+; match, kick off a fulfil-target2 codelet to plug it in
 
 (defn probe-target2
- "Probes a newly created block b to see if it justifies a secondary target"
+ "Probes a newly created block b to see if it justifies or fulfils a secondary target"
  [b]
  (cr/add-codelet (new-codelet :type :probe-target2
 																													 :desc (str "Probe target2:" (-format-block b))
@@ -157,11 +189,20 @@
 		(do
 			(log/info "probe-target2 b=" (-format-block b))
 			(if (cy/block-exists? b)
-				(if (misc/within (cy/get-target) (eval b) 0.4)
-					(do
-						(log/debug "probe-target2 b=" b "deserves target2")
-						(create-target2 b (Math/abs (- (eval b) (cy/get-target))) (if (< (eval b) (cy/get-target)) + -)))
-					(log/debug "probe-target2 b=" b "doesn't deserve target2"))))))))
+				(cond
+
+				 ; If b is equal to a secondary target, connect it up
+
+				 (some #{(eval b)} (cy/get-target2)) (fulfil-target2 b)
+
+					; If this is near to the main target, set up a secondary target
+
+					(misc/within (cy/get-target) (eval b) 0.4)
+						(do
+							(log/debug "probe-target2 b=" b "deserves target2")
+							(create-target2 b (Math/abs (- (eval b) (cy/get-target))) (if (< (eval b) (cy/get-target)) + -)))
+
+					:else (log/debug "probe-target2 b=" b "doesn't deserve target2"))))))))
 
 (defn load-brick
  "Loads a new brick with value v into the cytoplasm"
@@ -187,25 +228,29 @@
 									op (first b)
 									bstr (-format-block b)]
 				(log/info "test-block b1=" b1 "b2=" b2 "op=" op)
-				(if
-;					(and
-;						(or
-;							(and (= b1 b2) (cy/brick-free? b2 2)) ; either the two params are the same and we have 2 free copies
-;							(and (not= b1 b2) (cy/brick-free? b1) (cy/brick-free? b2))) ; or they are different and both are free
-						(> (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.5)
+				(cond
+
+					 ; If it evaluates to the target, check we're done!
+
+					 (= (cy/get-target) (eval b)) (check-done)
+
+						; If this is near a highly activated node, it's worth pursuing
+						(>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.2)
 							(do
 							 (log/debug "test-block b=" bstr " is worthy")
 							 (probe-target2 b))
-						 (do
-						 	(log/debug "test-block b=" bstr " is not worthy")
-						 	(log/debug "test-block b=" str ", (= b1 b2)=" (= b1 b2))
-						 	(log/debug "test-block b=" str ", (cy/brick-free? b2 2)=" (cy/brick-free? b2 2))
-						 	(log/debug "test-block b=" str ", (cy/brick-free? b1)=" (cy/brick-free? b1))
-						 	(log/debug "test-block b=" str ", closest=" ((pn/closest-keyword (eval b)) @pn/PNET))
-						 	(log/debug "test-block b=" str ", activation" (:activation ((pn/closest-keyword (eval b)) @pn/PNET)))
-						 	(log/debug "test-block b=" str ", act-test" (>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) pn/DEFAULT_INC))
 
-						 	(cy/del-block b))))))))
+							:else
+							 (do
+							 	(log/debug "test-block b=" bstr " is not worthy")
+							 	(log/debug "test-block b=" str ", (= b1 b2)=" (= b1 b2))
+							 	(log/debug "test-block b=" str ", (cy/brick-free? b2 2)=" (cy/brick-free? b2 2))
+							 	(log/debug "test-block b=" str ", (cy/brick-free? b1)=" (cy/brick-free? b1))
+							 	(log/debug "test-block b=" str ", closest=" ((pn/closest-keyword (eval b)) @pn/PNET))
+							 	(log/debug "test-block b=" str ", activation" (:activation ((pn/closest-keyword (eval b)) @pn/PNET)))
+							 	(log/debug "test-block b=" str ", act-test" (>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) pn/DEFAULT_INC))
+
+							 	(cy/del-block b))))))))
 
 ; Tries to build a block which makes something close to a biped in the pnet
 ; Find a biped: i.e. a randomly highly activated node of type :calculation
@@ -281,8 +326,9 @@
 																																			 	:desc (str "dismantler " (-format-block (:val block)))
 																																			 	:urgency URGENCY_LOW
 																																			 	:fn (fn []
-		(do
-			(log/info "dismantler " (:val block))
-			(cy/del-block (:val block)))))))))
+		(let [bl (cy/get-block (:val block))]
+			(log/info "dismantler " (:val bl))
+			(if (and bl (< (:attr bl) 0.3)) ; Never abandon a promising theory
+				(cy/del-block (:val bl))))))))))
 
 ;----- END OF CODELETS -----
