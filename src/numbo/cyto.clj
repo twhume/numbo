@@ -143,7 +143,7 @@
 
 (defn random-target
  "Return a random target entry"
-	([c] (:val (rand-nth (:targets c))))
+	([c] (if (empty? (:targets c)) nil (:val (rand-nth (:targets c)))))
 	([] (random-target @CYTO)))
 
 (defn -plug-block

@@ -11,7 +11,7 @@
 	(:refer-clojure :exclude [rand rand-int rand-nth]))
 
 (def seed (rand-int Integer/MAX_VALUE))
-(def seed 1572254847)
+;(def seed 1572254847)
 
 (log/info "Starting with random seed" seed)
 (set-random-seed! seed)
@@ -90,10 +90,11 @@
 
 
 (defn -main
-  []
-  (do
+  [& args]
+  (dotimes [n 1000]
 
 ; re-init everything every time so we can run from the REPL
+
 (try
 	(pn/initialize-pnet)
 	(cy/reset)
@@ -109,13 +110,14 @@
 	(cl/load-brick 7)
 
 
-	(run-for-iterations 5000)
+	(run-for-iterations 10000)
 	(if @cy/COMPLETE
-		(println "Solution=" (cy/get-solutions)))
+		(println "Solution," @cr/ITERATIONS "," (cy/get-solutions)))
 
-	(viz/-main)
+;	(viz/-main)
 	(catch Exception e
 	 (do
 			(log/error "Caught " e)
+			(println e)
 			(dump)
 )))))
