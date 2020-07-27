@@ -143,7 +143,8 @@
 
 		(run-for-iterations i)
 		(if @cy/COMPLETE
-			(println "Solution," @cr/ITERATIONS "," (cy/get-solutions)))
+			(println n "," t "," b "," @cr/ITERATIONS "," (cy/format-block (:val (first (cy/get-solutions)))))
+			(println n "," t "," b "," @cr/ITERATIONS ", none"))
 
 	 (if v (viz/-main))
 		(catch Exception e

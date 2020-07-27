@@ -1,6 +1,7 @@
 (ns numbo.cyto
  (:require [clojure.tools.logging :as log]
  										[numbo.misc :as misc]
+ 										[numbo.pnet :as pn]
  										[random-seed.core :refer :all])
  (:refer-clojure :exclude [rand rand-int rand-nth]))
 
