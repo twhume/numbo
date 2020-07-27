@@ -1,5 +1,6 @@
 (ns numbo.core
 	(:require [clojure.tools.logging :as log]
+											[clojure.tools.cli :refer [parse-opts]]
 											[numbo.coderack :as cr]
 											[numbo.codelet :as cl]
 											[numbo.cyto :as cy]
@@ -88,36 +89,81 @@
  [n]
  (run-until (fn[] (>= @cr/ITERATIONS n))))
 
+(defn parse-int [s] (Integer/parseInt s))
+
+(def cli-options
+[["-i" "--iterations NUM" 
+			"Maximum number of iterations to run before declaring failure"
+			:default 10000
+			:parse-fn #(Integer/parseInt %)
+			:validate [#(< 0 %) "Must be a positive number"]]
+ ["-c" "--count NUM" 
+			"How many times to run each calculation"
+			:default 1
+			:parse-fn #(Integer/parseInt %)
+			:validate [#(< 0 %) "Must be a positive number"]]			
+["-t" "--target VALUE"
+			"Target value for calculation"
+			:parse-fn #(Integer/parseInt %)
+			:validate [#(< 0 %) "Must be a positive number"]]
+		["-b" "--bricks 1,2,3"
+			"Comma-separate list of brick values"
+			:parse-fn #(map parse-int (clojure.string/split % #","))
+			:validate [#(< 0 (count %)) "Must be 1+ bricks"]]
+		["-s" "--seed VAL"
+			"Seed value for randomness"
+			:parse-fn #(Long/parseLong %)]
+		["-v" nil "Visualize"
+    :id :visualize
+    :default 0
+    :update-fn inc]
+		])
+
+
+(defn user-error
+	[s]
+	(do
+		(println s)
+		(log/error s)))
+
+(defn run-calcs
+ "Run max i iterations of a calculation of target t, bricks b, c times, vizualize if v is set"
+ [c i t b v]
+ (dotimes [n c]
+
+		; re-init everything every time so we can run from the REPL
+	(try
+		(pn/initialize-pnet)
+		(cy/reset)
+		(hist/reset)
+		(cr/reset)
+
+		(cl/load-target t)
+		(doall (map cl/load-brick b))
+
+		(run-for-iterations i)
+		(if @cy/COMPLETE
+			(println "Solution," @cr/ITERATIONS "," (cy/get-solutions)))
+
+	 (if v (viz/-main))
+		(catch Exception e
+		 (do
+				(log/error "Caught " e)
+				(println e)
+				(dump)
+)))))
 
 (defn -main
   [& args]
-  (dotimes [n 1000]
+  (let [argv (parse-opts *command-line-args* cli-options)
+  						opts (:options argv)]
+  	(cond
+  		(nil? (:target opts)) (user-error "No target specified")
+  		(nil? (:bricks opts)) (user-error "No bricks specified")
+  		(and
+  			(= 1 (:visualize opts))
+  			(< 1 (:count opts))) (user-error "Visualizing over >1 rounds")
 
-; re-init everything every time so we can run from the REPL
-
-(try
-	(pn/initialize-pnet)
-	(cy/reset)
-	(hist/reset)
-	(cr/reset)
-
-	(cl/load-target 114)
-
-	(cl/load-brick 11)
-	(cl/load-brick 20)
-	(cl/load-brick 1)
-	(cl/load-brick 6)
-	(cl/load-brick 7)
+  		:else (run-calcs (:count opts) (:iterations opts) (:target opts) (:bricks opts) (= 1 (:visualize opts))))))
 
 
-	(run-for-iterations 10000)
-	(if @cy/COMPLETE
-		(println "Solution," @cr/ITERATIONS "," (cy/get-solutions)))
-
-;	(viz/-main)
-	(catch Exception e
-	 (do
-			(log/error "Caught " e)
-			(println e)
-			(dump)
-)))))

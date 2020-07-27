@@ -5,7 +5,14 @@ See Fluid Concepts & Creative Analogies, p.131 onwards (Chapter 3)
 
 ## Usage
 
-lein run - kicks off and starts the GUI
+lein run - kicks off and starts a run
+
+lein run -- -t 114 -b 1,6,7,11,20 -i 1000 -c 10
+-t : target value
+-b : bricks to use to make this value
+-i : number of iterations to run a single calculation before giving up
+-c : number of times to run this target/bricks combo
+
 lein test - unit tests
 lein repl - loads all code, run (-main) to trigger the GUI and leave a REPL open
 
@@ -25,11 +32,6 @@ option) any later version, with the GNU Classpath Exception which is available
 at https://www.gnu.org/software/classpath/license.html.
 
 * Make the current iteration an input field which you can put a value into
-
-* At iteration 302 we have a main block, needing a 6, and get a 6 from 4-1=3
-* 1. Our pnet activation rules activate along every axis - i.e. activate 6, then minus and *every* minus
-* calc gets activated. We could be more selective.
-* 2. Now we have a 6 and a block needing 6. what happens? probe-target2 walks past it at 304... we should be completing the block here!
 
 - add more rules to rand-syntactic-comparison
 * UPDATE THE temperature calculator

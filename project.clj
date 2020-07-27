@@ -5,6 +5,7 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[clj-log4j2 "0.2.0"]
   															[org.clojure/clojure "1.10.0"]
+																	[org.clojure/tools.cli "1.0.194"]
   															[org.clojure/tools.logging "1.1.0"]
   															[random-seed "1.0.0"]
   															[rhizome "0.2.9"]
