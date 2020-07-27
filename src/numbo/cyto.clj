@@ -290,6 +290,19 @@
 	([c b] (first (filter #(= b (:val %1)) (:blocks c))))
 	([b] (get-block @CYTO b)))
 
+(defn format-block
+ "Turn the block b into a nice human-readable calculation"
+ [b]
+	 (let [op (first b) p1 (second b) p2 (misc/third b)]
+	 	(str "("
+	 		(if (seq? p1) (format-block p1) p1)
+	 		" "
+		 	(get pn/op-lookups op)
+		 	" "
+	 		(if (seq? p1) (format-block p2) p2)
+	 		")"
+	 	)))
+
 ; ----- Functions for nodes (i.e. blocks AND bricks) -----
 
 (defn random-node
