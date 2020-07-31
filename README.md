@@ -22,6 +22,7 @@ https://docs.google.com/spreadsheets/d/1WZ5VMy2MDzJz80Jh93ApQpbrfS-tuu16n_Xqfur-
 ## Tags
 
 v1.01 first fully running version with automated tests
+v1.02 played w/frequencies: dismantler 5->10, pump-target 5->10 pump-brick 5->10
 
 ## License
 

@@ -44,7 +44,7 @@
 ;			(= 0 (mod @cr/ITERATIONS 5)) (do
 ;				(if (< (rand) (cy/get-temperature)) (cl/rand-block)))
 
-		(if(= 0 (mod @cr/ITERATIONS 5)) (do
+		(if(= 0 (mod @cr/ITERATIONS 10)) (do
 																																	(if (< (rand) (cy/get-temperature)) (cl/dismantler))) ; if it's getting too hot, dismantle something
 
 		(if(= 0 (mod @cr/ITERATIONS 2)) (do
@@ -53,7 +53,7 @@
 
 			; Pump a random brick every few iterations
 
-		(if (= 0 (mod @cr/ITERATIONS 5)) (do 
+		(if (= 0 (mod @cr/ITERATIONS 10)) (do 
 																																	(if (> (rand) (cy/get-temperature)) ; When it's not so hot, pump a brick target
 																																		(let [br (cy/random-brick)]
 																																			(if br
@@ -61,7 +61,7 @@
 
 		; Pump a target (chosen randomly from the primary and secondary targets) 1 in 10 iterations
 
-			(if (= 0 (mod @cr/ITERATIONS 5)) (let [t (cy/random-target)]
+			(if (= 0 (mod @cr/ITERATIONS 10)) (let [t (cy/random-target)]
 																																		 (if (not (nil? t))
 																																		 	(do
 																																		 		(log/debug "tick activating target" t)
