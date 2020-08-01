@@ -8,7 +8,7 @@
 ; default amount by which to increase attractiveness of a node, when it's pumped
 (def DEFAULT_ATTRACTION_INC 0.7)
 ; default amount by which to decay attractiveness of a node, each timestep
-(def DEFAULT_ATTRACTION_DEC 0.02)
+(def DEFAULT_ATTRACTION_DEC 0.01)
 ; default starting attraction
 (def DEFAULT_ATTRACTION 0.4)
 
@@ -174,10 +174,10 @@
  			:else (recur (rest blocks) (conj ret cur))))))
 
 (defn plug-target2
-	"Given the block b, which evals to a secondary target, find the first block where it might plug in, and plug it in"
+	"Given the brick or block b, which evals to a secondary target, find the first block where it might plug in, and plug it in"
 	([c b] (do
 		(log/debug "plug-target2 c=" c "b="b)
-		(update-in c [:blocks] -plug-blocks b)))
+		(if (seq? b) (update-in c [:blocks] -plug-blocks b) c))) ; only plug in blocks, plugging in bricks is a noop
  ([b] (reset! CYTO (plug-target2 @CYTO b))))
 
 ; ----- Functions for bricks -----
@@ -190,7 +190,7 @@
 (defn brick-free?
 	"Is a brick with value v free? Are n copies of it free?"
  ([c n v] (-contains-n-vals? (:bricks c) v n))
- ([n v] (brick-free? @CYTO v n))
+ ([n v] (brick-free? @CYTO n v))
  ([v] (brick-free? @CYTO 1 v)))
 
 (defn largest-brick
@@ -257,6 +257,7 @@
  	(if (block-exists? c b) ; if the cytoplasm still contains this block
  	 (let [bricks (-bricks-for-block b)
  	 						shared (misc/common-elements (rest (map :val (:targets c))) bricks)
+ 	 						shared2 (mapcat -bricks-for-block )
  	 						remaining (misc/remove-each bricks shared)]
  	 	(log/debug "del-block bricks=" b "shared=" shared "remaining=" remaining)
 	 		(-> c
@@ -292,17 +293,19 @@
 	([b] (get-block @CYTO b)))
 
 (defn format-block
- "Turn the block b into a nice human-readable calculation"
+ "Turn the block or brick b into a nice human-readable calculation"
  [b]
-	 (let [op (first b) p1 (second b) p2 (misc/third b)]
-	 	(str "("
-	 		(if (seq? p1) (format-block p1) p1)
-	 		" "
-		 	(get pn/op-lookups op)
-		 	" "
-	 		(if (seq? p1) (format-block p2) p2)
-	 		")"
-	 	)))
+  (if (seq? b)
+		 (let [op (first b) p1 (second b) p2 (misc/third b)]
+		 	(str "("
+		 		(if (seq? p1) (format-block p1) p1)
+		 		" "
+			 	(get pn/op-lookups op)
+			 	" "
+		 		(if (seq? p1) (format-block p2) p2)
+		 		")"
+		 	))
+		  b))
 
 ; ----- Functions for nodes (i.e. blocks AND bricks) -----
 

@@ -7,7 +7,7 @@ COUNT=100
 
 
 current_time=$(date "+%Y.%m.%d-%H.%M.%S")
-TAG=`git tag`
+TAG=`git describe --tags`
 ARGS="-i $ITERATIONS -c $COUNT"
 OUT="runs/run-$TAG-$current_time.csv"
 CMD="lein run --"

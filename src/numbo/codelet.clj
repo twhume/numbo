@@ -47,6 +47,7 @@
 
 ;----- CODELETS HEREON -----
 
+
 ; activates a specific node in the Pnet
 
 (defn activate-pnet
@@ -69,35 +70,6 @@
 																												 		(log/info "pump-node" n)
 																															(cy/pump-node n))))))
 
-; load-target - (high urgency) when a target is loaded, the pnet landmark closest is activated.
-; operands (* - +) are activated. If it’s larger than the largest brick, * is activated more.
-; (p143)
-
-(defn load-target
-	"Add target node, activate closest number in Pnet, and operands (* if target is larger than largest brick)"
- [v]
- (cr/add-codelet
- 	(new-codelet :type :load-target
- 														:desc (str "Load target: " v)
- 														:urgency URGENCY_HIGH
-	 													:fn (fn []
-		 	(do
-		 		(log/info "load-target" v)
-		 		(cy/set-target v)
-		 	 (activate-pnet (pn/closest-keyword v))
-		 	 (doall (map activate-pnet (pn/get-operators))) ; activate all operators
-		 	 (cond
-
-		 	 	; if we have an enormous target, get ready to multiply
-		 	 	(and 
-			 	 	(not (nil? (cy/largest-brick))) (> v (cy/largest-brick))) 
-			 	 		(activate-pnet :times)
-
-			 	 	; if we have a small target, prefer to subtract
-		 	 	(< v 10)
-		 	 		(activate-pnet :minus)
-
-			 	 		))))))
 
 ; syntactic-comparison (low urgency) There is a type of codeliet which inspects various nodes and
 ; notices syntactic similarities, increases attractiveness of them - e.g. if brick 11 shares digits 
@@ -123,6 +95,92 @@
 									  		(log/debug "rand-syntactic-comparison pumping " node)
 									  		(pump-node node))))))))))
 
+(defn check-done
+	"Is there a block in the cytoplasm which is complete and == target?"
+	[]
+ (cr/add-codelet (new-codelet :type :check-done
+ 																													:desc (str "Check done")
+ 																													:urgency URGENCY_HIGH
+ 																													:fn (fn [] 
+		(do
+			(log/info "check-done")
+			(if (not (empty? (cy/get-solutions)))
+				(do
+					(log/info "check-done SOLVED! " (first (cy/get-solutions)))
+					(reset! cy/COMPLETE true))))))))
+
+(defn fulfil-target2
+ "Given a target block or brick b which we believe to resolve to value of a secondary target, plug it in"
+ [b]
+ (cr/add-codelet (new-codelet :type :fulfil-target2
+ 																													:desc (str "Fulfil target2:" (-format-block b))
+ 																													:urgency URGENCY_HIGH
+ 																													:fn (fn [] 
+		(do
+			(log/info "fulfil-target2 b=" b)
+			(if (and
+				(or (cy/brick-free? b) (cy/block-exists? b)) ; either a brick or block can fulfil a target
+				(some #{(eval b)} (cy/get-target2)))
+				(do
+					(log/debug "fulfil-target2 b=" b ", fulfilling target2")
+					(cy/plug-target2 b)
+					(cy/del-target2 (eval b))
+					(check-done))
+				(log/debug "fulfil-target2 b=" b "or target2 no longer exists")))))))
+
+; rand-target-match
+; See if we have a block which is an exact match for a secondary target
+; Triggered randomly or when we add a secondary target
+
+(defn rand-target-match
+	"Look to see if a free brick matches a target"
+	[]
+	(cr/add-codelet (new-codelet :type :rand-target-match
+																														:desc (str "Target2 brick match?")
+																														:urgency URGENCY_MEDIUM
+																														:fn (fn [] (do
+		(let [target2 (cy/random-target)
+								brick (if target2 (cy/closest-brick target2) nil)]
+								(log/info "rand-target-match" target2 brick)
+								(if (and target2 (= target2 brick))
+									(do
+									 (log/debug "rand-target-match matched, fulfilling")
+										(fulfil-target2 brick))
+								 (log/debug "rand-target-match not matched")
+									)))))))
+
+; load-target - (high urgency) when a target is loaded, the pnet landmark closest is activated.
+; operands (* - +) are activated. If it’s larger than the largest brick, * is activated more.
+; (p143)
+
+(defn load-target
+	"Add target node, activate closest number in Pnet, and operands (* if target is larger than largest brick)"
+ [v]
+ (cr/add-codelet
+ 	(new-codelet :type :load-target
+ 														:desc (str "Load target: " v)
+ 														:urgency URGENCY_HIGH
+	 													:fn (fn []
+		 	(do
+		 		(log/info "load-target" v)
+		 		(cy/set-target v)
+		 	 (activate-pnet (pn/closest-keyword v))
+		 	 (doall (map activate-pnet (pn/get-operators))) ; activate all operators
+		 	 (rand-target-match) ; check we don't have a brick for it
+		 	 (cond
+
+		 	 	; if we have an enormous target, get ready to multiply
+		 	 	(and 
+			 	 	(not (nil? (cy/largest-brick))) (> v (cy/largest-brick))) 
+			 	 		(activate-pnet :times)
+
+			 	 	; if we have a small target, prefer to subtract
+		 	 	(< v 10)
+		 	 		(activate-pnet :minus)
+
+			 	 		))))))
+
+
 (defn create-target2
  "Create a target block with b as one arm, a secondary target of t2 and an operator op combining them, pump the target2"
 	[b t2 op]
@@ -140,39 +198,10 @@
 					(activate-pnet (pn/closest-keyword t2)) ; light up the pnet for the target
 					(doall (map activate-pnet (pn/get-operators))) ; activate all operators
 					(pump-node (list op b t2)) ; pump the newly created block, so it's less likely to die
-				 (pump-node t2)) ; pump that secondary target, so it's more likely to be targeted
+				 (pump-node t2) ; pump that secondary target, so it's more likely to be targeted
+				 (rand-target-match)) ; see if we have a brick that matches it
 				(log/debug "create-target2 b=" b "no longer exists")))))))
 
-(defn check-done
-	"Is there a block in the cytoplasm which is complete and == target?"
-	[]
- (cr/add-codelet (new-codelet :type :check-done
- 																													:desc (str "Check done")
- 																													:urgency URGENCY_HIGH
- 																													:fn (fn [] 
-		(do
-			(log/info "check-done")
-			(if (not (empty? (cy/get-solutions)))
-				(do
-					(log/info "check-done SOLVED! " (first (cy/get-solutions)))
-					(reset! cy/COMPLETE true))))))))
-
-(defn fulfil-target2
- "Given a target block b which we believe to resolve to value of a secondary target, plug it in"
- [b]
- (cr/add-codelet (new-codelet :type :fulfil-target2
- 																													:desc (str "Fulfil target2:" (-format-block b))
- 																													:urgency URGENCY_HIGH
- 																													:fn (fn [] 
-		(do
-			(log/info "fulfil-target2 b=" b)
-			(if (and (cy/block-exists? b) (some #{(eval b)} (cy/get-target2)))
-				(do
-					(log/debug "fulfil-target2 b=" b ", fulfilling target2")
-					(cy/plug-target2 b)
-					(cy/del-target2 (eval b))
-					(check-done))
-				(log/debug "fulfil-target2 b=" b "or target2 no longer exists")))))))
 
 ; Run on newly created blocks; compares them to the target and if they're close, kick off
 ; a create-secondary-target codelet. Also compare to secondary targets and if there's a
@@ -279,7 +308,7 @@
 	        		(or
 	        			(and
 	        				(= (first params) (second params))
-	        				(cy/brick-free? (first params) 2)) ; either the params are same and free twice
+	        				(cy/brick-free? 2 (first params) )) ; either the params are same and free twice
 	        			(and
 	        				(not= (first params) (second params))
 	        				(cy/brick-free? (first params))

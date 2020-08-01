@@ -16,7 +16,7 @@
 
 (def PNET (atom '{}))
 
-(def DEFAULT_DECAY 0.1)
+(def DEFAULT_DECAY 0.05)
 (def DEFAULT_ACTIVATION 0)
 (def DEFAULT_INC 0.2)
 

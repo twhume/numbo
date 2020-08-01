@@ -11,10 +11,10 @@
   </Appenders>
     
   <Loggers>
-    <Root level="info">
+    <Root level="debug">
       <AppenderRef ref="Console"/>
     </Root>
-    <Root level="info">
+    <Root level="debug">
       <AppenderRef ref="File"/>
     </Root>
   </Loggers>
