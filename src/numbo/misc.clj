@@ -5,8 +5,6 @@
 											[random-seed.core :refer :all])
 	(:refer-clojure :exclude [rand rand-int rand-nth]))
 
-
-
 ; Useful functions I want to avoid duplicating across files
 
 ; Used to implement probabilistic sampling. Find a specific value within the range
@@ -148,29 +146,3 @@
 	 ((if (vector? s) vec identity) ; preserve vectorhood in inputs, as we rely on it for ordering purposes
 	 	(let [[n m] (split-with #(not= a %1) s)] (concat n (cons b (rest m)))))
 	 s))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

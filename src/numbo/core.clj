@@ -1,5 +1,6 @@
 (ns numbo.core
-	(:require [clojure.tools.logging :as log]
+	(:require [clojure.string :as str]
+											[clojure.tools.logging :as log]
 											[clojure.tools.cli :refer [parse-opts]]
 											[numbo.coderack :as cr]
 											[numbo.codelet :as cl]
@@ -26,8 +27,6 @@
 		(log/debug "PNET=" @pn/PNET)
 		(log/debug "CODERACK=" @cr/CODERACK)
 	))
-
-
 
 ; Tick is called every n iterations and takes charge of starting random tasks. Each tick:
 ; - there is a temp% chance that a rand-block codelet gets added to the coderack
@@ -108,7 +107,7 @@
 			:validate [#(< 0 %) "Must be a positive number"]]
 		["-b" "--bricks 1,2,3"
 			"Comma-separate list of brick values"
-			:parse-fn #(map parse-int (clojure.string/split % #","))
+			:parse-fn #(map parse-int (str/split % #","))
 			:validate [#(< 0 (count %)) "Must be 1+ bricks"]]
 		["-s" "--seed VAL"
 			"Seed value for randomness"
@@ -166,5 +165,3 @@
   			(< 1 (:count opts))) (user-error "Visualizing over >1 rounds")
 
   		:else (run-calcs (:count opts) (:iterations opts) (:target opts) (:bricks opts) (= 1 (:visualize opts))))))
-
-

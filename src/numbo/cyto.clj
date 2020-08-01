@@ -1,5 +1,6 @@
 (ns numbo.cyto
- (:require [clojure.tools.logging :as log]
+ (:require [clojure.set :refer [intersection]]
+											[clojure.tools.logging :as log]
  										[numbo.misc :as misc]
  										[numbo.pnet :as pn]
  										[random-seed.core :refer :all])
@@ -14,7 +15,6 @@
 
 ; has a solution been found?
 (def COMPLETE (atom false))
-
 
 ; ----- Private functions -----
 
@@ -103,7 +103,7 @@
 (defn set-target
  "Sets the primary target to t"
  ([c t] (if (empty? (:targets c))
- 	(update-in c [:targets] (partial conj) (-new-node t))
+ 	(update-in c [:targets] conj (-new-node t))
  	(do
  		(log/warn "set-target" t "but there's already a target in " (:targets c))
  		c)))
@@ -121,13 +121,13 @@
 
 (defn random-target
 	"Returns a random target, probabilistically weighted by attraction"
-	([c] (-n-random-nodes (:targets c) 1))
+	([c] (if (empty? (:targets c)) nil (first (-n-random-nodes (:targets c) 1))))
  ([] (random-target @CYTO)))
 
 (defn add-target2
  "Adds a secondary target t"
  ([c t] (if (> (count (:targets c)) 0)
- 	(update-in c [:targets] (partial conj) (-new-node t (-initial-attr t)))
+ 	(update-in c [:targets] conj (-new-node t (-initial-attr t)))
  	(do
  		(log/warn "add-target2" t "but no primary target set")
  		c)))
@@ -139,13 +139,8 @@
  (cond
   (= t (get-target)) (do (log/warn "del-target2 called on primary target" t) c)
   (empty? (rest (:targets c))) (do (log/warn "del-target2 called but no secondary targets set") c)
-  :else (update-in c [:targets] (partial -remove-first) t)))
+  :else (update-in c [:targets] -remove-first t)))
  ([t] (reset! CYTO (del-target2 @CYTO t))))
-
-(defn random-target
- "Return a random target entry"
-	([c] (if (empty? (:targets c)) nil (:val (rand-nth (:targets c)))))
-	([] (random-target @CYTO)))
 
 (defn -plug-block
  "In block a, find a leaf node where block b can provide the value and substitute b for that node"
@@ -184,7 +179,7 @@
 
 (defn add-brick
  "Add a brick with value v"
- ([c v] (update-in c [:bricks] (partial conj) (-new-node v (-initial-attr v))))
+ ([c v] (update-in c [:bricks] conj (-new-node v (-initial-attr v))))
  ([v] (reset! CYTO (add-brick @CYTO v))))
 
 (defn brick-free?
@@ -244,7 +239,7 @@
 				(and (= (second b) (misc/third b)) (brick-free? c 2 (second b))) ; check we have 2 copies of the parameter free, if they're the same
 				(every? true? (map (partial brick-free? c 1) (-bricks-for-block b)))) ; if all the parameters of the block are free bricks
 		 (-> c
-				(update-in [:blocks] (partial conj) (-new-node b (-initial-attr (eval b)))) ; add the new block to the cyto
+				(update-in [:blocks] conj (-new-node b (-initial-attr (eval b)))) ; add the new block to the cyto
 				(update-in [:bricks] (partial reduce -remove-first) (-bricks-for-block b))) ; remove all the bricks from the free list
 		 (do
 		 	(log/warn "add-block failed, bricks not free for " b)
@@ -261,8 +256,8 @@
  	 						remaining (misc/remove-each bricks shared)]
  	 	(log/debug "del-block bricks=" b "shared=" shared "remaining=" remaining)
 	 		(-> c
-	 			(update-in [:blocks] (partial -remove-first) b) ; remove the block from blocks
-	 			(update-in [:targets] (partial -remove-each) shared) ; remove any secondary targets it used
+	 			(update-in [:blocks] -remove-first b) ; remove the block from blocks
+	 			(update-in [:targets] -remove-each shared) ; remove any secondary targets it used
 	 			(update-in [:bricks] (partial apply conj) (map #(-new-node %1 (-initial-attr %1)) remaining)))) ; return any remaining bricks
 	 		(do
 	 		 (log/warn "del-block failed, block not in cytoplasm " b)
@@ -355,7 +350,7 @@
 		#(and
 			(= (get-target c) (eval (:val %1))) ; block evaluates to the target
 			(empty?
-				(clojure.set/intersection
+				(intersection
 					(set (-bricks-for-block (:val %1)))
 					(set (get-target2 c))))) (:blocks c))) ; there's no bricks used which are secondary targets
  ([] (get-solutions @CYTO)))
@@ -380,15 +375,3 @@
  	
  ))
  ([] (get-temperature @CYTO)))
-
-
-(add-brick 1)
-(add-brick 3)
-(add-brick 5)
-(add-brick 6)
-(add-brick 7)
-(add-brick 9)
-(add-brick 15)
-
-(add-block '(+ 1 5))
-(add-block '(+ 6 7))

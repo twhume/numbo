@@ -11,4 +11,5 @@
   															[rhizome "0.2.9"]
   															[seesaw/seesaw "1.5.0"]]
   :main ^:skip-aot numbo.core
-  :repl-options {:init-ns numbo.core})
+  :repl-options {:init-ns numbo.core}
+  :plugins [[jonase/eastwood "0.3.10"]])

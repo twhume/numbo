@@ -13,11 +13,10 @@
 (def operator-name-map (hash-map :plus "+" :minus "-" :times "*"))
 (def op-lookups {+ "+" - "-" * "*"})
 
-
 (def PNET (atom '{}))
 
 (def DEFAULT_DECAY 0.05)
-(def DEFAULT_ACTIVATION 0)
+(def DEFAULT_ACTIVATION 0.0)
 (def DEFAULT_INC 0.2)
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically

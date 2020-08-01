@@ -76,7 +76,7 @@
 
     )))
 
-(deftest range-selection-test
+(deftest normalize-test
  (testing "Normalizing values"
  	(is (= 0 (misc/normalized 0 -0.01)))
  	(is (= 1 (misc/normalized 1 0.01)))

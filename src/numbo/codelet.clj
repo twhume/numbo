@@ -47,7 +47,6 @@
 
 ;----- CODELETS HEREON -----
 
-
 ; activates a specific node in the Pnet
 
 (defn activate-pnet
@@ -69,7 +68,6 @@
 																														(fn [] (do
 																												 		(log/info "pump-node" n)
 																															(cy/pump-node n))))))
-
 
 ; syntactic-comparison (low urgency) There is a type of codeliet which inspects various nodes and
 ; notices syntactic similarities, increases attractiveness of them - e.g. if brick 11 shares digits 
@@ -180,7 +178,6 @@
 
 			 	 		))))))
 
-
 (defn create-target2
  "Create a target block with b as one arm, a secondary target of t2 and an operator op combining them, pump the target2"
 	[b t2 op]
@@ -201,7 +198,6 @@
 				 (pump-node t2) ; pump that secondary target, so it's more likely to be targeted
 				 (rand-target-match)) ; see if we have a brick that matches it
 				(log/debug "create-target2 b=" b "no longer exists")))))))
-
 
 ; Run on newly created blocks; compares them to the target and if they're close, kick off
 ; a create-secondary-target codelet. Also compare to secondary targets and if there's a

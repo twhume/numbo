@@ -19,7 +19,13 @@ lein repl - loads all code, run (-main) to trigger the GUI and leave a REPL open
 Dump CSV output at the end of the Raw data tab of
 https://docs.google.com/spreadsheets/d/1WZ5VMy2MDzJz80Jh93ApQpbrfS-tuu16n_Xqfur-Egk/edit#gid=0
 
-## Tags
+(I'm using this spreadsheet to track and analyze runs - the two "Run Analysis" tabs let me do 
+side-by-side comparisons)
+
+## Tags and experiments
+
+I'm tagging a new version wherever things get noticeably better, and documenting experiments here.
+I'm keeping output of experiments in the runs/ directory
 
 v1.01 first fully running version with automated tests
 v1.02
@@ -28,29 +34,53 @@ v1.02
 - made the random-creator 2 -> 1, everything else back to 5. Lots of failures in the first test
 - (2020.07.30-21.34.19) made the random-creator 1 -> 3, everything else on 5 - not much difference, maybe slightly worse
 - (2020.07.31-08.11.08) Slower decay, less pumping: cy/DEFAULT_ATTRACTION_DEC from 0.02 -> 0.01, pn/DEFAULT_DECAY 0.1 -> 0.05 core/brick and pump frequency 5->10 . Slows av # iterations but leads to more solutions and an uplift for 87	(8 3 9 10 7)
-- Allowed secondary targets to be fulfilled by single bricks, and slowed the decay/pumped less often
+- (2020.07.31-14.46.21) Allowed secondary targets to be fulfilled by single bricks, and slowed the decay/pumped less often - GREAT, went from solving 5 to 7 puzzles, run-times were up a little tho. MARKED v1.03
 
+v1.03
+- tried lots of runs for "lein run -- -t 116 -b 20,2,16,14,6 -i 10000 -c 10000" - do we ever go for depth 3?
+No, we always find something sooner - e.g. ((6 * 20) - (20 - 16)) not (20 * 6)- (2 + (16 - 14)) (see 116-target-10k.csv). 3% failed, 0.5% found ((6 * 20)= (20 - 16)) or equivalent, rest were ((6 * 16) + 20) or equivalent
+- random-target2 now samples by attraction instead of pure randomness
 
+## Bugs
 
-Ideas:
-- if things decay slower we don't need to pump them so often, so can reduce the activation-refresh and focus on calculations?
-- if things decay faster we'll get rid of them quicker so can try new theories out faster!
-- break out the different things in random-creator and run them at separate timings
-- Break out the noise. If a thing makes less difference, just do it less anyway. (e.g. reduce frequencies as far as poss? map impact of reduction over many runs?)
--  87 , (8 3 9 10 7) never gets ((8 * 10) + 7), always gets (7 + 10) + (8 + 9) - are we not finding single-brick secondary targets?
-- 81 , (9 7 2 25 18) never gets (9 * 7) + 18 - same problem? - or ((18 * (7 - 2)) - 9)
--  116 , (20 2 16 14 6) never gets (20 * 6)- (2 + (16 - 14)) - this is a tough one
-- 11 , (2 5 1 25 23) never gets (5 * 2) + 1 - another single-brick secondary target
-- Start measuring the # of iterations where there's nothing on the coderack - this is a smell that we're underpopulating it/running too cool
-- Activation is linear, make it nonlinear.
+* If "3" is a secondary target in block A, but also a component of block B, when B is dismantled "3" is never returned to the bricks (because we assume it's a secondary target right). Solution: when dismantling, count how many times a brick is used in *all* blocks, not the current one?
 
-BUGS
-- If "3" is a secondary target in block A, but also a component of block B, when B is dismantled "3" is never returned to the bricks (because we assume it's a secondary target right). ARGH
+## Improvements
 
-Solution: when dismantling, count how many times a brick is used in *all* blocks, not the current one
+Strategies:
+* if things decay slower we don't need to pump them so often, so can reduce the activation-refresh and focus on calculations?
+* counterargument: if things decay faster we'll get rid of them quicker so can try new theories out faster!
+* break out the different things in random-creator and run them at separate timings
+* Break out the noise. If a thing makes less difference, just do it less anyway. (e.g. reduce frequencies as far as poss? map impact of reduction over many runs?)
+* 81 , (9 7 2 25 18) never gets (9 * 7) + 18 - same problem? - or ((18 * (7 - 2)) - 9) (WOULD ADDING 7 * 9 HELP?)
+* 31	(3 5 24 3 14) never gets (((5 * 3) * 3) - 14) - complex tho
+* 116 , (20 2 16 14 6) never gets (20 * 6)- (2 + (16 - 14)) - but has simpler solutions
+* Start measuring the # of iterations where there's nothing on the coderack - this is a smell that we're underpopulating it/running too cool, and are effectively linear
+* Activation is linear, make it nonlinear - i.e important things should be way more likely to get sampled
 
+Viz:
+* Make the current iteration an input field which you can put a value into
+* work out how to make scroll bars appear on canvas
+* input target and initial bricks in the visualizer
 
-- we have 2 cy/random-target2 methods
+PNet:
+* Why does activation of :times not spread? Because it's got no pnet links. Seems bad
+* In pn/activate-node, take into account the weights of nodes
+
+Cyto:
+* add more rules to rand-syntactic-comparison
+* pretty sure the temperature calculator could be better
+* drop-off in activation
+* see also p234 of paper for more. I think we could do more target comparisons (B)
+* we have 2 cy/random-target2 methods
+
+Codelets:
+* cl/rand-op can multiply by 1, which doesn't seem so useful - never do this
+* Lots of boilerplate code here, replace with macro?
+
+General:
+* Abstract out the concept of sampling from a distribution more - it's used in cyto, pnet, coderack
+and currently implemented via a couple of macros in misc/
 
 ## License
 
@@ -67,32 +97,4 @@ the Free Software Foundation, either version 2 of the License, or (at your
 option) any later version, with the GNU Classpath Exception which is available
 at https://www.gnu.org/software/classpath/license.html.
 
-
-* I notice that when I change the target from 114 to 97, no solution is found - but (7 * 11) + 20 would work
-* - actually, a solution is found at iteration 17036(!) - but there's an issue here for sure.
-* Next step: make 10 problems, benchmark them 100 times and work from here
-
-
-* Make the current iteration an input field which you can put a value into
-
-- add more rules to rand-syntactic-comparison
-* UPDATE THE temperature calculator
-* cy/-format-block can't handle nested blocks
-* drop-off in activation
-
-
-See debugging notes
-
-
-see also p234 of paper for more. I think we could do more target comparisons (B)
-
-
-Tidy-ups/small improvements
-
-* work out how to make scroll bars appear on canvas
-* In pn/activate-node, take into account the weights of nodes
-* Rationale wm/new-node and cl/new-codelet - are they eerily similar?
-* cl/rand-op can multiply by 1, which doesn't seem so useful
-- input target and initial bricks in the visualizer
-- Why does activation of :times not spread? Because it's got no pnet links
 
