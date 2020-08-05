@@ -1,6 +1,7 @@
 # numbo
 
-Goal: recreate Hofstadter’s Numbo in Clojure
+Goal: recreate FARG's Numbo in Clojure
+
 See Fluid Concepts & Creative Analogies, p.131 onwards (Chapter 3)
 
 ## Usage
@@ -40,6 +41,9 @@ v1.03
 - tried lots of runs for "lein run -- -t 116 -b 20,2,16,14,6 -i 10000 -c 10000" - do we ever go for depth 3?
 No, we always find something sooner - e.g. ((6 * 20) - (20 - 16)) not (20 * 6)- (2 + (16 - 14)) (see 116-target-10k.csv). 3% failed, 0.5% found ((6 * 20)= (20 - 16)) or equivalent, rest were ((6 * 16) + 20) or equivalent
 - random-target2 now samples by attraction instead of pure randomness
+- 1000 attempts on 81 , (9 7 2 25 18), it never gets there.
+- updated the worthiness calculator so if there's an activated node near the eval'd value we use it; this lengthens the calculation a lot but gets us 8/10 solved. I suspect that pnet activation and overly empty coderacks are a problem now (1/5 of our iterations for this run were nil, many must be just 1 codelet in the rack, so in practice we're never selecting between alternatives)
+
 
 ## Bugs
 

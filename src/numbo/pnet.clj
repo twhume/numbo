@@ -1190,6 +1190,16 @@
  ([pn] (-update-values pn (fn [x] (assoc x :activation (misc/normalized (:activation x) (- 0 DEFAULT_DECAY))))))
  ([] (reset! PNET (decay @PNET))))
 
+(defn val-near-and-activated
+ "Return all the number nodes which are <= d distance from value v, with a minimum activation of a"
+ ([p d v a]
+	 (filter
+	  #(and
+	    (= :number (:type (%1 p)))
+	  		(<= (Math/abs (- v (Integer/parseInt (name %1)))) d)
+	  		(>= (:activation (%1 p)) a))
+		 (keys p)))
+ ([d v a] (val-near-and-activated @PNET d v a)))
 
 (defn closest-keyword
  "Return the keyword of a Pnet node with the closest value to v"

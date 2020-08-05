@@ -260,7 +260,8 @@
 					 (= (cy/get-target) (eval b)) (check-done)
 
 						; If this is near a highly activated node, it's worth pursuing
-						(>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.2)
+						(not (empty? (pn/val-near-and-activated 25 (eval b) 0.2)))
+;						(>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.2)
 							(do
 							 (log/debug "test-block b=" bstr " is worthy")
 							 (probe-target2 b))

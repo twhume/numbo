@@ -64,6 +64,7 @@
 																																		 (if (not (nil? t))
 																																		 	(do
 																																		 		(log/debug "tick activating target" t)
+																																		 		(cy/pump-node t)
 																																			 	(cl/activate-pnet (pn/closest-keyword t))))))
 
   (cy/decay)
