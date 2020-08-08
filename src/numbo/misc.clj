@@ -146,3 +146,15 @@
 	 ((if (vector? s) vec identity) ; preserve vectorhood in inputs, as we rely on it for ordering purposes
 	 	(let [[n m] (split-with #(not= a %1) s)] (concat n (cons b (rest m)))))
 	 s))
+
+(defn -sample-val
+ [s rval r]
+			(ffirst
+				(filter #(>= (second %1) rval) (map list s r))))
+
+(defn sample
+ "Sample a random value from sequence s where the weight of each value is f(s)"
+ ([s f n]
+	 (let [ranges (reductions + (map f s))]
+	 	(repeatedly n #(-sample-val s (rand (last ranges)) ranges))))
+ ([s f] (sample s f 1)))
