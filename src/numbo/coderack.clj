@@ -7,6 +7,7 @@
 
 (def CODERACK (atom '()))
 (def ITERATIONS (atom 1))
+(def MAX_SIZE 30)
 
 (defn reset
  "Reset the coderack"
@@ -22,6 +23,12 @@
  	 (if (not-empty urgencies)
  	  (misc/random-val-in-range urgencies)))))
 
+(defn -remove-codelet
+	"Returns rack r without codelet c"
+	[r c]
+	(let [[n m] (split-with (partial not= c) r)]
+		(concat n (rest m))))
+
 (defn -execute
  "Executes the function f, warning and doing nothing if f is nil"
  [f]
@@ -36,7 +43,7 @@
  		(log/debug  "Iteration" @ITERATIONS "cyto=" @cy/CYTO)
  	 (if ((complement nil?) codelet) (-execute (:fn codelet)))
  	 (hist/add-step @pn/PNET @cy/CYTO @CODERACK codelet @ITERATIONS (cy/get-temperature))
- 	 (reset! CODERACK (let [[n m] (split-with (partial not= codelet) @CODERACK)] (concat n (rest m))))
+ 	 (reset! CODERACK (-remove-codelet @CODERACK codelet))
  		(swap! ITERATIONS inc)
  	 ))))
 
@@ -44,3 +51,20 @@
  "Adds a new codelet to the coderack"
  ([r c] (conj r c))
  ([c] (reset! CODERACK (add-codelet @CODERACK c))))
+
+(defn -invert-urgency
+ "Invert the urgency value of the passed codelet"
+ [c]
+ (assoc c :urgency (- 6 (:urgency c)))) ; DIRTY CONSTANT TODO REMOVE
+
+(defn decay
+ "Decays the coderack - if it's over MAX_SIZE, remove a low-pri element"
+ ([r]
+	 (if (> (count r) MAX_SIZE)
+	 	(-remove-codelet r
+	 	 (-invert-urgency
+		 	 (misc/random-val-in-range
+		 	 	(misc/make-ranges
+						 (map -invert-urgency r)
+		 	 	 :urgency)))) r))
+ ([] (reset! CODERACK (decay @CODERACK))))
