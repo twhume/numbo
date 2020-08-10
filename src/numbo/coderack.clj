@@ -1,13 +1,13 @@
 (ns numbo.coderack
 	(:require [clojure.tools.logging :as log]
-											[numbo.misc :as misc]
+											[numbo.config :as cfg]
+											[numbo.cyto :as cy]
 											[numbo.history :as hist]
-											[numbo.pnet :as pn]
-											[numbo.cyto :as cy]))
+											[numbo.misc :as misc]
+											[numbo.pnet :as pn]))
 
 (def CODERACK (atom '()))
 (def ITERATIONS (atom 1))
-(def MAX_SIZE 30)
 
 (defn reset
  "Reset the coderack"
@@ -60,7 +60,7 @@
 (defn decay
  "Decays the coderack - if it's over MAX_SIZE, remove a low-pri element"
  ([r]
-	 (if (> (count r) MAX_SIZE)
+	 (if (> (count r) cfg/CODERACK_SIZE)
 	 	(-remove-codelet r
 	 	 (-invert-urgency
 		 	 (misc/random-val-in-range

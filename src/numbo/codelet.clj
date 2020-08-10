@@ -2,6 +2,7 @@
 	(:require [clojure.tools.logging :as log]
 											[clojure.string :as str]
 											[numbo.coderack :as cr]
+											[numbo.config :as cfg]
 											[numbo.cyto :as cy]
 											[numbo.misc :as misc]
 											[numbo.pnet :as pn]
@@ -274,7 +275,7 @@
 							 	(log/debug "test-block b=" str ", (cy/brick-free? b1)=" (cy/brick-free? b1))
 							 	(log/debug "test-block b=" str ", closest=" ((pn/closest-keyword (eval b)) @pn/PNET))
 							 	(log/debug "test-block b=" str ", activation" (:activation ((pn/closest-keyword (eval b)) @pn/PNET)))
-							 	(log/debug "test-block b=" str ", act-test" (>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) pn/DEFAULT_INC))
+							 	(log/debug "test-block b=" str ", act-test" (>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) cfg/PN_INC))
 
 							 	(cy/del-block b))))))))
 

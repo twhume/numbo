@@ -4,6 +4,7 @@
 											[clojure.tools.cli :refer [parse-opts]]
 											[numbo.coderack :as cr]
 											[numbo.codelet :as cl]
+											[numbo.config :as cfg]
 											[numbo.cyto :as cy]
 											[numbo.history :as hist]
 											[numbo.misc :as misc]
@@ -43,16 +44,19 @@
 ;			(= 0 (mod @cr/ITERATIONS 5)) (do
 ;				(if (< (rand) (cy/get-temperature)) (cl/rand-block)))
 
-		(if(= 0 (mod @cr/ITERATIONS 5)) (do
-																																	(if (< (rand) (cy/get-temperature)) (cl/dismantler))) ; if it's getting too hot, dismantle something
+		
+			(if	(= 0 (mod @cr/ITERATIONS cfg/FREQ_DISMANTLE)) (do
+																																	(if (< (rand) (cy/get-temperature)) (cl/dismantler)))) ; if it's getting too hot, dismantle something
 
-		(if(= 0 (mod @cr/ITERATIONS 2)) (do
+		 (if	(= 0 (mod @cr/ITERATIONS cfg/FREQ_RAND_OP)) (do
+																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-block cl/seek-facsimile cl/rand-target-match cl/rand-syntactic-comparison))))))
 
-																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-target-match cl/rand-block cl/rand-syntactic-comparison cl/seek-facsimile)))))))
+;		 (if	(= 0 (mod @cr/ITERATIONS 2)) (do
+;																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-block cl/seek-facsimile))))))
 
 			; Pump a random brick every few iterations
 
-		(if (= 0 (mod @cr/ITERATIONS 10)) (do 
+		 (if	(= 0 (mod @cr/ITERATIONS cfg/FREQ_PUMP_BRICK)) (do 
 																																	(if (> (rand) (cy/get-temperature)) ; When it's not so hot, pump a brick target
 																																		(let [br (cy/random-brick)]
 																																			(if br
@@ -60,7 +64,7 @@
 
 		; Pump a target (chosen randomly from the primary and secondary targets) 1 in 10 iterations
 
-			(if (= 0 (mod @cr/ITERATIONS 10)) (let [t (cy/random-target)]
+			(if	(= 0 (mod @cr/ITERATIONS cfg/FREQ_PUMP_TARGET)) (let [t (cy/random-target)]
 																																		 (if (not (nil? t))
 																																		 	(do
 																																		 		(log/debug "tick activating target" t)
@@ -69,6 +73,7 @@
 
   (cy/decay)
 		(pn/decay)
+		(cr/decay)
 ))
 
 (defn run-until

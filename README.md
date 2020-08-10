@@ -41,8 +41,28 @@ v1.03
 - tried lots of runs for "lein run -- -t 116 -b 20,2,16,14,6 -i 10000 -c 10000" - do we ever go for depth 3?
 No, we always find something sooner - e.g. ((6 * 20) - (20 - 16)) not (20 * 6)- (2 + (16 - 14)) (see 116-target-10k.csv). 3% failed, 0.5% found ((6 * 20)= (20 - 16)) or equivalent, rest were ((6 * 16) + 20) or equivalent
 - random-target2 now samples by attraction instead of pure randomness
-- 1000 attempts on 81 , (9 7 2 25 18), it never gets there.
-- updated the worthiness calculator so if there's an activated node near the eval'd value we use it; this lengthens the calculation a lot but gets us 8/10 solved. I suspect that pnet activation and overly empty coderacks are a problem now (1/5 of our iterations for this run were nil, many must be just 1 codelet in the rack, so in practice we're never selecting between alternatives)
+- (2020.08.01-08.44.10) 1000 attempts on 81 , (9 7 2 25 18), it never gets there.
+- (2020.08.03-22.00.58 v1.03-2-g29b4f1e) updated the worthiness calculator so if there's an activated node near the eval'd value we use it; this lengthens the calculation a lot but gets us 8/10  ( whilst degrading the solution %age for a few). I suspect that pnet activation and overly empty coderacks are a problem now (1/5 of our iterations for this run were nil, many must be just 1 codelet in the rack, so in practice we're never selecting between alternatives). MARKED 1.04
+
+v1.04
+- Upped the frequency of events going into the coderack and implemented a decay there so it never has >32 items in it. IT RAN SO SLOW IT HURT - no debugging output at all, tho I could see stuff go past in the logs
+- Rewound a bit after getting poor result and started playing with the frequency of doing random stuff
+- (2020.08.09-09.03.26) do random stuff every iteration - 8/10 solved, but %ages solved low (1 @ 100%)
+- (2020.08.08-12.26.48) every 2 iterations, 8/10 solved and %ages higher (2 @ 100%, 1 @ 95, 1 @ 99)
+- (2020.08.09-11.42.53) every 3 iterations, 8/10 solved and still higher (3 @ 100%, 1 @ 99, many others in 80s) - also getting faster
+- (2020.08.09-19.38.38) every 5 iterations, 8/10 solved (2 @ 100, 5 in 90s, 1 at 89)
+- (2020.08.09-20.27.03) every 10 iterations, 8/10 solved but quality of a few seems to drop off. So it seems like the best is in between
+- (2020.08.09-20.59.37) every 7, a few drop, a few gain, but overall slower
+- (2020.08.10-07.15.19) seems best balance
+
+
+Next: get to something optimal here
+- Break out constants into a separate file (DONE)
+- codelet urgencies in their own map
+- Vary this file across runs
+- Do a large number of runs playing with parameters, over days
+- Before this, quickly play with sampling - is it faster for 30 items, say?
+- Also measure impact of disabling logging
 
 
 ## Bugs
@@ -59,6 +79,7 @@ Strategies:
 * 81 , (9 7 2 25 18) never gets (9 * 7) + 18 - same problem? - or ((18 * (7 - 2)) - 9) (WOULD ADDING 7 * 9 HELP?)
 * 31	(3 5 24 3 14) never gets (((5 * 3) * 3) - 14) - complex tho
 * 116 , (20 2 16 14 6) never gets (20 * 6)- (2 + (16 - 14)) - but has simpler solutions
+* 127	(7 6 4 22 25) never gets ((25 - (6 + 4)) * 7) + 22)
 * Start measuring the # of iterations where there's nothing on the coderack - this is a smell that we're underpopulating it/running too cool, and are effectively linear
 * Activation is linear, make it nonlinear - i.e important things should be way more likely to get sampled
 
