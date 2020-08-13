@@ -1,6 +1,6 @@
 (ns numbo.coderack
 	(:require [clojure.tools.logging :as log]
-											[numbo.config :as cfg]
+											[numbo.config :as cfg :refer [config]]
 											[numbo.cyto :as cy]
 											[numbo.history :as hist]
 											[numbo.misc :as misc]
@@ -60,7 +60,7 @@
 (defn decay
  "Decays the coderack - if it's over MAX_SIZE, remove a low-pri element"
  ([r]
-	 (if (> (count r) cfg/CODERACK_SIZE)
+	 (if (> (count r) (:CODERACK_SIZE @config))
 	 	(-remove-codelet r
 	 	 (-invert-urgency
 		 	 (misc/random-val-in-range

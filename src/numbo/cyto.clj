@@ -1,7 +1,7 @@
 (ns numbo.cyto
  (:require [clojure.set :refer [intersection]]
 											[clojure.tools.logging :as log]
- 										[numbo.config :as cfg]
+ 										[numbo.config :as cfg :refer [config]]
  										[numbo.misc :as misc]
  										[numbo.pnet :as pn]
  										[random-seed.core :refer :all])
@@ -20,7 +20,7 @@
 (defn -initial-attr
 	"Calculates an initial attractiveness for a given value"
  [n]
- (cond-> cfg/ATTR_DEFAULT
+ (cond-> (:ATTR_DEFAULT @config)
  	(= 0 (mod n 5)) (+ 0.1)
  	(= 0 (mod n 10)) (+ 0.1)
  	(= 0 (mod n 100)) (+ 0.1)
@@ -315,9 +315,9 @@
  "Pump the attractiveness of the node n"
  ([c n]
  	(-> c
- 		(update-in [:blocks] (partial -inc-attr cfg/ATTR_INC) n)
- 		(update-in [:bricks] (partial -inc-attr cfg/ATTR_INC) n)
- 		(update-in [:targets] (partial -inc-attr cfg/ATTR_INC) n)
+ 		(update-in [:blocks] (partial -inc-attr (:ATTR_INC @config)) n)
+ 		(update-in [:bricks] (partial -inc-attr (:ATTR_INC @config)) n)
+ 		(update-in [:targets] (partial -inc-attr (:ATTR_INC @config)) n)
  	))
  ([v] (reset! CYTO (pump-node @CYTO v))))
 
@@ -332,9 +332,9 @@
  "Causes all attractiveness of all bricks, blocks, targets to drop"
  ([c]
 	 (-> c
-	 	(update-in [:blocks] (partial -dec-attr cfg/ATTR_DEC))
-	 	(update-in [:bricks] (partial -dec-attr cfg/ATTR_DEC))
-	 	(update-in [:targets] (partial -dec-attr cfg/ATTR_DEC))))
+	 	(update-in [:blocks] (partial -dec-attr (:ATTR_DEC @config)))
+	 	(update-in [:bricks] (partial -dec-attr (:ATTR_DEC @config)))
+	 	(update-in [:targets] (partial -dec-attr (:ATTR_DEC @config)))))
  ([] (reset! CYTO (decay @CYTO))))
 
 (defn get-solutions

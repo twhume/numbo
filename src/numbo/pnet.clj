@@ -1,6 +1,6 @@
 (ns numbo.pnet
 	(:require [clojure.tools.logging :as log]
-											[numbo.config :as cfg]
+											[numbo.config :as cfg :refer [config]]
 											[numbo.misc :as misc]))
 
 ; Pnet is a map of name -> node, where name is a keyword name of the node, and node is a map:
@@ -1089,7 +1089,7 @@
 (defn initialize-pnet
  "Fill in the default values"
  ([pnet]
-	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation cfg/PN_DEFAULT :weight 1)))]
+	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation (:PN_DEFAULT @config) :weight 1)))]
 	 	(apply assoc '{} (mapcat #(list %1 (assoc (get weights-and-activations %1) :name %1)) (keys weights-and-activations)))))
  ([] (reset! PNET (initialize-pnet initial-pnet))))
 
@@ -1101,7 +1101,7 @@
 (defn -update-activation
  "Update the activation of node n by an increment i"
  [i n]
- (update n :activation (fn [x] (misc/normalized (+ (* i cfg/PN_INC) x)))))
+ (update n :activation (fn [x] (misc/normalized (+ (* i (:PN_INC @config)) x)))))
 
 (defn -map-values
 	[m keys f & args]
@@ -1130,9 +1130,9 @@
  						node-and-neighbors (set (conj neighbors n))
  						neighbors-2 (remove node-and-neighbors (distinct (mapcat (partial -get-neighbors p) neighbors)))]
  (-> p
-	 (update n (partial -update-activation cfg/PN_SELF))
-  (-map-values neighbors (partial -update-activation cfg/PN_NEIGHBOR))
-  (-map-values neighbors-2 (partial -update-activation cfg/PN_NNEIGHBOR))
+	 (update n (partial -update-activation (:PN_SELF @config)))
+  (-map-values neighbors (partial -update-activation (:PN_NEIGHBOR @config)))
+  (-map-values neighbors-2 (partial -update-activation (:PN_NNEIGHBOR @config)))
  )))
  ([n] (reset! PNET (activate-node @PNET n))))
 
@@ -1184,7 +1184,7 @@
 
 (defn decay
  "Reduce the :activation of all nodes in the PNet"
- ([pn] (-update-values pn (fn [x] (assoc x :activation (misc/normalized (:activation x) (- 0 cfg/PN_DECAY))))))
+ ([pn] (-update-values pn (fn [x] (assoc x :activation (misc/normalized (:activation x) (- 0 (:PN_DECAY @config)))))))
  ([] (reset! PNET (decay @PNET))))
 
 (defn val-near-and-activated
