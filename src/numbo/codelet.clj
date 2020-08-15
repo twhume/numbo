@@ -2,24 +2,12 @@
 	(:require [clojure.tools.logging :as log]
 											[clojure.string :as str]
 											[numbo.coderack :as cr]
-											[numbo.config :as cfg :refer [config]]
+											[numbo.config :as cfg :refer :all]
 											[numbo.cyto :as cy]
 											[numbo.misc :as misc]
 											[numbo.pnet :as pn]
 											[random-seed.core :refer :all])
 	(:refer-clojure :exclude [rand rand-int rand-nth]))
-
-(def codelet-types :load-target)
-
-(def URGENCY_HIGH 5)
-(def URGENCY_MEDIUM 3)
-(def URGENCY_LOW 1)
-
-(def urgency-labels '{
-	URGENCY_HIGH "High"
-	URGENCY_MEDIUM "Medium"
-	URGENCY_LOW "Low"
-})
 
 ; Lets us create codelets with a consistent set of fields.
 ; Example usage:
@@ -43,8 +31,8 @@
 
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
- [& s]
- (into (hash-map :urgency URGENCY_LOW :fn nil :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
+ [t & s]
+ (into (hash-map :type t :urgency (if (t @urgencies) (t @urgencies) :URGENCY_LOW) :fn nil :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
 
 ;----- CODELETS HEREON -----
 
@@ -53,9 +41,8 @@
 (defn activate-pnet
 	[n]
 	(do
-	(cr/add-codelet (new-codelet :type :activate-pnet
+	(cr/add-codelet (new-codelet :activate-pnet
 																														:desc (str "Activate PNet: " n)
-																														:urgency URGENCY_MEDIUM
 																														:fn (fn [] (do
 																												 		(log/info "activate-pnet" n)
 																												 		(pn/activate-node n)))))))
@@ -63,9 +50,9 @@
 (defn pump-node
  "Pumps the attractiveness of a node"
 	[n]
-	(cr/add-codelet (new-codelet :type :inc-attraction
+	(cr/add-codelet (new-codelet :inc-attraction
 																														:desc (str "Pump node: " (-format-block n))
-																														:urgency URGENCY_MEDIUM :fn
+																														:fn
 																														(fn [] (do
 																												 		(log/info "pump-node" n)
 																															(cy/pump-node n))))))
@@ -81,9 +68,8 @@
  						nval (str (eval node))
  						tval (str (cy/random-target))]
  						(if node
-	 						(cr/add-codelet (new-codelet :type :rand-syntactic-comparison
+	 						(cr/add-codelet (new-codelet :rand-syntactic-comparison
 	 																																			:desc (str "Compare " nval " to target " tval)
-	 																																			:urgency URGENCY_LOW
 	 																																			:fn (fn []
 	 						 (do
 	 	 						(log/info "rand-syntactic-comparison val=" nval "tval=" tval)
@@ -97,9 +83,8 @@
 (defn check-done
 	"Is there a block in the cytoplasm which is complete and == target?"
 	[]
- (cr/add-codelet (new-codelet :type :check-done
+ (cr/add-codelet (new-codelet :check-done
  																													:desc (str "Check done")
- 																													:urgency URGENCY_HIGH
  																													:fn (fn [] 
 		(do
 			(log/info "check-done")
@@ -111,9 +96,8 @@
 (defn fulfil-target2
  "Given a target block or brick b which we believe to resolve to value of a secondary target, plug it in"
  [b]
- (cr/add-codelet (new-codelet :type :fulfil-target2
+ (cr/add-codelet (new-codelet :fulfil-target2
  																													:desc (str "Fulfil target2:" (-format-block b))
- 																													:urgency URGENCY_HIGH
  																													:fn (fn [] 
 		(do
 			(log/info "fulfil-target2 b=" b)
@@ -134,9 +118,8 @@
 (defn rand-target-match
 	"Look to see if a free brick matches a target"
 	[]
-	(cr/add-codelet (new-codelet :type :rand-target-match
+	(cr/add-codelet (new-codelet :rand-target-match
 																														:desc (str "Target2 brick match?")
-																														:urgency URGENCY_MEDIUM
 																														:fn (fn [] (do
 		(let [target2 (cy/random-target)
 								brick (if target2 (cy/closest-brick target2) nil)]
@@ -156,9 +139,8 @@
 	"Add target node, activate closest number in Pnet, and operands (* if target is larger than largest brick)"
  [v]
  (cr/add-codelet
- 	(new-codelet :type :load-target
+ 	(new-codelet :load-target
  														:desc (str "Load target: " v)
- 														:urgency URGENCY_HIGH
 	 													:fn (fn []
 		 	(do
 		 		(log/info "load-target" v)
@@ -182,9 +164,8 @@
 (defn create-target2
  "Create a target block with b as one arm, a secondary target of t2 and an operator op combining them, pump the target2"
 	[b t2 op]
- (cr/add-codelet (new-codelet :type :create-target2
+ (cr/add-codelet (new-codelet :create-target2
  																													:desc (str "Create target2:" (-format-block b) " off by " t2)
- 																													:urgency URGENCY_HIGH
  																													:fn (fn [] 
 		(do
 			(log/info "create-target2 b=" b ",t2=" t2 ",op=" op)
@@ -207,9 +188,8 @@
 (defn probe-target2
  "Probes a newly created block b to see if it justifies or fulfils a secondary target"
  [b]
- (cr/add-codelet (new-codelet :type :probe-target2
+ (cr/add-codelet (new-codelet :probe-target2
 																													 :desc (str "Probe target2:" (-format-block b))
-																													 :urgency URGENCY_HIGH
 																													 :fn (fn []
 
 		(do
@@ -233,9 +213,8 @@
 (defn load-brick
  "Loads a new brick with value v into the cytoplasm"
  [v]
-	(cr/add-codelet (new-codelet :type :load-brick
+	(cr/add-codelet (new-codelet :load-brick
 																														:desc (str "Load brick: " v)
-																														:urgency URGENCY_HIGH
 																														:fn (fn [] 
 		(do
 	  (log/info "load-brick " v)
@@ -245,9 +224,8 @@
 (defn test-block
 	"Schedule a test of a given block b, if it can be found"
 	[b]
-  (cr/add-codelet (new-codelet :type :test-block
+  (cr/add-codelet (new-codelet :test-block
 																									  				:desc (str "Test block: " (-format-block b))
-																									  				:urgency URGENCY_HIGH
 																															:fn (fn []
 			(let [b1 (second b)
 									b2 (misc/third b)
@@ -289,9 +267,8 @@
  "Find a highly activated calculation, make a block for it, and schedule a test of the block"
  []
  (let [calc (pn/get-random-calc)]
-	 (cr/add-codelet (new-codelet :type :seek-facsimile
+	 (cr/add-codelet (new-codelet :seek-facsimile
 																					 									:desc (str "Seek facsimile: " (pn/format-calc calc))
-																					 									:urgency URGENCY_MEDIUM
 																					 									:fn (fn []
 	  (let [ope ((first (pn/filter-links-for (:links calc) :operator)) pn/operator-map)
 	        params (map (comp cy/closest-node misc/int-k) (pn/filter-links-for (:links calc) :param))]
@@ -334,9 +311,8 @@
  						]
  						(log/debug "rand-block op=" op "b1=" b1 "b2=" b2)
  						(if (and b1 b2 op)
-	 						(cr/add-codelet (new-codelet :type :rand-block
+	 						(cr/add-codelet (new-codelet :rand-block
 																													 							:desc (str "Random block: " (-format-block (list op b1 b2)))
-																													 							:urgency URGENCY_MEDIUM
 																													 							:fn (fn []
 		(do
 			(log/info "rand-block adding " (-format-block (list op b1 b2)))
@@ -349,9 +325,8 @@
  []
  (let [block (cy/unworthy-block)]
  						(if block
-							 (cr/add-codelet (new-codelet :type :dismantler
+							 (cr/add-codelet (new-codelet :dismantler
 																																			 	:desc (str "dismantler " (-format-block (:val block)))
-																																			 	:urgency URGENCY_LOW
 																																			 	:fn (fn []
 		(let [bl (cy/get-block (:val block))]
 			(log/info "dismantler " (:val bl))

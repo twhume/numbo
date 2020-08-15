@@ -19,9 +19,11 @@
 (defn -select-next-codelet
  "Grabs the next codelet from the rack r, probabilistically according to its urgency"
  ([rack]
+  (do (log/debug "-select-next-codelet " rack)
  	(let [urgencies (misc/make-ranges rack :urgency)]
  	 (if (not-empty urgencies)
  	  (misc/random-val-in-range urgencies)))))
+)
 
 (defn -remove-codelet
 	"Returns rack r without codelet c"

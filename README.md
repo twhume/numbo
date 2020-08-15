@@ -53,15 +53,18 @@ v1.04
 - (2020.08.09-19.38.38) every 5 iterations, 8/10 solved (2 @ 100, 5 in 90s, 1 at 89)
 - (2020.08.09-20.27.03) every 10 iterations, 8/10 solved but quality of a few seems to drop off. So it seems like the best is in between
 - (2020.08.09-20.59.37) every 7, a few drop, a few gain, but overall slower
-- (2020.08.10-07.15.19) seems best balance
+- (2020.08.10-07.15.19) seems best balance (MOVED to v1.05)
+
+v1.05
 
 
 Next: get to something optimal here
 - Break out constants into a separate file (DONE)
-- codelet urgencies in their own map
-- Vary this file across runs
-- Do a large number of runs playing with parameters, over days
+- codelet urgencies in their own map (DONE)
+- fix unit tests (DONE)
 - Before this, quickly play with sampling - is it faster for 30 items, say?
+- Vary config across runs
+- Do a large number of runs playing with parameters, over days
 - Also measure impact of disabling logging
 
 

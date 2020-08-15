@@ -3,75 +3,78 @@
   										[numbo.codelet :as cl]
             [numbo.misc :as misc]))
 
+(defn -mk-codelet
+ [& t]
+ (apply cl/new-codelet :dummytype t))
+
 (deftest range-selection-test
 	(let [empty-rack ()
-							zerod-rack (list (cl/new-codelet :urgency 0 :dummy 1) (cl/new-codelet :urgency 0 :dummy 1) (cl/new-codelet :urgency 0 :dummy 1))
-							single-item-rack (list (cl/new-codelet))
-							two-item-rack (list (cl/new-codelet) (cl/new-codelet :urgency 5))
-							five-item-rack (list (cl/new-codelet) (cl/new-codelet) (cl/new-codelet :urgency 2) (cl/new-codelet :urgency 5) (cl/new-codelet :urgency 10))
-							all-1-rack (list (cl/new-codelet :name 1) (cl/new-codelet :name 2) (cl/new-codelet :name 3) (cl/new-codelet :name 4) (cl/new-codelet :name 5))]
+							single-item-rack (list (-mk-codelet))
+							two-item-rack (list (-mk-codelet) (-mk-codelet :urgency 5))
+							five-item-rack (list (-mk-codelet) (-mk-codelet) (-mk-codelet :urgency 2) (-mk-codelet :urgency 5) (-mk-codelet :urgency 10))
+							all-1-rack (list (-mk-codelet :name 1) (-mk-codelet :name 2) (-mk-codelet :name 3) (-mk-codelet :name 4) (-mk-codelet :name 5))]
   (testing "Rack selection given a value"
     (is (= (misc/select-val-in-range (misc/make-ranges empty-rack :urgency) 0) nil))
 
-    (is (= (misc/select-val-in-range (misc/make-ranges single-item-rack :urgency) 0) (cl/new-codelet)))
+    (is (= (misc/select-val-in-range (misc/make-ranges single-item-rack :urgency) 0) (-mk-codelet)))
     (is (= (misc/select-val-in-range (misc/make-ranges single-item-rack :urgency) 1) nil))
 
-    (is (= (misc/select-val-in-range (misc/make-ranges two-item-rack :urgency) 0) (cl/new-codelet)))
-    (is (= (misc/select-val-in-range (misc/make-ranges two-item-rack :urgency) 1) (cl/new-codelet :urgency 5)))
-    (is (= (misc/select-val-in-range (misc/make-ranges two-item-rack :urgency) 5) (cl/new-codelet :urgency 5)))
+    (is (= (misc/select-val-in-range (misc/make-ranges two-item-rack :urgency) 0) (-mk-codelet)))
+    (is (= (misc/select-val-in-range (misc/make-ranges two-item-rack :urgency) 1) (-mk-codelet :urgency 5)))
+    (is (= (misc/select-val-in-range (misc/make-ranges two-item-rack :urgency) 5) (-mk-codelet :urgency 5)))
     (is (= (misc/select-val-in-range (misc/make-ranges two-item-rack :urgency) 6) nil))
 
-    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 0) (cl/new-codelet)))
-    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 1) (cl/new-codelet)))
-    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 3) (cl/new-codelet :urgency 2)))
-    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 8) (cl/new-codelet :urgency 5)))
-    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 18) (cl/new-codelet :urgency 10)))
+    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 0) (-mk-codelet)))
+    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 1) (-mk-codelet)))
+    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 3) (-mk-codelet :urgency 2)))
+    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 8) (-mk-codelet :urgency 5)))
+    (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 18) (-mk-codelet :urgency 10)))
     (is (= (misc/select-val-in-range (misc/make-ranges five-item-rack :urgency) 19) nil))
 
-    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 0) (cl/new-codelet :name 1)))
-    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 1) (cl/new-codelet :name 2)))
-    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 2) (cl/new-codelet :name 3)))
-    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 3) (cl/new-codelet :name 4)))
-    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 4) (cl/new-codelet :name 5)))
+    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 0) (-mk-codelet :name 1)))
+    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 1) (-mk-codelet :name 2)))
+    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 2) (-mk-codelet :name 3)))
+    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 3) (-mk-codelet :name 4)))
+    (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 4) (-mk-codelet :name 5)))
     (is (= (misc/select-val-in-range (misc/make-ranges all-1-rack :urgency) 5) nil))
 
     )))
 
 (deftest percent-range-selection-test
 	(let [empty-rack ()
-							zerod-rack (list (cl/new-codelet :urgency 0 :dummy 1) (cl/new-codelet :urgency 0 :dummy 1) (cl/new-codelet :urgency 0 :dummy 1))
-							single-item-rack (list (cl/new-codelet :urgency 0))
-							two-item-rack (list (cl/new-codelet :urgency 0) (cl/new-codelet :urgency 0.5))
-							five-item-rack (list (cl/new-codelet :urgency 0) (cl/new-codelet :urgency 0) (cl/new-codelet :urgency 0.2) (cl/new-codelet :urgency 0.5) (cl/new-codelet :urgency 1.0))
-							all-1-rack (list (cl/new-codelet :name 1 :urgency 0) (cl/new-codelet :name 2 :urgency 0) (cl/new-codelet :name 3 :urgency 0) (cl/new-codelet :name 4 :urgency 0) (cl/new-codelet :name 5 :urgency 0))]
+							zerod-rack (list (-mk-codelet :urgency 0 :dummy 1) (-mk-codelet :urgency 0 :dummy 1) (-mk-codelet :urgency 0 :dummy 1))
+							single-item-rack (list (-mk-codelet :urgency 0))
+							two-item-rack (list (-mk-codelet :urgency 0) (-mk-codelet :urgency 0.5))
+							five-item-rack (list (-mk-codelet :urgency 0) (-mk-codelet :urgency 0) (-mk-codelet :urgency 0.2) (-mk-codelet :urgency 0.5) (-mk-codelet :urgency 1.0))
+							all-1-rack (list (-mk-codelet :name 1 :urgency 0) (-mk-codelet :name 2 :urgency 0) (-mk-codelet :name 3 :urgency 0) (-mk-codelet :name 4 :urgency 0) (-mk-codelet :name 5 :urgency 0))]
   (testing "Rack selection given a value"
     (is (= (misc/select-val-in-range (misc/make-percent-ranges empty-rack :urgency) 0) nil))
 
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges single-item-rack :urgency) 0) (cl/new-codelet :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges single-item-rack :urgency) 0) (-mk-codelet :urgency 0)))
     (is (= (misc/select-val-in-range (misc/make-percent-ranges single-item-rack :urgency) 1) nil))
 
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 0) (cl/new-codelet :urgency 0)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 1) (cl/new-codelet :urgency 0.5)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 2) (cl/new-codelet :urgency 0.5)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 50) (cl/new-codelet :urgency 0.5)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 0) (-mk-codelet :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 1) (-mk-codelet :urgency 0.5)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 2) (-mk-codelet :urgency 0.5)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 50) (-mk-codelet :urgency 0.5)))
     (is (= (misc/select-val-in-range (misc/make-percent-ranges two-item-rack :urgency) 51) nil))
 
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 0) (cl/new-codelet :urgency 0)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 1) (cl/new-codelet :urgency 0)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 2) (cl/new-codelet :urgency 0.2)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 3) (cl/new-codelet :urgency 0.2)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 21) (cl/new-codelet :urgency 0.2)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 22) (cl/new-codelet :urgency 0.5)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 71) (cl/new-codelet :urgency 0.5)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 72) (cl/new-codelet :urgency 1.0)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 171) (cl/new-codelet :urgency 1.0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 0) (-mk-codelet :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 1) (-mk-codelet :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 2) (-mk-codelet :urgency 0.2)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 3) (-mk-codelet :urgency 0.2)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 21) (-mk-codelet :urgency 0.2)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 22) (-mk-codelet :urgency 0.5)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 71) (-mk-codelet :urgency 0.5)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 72) (-mk-codelet :urgency 1.0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 171) (-mk-codelet :urgency 1.0)))
     (is (= (misc/select-val-in-range (misc/make-percent-ranges five-item-rack :urgency) 172) nil))
 
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 0) (cl/new-codelet :name 1 :urgency 0)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 1) (cl/new-codelet :name 2 :urgency 0)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 2) (cl/new-codelet :name 3 :urgency 0)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 3) (cl/new-codelet :name 4 :urgency 0)))
-    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 4) (cl/new-codelet :name 5 :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 0) (-mk-codelet :name 1 :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 1) (-mk-codelet :name 2 :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 2) (-mk-codelet :name 3 :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 3) (-mk-codelet :name 4 :urgency 0)))
+    (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 4) (-mk-codelet :name 5 :urgency 0)))
     (is (= (misc/select-val-in-range (misc/make-percent-ranges all-1-rack :urgency) 5) nil))
 
     )))

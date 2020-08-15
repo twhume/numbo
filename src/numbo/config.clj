@@ -40,4 +40,35 @@
 ; Multiplier for PN_INC for neighboring nodes
  :PN_NEIGHBOR 3
 ; Multiplier for PN_INC for neighbors of neighbors
-:PN_NNEIGHBOR 1}))
+:PN_NNEIGHBOR 1
+
+; ----- Configuration for codelet.clj -----
+
+:URGENCY_HIGH 5
+:URGENCY_MEDIUM 3
+:URGENCY_LOW 1
+
+
+}))
+
+; Map of type --> urgency for codelets
+
+
+
+
+(def urgencies (atom {
+	:activate-pnet (:URGENCY_MEDIUM @config)
+	:inc-attraction (:URGENCY_MEDIUM @config)
+	:rand-syntactic-comparison (:URGENCY_LOW @config)
+	:check-done (:URGENCY_HIGH @config)
+	:fulfil-target2 (:URGENCY_HIGH @config)
+	:rand-target-match (:URGENCY_MEDIUM @config)
+	:load-target (:URGENCY_HIGH @config)
+	:create-target2 (:URGENCY_HIGH @config)
+	:probe-target2 (:URGENCY_HIGH @config)
+	:load-brick (:URGENCY_HIGH @config)
+	:test-block (:URGENCY_HIGH @config)
+	:seek-facsimile (:URGENCY_MEDIUM @config)
+	:rand-block (:URGENCY_MEDIUM @config)
+	:dismantler (:URGENCY_LOW @config)
+	}))
