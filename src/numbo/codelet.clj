@@ -32,7 +32,7 @@
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
  [t & s]
- (into (hash-map :type t :urgency (if (t @urgencies) (t @urgencies) :URGENCY_LOW) :fn nil :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
+ (into (hash-map :type t :urgency (if (t @urgencies) (t @urgencies) (:URGENCY_LOW @config)) :fn nil :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
 
 ;----- CODELETS HEREON -----
 

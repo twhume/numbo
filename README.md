@@ -57,12 +57,6 @@ v1.04
 
 v1.05
 
-
-Next: get to something optimal here
-- Break out constants into a separate file (DONE)
-- codelet urgencies in their own map (DONE)
-- fix unit tests (DONE)
-- Before this, quickly play with sampling - is it faster for 30 items, say?
 - Vary config across runs
 - Do a large number of runs playing with parameters, over days
 - Also measure impact of disabling logging

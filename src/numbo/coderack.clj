@@ -18,12 +18,7 @@
 
 (defn -select-next-codelet
  "Grabs the next codelet from the rack r, probabilistically according to its urgency"
- ([rack]
-  (do (log/debug "-select-next-codelet " rack)
- 	(let [urgencies (misc/make-ranges rack :urgency)]
- 	 (if (not-empty urgencies)
- 	  (misc/random-val-in-range urgencies)))))
-)
+ ([rack] (first (misc/sample rack :urgency))))
 
 (defn -remove-codelet
 	"Returns rack r without codelet c"
@@ -65,8 +60,6 @@
 	 (if (> (count r) (:CODERACK_SIZE @config))
 	 	(-remove-codelet r
 	 	 (-invert-urgency
-		 	 (misc/random-val-in-range
-		 	 	(misc/make-ranges
-						 (map -invert-urgency r)
-		 	 	 :urgency)))) r))
+		 	 (first (misc/sample (map -invert-urgency r) :urgency))))
+	 		r))
  ([] (reset! CODERACK (decay @CODERACK))))

@@ -57,10 +57,7 @@
 (defn -n-random-nodes
  "Return n nodes, weighted by attraction, from the supplied list s"
  [s n]
- (loop [ranges (misc/make-percent-ranges s :attr) ret '()]
-			(let [entry (first (filter #(< (rand-int (first (last ranges))) (first %)) ranges))]
-				(if (or (empty? ranges) (= n (count ret))) ret
-					(recur (misc/seq-remove ranges entry) (conj ret (:val (second entry))))))))
+ (map :val (misc/sample s :attr n)))
 
 (defn -inc-attr
  "Up the :attr value of nodes with :val n in the map m by i"
@@ -187,8 +184,6 @@
  ([c] (first (reverse (sort (map :val (:bricks c))))))
  ([] (largest-brick @CYTO)))
 
-; The complicated stuff in here I cribbed from misc/select-val-in-range and random-val-in-range
-
 (defn random-brick
 	"Return a random brick, or n random bricks, probabilistically weighted by attraction"
 	([c n] (-n-random-nodes (:bricks c) n))
@@ -272,8 +267,7 @@
  "Return a random block, weighted by the inverse of its attractiveness"
  ([c]
 		(misc/invert-val :attr ; invert it back again once we have it
-			(misc/random-val-in-range
-				(misc/make-percent-ranges (map (partial misc/invert-val :attr) (:blocks c)) :attr))))
+			(first (misc/sample (map (partial misc/invert-val :attr) (:blocks c)) :attr))))
 	([] (unworthy-block @CYTO)))
 
 (defn get-block

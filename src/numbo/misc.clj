@@ -7,50 +7,6 @@
 
 ; Useful functions I want to avoid duplicating across files
 
-; Used to implement probabilistic sampling. Find a specific value within the range
-;
-; e.g. Urgency value ranges for selecting a codelet. What are urgency value ranges?
-; Imagine we have a set of codelet in the rack with urgencies 1 1 2 5 10
-; The urgency value ranges are 1 2 4 9 19
-; (minimum urgency must be 1 rather than 0, so that 0-urgency nodes have a chance of running)
-; A random value from 0..19 would be generated to choose one weighted by its urgency
-
-(defn select-val-in-range
- "Given a sequence of (value range, value) r, and a value v within the ranges, return a value"
-	[r v]
- (second (first (filter #(< v (first %)) r))))
-
-; Find a random value within the ranges (this tends to be what we want)
-
-(defn random-val-in-range
- "Given a sequence of (value range, value) r, return a random value"
- [r]
- (if (empty? r) nil
-	 (select-val-in-range r (rand-int (first (last r))))))
-
-; Take a sequence of maps s and return a list of (range, node) tuples where range is based on key k.
-; Used to power probabilistic sampling of elements from a sequence
-;
-; With codelets the sequence is the coderack and the key is :urgency
-; With bricks in WM the sequence is the NODES and the key is :attractiveness
-
-(defn make-ranges
- [s k]
- 	 (map #(list %1 %2) (reductions + (map k s)) s))
-
-(defn -make-percent
- [k m]
-
- (if (zero? (k m)) 1
- 	(int (* (k m) 100))))
-
-; A version of make-ranges which assumes the value pointed at by k is 0..1
-; This value is commuted into 1..100
-
-(defn make-percent-ranges
- [s k]
- 	 (map #(list %1 %2) (reductions + (map (partial -make-percent k) s)) s))
-
 (defn uuid
  "Generate a new Java UUID"
  []
@@ -147,14 +103,26 @@
 	 	(let [[n m] (split-with #(not= a %1) s)] (concat n (cons b (rest m)))))
 	 s))
 
+; Used to implement probabilistic sampling. Find a specific value within the range
+
 (defn -sample-val
- [s rval r]
-			(ffirst
-				(filter #(>= (second %1) rval) (map list s r))))
+ [s f r]
+ (if (empty? s) nil
+	 (loop [rem s acc 0.0]
+		 	(let [cur (first rem) curv (f cur) accv (+ curv acc)]
+			  (cond
+			  	(nil? cur) (log/error "-sample-val fallen off the edge")
+			  	(>= accv r) cur
+			  	(= 1 (count rem)) nil
+			  	:else (recur (rest rem) accv))))))
 
 (defn sample
- "Sample a random value from sequence s where the weight of each value is f(s)"
- ([s f n]
-	 (let [ranges (reductions + (map f s))]
-	 	(repeatedly n #(-sample-val s (rand (last ranges)) ranges))))
+ "Sample n random values from sequence s where the weight of each value is f(), total of all weights is w"
+ ([s f n w]
+  (if (empty? s) '()
+   (loop [rem s ret '[] tot w]
+				(if (or (empty? rem) (= n (count ret))) ret
+	    (let [cur (-sample-val rem f (rand tot))]
+						(recur (seq-remove rem cur) (conj ret cur) (- tot (f cur))))))))
+ ([s f n] (sample s f n (reduce + (map f s))))
  ([s f] (sample s f 1)))

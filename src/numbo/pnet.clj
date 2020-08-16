@@ -1140,9 +1140,7 @@
 (defn -get-random-by-type
 	"Get a random node, sampled probabilistically by activation from all nodes of :type t"
  [p t]
-	(let [op-range (misc/make-percent-ranges (filter #(= t (:type %)) (vals p)) :activation)]
-	 (if (not-empty op-range)
-	  (misc/random-val-in-range op-range))))
+ (first (misc/sample (filter #(= t (:type %)) (vals p)) :activation)))
 
 (defn get-random-op
 	"Get a random operator, sampled probabilistically by activation"
