@@ -52,7 +52,7 @@
 (defn -invert-urgency
  "Invert the urgency value of the passed codelet"
  [c]
- (assoc c :urgency (- 6 (:urgency c)))) ; DIRTY CONSTANT TODO REMOVE
+ (assoc c :urgency (- (+ (:URGENCY_HIGH @config) (:URGENCY_LOW @config)) (:urgency c))))
 
 (defn decay
  "Decays the coderack - if it's over MAX_SIZE, remove a low-pri element"
