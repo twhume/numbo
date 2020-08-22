@@ -246,6 +246,7 @@
 		:links (
 			(:times-4-5 :result)
 			(:times-2-10 :result)
+			(:plus-20-20 :param)
 			(:times-2-20 :param)
 			(:times-3-20 :param)
 			(:times-4-20 :param)
@@ -288,6 +289,7 @@
 		:links (
 			(:times-4-10 :result)
 			(:times-2-20 :result)
+			(:plus-20-20 :result)
 			(:30 :similar)
 			(:50 :similar)
 		)
@@ -734,6 +736,16 @@
 			(:7 :param)
 			(:8 :param)
 			(:15 :result)
+			(:plus :operator)
+		)
+	}
+
+		:plus-20-20 {
+		:type :calculation
+		:links (
+			(:20 :param)
+			(:20 :param)
+			(:40 :result)
 			(:plus :operator)
 		)
 	}
