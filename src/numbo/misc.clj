@@ -20,11 +20,12 @@
 
 (defn normalized
  "Give an input value v and optional modified m return a pumped value capped at 1"
- ([v] (cond
- 	(< v 0) 0
- 	(> v 1) 1
+ ([v l u] (cond
+ 	(< v l) l
+ 	(> v u) u
  	:else (round-to 2 v)
  ))
+ ([v] (normalized v 0 1))
  ([v m] (normalized (+ (if v v 0) (if m m 0)))))
 
 (defn within

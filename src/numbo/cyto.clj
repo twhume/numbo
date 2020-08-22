@@ -344,9 +344,15 @@
  ([] (get-solutions @CYTO)))
 
 ; Contributors to temperature:
-; # secondary targets
-; # nodes which are highly attractive
-; # free nodes
+; # secondary targets - 0.2 * (# secondary targets)
+; # blocks which are highly attractive: (- ((sum of attr of blocks) / 2))
+; # free bricks:  + 0.2 for each
+;
+; no secondary targets, no blocks, 5 bricks = 1.0
+; 1 secondary target, 1 block 0.7 attr, 3 bricks = -0.2 -0.35 + 0.6 = 0.05
+; 1 block 0.4 attr, 3 bricks  = -0.2 + 0.6 = 0.4
+
+;
 ;
 ; High temperature --> less promising; dismantler codelets loaded into coderack, to dismantle probabilistically chosen targets
 ; Temperature is on a scale of 0..1
@@ -354,12 +360,10 @@
 (defn get-temperature
  "What's the temperature of the cytoplasm c?"
  ([c] 
- (+
-  (* 0.05 (count (:blocks c))) ; Add 0.05 for each block we have; lots of blocks --> trigger dismantlers
- 	(* 0.1 (count (:bricks c))) ; Add 0.1 for each free brick
-; 	(* -0.05 (count (filter (partial < 0.3) ; Subtract 0.05 for each node with an :attr > 0.3
-; 								(filter (complement nil?) (mapcat #(map :attr (-blocktree-nodes %1)) bl)))))
- 	; TODO add secondary targets stuff in
- 	
- ))
+ (misc/normalized
+	 (+
+	  (* -0.2 (dec (count (:targets c)))) ; lose 0.2 for each secondary target we have
+	  (* 0.2 (count (:bricks c))) ; add 0.2 for every free brick
+	  (/ (reduce + (map :attr (:blocks c))) 2) ; + half the sum of the attr of all blocks 	
+	 ) 0.1 0.9))
  ([] (get-temperature @CYTO)))
