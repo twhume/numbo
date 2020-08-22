@@ -2,7 +2,7 @@
 
 # Script to run the set of canonical problems from the Numbo paper
 
-ITERATIONS=5000
+ITERATIONS=2000
 COUNT=100
 
 
