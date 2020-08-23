@@ -7,7 +7,11 @@
 ; how often (in iterations) should we dismantle, temperature permitting?
 	:FREQ_DISMANTLE 5
 ; how often (in iterations) should we trigger one of our random ops, temperature permitting?
- :FREQ_RAND_OP 6
+ :FREQ_RAND_BLOCK 2
+ :FREQ_SEEK_FACSIMILE 2
+ :FREQ_RAND_TARGET_MATCH 10
+ :FREQ_RAND_SYNTACTIC_COMPARISON 10
+
 ; how often (in iterations) should we pump a random brick, temperature permitting?
  :FREQ_PUMP_BRICK 10
 ; how often (in iterations) should we pump a random target, temperature permitting?

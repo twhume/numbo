@@ -55,11 +55,13 @@
  (assoc c :urgency (- (+ (:URGENCY_HIGH @config) (:URGENCY_LOW @config)) (:urgency c))))
 
 (defn decay
- "Decays the coderack - if it's over MAX_SIZE, remove a low-pri element"
+ "Decays the coderack - while it's over MAX_SIZE, remove a low-pri element"
  ([r]
-	 (if (> (count r) (:CODERACK_SIZE @config))
-	 	(-remove-codelet r
-	 	 (-invert-urgency
-		 	 (first (misc/sample (map -invert-urgency r) :urgency))))
-	 		r))
+ 	(loop [cur r]
+ 		(if (> (count cur) (:CODERACK_SIZE @config))
+ 			(recur 
+			 	(-remove-codelet cur
+			 	 (-invert-urgency
+				 	 (first (misc/sample (map -invert-urgency cur) :urgency)))))
+			 		cur)))
  ([] (reset! CODERACK (decay @CODERACK))))

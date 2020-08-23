@@ -175,6 +175,7 @@
 		:links (
 			(:minus-10-1 :result)
 			(:times-3-3 :result)
+			(:times-9-9 :param)
 			(:8 :similar)
 		)
 	}

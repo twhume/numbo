@@ -48,8 +48,18 @@
 			(if	(= 0 (mod @cr/ITERATIONS (:FREQ_DISMANTLE @config))) (do
 																																	(if (< (rand) (cy/get-temperature)) (cl/dismantler)))) ; if it's getting too hot, dismantle something
 
-		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_OP @config))) (do
-																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-block cl/seek-facsimile cl/rand-target-match cl/rand-syntactic-comparison))))))
+		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_BLOCK @config))) (do
+																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-block))))
+
+		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_SEEK_FACSIMILE @config))) (do
+																														 		(if (> (rand) (cy/get-temperature)) (cl/seek-facsimile))))
+
+		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_TARGET_MATCH @config))) (do
+																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-target-match))))
+
+		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_SYNTACTIC_COMPARISON @config))) (do
+																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-syntactic-comparison))))
+
 
 ;		 (if	(= 0 (mod @cr/ITERATIONS 2)) (do
 ;																														 		(if (> (rand) (cy/get-temperature)) ((rand-nth (list cl/rand-block cl/seek-facsimile))))))
@@ -148,8 +158,8 @@
 
 		(run-for-iterations i)
 		(if @cy/COMPLETE
-			(println n "," t "," b "," @cr/ITERATIONS "," (cy/format-block (:val (first (cy/get-solutions)))))
-			(println n "," t "," b "," @cr/ITERATIONS ", none"))
+			(println n "," t "," b "," @cr/ITERATIONS "," (cy/format-block (:val (first (cy/get-solutions)))) "," (count (filter empty? (map :coderack @hist/HISTORY))))
+			(println n "," t "," b "," @cr/ITERATIONS ", none, " (count (filter empty? (map :coderack @hist/HISTORY)))))
 
 	 (if v (viz/-main))
 		(catch Exception e

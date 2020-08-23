@@ -57,6 +57,48 @@ v1.04
 
 v1.05
 
+- added 20 + 20 = 40 to pnet which ought to help with 41 5,16,22,25,1 (it did: 6 --> 63%)
+- played with pnet deactivation: 0.1, 0.2, 0.9 for nneighbor, neighbor and activated node, decay 0.02
+(basically, make highly activated nodes nonlinearly more likely - focus on a single idea more readily)
+(also cyto nodes start less attractive, are pumped 0.7, decay more slowly) (worse)
+- dropped iterations to 2000, it's more important for us to test fast than be exhaustive. 
+- looked into some solutions, really struggled with 31. Tried modifying rand-syntactic-comparison
+- we have a ton of wasted iterations where there's nothing in the coderack. Started logging these, they're a smell...
+- ok, rewrote get-temperature, started running random operations based on temperature at the same frequency. Coderack more rarely empty. So how important are individual random operations?
+- (2020.08.22-12.19.07) disabled rand-block: avg solutions=1, avg time=1213, % solved=48, % blank=30
+- (2020.08.22-12.40.49) nothing disabled: avg solutions=2.7, avg time=1351, % solved=43, % blank=15
+- (2020.08.22-13.21.54) disabled seek-facsimile: avg solutions=3.1, avg time=1573, % solved=27, % blank=34
+- (2020.08.22-13.47.00) disabled rand-target-match: avg solutions=3, avg time=1368, % solved=40, % blank=28
+- (2020.08.22-14.21.03) disabled rand-syntactic-comparison: avg solutions=2.8, avg time=976, % solved=, 68, % blank=10
+- Conclusions: seek-facsimile seems important for solving. rand-block ensures more exploration at the cost of dead ends. syntactic-comparison is harmful. target-match useful occasionally.
+- Next steps: make syntactic-comparison + target-match v rare (1/10?), keep rand-block as-is, seek facsimile as-is
+- (2020.08.22-15.00.28) avg solutions=2.8, avg time=1056, % solved=, 63, % blank=29
+- Hmm. make rand-syntactic even less frequent? Try again with same config to get a feel for variance
+- (2020.08.22-15.47.23) avg solutions=2.8, avg time=1111, % solved=, 61, % blank=30
+- (diversion) - can't understand why 81 , (9 7 2 25 18) isnt getting 9 * (7+2) and added a pnet line to try and make this connection. If there's a pnet calculation with the result of a target, we should try and make it no?
+- () changed seek-facsimile and rand-block to be considered every cycle (rather than every 2): avg solutions=2.6, avg time=1250, % solved=54, , % blank=3.55 - so good for blanks but that's it
+
+
+- seek-facsimile should consider blocks as possible contributors, not just bricks
+- i.e. if I've made 7+2=9 then this 9 and a brick 9 might make 81...
+
+- seek-facsimile gets 9 * 9 = 81 (we had this 2360 times in 20 x 5k iterations) = 2% of all codelets!
+- seek-facsimile sees there's a brick 9, makes a block (9 * 9), adds 9 as a secondary target
+- OR
+- seek-facsimile sees there's a block 9, makes a block referencing it (9 * 9), adds 9 as a secondary target
+
+******
+
+- LINE 297 onwards in codelet.clj is breaking everything and I don't know why
+******
+
+- Get solutions for the real nasties that evade us - work out how to solve these even if slowly
+* 31	(3 5 24 3 14) never gets (((5 * 3) * 3) - 14) - complex tho
+- path could be: 3 is like 31, so pump. 3 * 5 = 15, which is half 30, so pump. 15 * 3 = 45 which is near 31, so keep it. Should seek-facsimile be working on blocks, so once we have 15 it's simple?
+* 127	(7 6 4 22 25) never gets ((25 - (6 + 4)) * 7) + 22)
+
+
+- let single bricks be blocks that seek secondary targets, if they're within 50% of the solution
 - Vary config across runs
 - Do a large number of runs playing with parameters, over days
 - Also measure impact of disabling logging
