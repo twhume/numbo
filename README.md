@@ -76,20 +76,28 @@ v1.05
 - Hmm. make rand-syntactic even less frequent? Try again with same config to get a feel for variance
 - (2020.08.22-15.47.23) avg solutions=2.8, avg time=1111, % solved=, 61, % blank=30
 - (diversion) - can't understand why 81 , (9 7 2 25 18) isnt getting 9 * (7+2) and added a pnet line to try and make this connection. If there's a pnet calculation with the result of a target, we should try and make it no?
-- () changed seek-facsimile and rand-block to be considered every cycle (rather than every 2): avg solutions=2.6, avg time=1250, % solved=54, , % blank=3.55 - so good for blanks but that's it
+- (???) changed seek-facsimile and rand-block to be considered every cycle (rather than every 2): avg solutions=2.6, avg time=1250, % solved=54, , % blank=3.55 - so good for blanks but that's it
+- forced a seek-facsimile whenever we regularly pump the pnet+cyto, to be a bit more "intentional" - "go look here"
+- (2020.08.23-19.01.00) avg solutions=3.1, avg time=1072, % solved=61, , % blank=29
 
+## Next
 
-- seek-facsimile should consider blocks as possible contributors, not just bricks
-- i.e. if I've made 7+2=9 then this 9 and a brick 9 might make 81...
+We need to consider bricks as starting points to calculations, not just blocks, to cover the 9 * (7 + 2) = 81 case
+If seek-facsimile gets a brick 9, it should make a block 9 * 9, with that second 9 being a secondary target. This should stimulate a 7+2 to occur.
+To do this
 
-- seek-facsimile gets 9 * 9 = 81 (we had this 2360 times in 20 x 5k iterations) = 2% of all codelets!
-- seek-facsimile sees there's a brick 9, makes a block (9 * 9), adds 9 as a secondary target
-- OR
-- seek-facsimile sees there's a block 9, makes a block referencing it (9 * 9), adds 9 as a secondary target
+- seek-facsimile --> make-block (brick1 op)
+- make-block sees if we can make a block using brick1 and op, sets it up, adds brick2 as 
+a secondary target
+
 
 ******
 
 - LINE 297 onwards in codelet.clj is breaking everything and I don't know why
+- just make a new set of codelets to fire
+
+- update this section to call probe-target2 with 
+
 ******
 
 - Get solutions for the real nasties that evade us - work out how to solve these even if slowly

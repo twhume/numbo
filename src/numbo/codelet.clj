@@ -65,18 +65,25 @@
  "Examine a random brick or block, compare to the target, pump it if promising"
  []
  (let [node (cy/random-node)
- 						nval (str (eval node))
- 						tval (str (cy/random-target))]
+ 						nval (eval node)
+ 						nstr (str nval)
+ 						tval (cy/random-target)
+ 						tstr (str tval)]
  						(if node
 	 						(cr/add-codelet (new-codelet :rand-syntactic-comparison
 	 																																			:desc (str "Compare " nval " to target " tval)
 	 																																			:fn (fn []
 	 						 (do
 	 	 						(log/info "rand-syntactic-comparison val=" nval "tval=" tval)
-									 (if; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
+									 (if
 									  (or
-									  	(str/includes? nval tval)
-									  	(str/includes? tval nval)) (do
+									  	(str/includes? nstr tstr) ; either node contains the other, as a string - e.g. 114 contains 11, 15 contains 5, 51 contains 5
+									  	(str/includes? tstr nstr)
+									  	
+									  	(misc/within nval tval 0.1) ; the node is ~ the target
+									  	(misc/within nval (/ tval 2) 0.1) ; the node is ~ half the target
+									  	(misc/within nval (/ tval 3) 0.1) ; the node is ~ a third the target
+									  	) (do
 									  		(log/debug "rand-syntactic-comparison pumping " node)
 									  		(pump-node node))))))))))
 
@@ -248,13 +255,6 @@
 							:else
 							 (do
 							 	(log/debug "test-block b=" bstr " is not worthy")
-							 	(log/debug "test-block b=" str ", (= b1 b2)=" (= b1 b2))
-							 	(log/debug "test-block b=" str ", (cy/brick-free? b2 2)=" (cy/brick-free? b2 2))
-							 	(log/debug "test-block b=" str ", (cy/brick-free? b1)=" (cy/brick-free? b1))
-							 	(log/debug "test-block b=" str ", closest=" ((pn/closest-keyword (eval b)) @pn/PNET))
-							 	(log/debug "test-block b=" str ", activation" (:activation ((pn/closest-keyword (eval b)) @pn/PNET)))
-							 	(log/debug "test-block b=" str ", act-test" (>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) (:PN_INC @config)))
-
 							 	(cy/del-block b))))))))
 
 ; Tries to build a block which makes something close to a biped in the pnet
@@ -272,12 +272,12 @@
 																					 									:fn (fn []
 	  (let [ope ((first (pn/filter-links-for (:links calc) :operator)) pn/operator-map)
 	        params (map (comp cy/closest-node misc/int-k) (pn/filter-links-for (:links calc) :param))]
-	       	(log/info "seek-facsimile for " (pn/format-calc calc))
+	       	(log/info "seek-facsimile for " (pn/format-calc calc) ope params)
 
 	       	; TODO: check that all the params are within 50% of the desired
 	       	; TODO: check the result is desirable (somewhere)?
 
-	        (if
+	        (cond
 	        	(and
 	        		(= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
 	        		(or
@@ -287,17 +287,32 @@
 	        			(and
 	        				(not= (first params) (second params))
 	        				(cy/brick-free? (first params))
-	        				(cy/brick-free? (second params))) ; or they differ and are free
-	        			))
-	        			(do 
-			        		(log/debug "seek-facsimile START ")
-			        		(log/debug "seek-facsimile DOING " ope params)
-			        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
-				        	(test-block (cons ope params)) ; Schedule a new test of it in future
-			        		(log/debug "seek-facsimile DONE " ope params)
+	        				(cy/brick-free? (second params))))) ; or they differ and are free
+	        			
+       			(do 
+	        		(log/debug "seek-facsimile adding block from bricks " ope params)
+	        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
+		        	(test-block (cons ope params))) ; Schedule a new test of it in future
+
+;       			(and
+;       				(= (count params) 2)
+;       				(or ; We only get one matching brick
+;       					(cy/brick-free? (first params))
+;       					(cy/brick-free? (second params)))
+;       				(not (and
+;       					(cy/brick-free? (first params))
+;       					(cy/brick-free? (second params)))       				
+;       				))
+;       			(do
+;       				(log/debug "seek-facsimile adding block from brick " ope params)
+;       				(cy/add-block (cons ope params))
+;       				(if (cy/brick-free? (first params))
+;       					(cy/add-target2 (second params))
+;       					(cy/add-target2 (first params)))
+;       				(rand-target-match))
 
 		        	 
-	        	))))))))
+	        	)))))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
 ; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)

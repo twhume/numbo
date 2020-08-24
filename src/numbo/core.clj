@@ -51,8 +51,8 @@
 		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_BLOCK @config))) (do
 																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-block))))
 
-		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_SEEK_FACSIMILE @config))) (do
-																														 		(if (> (rand) (cy/get-temperature)) (cl/seek-facsimile))))
+;		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_SEEK_FACSIMILE @config))) (do
+;																														 		(if (> (rand) (cy/get-temperature)) (cl/seek-facsimile))))
 
 		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_TARGET_MATCH @config))) (do
 																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-target-match))))
@@ -78,8 +78,10 @@
 																																		 (if (not (nil? t))
 																																		 	(do
 																																		 		(log/debug "tick activating target" t)
-																																		 		(cy/pump-node t)
-																																			 	(cl/activate-pnet (pn/closest-keyword t))))))
+																																		 		(cl/pump-node t)
+																																			 	(cl/activate-pnet (pn/closest-keyword t))
+																																			 	(cl/seek-facsimile)
+																																			 	))))
 
   (cy/decay)
 		(pn/decay)
