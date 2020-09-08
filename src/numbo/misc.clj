@@ -127,3 +127,5 @@
 						(recur (seq-remove rem cur) (conj ret cur) (- tot (f cur))))))))
  ([s f n] (sample s f n (reduce + (map f s))))
  ([s f] (sample s f 1)))
+
+(defn xor [a b] (or (and a (not b)) (and (not a) b)))

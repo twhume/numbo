@@ -26,10 +26,18 @@
  	(= 0 (mod n 100)) (+ 0.1)
  ))
 
+; Handles the case where a :val can be an integer (bricks) or a sequence (blocks)
+(defn -contains-n-evals?
+ "Does the supplied sequence s contain >=n nodes with value v?"
+ [s v n]
+ (>=
+ 	(count (filter #(= v (eval (:val %1))) s)) n))
+
 (defn -contains-n-vals?
  "Does the supplied sequence s contain >=n nodes with value v?"
  [s v n]
- (>= (count (filter #(= v (:val %1)) s)) n))
+ (>=
+ 	(count (filter #(= v (:val %1)) s)) n))
 
 (defn -remove-first
  "Return sequence s without the first instance of a node with value v"
@@ -304,6 +312,12 @@
  	(filter #(= v (:val %1)) (:bricks c))
   (filter #(= v (eval (:val %1))) (:blocks c))))
  ([v] (free-nodes @CYTO v)))
+
+(defn node-free?
+	"Is a node with value v free? Are n copies of it free?"
+ ([c n v] (-contains-n-evals? (concat (:bricks c) (:blocks c)) v n))
+ ([n v] (node-free? @CYTO n v))
+ ([v] (node-free? @CYTO 1 v)))
 
 (defn pump-node
  "Pump the attractiveness of the node n"

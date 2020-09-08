@@ -8,7 +8,7 @@
 	:FREQ_DISMANTLE 5
 ; how often (in iterations) should we trigger one of our random ops, temperature permitting?
  :FREQ_RAND_BLOCK 2
- :FREQ_SEEK_FACSIMILE 2
+ :FREQ_SEEK_FACSIMILE 10
  :FREQ_RAND_TARGET_MATCH 10
  :FREQ_RAND_SYNTACTIC_COMPARISON 10
 
@@ -73,6 +73,6 @@
 	:load-brick (:URGENCY_HIGH @config)
 	:test-block (:URGENCY_HIGH @config)
 	:seek-facsimile (:URGENCY_MEDIUM @config)
-	:rand-block (:URGENCY_MEDIUM @config)
+	:rand-block (:URGENCY_LOW @config)
 	:dismantler (:URGENCY_LOW @config)
 	}))

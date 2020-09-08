@@ -51,6 +51,10 @@
 		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_BLOCK @config))) (do
 																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-block))))
 
+  	(if (= 0 (mod @cr/ITERATIONS (:FREQ_SEEK_FACSIMILE @config))) (do
+																																	(if (> (rand) (cy/get-temperature)) (cl/seek-facsimile))))
+ 
+
 		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_TARGET_MATCH @config))) (do
 																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-target-match))))
 

@@ -79,6 +79,9 @@ v1.05
 - (???) changed seek-facsimile and rand-block to be considered every cycle (rather than every 2): avg solutions=2.6, avg time=1250, % solved=54, , % blank=3.55 - so good for blanks but that's it
 - forced a seek-facsimile whenever we regularly pump the pnet+cyto, to be a bit more "intentional" - "go look here"
 - (2020.08.23-19.01.00) avg solutions=3.1, avg time=1072, % solved=61, , % blank=29
+- tried with both the seek-facsimile when pumping and a random one
+- (2020.08.23-20.28.34) little difference, avg solutions=2.5, avg time=1124, %solved=61, % blank=9
+- will we just randomly find answers by spending a long time? did 100 runs to 25k iterations each on 31 , (3 5 24 3 14) - no answers anywhere. SO WE NEED NEW CODELETS yay
 
 ## Next
 

@@ -277,41 +277,22 @@
 	       	; TODO: check that all the params are within 50% of the desired
 	       	; TODO: check the result is desirable (somewhere)?
 
-	        (cond
+	        (if
 	        	(and
 	        		(= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
 	        		(or
 	        			(and
 	        				(= (first params) (second params))
-	        				(cy/brick-free? 2 (first params) )) ; either the params are same and free twice
+	        				(cy/node-free? 2 (first params) )) ; either the params are same and free twice
 	        			(and
 	        				(not= (first params) (second params))
-	        				(cy/brick-free? (first params))
-	        				(cy/brick-free? (second params))))) ; or they differ and are free
+	        				(cy/node-free? (first params))
+	        				(cy/node-free? (second params))))) ; or they differ and are free
 	        			
        			(do 
 	        		(log/debug "seek-facsimile adding block from bricks " ope params)
 	        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
 		        	(test-block (cons ope params))) ; Schedule a new test of it in future
-
-;       			(and
-;       				(= (count params) 2)
-;       				(or ; We only get one matching brick
-;       					(cy/brick-free? (first params))
-;       					(cy/brick-free? (second params)))
-;       				(not (and
-;       					(cy/brick-free? (first params))
-;       					(cy/brick-free? (second params)))       				
-;       				))
-;       			(do
-;       				(log/debug "seek-facsimile adding block from brick " ope params)
-;       				(cy/add-block (cons ope params))
-;       				(if (cy/brick-free? (first params))
-;       					(cy/add-target2 (second params))
-;       					(cy/add-target2 (first params)))
-;       				(rand-target-match))
-
-		        	 
 	        	)))))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
@@ -322,7 +303,7 @@
  []
  (let [rand-op (pn/get-random-op)
  						op ((:name rand-op) pn/operator-map)
- 						[b1 b2] (cy/random-brick 2)
+ 						[b1 b2] (cy/random-node 2)
  						]
  						(log/debug "rand-block op=" op "b1=" b1 "b2=" b2)
  						(if (and b1 b2 op)
@@ -331,9 +312,14 @@
 																													 							:fn (fn []
 		(do
 			(log/info "rand-block adding " (-format-block (list op b1 b2)))
-			(cy/add-block (list op b1 b2))
-			(test-block (list op b1 b2))
-		)))))))
+			(if
+			 (and
+			  (cy/node-free? b1)
+			  (cy/node-free? b2))
+			 (do
+					(cy/add-block (list op b1 b2))
+					(test-block (list op b1 b2))
+		)))))))))
 
 (defn dismantler
  "Picks a random low-attractiveness block and removes it, returning taken bricks"
@@ -346,6 +332,8 @@
 		(let [bl (cy/get-block (:val block))]
 			(log/info "dismantler " (:val bl))
 			(if (and bl (< (:attr bl) 0.3)) ; Never abandon a promising theory
-				(cy/del-block (:val bl))))))))))
+				(cy/del-block (:val bl))
+				(log/debug "dismantler " (:val bl) " is still activated")
+				))))))))
 
 ;----- END OF CODELETS -----
