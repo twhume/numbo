@@ -266,11 +266,6 @@
 	([c v] (-closest-node (:blocks c) eval v))
 	([v] (closest-block @CYTO v)))
 
-(defn block-result
-	"Return all blocks which have result v"
- ([c v] (filter #(= v (eval (:val %1))) (:blocks c)))
- ([v] (block-result @CYTO v)))
-
 (defn unworthy-block
  "Return a random block, weighted by the inverse of its attractiveness"
  ([c]
@@ -305,13 +300,6 @@
 	([c n] (-n-random-nodes (concat (:bricks c) (:blocks c)) n))
  ([n] (random-node @CYTO n))
 	([] (first (random-node @CYTO 1))))
-
-(defn free-nodes
- "Return all the bricks or blocks with the value v"
- ([c v] (concat
- 	(filter #(= v (:val %1)) (:bricks c))
-  (filter #(= v (eval (:val %1))) (:blocks c))))
- ([v] (free-nodes @CYTO v)))
 
 (defn node-free?
 	"Is a node with value v free? Are n copies of it free?"

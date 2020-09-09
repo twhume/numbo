@@ -7,11 +7,6 @@
 
 ; Useful functions I want to avoid duplicating across files
 
-(defn uuid
- "Generate a new Java UUID"
- []
-	(.toString (java.util.UUID/randomUUID)))
-
 (defn round-to
   "Round a double to the given precision (number of significant digits)"
   [precision d]
@@ -47,16 +42,6 @@
  [k m]
  (if (nil? m) nil
  (assoc m k (round-to 2 (- 1 (k m))))))
-
-;; zip-walk takes a transformation function f and a zipper z.
-;; f takes a location and returns location. Applies f
-;; to the nodes in the zipper maintaining the original nesting.
-;; From https://clojuredocs.org/clojure.zip/next
-
-(defn zip-walk [f z]
-  (if (zip/end? z)
-    (zip/root z)
-    (recur f (zip/next (f z)))))
 
 (defn int-k
  "Turn keyword into an integer"
@@ -129,3 +114,8 @@
  ([s f] (sample s f 1)))
 
 (defn xor [a b] (or (and a (not b)) (and (not a) b)))
+
+(defn mk-sampler
+ "Create a sampler for the atom a using function f"
+ [a f]
+ (fn [] (sample @a f)))

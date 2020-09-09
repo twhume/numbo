@@ -82,8 +82,49 @@ v1.05
 - tried with both the seek-facsimile when pumping and a random one
 - (2020.08.23-20.28.34) little difference, avg solutions=2.5, avg time=1124, %solved=61, % blank=9
 - will we just randomly find answers by spending a long time? did 100 runs to 25k iterations each on 31 , (3 5 24 3 14) - no answers anywhere. SO WE NEED NEW CODELETS yay
+- OK, made it so rand-block can use sub-blocks
+- (2020.09.08-13.07.57) Did a full test. A bit better, avg solutions=3.1, time=989, %age solved=64%, % blank = 19% (TAGGED to v1.06)
+
+v 1.06
+- Noticed we are allowing some poor solutions (9 7 2 25 18 --> 9 * 9)
+- When we create a block, we immediately test whether it's the target...
+
+What I'm noticing now: Numbo gets fixated on a possible, reasonable path and doesn't try others
+e.g. when trying to get to 31, 3 * 14 = 42 comes up again and again. Just 11 different! But we can't make 11.
+
+Solution: introduce a memory:
+1. Whenever you dismantle, add the block you're dismantling to memory (count=1) or up its count
+2. Before creating a block, if it exists in memory. If it does, it has a count% (capped at 95) chance of being silently dropped.
 
 ## Next
+
+We currently don't solve 31 3 5 24 3 14
+5 * 3 * 3 = 45
+45 - 14 = 31
+
+
+Chain of thought
+31 is nearly 30, 3 * 5 = half of thirty so try that
+3 * 5 = 15
+so we have 15,24,3,14 to make 31
+15 is less than half of 31 and there's no immediate secondary target, so don't make one
+
+15 * 3 = 45 
+so we have 45, 24, 14 to make 31
+secondary target = 14 which we have!
+
+
+seek-facsimile should include not just bricks, but blocks, as inputs
+e.g. once we have 3 * 5 = 15
+seek-facsimile 3 * 10 = 30
+could get to (3 * 5) * 5 = 45
+
+
+Specific changes:
+- seek-facsimile to consider blocks as well as bricks
+-- It should be doing this already (via cy/closest-node) but the subsequent check of brick-free? may kill these opportunities.
+
+## Next 2
 
 We need to consider bricks as starting points to calculations, not just blocks, to cover the 9 * (7 + 2) = 81 case
 If seek-facsimile gets a brick 9, it should make a block 9 * 9, with that second 9 being a secondary target. This should stimulate a 7+2 to occur.
@@ -92,6 +133,8 @@ To do this
 - seek-facsimile --> make-block (brick1 op)
 - make-block sees if we can make a block using brick1 and op, sets it up, adds brick2 as 
 a secondary target
+
+##
 
 
 ******

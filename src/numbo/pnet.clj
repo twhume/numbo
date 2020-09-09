@@ -1180,10 +1180,6 @@
 	 	(misc/int-k (first (filter-links-for l :result)))
  	)))
 
-(defn get-similar
- "Get a list of nodes which have :similar links from n"
- ([p n] (map first (filter #(= :similar (second %1)) (:links (get p n)))))
- ([n] (get-similar @PNET n)))
 ; Used in graphing
 
 (defn get-link-type
