@@ -35,7 +35,7 @@
 ; How much to decay each iteration
  :PN_DECAY 0.05
 ; Where to start pnet activation
- :PN_DEFAULT 0.0
+ :PN_DEFAULT 0.01
 ; How much to increase by when pumping
  :PN_INC 0.2
 

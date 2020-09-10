@@ -86,8 +86,8 @@
 
 (deftest normalize-test
  (testing "Normalizing values"
- 	(is (= 0 (misc/normalized 0 -0.01)))
- 	(is (= 1 (misc/normalized 1 0.01)))
+ 	(is (= 0.01 (misc/normalized 0 -0.01)))
+ 	(is (= 1.0 (misc/normalized 1 0.01)))
  	(is (= 0.51 (misc/normalized 0.5 0.01)))))
 
 

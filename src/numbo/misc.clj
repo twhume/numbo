@@ -20,7 +20,7 @@
  	(> v u) u
  	:else (round-to 2 v)
  ))
- ([v] (normalized v 0.01 1))
+ ([v] (normalized v 0.01 1.0))
  ([v m] (normalized (+ (if v v 0) (if m m 0)))))
 
 (defn within

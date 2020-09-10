@@ -46,7 +46,7 @@
 (defn plot-pnet
  "Convert a pnet to a graph structure suitable for rhizome, then to an image"
  [p w h]
- (let [just-activated (filter #(> (:activation (second %1)) 0) p)
+ (let [just-activated (filter #(> (:activation (second %1)) 0.01) p)
  						rh-graph (-pnet-into-rh just-activated)]
 ; (let [rh-graph (-pnet-into-rh p)]
  	(rh/graph->image (keys rh-graph) rh-graph

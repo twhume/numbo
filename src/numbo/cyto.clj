@@ -81,7 +81,9 @@
 	[]
 	'{:bricks ()
 	  :blocks ()
-	  :targets []} ; Vector because the first entry is the primary target
+	  :targets [] ; Vector because the first entry is the primary target
+	  :original-bricks () ; used to keep a second record of all available bricks, to test solutions
+  }
 )
 
 (def CYTO (atom (new-cyto)))
@@ -178,7 +180,9 @@
 
 (defn add-brick
  "Add a brick with value v"
- ([c v] (update-in c [:bricks] conj (-new-node v (-initial-attr v))))
+ ([c v] (-> c
+ 	(update-in [:bricks] conj (-new-node v (-initial-attr v)))
+ 	(update-in [:original-bricks] conj v)))
  ([v] (reset! CYTO (add-brick @CYTO v))))
 
 (defn brick-free?
@@ -327,7 +331,6 @@
  	(some #{v} (map :val (:bricks c))) v ; it's a brick, just return it
  	(first (filter #(= (eval %1) v) (map :val (:blocks c))))))
 
-
 (defn closest-nodes
  "Return the nodes in cytoplasm c which most closely match input sequence s"
  ([c s] 
@@ -350,13 +353,13 @@
 (defn get-solutions
  "Return all blocks which are complete and valid solutions"
  ([c]
-	(filter
-		#(and
-			(= (get-target c) (eval (:val %1))) ; block evaluates to the target
-			(empty?
-				(intersection
-					(set (-bricks-for-block (:val %1)))
-					(set (get-target2 c))))) (:blocks c))) ; there's no bricks used which are secondary targets
+		(filter
+			#(and
+				(= (get-target c) (eval (:val %1))) ; block evaluates to the target
+				(=
+				  (count (-bricks-for-block (:val %1)))
+						(count (misc/common-elements (-bricks-for-block (:val %1)) (:original-bricks c)))))
+			(:blocks c)))
  ([] (get-solutions @CYTO)))
 
 ; Contributors to temperature:

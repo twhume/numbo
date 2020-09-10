@@ -101,17 +101,23 @@ So something about sampling must be broken....
 - (2020.09.10-09.37.51) avg solutions=2.6, avg time=844, % solved=70, % blank=15 - MUCH BETTER
 - shuffle inputs to closest-nodes
 - (2020.09.10-10.03.20) avg solutions=3.1, avg time=891, % solved=69, % blank=15
+- Pinned misc.normalized minimal value to 0.01 so that there's always a chance of getting 0-activated items and when we have nothing but zeros something can be chosen. Got an NPE when running this but can't repro it, seems rare...
+- OCCASIONAL NULLPOINTEREXCEPTION. Added some debugging to see what's going on, repro's v occasionally
+- (2020.09.10-10.52.25) avg solutions=3.2, avg time=910, % solved=68, % blank=16 - pinning didn't do much
+- We were allowing some poor solutions (9 7 2 25 18 --> 9 * 9). Fixed the get-solutions so it checks against
+a second count of actual bricks, stored in :original-bricks
+- (2020.09.10-12.47.50) avg solutions=2.7, avg time=964, % solved=66, % blank=16 - pretty good
+
+Problems to look at next:
+41	(5 16 22 25 1) - tiny success rate. Why is 22+25 not started early and then 5+1 as a target2?
+81	(9 7 2 25 18) - never gets 9 * (7+2). Why is 9 * 9 not tried early, 9 as a target2?
 
 
+No solutions for:
+127	(7 6 4 22 25)
+31	(3 5 24 3 14)
 
-- I see that when all activations are 0 we always choose the first item. Pin min-activations to 0.01 or something to avoid this.
-
-
-
-- ISSUE: we are allowing some poor solutions (9 7 2 25 18 --> 9 * 9)
-- When we create a block, we immediately test whether it's the target...
-- Next: pin values to >0 for sampler to work properly
-- Then: move sampler code into its own file
+- Next: move sampler code into its own file
 
 
 
