@@ -20,7 +20,7 @@
  	(> v u) u
  	:else (round-to 2 v)
  ))
- ([v] (normalized v 0 1))
+ ([v] (normalized v 0.01 1))
  ([v m] (normalized (+ (if v v 0) (if m m 0)))))
 
 (defn within
@@ -48,6 +48,12 @@
  [k]
  (Integer/parseInt (name k)))
 
+
+(defn seq-remove
+ "Return sequence s without the first instance of value v"
+ [s v] ((if (vector? s) vec identity) ; preserve vectorhood!
+ 	(let [[n m] (split-with (partial not= v) s)] (concat n (rest m)))))
+
 (defn closest
 	"Return the element of sequence s which is closest to the input value n"
 [s n]
@@ -55,10 +61,19 @@
 (nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))
 )
 
-(defn seq-remove
- "Return sequence s without the first instance of value v"
- [s v] ((if (vector? s) vec identity) ; preserve vectorhood!
- 	(let [[n m] (split-with (partial not= v) s)] (concat n (rest m)))))
+(defn closest-seq
+ "Return a list of integer elements from sequence c which are closest to each item in s, w/o reusing elements"
+ [c s]
+ (loop [nodes c
+ 							ins s
+ 							ret '[]]
+ 							(if (or (empty? ins) (empty? nodes)) ret
+	 							(let [best-match (closest nodes (first ins))]
+	 								(recur
+	 									(seq-remove nodes best-match)
+	 									(rest ins)
+	 									(conj ret best-match)
+	 								)))))
 
 (defn third
 	"Return the third item in the sequence s"
@@ -102,6 +117,8 @@
 			  	(= 1 (count rem)) nil
 			  	:else (recur (rest rem) accv))))))
 
+(defn xor [a b] (or (and a (not b)) (and (not a) b)))
+
 (defn sample
  "Sample n random values from sequence s where the weight of each value is f(), total of all weights is w"
  ([s f n w]
@@ -111,11 +128,23 @@
 	    (let [cur (-sample-val rem f (rand tot))]
 						(recur (seq-remove rem cur) (conj ret cur) (- tot (f cur))))))))
  ([s f n] (sample s f n (reduce + (map f s))))
- ([s f] (sample s f 1)))
+ ([s f] (first (sample s f 1))))
 
-(defn xor [a b] (or (and a (not b)) (and (not a) b)))
+; a = an atom containing the input sequence
+; f = a function run on each element in the input sequence to determine their value
+; p = a function run on the whole input sequence before processing
+; o = a function run on each value before it is returned
 
 (defn mk-sampler
- "Create a sampler for the atom a using function f"
- [a f]
- (fn [] (sample @a f)))
+ "Create a sampler for the sequence in atom a using function f to identify value of an element in it, p to filter out values"
+ ([a f p o]
+ 	(fn
+ 		([] (o (sample (map o (p @a)) f)))
+   ([n] (map o (sample (map o (p @a)) f n)))))
+ ([a f p] (mk-sampler a f p identity))
+ ([a f] (mk-sampler a f identity identity)))
+
+(defn invert-key
+ "Returns the inverse value of key k in input c"
+ [k min max c]
+ (- (+ max min) (k c)))

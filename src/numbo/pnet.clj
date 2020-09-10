@@ -16,6 +16,10 @@
 
 (def PNET (atom '{}))
 
+(def op-sampler (misc/mk-sampler PNET :activation (fn [x] (filter #(= :operator (:type %)) (vals x)))))
+(def calc-sampler (misc/mk-sampler PNET :activation (fn [x] (filter #(= :calculation (:type %)) (vals x)))))
+
+
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
 
 (def initial-pnet '{
@@ -1153,7 +1157,7 @@
 (defn -get-random-by-type
 	"Get a random node, sampled probabilistically by activation from all nodes of :type t"
  [p t]
- (first (misc/sample (filter #(= t (:type %)) (vals p)) :activation)))
+ (misc/sample (filter #(= t (:type %)) (vals p)) :activation))
 
 (defn get-random-op
 	"Get a random operator, sampled probabilistically by activation"
@@ -1209,3 +1213,14 @@
  "Return the keyword of a Pnet node with the closest value to v"
 	[v] 
 	(keyword (str (misc/closest (get-numbers) v))))
+
+(defn operator-for-calc
+ "Given a calculation node c, return its operator"
+ [c]
+ ((first (filter-links-for (:links c) :operator)) operator-map))
+
+(defn params-for-calc
+ "Given a calculation node c, return its parameters as integers"
+ [c]
+ (map misc/int-k (filter-links-for (:links c) :param)))
+

@@ -270,29 +270,18 @@
 	 (cr/add-codelet (new-codelet :seek-facsimile
 																					 									:desc (str "Seek facsimile: " (pn/format-calc calc))
 																					 									:fn (fn []
-	  (let [ope ((first (pn/filter-links-for (:links calc) :operator)) pn/operator-map)
-	        params (map (comp cy/closest-node misc/int-k) (pn/filter-links-for (:links calc) :param))]
+	  (let [ope (pn/operator-for-calc calc) 
+	  			   params (cy/closest-nodes (shuffle (pn/params-for-calc calc)))]
 	       	(log/info "seek-facsimile for " (pn/format-calc calc) ope params)
 
 	       	; TODO: check that all the params are within 50% of the desired
 	       	; TODO: check the result is desirable (somewhere)?
 
-	        (if
-	        	(and
-	        		(= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
-	        		(or
-	        			(and
-	        				(= (first params) (second params))
-	        				(cy/node-free? 2 (first params) )) ; either the params are same and free twice
-	        			(and
-	        				(not= (first params) (second params))
-	        				(cy/node-free? (first params))
-	        				(cy/node-free? (second params))))) ; or they differ and are free
-	        			
-       			(do 
-	        		(log/debug "seek-facsimile adding block from bricks " ope params)
-	        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
-		        	(test-block (cons ope params))) ; Schedule a new test of it in future
+	        (if (= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
+		      			(do 
+		        		(log/debug "seek-facsimile adding block from bricks " ope params)
+		        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
+			        	(test-block (cons ope params))) ; Schedule a new test of it in future
 	        	)))))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
@@ -329,7 +318,7 @@
 							 (cr/add-codelet (new-codelet :dismantler
 																																			 	:desc (str "dismantler " (-format-block (:val block)))
 																																			 	:fn (fn []
-		(let [bl (cy/get-block (:val block))]
+		(let [bl (cy/get-block block)]
 			(log/info "dismantler " (:val bl))
 			(if (and bl (< (:attr bl) 0.3)) ; Never abandon a promising theory
 				(cy/del-block (:val bl))

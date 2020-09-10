@@ -9,16 +9,22 @@
 (def CODERACK (atom '()))
 (def ITERATIONS (atom 1))
 
+(defn -urg-invert
+	"Inverts urgency of c according to configs"
+	[c]
+	(do
+		(log/debug "-urg-invert c=" c "high=" (:URGENCY_HIGH @config) "low=" (:URGENCY_LOW @config))
+	(misc/invert-key :urgency (:URGENCY_HIGH @config) (:URGENCY_LOW @config) c)))
+
+(def priority-sampler (misc/mk-sampler CODERACK :urgency))
+(def inv-priority-sampler (misc/mk-sampler CODERACK identity -urg-invert))
+
 (defn reset
  "Reset the coderack"
  []
  (do
  	(reset! CODERACK '())
  	(reset! ITERATIONS 1)))
-
-(defn -select-next-codelet
- "Grabs the next codelet from the rack r, probabilistically according to its urgency"
- ([rack] (first (misc/sample rack :urgency))))
 
 (defn -remove-codelet
 	"Returns rack r without codelet c"
@@ -34,7 +40,7 @@
 (defn process-next-codelet
  "Grabs and executes a codelet from the rack, removing it afterwards"
  ([]
- 	(let [codelet (-select-next-codelet @CODERACK)]
+ 	(let [codelet (priority-sampler)]
  	(do
  		(log/info  "Iteration" @ITERATIONS ":" (:desc codelet))
  		(log/debug  "Iteration" @ITERATIONS "cyto=" @cy/CYTO)
@@ -49,19 +55,11 @@
  ([r c] (conj r c))
  ([c] (reset! CODERACK (add-codelet @CODERACK c))))
 
-(defn -invert-urgency
- "Invert the urgency value of the passed codelet"
- [c]
- (assoc c :urgency (- (+ (:URGENCY_HIGH @config) (:URGENCY_LOW @config)) (:urgency c))))
-
 (defn decay
  "Decays the coderack - while it's over MAX_SIZE, remove a low-pri element"
  ([r]
  	(loop [cur r]
- 		(if (> (count cur) (:CODERACK_SIZE @config))
- 			(recur 
-			 	(-remove-codelet cur
-			 	 (-invert-urgency
-				 	 (first (misc/sample (map -invert-urgency cur) :urgency)))))
+ 		(if (> (count cur) (:CODERACK_SIZE @config)) ; if we are too big
+	 			(recur (-remove-codelet cur (inv-priority-sampler))) ; cut a low priority codelet
 			 		cur)))
  ([] (reset! CODERACK (decay @CODERACK))))

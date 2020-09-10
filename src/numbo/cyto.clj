@@ -62,11 +62,6 @@
 	[s f v]
 	(ffirst (sort-by val (into '{} (map #(hash-map (:val %1) (Math/abs (- v (f (:val %1))))) s)))))
 
-(defn -n-random-nodes
- "Return n nodes, weighted by attraction, from the supplied list s"
- [s n]
- (map :val (misc/sample s :attr n)))
-
 (defn -inc-attr
  "Up the :attr value of nodes with :val n in the map m by i"
 	[i m n] (let [matches (filter #(= n (:val %1)) m)
@@ -97,6 +92,11 @@
 	(reset! CYTO (new-cyto))
 	(reset! COMPLETE false))
 
+(def brick-attr-sampler (misc/mk-sampler CYTO :attr :bricks))
+(def target-attr-sampler (misc/mk-sampler CYTO :attr :targets))
+(def block-invattr-sampler (misc/mk-sampler CYTO :attr :blocks (partial misc/invert-val :attr)))
+(def node-attr-sampler (misc/mk-sampler CYTO :attr (fn [x] (concat (:blocks x) (:bricks x)))))
+
 ; ----- Functions for targets -----
 
 (defn set-target
@@ -114,14 +114,14 @@
 	([] (get-target @CYTO)))
 
 (defn get-target2
-	"Returns all secondary targets"
+	"Returns all secondary targets, or a random one"
 	([c] (map :val (rest (:targets c))))
 	([] (get-target2 @CYTO)))
 
 (defn random-target
 	"Returns a random target, probabilistically weighted by attraction"
-	([c] (if (empty? (:targets c)) nil (first (-n-random-nodes (:targets c) 1))))
- ([] (random-target @CYTO)))
+	[]
+	(:val (target-attr-sampler)))
 
 (defn add-target2
  "Adds a secondary target t"
@@ -194,13 +194,13 @@
 
 (defn random-brick
 	"Return a random brick, or n random bricks, probabilistically weighted by attraction"
-	([c n] (-n-random-nodes (:bricks c) n))
- ([n] (random-brick @CYTO n))
-	([] (first (random-brick @CYTO 1))))
+	[] (:val (brick-attr-sampler)))
 
 (defn closest-brick
 	"Returns the closest brick to the value v"
-	([c v] (-closest-node (:bricks c) identity v))
+	([c v] (do
+		(log/debug "closest-brick c=" c "v=" v)
+		(-closest-node (:bricks c) identity v)))
 	([v] (closest-brick @CYTO v)))
 
 ; Used when going from (target=100) (* 24 4) --> (+ (* 24 4) 4)
@@ -268,10 +268,8 @@
 
 (defn unworthy-block
  "Return a random block, weighted by the inverse of its attractiveness"
- ([c]
-		(misc/invert-val :attr ; invert it back again once we have it
-			(first (misc/sample (map (partial misc/invert-val :attr) (:blocks c)) :attr))))
-	([] (unworthy-block @CYTO)))
+ []
+	(:val (block-invattr-sampler))) ; invert it back again once we have it
 
 (defn get-block
 	"Read the block b from cyto c"
@@ -297,9 +295,8 @@
 
 (defn random-node
 	"Return a random node, or n random nodes, probabilistically weighted by attraction"
-	([c n] (-n-random-nodes (concat (:bricks c) (:blocks c)) n))
- ([n] (random-node @CYTO n))
-	([] (first (random-node @CYTO 1))))
+ ([n] (:val (node-attr-sampler n)))
+	([] (:val (node-attr-sampler))))
 
 (defn node-free?
 	"Is a node with value v free? Are n copies of it free?"
@@ -321,6 +318,23 @@
  "Return the node which most closely produces v"
 	([c v] (-closest-node (concat (:bricks c) (:blocks c)) eval v))
 	([v] (closest-node @CYTO v)))
+
+
+(defn -lookup-node
+ "Look up the node with value v in cytoplasm c, preferring bricks to blocks"
+ [c v]
+ (if
+ 	(some #{v} (map :val (:bricks c))) v ; it's a brick, just return it
+ 	(first (filter #(= (eval %1) v) (map :val (:blocks c))))))
+
+
+(defn closest-nodes
+ "Return the nodes in cytoplasm c which most closely match input sequence s"
+ ([c s] 
+  (do (log/debug "closest-nodes c=" c "s=" s)
+  (map (partial -lookup-node c)
+  	(misc/closest-seq (map :val (concat (:bricks c) (map eval (:blocks c)))) s))))
+ ([s] (closest-nodes @CYTO s)))
 
 ; ----- Other functions -----
 

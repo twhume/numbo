@@ -86,8 +86,38 @@ v1.05
 - (2020.09.08-13.07.57) Did a full test. A bit better, avg solutions=3.1, time=989, %age solved=64%, % blank = 19% (TAGGED to v1.06)
 
 v 1.06
-- Noticed we are allowing some poor solutions (9 7 2 25 18 --> 9 * 9)
+- Updating to use samplers
+- Turned down FREQ_PUMP_TARGET to 20 to avoid overfocusing on a solution
+- (2020.09.09-10.23.47) avg solutions=1.2, avg time=1136, % solved=52, % blank=59
+- Turned FREQ_PUMP_TARGET back to 10 - that %age blank is hideous
+- (2020.09.10-07.28.07) avg solutions=1.2, avg time=1032, % solved=58, % blank=36
+
+So something about sampling must be broken....
+
+- In seek-facsimile, 20+20=40 maps to 22+22, which cannot be satisfied
+- Error is in (map (comp cy/closest-node misc/int-k) (pn/filter-links-for (:links calc) :param))
+- This allows the same parameter to be pulled twice - cy/closest-node needs to take multiple parameters
+- Rewrote and fixed! 
+- (2020.09.10-09.37.51) avg solutions=2.6, avg time=844, % solved=70, % blank=15 - MUCH BETTER
+- shuffle inputs to closest-nodes
+- (2020.09.10-10.03.20) avg solutions=3.1, avg time=891, % solved=69, % blank=15
+
+
+
+- I see that when all activations are 0 we always choose the first item. Pin min-activations to 0.01 or something to avoid this.
+
+
+
+- ISSUE: we are allowing some poor solutions (9 7 2 25 18 --> 9 * 9)
 - When we create a block, we immediately test whether it's the target...
+- Next: pin values to >0 for sampler to work properly
+- Then: move sampler code into its own file
+
+
+
+----------
+
+
 
 What I'm noticing now: Numbo gets fixated on a possible, reasonable path and doesn't try others
 e.g. when trying to get to 31, 3 * 14 = 42 comes up again and again. Just 11 different! But we can't make 11.
