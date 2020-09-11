@@ -106,24 +106,45 @@ So something about sampling must be broken....
 - (2020.09.10-10.52.25) avg solutions=3.2, avg time=910, % solved=68, % blank=16 - pinning didn't do much
 - We were allowing some poor solutions (9 7 2 25 18 --> 9 * 9). Fixed the get-solutions so it checks against
 a second count of actual bricks, stored in :original-bricks
-- (2020.09.10-12.47.50) avg solutions=2.7, avg time=964, % solved=66, % blank=16 - pretty good
+- (2020.09.10-12.47.50) avg solutions=2.7, avg time=964, % solved=66, % blank=16 - pretty good (TAGGED to v1.07)
 
-Problems to look at next:
-41	(5 16 22 25 1) - tiny success rate. Why is 22+25 not started early and then 5+1 as a target2?
+v1.07
+
+- 41 (5 16 22 25 1) had a tiny success rate. 22+25 wasn't started from 20+20 because 16 and 22 are both nearer 20 than 25 is... so I made fuzzy-closest-nodes which occasionally looks beyond the obvious choices
+- (2020.09.10-19.52.48) avg solutions=3.4, avg time=879, % solved=73, % blank=17 - BEST YET, with an 86% success rate for 41
+- Looking at 31	(3 5 24 3 14) - ((5 * 3) * 3) - 14)
+- We frequently make 3 * 5 = 15 but never go with it. I've added 3 * 15 = 45 to the pnet, no joy.
+- Now activate the pnet with the results of any block we make, initially but not periodically, to "suggest" calculations be tried from this block?
+
+TODO:
+- consider blocks as input to seek-facsimile
+
+seek-facsimile should include not just bricks, but blocks, as inputs
+e.g. once we have 3 * 5 = 15
+seek-facsimile 3 * 10 = 30
+could get to (3 * 15) = 45
+-- It should be doing this already (via cy/closest-node) but the subsequent check of brick-free? may kill these opportunities.
+
+
 81	(9 7 2 25 18) - never gets 9 * (7+2). Why is 9 * 9 not tried early, 9 as a target2?
-
+- 7+2 = 9
+- TODO: test-block should see whether the result is part of a calc leading to the entry, if so probe-target2
+- TODO: probe-target2 should look for multipliers
 
 No solutions for:
-127	(7 6 4 22 25)
-31	(3 5 24 3 14)
+127	(7 6 4 22 25) - (((25 - (6 + 4)) * 7) + 22)
 
-- Next: move sampler code into its own file
 
+- TODO: move sampler code into its own file
+- TODO: make the ratios in misc/fuzzy-closest-nodes configurable parameters
 
 
 ----------
 
+## Future ideas
 
+
+### Memory
 
 What I'm noticing now: Numbo gets fixated on a possible, reasonable path and doesn't try others
 e.g. when trying to get to 31, 3 * 14 = 42 comes up again and again. Just 11 different! But we can't make 11.
@@ -132,35 +153,8 @@ Solution: introduce a memory:
 1. Whenever you dismantle, add the block you're dismantling to memory (count=1) or up its count
 2. Before creating a block, if it exists in memory. If it does, it has a count% (capped at 95) chance of being silently dropped.
 
-## Next
 
-We currently don't solve 31 3 5 24 3 14
-5 * 3 * 3 = 45
-45 - 14 = 31
-
-
-Chain of thought
-31 is nearly 30, 3 * 5 = half of thirty so try that
-3 * 5 = 15
-so we have 15,24,3,14 to make 31
-15 is less than half of 31 and there's no immediate secondary target, so don't make one
-
-15 * 3 = 45 
-so we have 45, 24, 14 to make 31
-secondary target = 14 which we have!
-
-
-seek-facsimile should include not just bricks, but blocks, as inputs
-e.g. once we have 3 * 5 = 15
-seek-facsimile 3 * 10 = 30
-could get to (3 * 5) * 5 = 45
-
-
-Specific changes:
-- seek-facsimile to consider blocks as well as bricks
--- It should be doing this already (via cy/closest-node) but the subsequent check of brick-free? may kill these opportunities.
-
-## Next 2
+## Bricks as starting points
 
 We need to consider bricks as starting points to calculations, not just blocks, to cover the 9 * (7 + 2) = 81 case
 If seek-facsimile gets a brick 9, it should make a block 9 * 9, with that second 9 being a secondary target. This should stimulate a 7+2 to occur.
@@ -170,28 +164,17 @@ To do this
 - make-block sees if we can make a block using brick1 and op, sets it up, adds brick2 as 
 a secondary target
 
-##
+## Evolve parameters
 
+I've got a lot of config params in config.clj
+
+Evolve them:
+1. Do a run with 10 different variants of parameters
+2. Take the best 3 (measured by % complete, then speed)
+3. Do 6 evolutions of #1, 3 of #1, 1 of #3
+4. Repeat; should be O(7) runs in 24h
 
 ******
-
-- LINE 297 onwards in codelet.clj is breaking everything and I don't know why
-- just make a new set of codelets to fire
-
-- update this section to call probe-target2 with 
-
-******
-
-- Get solutions for the real nasties that evade us - work out how to solve these even if slowly
-* 31	(3 5 24 3 14) never gets (((5 * 3) * 3) - 14) - complex tho
-- path could be: 3 is like 31, so pump. 3 * 5 = 15, which is half 30, so pump. 15 * 3 = 45 which is near 31, so keep it. Should seek-facsimile be working on blocks, so once we have 15 it's simple?
-* 127	(7 6 4 22 25) never gets ((25 - (6 + 4)) * 7) + 22)
-
-
-- let single bricks be blocks that seek secondary targets, if they're within 50% of the solution
-- Vary config across runs
-- Do a large number of runs playing with parameters, over days
-- Also measure impact of disabling logging
 
 
 ## Bugs
@@ -223,18 +206,12 @@ PNet:
 
 Cyto:
 * add more rules to rand-syntactic-comparison
-* pretty sure the temperature calculator could be better
 * drop-off in activation
 * see also p234 of paper for more. I think we could do more target comparisons (B)
 * we have 2 cy/random-target2 methods
 
 Codelets:
 * cl/rand-op can multiply by 1, which doesn't seem so useful - never do this
-* Lots of boilerplate code here, replace with macro?
-
-General:
-* Abstract out the concept of sampling from a distribution more - it's used in cyto, pnet, coderack
-and currently implemented via a couple of macros in misc/
 
 ## License
 

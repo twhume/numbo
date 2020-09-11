@@ -250,7 +250,10 @@
 ;						(>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.2)
 							(do
 							 (log/debug "test-block b=" bstr " is worthy")
-							 (probe-target2 b))
+							 (probe-target2 b)
+							 (log/debug "test-block activate pnet for b=" (eval b))
+							 (activate-pnet (pn/closest-keyword (eval b)))
+							 )
 
 							:else
 							 (do

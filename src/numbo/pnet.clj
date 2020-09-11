@@ -84,6 +84,7 @@
 			(:times-2-3 :param)
 			(:times-3-3 :param)
 			(:times-3-10 :param)
+			(:times-3-15 :param)
 			(:times-3-20 :param)
 			(:minus-4-1 :result)
 		 (:plus-1-2 :result)
@@ -230,7 +231,9 @@
 		:links (
 			(:plus-7-8 :result)
 			(:plus-5-10 :result)
+			(:times-2-15 :param)
 			(:times-3-5 :result)
+			(:times-3-15 :param)
 			(:times-10-15 :param)
 			(:12 :similar)
 			(:16 :similar)
@@ -284,6 +287,7 @@
 		:type :number
 		:links (
 			(:times-3-10 :result)
+			(:times-2-15 :result)
 			(:25 :similar)
 			(:40 :similar)
 		)
@@ -296,15 +300,25 @@
 			(:times-2-20 :result)
 			(:plus-20-20 :result)
 			(:30 :similar)
+			(:45 :similar)
 			(:50 :similar)
 		)
 	}
 
+	:45 {
+		:type :number
+		:links (
+			(:times-3-15 :result)
+			(:50 :similar)
+			(:40 :similar)
+		)
+	}
 	:49 {
 		:type :number
 		:links (
 			(:minus-50-1 :result)
 			(:times-7-7 :result)
+			(:45 :similar)
 			(:50 :similar)
 		)
 	}
@@ -825,6 +839,16 @@
 		)
 	}
 
+	:times-2-15 {
+		:type :calculation
+		:links (
+			(:2 :param)
+			(:15 :param)
+			(:times :operator)
+			(:30 :result)
+		)
+	}
+
 	:times-2-20 {
 		:type :calculation
 		:links (
@@ -871,6 +895,16 @@
 			(:3 :param)
 			(:10 :param)
 			(:30 :result)
+			(:times :operator)
+		)
+	}
+
+	:times-3-15 {
+		:type :calculation
+		:links (
+			(:3 :param)
+			(:15 :param)
+			(:45 :result)
 			(:times :operator)
 		)
 	}
