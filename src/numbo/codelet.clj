@@ -22,12 +22,17 @@
 ; :type (one of codelet-types)
 ; :desc description
 
+
+(defn -format-block-part
+ [p]
+ (if (seq? p)
+ 	(str "(" (-format-block-part (second p)) (get pn/op-lookups (first p)) (-format-block-part (misc/third p)) ")")
+ 	(str p)))
+
 (defn -format-block
  "Make a nice printable version of the calculation in b"
  [b]
- (if (seq? b)
- 	(str (second b) (get pn/op-lookups (first b)) (misc/third b) "=" (eval b))
- 	(str b)))
+ (str (-format-block-part b) "=" (eval b)))
 
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
@@ -282,7 +287,7 @@
 
 	        (if (= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
 		      			(do 
-		        		(log/debug "seek-facsimile adding block from bricks " ope params)
+		        		(log/debug "seek-facsimile adding block from bricks " (-format-block (cons ope params)))
 		        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
 			        	(test-block (cons ope params))) ; Schedule a new test of it in future
 	        	)))))))
