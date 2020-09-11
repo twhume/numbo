@@ -37,6 +37,11 @@
 		:else false))
 )
 
+(defn third
+	"Return the third item in the sequence s"
+	[s]
+	(nth s 2))
+
 (defn invert-val
  "Invert the value of key k in map m"
  [k m]
@@ -56,29 +61,39 @@
 
 (defn closest
 	"Return the element of sequence s which is closest to the input value n"
-[s n]
-(do (log/debug "closest s=" s " n=" n)
-(nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))
-)
+	[s n]
+	(do (log/debug "closest s=" s " n=" n)
+	(nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s)))))))
 
-(defn closest-seq
+(defn fuzzy-closest
+	"Return an element of sequence s close to the input value n: closest 70% of the time, second-closest 20%, third 10%"
+	[s n]
+	(do
+		(log/debug "fuzzy-closest s=" s " n=" n)
+		(let [which (condp >= (rand)
+																0.7 first
+																0.9 (if (> (count s) 1) second first)
+																(condp >= (count s)
+																	2 first
+																	1 second
+																	third
+																))]
+		 (log/debug "which=" which "s=" (count s))
+			(nth s (first (which (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))))
+
+(defn fuzzy-closest-seq
  "Return a list of integer elements from sequence c which are closest to each item in s, w/o reusing elements"
  [c s]
  (loop [nodes c
  							ins s
  							ret '[]]
  							(if (or (empty? ins) (empty? nodes)) ret
-	 							(let [best-match (closest nodes (first ins))]
+	 							(let [best-match (fuzzy-closest nodes (first ins))]
 	 								(recur
 	 									(seq-remove nodes best-match)
 	 									(rest ins)
 	 									(conj ret best-match)
 	 								)))))
-
-(defn third
-	"Return the third item in the sequence s"
-	[s]
-	(nth s 2))
 
 (defn common-elements [& colls]
   (let [freqs (map frequencies colls)]

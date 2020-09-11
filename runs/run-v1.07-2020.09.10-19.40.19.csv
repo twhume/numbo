@@ -1,0 +1,2129 @@
+2020.09.10-19.40.19,v1.07,0 , 114 , (11 20 7 1 6) , 478 , ((6 * 20) - (7 - 1)) , 58
+2020.09.10-19.40.19,v1.07,1 , 114 , (11 20 7 1 6) , 558 , ((20 * 6) - (7 - 1)) , 43
+2020.09.10-19.40.19,v1.07,2 , 114 , (11 20 7 1 6) , 1885 , ((6 * 20) - (7 - 1)) , 287
+2020.09.10-19.40.19,v1.07,3 , 114 , (11 20 7 1 6) , 184 , ((20 * 6) - (7 - 1)) , 14
+2020.09.10-19.40.19,v1.07,4 , 114 , (11 20 7 1 6) , 410 , ((20 * 6) - (7 - 1)) , 65
+2020.09.10-19.40.19,v1.07,5 , 114 , (11 20 7 1 6) , 1879 , ((20 * 6) - (7 - 1)) , 341
+2020.09.10-19.40.19,v1.07,6 , 114 , (11 20 7 1 6) , 449 , ((20 * 6) - (7 - 1)) , 68
+2020.09.10-19.40.19,v1.07,7 , 114 , (11 20 7 1 6) , 471 , ((6 * 20) - (7 - 1)) , 43
+2020.09.10-19.40.19,v1.07,8 , 114 , (11 20 7 1 6) , 1877 , ((6 * 20) - (7 - 1)) , 276
+2020.09.10-19.40.19,v1.07,9 , 114 , (11 20 7 1 6) , 977 , ((6 * 20) - (7 - 1)) , 132
+2020.09.10-19.40.19,v1.07,10 , 114 , (11 20 7 1 6) , 2000 , none,  300
+2020.09.10-19.40.19,v1.07,11 , 114 , (11 20 7 1 6) , 860 , ((6 * 20) - (7 - 1)) , 102
+2020.09.10-19.40.19,v1.07,12 , 114 , (11 20 7 1 6) , 839 , ((20 * 6) - (7 - 1)) , 135
+2020.09.10-19.40.19,v1.07,13 , 114 , (11 20 7 1 6) , 250 , ((6 * 20) - (7 - 1)) , 42
+2020.09.10-19.40.19,v1.07,14 , 114 , (11 20 7 1 6) , 2000 , none,  300
+2020.09.10-19.40.19,v1.07,15 , 114 , (11 20 7 1 6) , 609 , ((6 * 20) - (7 - 1)) , 42
+2020.09.10-19.40.19,v1.07,16 , 114 , (11 20 7 1 6) , 1719 , ((6 * 20) - (7 - 1)) , 277
+2020.09.10-19.40.19,v1.07,17 , 114 , (11 20 7 1 6) , 2000 , none,  308
+2020.09.10-19.40.19,v1.07,18 , 114 , (11 20 7 1 6) , 2000 , none,  298
+2020.09.10-19.40.19,v1.07,19 , 114 , (11 20 7 1 6) , 2000 , none,  273
+2020.09.10-19.40.19,v1.07,20 , 114 , (11 20 7 1 6) , 138 , ((6 * 20) - (7 - 1)) , 11
+2020.09.10-19.40.19,v1.07,21 , 114 , (11 20 7 1 6) , 909 , ((6 * 20) - (7 - 1)) , 213
+2020.09.10-19.40.19,v1.07,22 , 114 , (11 20 7 1 6) , 314 , ((6 * 20) - (7 - 1)) , 36
+2020.09.10-19.40.19,v1.07,23 , 114 , (11 20 7 1 6) , 2000 , none,  320
+2020.09.10-19.40.19,v1.07,24 , 114 , (11 20 7 1 6) , 2000 , none,  329
+2020.09.10-19.40.19,v1.07,25 , 114 , (11 20 7 1 6) , 2000 , none,  297
+2020.09.10-19.40.19,v1.07,26 , 114 , (11 20 7 1 6) , 2000 , none,  382
+2020.09.10-19.40.19,v1.07,27 , 114 , (11 20 7 1 6) , 889 , ((20 * 6) - (7 - 1)) , 133
+2020.09.10-19.40.19,v1.07,28 , 114 , (11 20 7 1 6) , 1139 , ((6 * 20) - (7 - 1)) , 154
+2020.09.10-19.40.19,v1.07,29 , 114 , (11 20 7 1 6) , 212 , ((6 * 20) - (7 - 1)) , 38
+2020.09.10-19.40.19,v1.07,30 , 114 , (11 20 7 1 6) , 1698 , ((6 * 20) - (7 - 1)) , 384
+2020.09.10-19.40.19,v1.07,31 , 114 , (11 20 7 1 6) , 418 , ((20 * 6) - (7 - 1)) , 107
+2020.09.10-19.40.19,v1.07,32 , 114 , (11 20 7 1 6) , 220 , ((6 * 20) - (7 - 1)) , 18
+2020.09.10-19.40.19,v1.07,33 , 114 , (11 20 7 1 6) , 502 , ((6 * 20) - (7 - 1)) , 89
+2020.09.10-19.40.19,v1.07,34 , 114 , (11 20 7 1 6) , 272 , ((20 * 6) - (7 - 1)) , 20
+2020.09.10-19.40.19,v1.07,35 , 114 , (11 20 7 1 6) , 2000 , none,  500
+2020.09.10-19.40.19,v1.07,36 , 114 , (11 20 7 1 6) , 787 , ((20 * 6) - (7 - 1)) , 125
+2020.09.10-19.40.19,v1.07,37 , 114 , (11 20 7 1 6) , 155 , ((20 * 6) - (7 - 1)) , 11
+2020.09.10-19.40.19,v1.07,38 , 114 , (11 20 7 1 6) , 2000 , none,  347
+2020.09.10-19.40.19,v1.07,39 , 114 , (11 20 7 1 6) , 1528 , ((6 * 20) - (7 - 1)) , 217
+2020.09.10-19.40.19,v1.07,40 , 114 , (11 20 7 1 6) , 2000 , none,  301
+2020.09.10-19.40.19,v1.07,41 , 114 , (11 20 7 1 6) , 412 , ((6 * 20) - (7 - 1)) , 44
+2020.09.10-19.40.19,v1.07,42 , 114 , (11 20 7 1 6) , 908 , ((6 * 20) - (7 - 1)) , 112
+2020.09.10-19.40.19,v1.07,43 , 114 , (11 20 7 1 6) , 1377 , ((20 * 6) - (7 - 1)) , 205
+2020.09.10-19.40.19,v1.07,44 , 114 , (11 20 7 1 6) , 555 , ((6 * 20) - (7 - 1)) , 54
+2020.09.10-19.40.19,v1.07,45 , 114 , (11 20 7 1 6) , 603 , ((20 * 6) - (7 - 1)) , 78
+2020.09.10-19.40.19,v1.07,46 , 114 , (11 20 7 1 6) , 1221 , ((6 * 20) - (7 - 1)) , 197
+2020.09.10-19.40.19,v1.07,47 , 114 , (11 20 7 1 6) , 2000 , none,  336
+2020.09.10-19.40.19,v1.07,48 , 114 , (11 20 7 1 6) , 548 , ((20 * 6) - (7 - 1)) , 110
+2020.09.10-19.40.19,v1.07,49 , 114 , (11 20 7 1 6) , 360 , ((20 * 6) - (7 - 1)) , 62
+2020.09.10-19.40.19,v1.07,50 , 114 , (11 20 7 1 6) , 418 , ((6 * 20) - (7 - 1)) , 50
+2020.09.10-19.40.19,v1.07,51 , 114 , (11 20 7 1 6) , 449 , ((6 * 20) - (7 - 1)) , 47
+2020.09.10-19.40.19,v1.07,52 , 114 , (11 20 7 1 6) , 2000 , none,  293
+2020.09.10-19.40.19,v1.07,53 , 114 , (11 20 7 1 6) , 2000 , none,  313
+2020.09.10-19.40.19,v1.07,54 , 114 , (11 20 7 1 6) , 2000 , none,  472
+2020.09.10-19.40.19,v1.07,55 , 114 , (11 20 7 1 6) , 236 , ((6 * 20) - (7 - 1)) , 23
+2020.09.10-19.40.19,v1.07,56 , 114 , (11 20 7 1 6) , 2000 , none,  203
+2020.09.10-19.40.19,v1.07,57 , 114 , (11 20 7 1 6) , 787 , ((6 * 20) - (7 - 1)) , 121
+2020.09.10-19.40.19,v1.07,58 , 114 , (11 20 7 1 6) , 1010 , ((20 * 6) - (7 - 1)) , 161
+2020.09.10-19.40.19,v1.07,59 , 114 , (11 20 7 1 6) , 543 , ((20 * 6) - (7 - 1)) , 80
+2020.09.10-19.40.19,v1.07,60 , 114 , (11 20 7 1 6) , 2000 , none,  315
+2020.09.10-19.40.19,v1.07,61 , 114 , (11 20 7 1 6) , 2000 , none,  430
+2020.09.10-19.40.19,v1.07,62 , 114 , (11 20 7 1 6) , 2000 , none,  231
+2020.09.10-19.40.19,v1.07,63 , 114 , (11 20 7 1 6) , 2000 , none,  298
+2020.09.10-19.40.19,v1.07,64 , 114 , (11 20 7 1 6) , 242 , ((20 * 6) - (7 - 1)) , 37
+2020.09.10-19.40.19,v1.07,65 , 114 , (11 20 7 1 6) , 2000 , none,  372
+2020.09.10-19.40.19,v1.07,66 , 114 , (11 20 7 1 6) , 1478 , ((20 * 6) - (7 - 1)) , 242
+2020.09.10-19.40.19,v1.07,67 , 114 , (11 20 7 1 6) , 930 , ((6 * 20) - (7 - 1)) , 106
+2020.09.10-19.40.19,v1.07,68 , 114 , (11 20 7 1 6) , 2000 , none,  341
+2020.09.10-19.40.19,v1.07,69 , 114 , (11 20 7 1 6) , 848 , ((20 * 6) - (7 - 1)) , 92
+2020.09.10-19.40.19,v1.07,70 , 114 , (11 20 7 1 6) , 319 , ((20 * 6) - (7 - 1)) , 18
+2020.09.10-19.40.19,v1.07,71 , 114 , (11 20 7 1 6) , 828 , ((20 * 6) - (7 - 1)) , 124
+2020.09.10-19.40.19,v1.07,72 , 114 , (11 20 7 1 6) , 2000 , none,  381
+2020.09.10-19.40.19,v1.07,73 , 114 , (11 20 7 1 6) , 327 , ((20 * 6) - (7 - 1)) , 20
+2020.09.10-19.40.19,v1.07,74 , 114 , (11 20 7 1 6) , 1108 , ((20 * 6) - (7 - 1)) , 165
+2020.09.10-19.40.19,v1.07,75 , 114 , (11 20 7 1 6) , 1700 , ((6 * 20) - (7 - 1)) , 207
+2020.09.10-19.40.19,v1.07,76 , 114 , (11 20 7 1 6) , 1587 , ((6 * 20) - (7 - 1)) , 207
+2020.09.10-19.40.19,v1.07,77 , 114 , (11 20 7 1 6) , 119 , ((20 * 6) - (7 - 1)) , 0
+2020.09.10-19.40.19,v1.07,78 , 114 , (11 20 7 1 6) , 727 , ((6 * 20) - (7 - 1)) , 101
+2020.09.10-19.40.19,v1.07,79 , 114 , (11 20 7 1 6) , 948 , ((20 * 6) - (7 - 1)) , 133
+2020.09.10-19.40.19,v1.07,80 , 114 , (11 20 7 1 6) , 120 , ((6 * 20) - (7 - 1)) , 0
+2020.09.10-19.40.19,v1.07,81 , 114 , (11 20 7 1 6) , 2000 , none,  338
+2020.09.10-19.40.19,v1.07,82 , 114 , (11 20 7 1 6) , 540 , ((6 * 20) - (7 - 1)) , 42
+2020.09.10-19.40.19,v1.07,83 , 114 , (11 20 7 1 6) , 889 , ((6 * 20) - (7 - 1)) , 137
+2020.09.10-19.40.19,v1.07,84 , 114 , (11 20 7 1 6) , 226 , ((20 * 6) - (7 - 1)) , 14
+2020.09.10-19.40.19,v1.07,85 , 114 , (11 20 7 1 6) , 2000 , none,  306
+2020.09.10-19.40.19,v1.07,86 , 114 , (11 20 7 1 6) , 1388 , ((6 * 20) - (7 - 1)) , 139
+2020.09.10-19.40.19,v1.07,87 , 114 , (11 20 7 1 6) , 230 , ((20 * 6) - (7 - 1)) , 22
+2020.09.10-19.40.19,v1.07,88 , 114 , (11 20 7 1 6) , 1787 , ((6 * 20) - (7 - 1)) , 283
+2020.09.10-19.40.19,v1.07,89 , 114 , (11 20 7 1 6) , 599 , ((6 * 20) - (7 - 1)) , 74
+2020.09.10-19.40.19,v1.07,90 , 114 , (11 20 7 1 6) , 2000 , none,  325
+2020.09.10-19.40.19,v1.07,91 , 114 , (11 20 7 1 6) , 1562 , ((6 * 20) - (7 - 1)) , 171
+2020.09.10-19.40.19,v1.07,92 , 114 , (11 20 7 1 6) , 2000 , none,  272
+2020.09.10-19.40.19,v1.07,93 , 114 , (11 20 7 1 6) , 2000 , none,  332
+2020.09.10-19.40.19,v1.07,94 , 114 , (11 20 7 1 6) , 1798 , ((6 * 20) - (7 - 1)) , 286
+2020.09.10-19.40.19,v1.07,95 , 114 , (11 20 7 1 6) , 650 , ((6 * 20) - (7 - 1)) , 104
+2020.09.10-19.40.19,v1.07,96 , 114 , (11 20 7 1 6) , 1088 , ((20 * 6) - (7 - 1)) , 158
+2020.09.10-19.40.19,v1.07,97 , 114 , (11 20 7 1 6) , 566 , ((20 * 6) - (7 - 1)) , 116
+2020.09.10-19.40.19,v1.07,98 , 114 , (11 20 7 1 6) , 702 , ((6 * 20) - (7 - 1)) , 96
+2020.09.10-19.40.19,v1.07,99 , 114 , (11 20 7 1 6) , 2000 , none,  347
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,1 , 87 , (8 3 9 10 7) , 78 , ((10 * 9) - 3) , 10
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,4 , 87 , (8 3 9 10 7) , 352 , ((10 * 8) + 7) , 56
+2020.09.10-19.40.19,v1.07,5 , 87 , (8 3 9 10 7) , 48 , ((9 * 10) - 3) , 0
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,8 , 87 , (8 3 9 10 7) , 829 , ((10 * 9) - 3) , 109
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,10 , 87 , (8 3 9 10 7) , 1404 , ((10 * 8) + 7) , 179
+2020.09.10-19.40.19,v1.07,11 , 87 , (8 3 9 10 7) , 529 , ((7 * 9) + (8 * 3)) , 52
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,14 , 87 , (8 3 9 10 7) , 2000 , none,  327
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,17 , 87 , (8 3 9 10 7) , 1969 , ((10 * 9) - 3) , 303
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,19 , 87 , (8 3 9 10 7) , 78 , ((8 * 10) + 7) , 12
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,21 , 87 , (8 3 9 10 7) , 370 , ((10 * 9) - 3) , 49
+2020.09.10-19.40.19,v1.07,22 , 87 , (8 3 9 10 7) , 350 , ((7 * 9) + (3 * 8)) , 48
+2020.09.10-19.40.19,v1.07,23 , 87 , (8 3 9 10 7) , 277 , ((8 * 10) + 7) , 6
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,26 , 87 , (8 3 9 10 7) , 677 , ((7 * 9) + (8 * 3)) , 80
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,28 , 87 , (8 3 9 10 7) , 537 , ((8 * 10) + 7) , 54
+2020.09.10-19.40.19,v1.07,29 , 87 , (8 3 9 10 7) , 56 , ((9 * 10) - 3) , 0
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,31 , 87 , (8 3 9 10 7) , 98 , ((9 * 7) + (8 * 3)) , 2
+2020.09.10-19.40.19,v1.07,32 , 87 , (8 3 9 10 7) , 70 , ((9 * 10) - 3) , 7
+2020.09.10-19.40.19,v1.07,33 , 87 , (8 3 9 10 7) , 319 , ((8 * 10) + 7) , 46
+2020.09.10-19.40.19,v1.07,34 , 87 , (8 3 9 10 7) , 1627 , ((7 * 9) + (3 * 8)) , 253
+2020.09.10-19.40.19,v1.07,35 , 87 , (8 3 9 10 7) , 455 , ((10 * 9) - 3) , 68
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,38 , 87 , (8 3 9 10 7) , 139 , ((9 * 7) + (8 * 3)) , 12
+2020.09.10-19.40.19,v1.07,39 , 87 , (8 3 9 10 7) , 1406 , ((10 * 8) + 7) , 171
+2020.09.10-19.40.19,v1.07,40 , 87 , (8 3 9 10 7) , 549 , ((10 * 8) + 7) , 60
+2020.09.10-19.40.19,v1.07,41 , 87 , (8 3 9 10 7) , 107 , ((10 * 8) + 7) , 20
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,43 , 87 , (8 3 9 10 7) , 339 , ((9 * 10) - 3) , 32
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,45 , 87 , (8 3 9 10 7) , 665 , ((9 * 10) - 3) , 79
+2020.09.10-19.40.19,v1.07,46 , 87 , (8 3 9 10 7) , 387 , ((7 * 9) + (3 * 8)) , 22
+2020.09.10-19.40.19,v1.07,47 , 87 , (8 3 9 10 7) , 77 , ((10 * 9) - 3) , 16
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,51 , 87 , (8 3 9 10 7) , 340 , ((10 * 8) + 7) , 53
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,54 , 87 , (8 3 9 10 7) , 92 , ((8 * 10) + 7) , 15
+2020.09.10-19.40.19,v1.07,55 , 87 , (8 3 9 10 7) , 46 , ((8 * 10) + 7) , 0
+2020.09.10-19.40.19,v1.07,56 , 87 , (8 3 9 10 7) , 333 , ((9 * 10) - 3) , 50
+2020.09.10-19.40.19,v1.07,57 , 87 , (8 3 9 10 7) , 63 , ((9 * 7) + (3 * 8)) , 0
+2020.09.10-19.40.19,v1.07,58 , 87 , (8 3 9 10 7) , 50 , ((10 * 9) - 3) , 0
+2020.09.10-19.40.19,v1.07,59 , 87 , (8 3 9 10 7) , 1919 , ((10 * 9) - 3) , 317
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,62 , 87 , (8 3 9 10 7) , 400 , ((10 * 9) - 3) , 53
+2020.09.10-19.40.19,v1.07,63 , 87 , (8 3 9 10 7) , 732 , ((9 * 10) - 3) , 106
+2020.09.10-19.40.19,v1.07,64 , 87 , (8 3 9 10 7) , 316 , ((8 * 10) + 7) , 49
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,66 , 87 , (8 3 9 10 7) , 268 , ((9 * 7) + (3 * 8)) , 14
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,68 , 87 , (8 3 9 10 7) , 2000 , none,  243
+2020.09.10-19.40.19,v1.07,69 , 87 , (8 3 9 10 7) , 995 , ((10 * 8) + 7) , 181
+2020.09.10-19.40.19,v1.07,70 , 87 , (8 3 9 10 7) , 250 , ((7 * 9) + (3 * 8)) , 30
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,72 , 87 , (8 3 9 10 7) , 78 , ((7 * 9) + (3 * 8)) , 0
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,74 , 87 , (8 3 9 10 7) , 65 , ((10 * 9) - 3) , 0
+2020.09.10-19.40.19,v1.07,75 , 87 , (8 3 9 10 7) , 58 , ((7 * 9) + (3 * 8)) , 0
+2020.09.10-19.40.19,v1.07,76 , 87 , (8 3 9 10 7) , 1386 , ((9 * 10) - 3) , 227
+2020.09.10-19.40.19,v1.07,77 , 87 , (8 3 9 10 7) , 60 , ((9 * 10) - 3) , 0
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,79 , 87 , (8 3 9 10 7) , 69 , ((9 * 7) + (8 * 3)) , 0
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,84 , 87 , (8 3 9 10 7) , 46 , ((9 * 10) - 3) , 0
+2020.09.10-19.40.19,v1.07,85 , 87 , (8 3 9 10 7) , 450 , ((10 * 9) - 3) , 25
+2020.09.10-19.40.19,v1.07,86 , 87 , (8 3 9 10 7) , 317 , ((7 * 9) + (3 * 8)) , 25
+2020.09.10-19.40.19,v1.07,87 , 87 , (8 3 9 10 7) , 1067 , ((7 * 9) + (8 * 3)) , 135
+2020.09.10-19.40.19,v1.07,88 , 87 , (8 3 9 10 7) , 918 , ((9 * 7) + (3 * 8)) , 153
+2020.09.10-19.40.19,v1.07,89 , 87 , (8 3 9 10 7) , 1378 , ((7 * 10) + (8 + 9)) , 316
+2020.09.10-19.40.19,v1.07,90 , 87 , (8 3 9 10 7) , 187 , ((9 * 7) + (3 * 8)) , 5
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,92 , 87 , (8 3 9 10 7) , 667 , ((10 * 8) + 7) , 113
+2020.09.10-19.40.19,v1.07,93 , 87 , (8 3 9 10 7) , 426 , ((10 * 8) + 7) , 58
+2020.09.10-19.40.19,v1.07,94 , 87 , (8 3 9 10 7) , 69 , ((10 * 8) + 7) , 5
+2020.09.10-19.40.19,v1.07,95 , 87 , (8 3 9 10 7) , 307 , ((9 * 7) + (3 * 8)) , 29
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init9983141075638397887.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,98 , 87 , (8 3 9 10 7) , 462 , ((10 * 8) + 7) , 65
+2020.09.10-19.40.19,v1.07,99 , 87 , (8 3 9 10 7) , 939 , ((7 * 10) + (8 + 9)) , 90
+2020.09.10-19.40.19,v1.07,0 , 31 , (3 5 24 3 14) , 2000 , none,  209
+2020.09.10-19.40.19,v1.07,1 , 31 , (3 5 24 3 14) , 2000 , none,  331
+2020.09.10-19.40.19,v1.07,2 , 31 , (3 5 24 3 14) , 2000 , none,  320
+2020.09.10-19.40.19,v1.07,#error {
+2020.09.10-19.40.19,v1.07, :cause nil
+2020.09.10-19.40.19,v1.07, :via
+2020.09.10-19.40.19,v1.07, [{:type java.lang.NullPointerException
+2020.09.10-19.40.19,v1.07,   :message nil
+2020.09.10-19.40.19,v1.07,   :at [clojure.lang.RT intCast RT.java 1216]}]
+2020.09.10-19.40.19,v1.07, :trace
+2020.09.10-19.40.19,v1.07, [[clojure.lang.RT intCast RT.java 1216]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invokeStatic misc.clj 74]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest invoke misc.clj 68]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invokeStatic misc.clj 83]
+2020.09.10-19.40.19,v1.07,  [numbo.misc$fuzzy_closest_seq invoke misc.clj 76]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 339]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invokeStatic cyto.clj 340]
+2020.09.10-19.40.19,v1.07,  [numbo.cyto$closest_nodes invoke cyto.clj 334]
+2020.09.10-19.40.19,v1.07,  [numbo.codelet$seek_facsimile$fn__1247 invoke codelet.clj 274]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invokeStatic coderack.clj 38]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$_execute invoke coderack.clj 35]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invokeStatic coderack.clj 47]
+2020.09.10-19.40.19,v1.07,  [numbo.coderack$process_next_codelet invoke coderack.clj 40]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invokeStatic core.clj 96]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_until invoke core.clj 92]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invokeStatic core.clj 108]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_for_iterations invoke core.clj 106]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs$fn__7233 invoke core.clj 162]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invokeStatic core.clj 153]
+2020.09.10-19.40.19,v1.07,  [numbo.core$run_calcs invoke core.clj 147]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main invokeStatic core.clj 186]
+2020.09.10-19.40.19,v1.07,  [numbo.core$_main doInvoke core.clj 175]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn invoke RestFn.java 619]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var invoke Var.java 435]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invokeStatic form-init3341285025183354377.clj 1]
+2020.09.10-19.40.19,v1.07,  [user$eval140 invoke form-init3341285025183354377.clj 1]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7176]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler eval Compiler.java 7166]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler load Compiler.java 7635]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Compiler loadFile Compiler.java 7573]
+2020.09.10-19.40.19,v1.07,  [clojure.main$load_script invokeStatic main.clj 452]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invokeStatic main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$init_opt invoke main.clj 454]
+2020.09.10-19.40.19,v1.07,  [clojure.main$initialize invokeStatic main.clj 485]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invokeStatic main.clj 519]
+2020.09.10-19.40.19,v1.07,  [clojure.main$null_opt invoke main.clj 516]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main invokeStatic main.clj 598]
+2020.09.10-19.40.19,v1.07,  [clojure.main$main doInvoke main.clj 561]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.RestFn applyTo RestFn.java 137]
+2020.09.10-19.40.19,v1.07,  [clojure.lang.Var applyTo Var.java 705]
+2020.09.10-19.40.19,v1.07,  [clojure.main main main.java 37]]}
+2020.09.10-19.40.19,v1.07,4 , 31 , (3 5 24 3 14) , 2000 , none,  276
+2020.09.10-19.40.19,v1.07,5 , 31 , (3 5 24 3 14) , 2000 , none,  260
+2020.09.10-19.40.19,v1.07,6 , 31 , (3 5 24 3 14) , 2000 , none,  336
+2020.09.10-19.40.19,v1.07,7 , 31 , (3 5 24 3 14) , 2000 , none,  253
+2020.09.10-19.40.19,v1.07,8 , 31 , (3 5 24 3 1

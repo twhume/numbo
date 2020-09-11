@@ -332,11 +332,11 @@
  	(first (filter #(= (eval %1) v) (map :val (:blocks c))))))
 
 (defn closest-nodes
- "Return the nodes in cytoplasm c which most closely match input sequence s"
+ "Return the nodes in cytoplasm c which most closely match those in input sequence s"
  ([c s] 
   (do (log/debug "closest-nodes c=" c "s=" s)
   (map (partial -lookup-node c)
-  	(misc/closest-seq (map :val (concat (:bricks c) (map eval (:blocks c)))) s))))
+  	(misc/fuzzy-closest-seq (map :val (concat (:bricks c) (map eval (:blocks c)))) s))))
  ([s] (closest-nodes @CYTO s)))
 
 ; ----- Other functions -----
