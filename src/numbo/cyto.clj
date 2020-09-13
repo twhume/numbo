@@ -238,9 +238,10 @@
 		(if 
 			(or
 				(and (= (second b) (misc/third b)) (brick-free? c 2 (second b))) ; check we have 2 copies of the parameter free, if they're the same
-				(every? true? (map (partial brick-free? c 1) (-bricks-for-block b)))) ; if all the parameters of the block are free bricks
+				(every? true? (map #(or (seq? %1) (brick-free? c 1 %1)) (rest b)))) ; if all the parameters of the block are free bricks or blocks
 		 (-> c
 				(update-in [:blocks] conj (-new-node b (-initial-attr (eval b)))) ; add the new block to the cyto
+				(update-in [:blocks] (partial reduce -remove-first) (filter seq? (rest b)))
 				(update-in [:bricks] (partial reduce -remove-first) (-bricks-for-block b))) ; remove all the bricks from the free list
 		 (do
 		 	(log/warn "add-block failed, bricks not free for " b)

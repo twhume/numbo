@@ -34,6 +34,16 @@
  [b]
  (str (-format-block-part b) "=" (eval b)))
 
+(defn -worthwhile-block
+ "Is this worth keeping? (blocks that multiple by 1 are not)"
+ [b]
+ (if
+ 	(and
+ 	 (= (first b) *)
+ 	 (or
+ 	 	(= (second b) 1)
+ 	 	(= (misc/third b) 1))) false true))
+
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
  [t & s]
@@ -279,17 +289,22 @@
 																					 									:desc (str "Seek facsimile: " (pn/format-calc calc))
 																					 									:fn (fn []
 	  (let [ope (pn/operator-for-calc calc) 
-	  			   params (cy/closest-nodes (shuffle (pn/params-for-calc calc)))]
-	       	(log/info "seek-facsimile for " (pn/format-calc calc) ope params)
+	  			   params (cy/closest-nodes (shuffle (pn/params-for-calc calc)))
+	  			   new-block (cons ope params)]
+	       	(log/info "seek-facsimile for " (pn/format-calc calc) new-block)
 
 	       	; TODO: check that all the params are within 50% of the desired
 	       	; TODO: check the result is desirable (somewhere)?
 
-	        (if (= (count params) 2) ; It's possible we don't find enough best matches - in which case the seek has failed
+	        (if (and
+	        	(= (count params) 2)
+	        	(-worthwhile-block new-block)
+	        	(misc/within (pn/result-for-calc calc) (eval new-block) 0.5)) ; don't do crazy facsimiles
+	        	 ; It's possible we don't find enough best matches - in which case the seek has failed
 		      			(do 
-		        		(log/debug "seek-facsimile adding block from bricks " (-format-block (cons ope params)))
-		        		(cy/add-block (cons ope params)) ; add it to the cytoplasm
-			        	(test-block (cons ope params))) ; Schedule a new test of it in future
+		        		(log/debug "seek-facsimile adding block from bricks " (-format-block new-block))
+		        		(cy/add-block new-block) ; add it to the cytoplasm
+			        	(test-block new-block)) ; Schedule a new test of it in future
 	        	)))))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
@@ -301,21 +316,23 @@
  (let [rand-op (pn/get-random-op)
  						op ((:name rand-op) pn/operator-map)
  						[b1 b2] (cy/random-node 2)
+ 						new-block (list op b1 b2)
  						]
- 						(log/debug "rand-block op=" op "b1=" b1 "b2=" b2)
+ 						(log/debug "rand-block new-block=" new-block)
  						(if (and b1 b2 op)
 	 						(cr/add-codelet (new-codelet :rand-block
-																													 							:desc (str "Random block: " (-format-block (list op b1 b2)))
+																													 							:desc (str "Random block: " new-block)
 																													 							:fn (fn []
 		(do
-			(log/info "rand-block adding " (-format-block (list op b1 b2)))
+			(log/info "rand-block adding " (-format-block new-block))
 			(if
 			 (and
+					(-worthwhile-block new-block)
 			  (cy/node-free? b1)
 			  (cy/node-free? b2))
 			 (do
-					(cy/add-block (list op b1 b2))
-					(test-block (list op b1 b2))
+					(cy/add-block new-block)
+					(test-block new-block)
 		)))))))))
 
 (defn dismantler
@@ -328,7 +345,7 @@
 																																			 	:fn (fn []
 		(let [bl (cy/get-block block)]
 			(log/info "dismantler " (:val bl))
-			(if (and bl (< (:attr bl) 0.3)) ; Never abandon a promising theory
+			(if (and bl (< (:attr bl) 0.4)) ; Never abandon a promising theory
 				(cy/del-block (:val bl))
 				(log/debug "dismantler " (:val bl) " is still activated")
 				))))))))

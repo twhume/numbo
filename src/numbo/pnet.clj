@@ -1258,3 +1258,9 @@
  [c]
  (map misc/int-k (filter-links-for (:links c) :param)))
 
+(defn result-for-calc
+ "Given a calculation node c, return its result as integer"
+ [c]
+ (misc/int-k (first (filter-links-for (:links c) :result))))
+
+

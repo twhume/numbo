@@ -10,14 +10,12 @@
 (def ITERATIONS (atom 1))
 
 (defn -urg-invert
-	"Inverts urgency of c according to configs"
+	"Inverts urgency of codelet c according to configs"
 	[c]
-	(do
-		(log/debug "-urg-invert c=" c "high=" (:URGENCY_HIGH @config) "low=" (:URGENCY_LOW @config))
-	(misc/invert-key :urgency (:URGENCY_HIGH @config) (:URGENCY_LOW @config) c)))
+	(assoc c :urgency (misc/invert-key :urgency (:URGENCY_HIGH @config) (:URGENCY_LOW @config) c)))
 
 (def priority-sampler (misc/mk-sampler CODERACK :urgency))
-(def inv-priority-sampler (misc/mk-sampler CODERACK identity -urg-invert))
+(def inv-priority-sampler (misc/mk-sampler CODERACK :urgency identity -urg-invert))
 
 (defn reset
  "Reset the coderack"

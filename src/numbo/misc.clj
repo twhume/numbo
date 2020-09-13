@@ -2,6 +2,7 @@
 	(:require [clojure.tools.logging :as log]
 											[clojure.set :as set]
 											[clojure.zip :as zip]
+											[numbo.config :as cfg]
 											[random-seed.core :refer :all])
 	(:refer-clojure :exclude [rand rand-int rand-nth]))
 
@@ -71,8 +72,8 @@
 	(do
 		(log/debug "fuzzy-closest s=" s " n=" n)
 		(let [which (condp >= (rand)
-																0.7 first
-																0.9 (if (> (count s) 1) second first)
+																(:FUZZY_CLOSEST_TOP @cfg/config) first
+																(:FUZZY_CLOSEST_MID @cfg/config) (if (> (count s) 1) second first)
 																(condp >= (count s)
 																	2 first
 																	1 second

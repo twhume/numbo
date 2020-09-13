@@ -28,8 +28,12 @@ side-by-side comparisons)
 I'm tagging a new version wherever things get noticeably better, and documenting experiments here.
 I'm keeping output of experiments in the runs/ directory
 
-v1.01 first fully running version with automated tests
-v1.02
+### v1.01
+
+first fully running version with automated tests
+
+### v1.02
+
 - played w/frequencies: dismantler 5->10, pump-target 5->10 pump-brick 5->10; didn't make much difference to speed
 - played w/frequencies: dismantler 5->2, pump-target 5->2 pump-brick 5->2; didn't make much difference to speed
 - made the random-creator 2 -> 1, everything else back to 5. Lots of failures in the first test
@@ -37,14 +41,16 @@ v1.02
 - (2020.07.31-08.11.08) Slower decay, less pumping: cy/DEFAULT_ATTRACTION_DEC from 0.02 -> 0.01, pn/DEFAULT_DECAY 0.1 -> 0.05 core/brick and pump frequency 5->10 . Slows av # iterations but leads to more solutions and an uplift for 87	(8 3 9 10 7)
 - (2020.07.31-14.46.21) Allowed secondary targets to be fulfilled by single bricks, and slowed the decay/pumped less often - GREAT, went from solving 5 to 7 puzzles, run-times were up a little tho. MARKED v1.03
 
-v1.03
+### v1.03
+
 - tried lots of runs for "lein run -- -t 116 -b 20,2,16,14,6 -i 10000 -c 10000" - do we ever go for depth 3?
 No, we always find something sooner - e.g. ((6 * 20) - (20 - 16)) not (20 * 6)- (2 + (16 - 14)) (see 116-target-10k.csv). 3% failed, 0.5% found ((6 * 20)= (20 - 16)) or equivalent, rest were ((6 * 16) + 20) or equivalent
 - random-target2 now samples by attraction instead of pure randomness
 - (2020.08.01-08.44.10) 1000 attempts on 81 , (9 7 2 25 18), it never gets there.
 - (2020.08.03-22.00.58 v1.03-2-g29b4f1e) updated the worthiness calculator so if there's an activated node near the eval'd value we use it; this lengthens the calculation a lot but gets us 8/10  ( whilst degrading the solution %age for a few). I suspect that pnet activation and overly empty coderacks are a problem now (1/5 of our iterations for this run were nil, many must be just 1 codelet in the rack, so in practice we're never selecting between alternatives). MARKED 1.04
 
-v1.04
+### v1.04
+
 - Upped the frequency of events going into the coderack and implemented a decay there so it never has >32 items in it. IT RAN SO SLOW IT HURT - no debugging output at all, tho I could see stuff go past in the logs
 - Rewound a bit after getting poor result and started playing with the frequency of doing random stuff
 - (2020.08.09-09.03.26) do random stuff every iteration - 8/10 solved, but %ages solved low (1 @ 100%)
@@ -55,7 +61,7 @@ v1.04
 - (2020.08.09-20.59.37) every 7, a few drop, a few gain, but overall slower
 - (2020.08.10-07.15.19) seems best balance (MOVED to v1.05)
 
-v1.05
+### v1.05
 
 - added 20 + 20 = 40 to pnet which ought to help with 41 5,16,22,25,1 (it did: 6 --> 63%)
 - played with pnet deactivation: 0.1, 0.2, 0.9 for nneighbor, neighbor and activated node, decay 0.02
@@ -85,15 +91,14 @@ v1.05
 - OK, made it so rand-block can use sub-blocks
 - (2020.09.08-13.07.57) Did a full test. A bit better, avg solutions=3.1, time=989, %age solved=64%, % blank = 19% (TAGGED to v1.06)
 
-v 1.06
+### v1.06
+
 - Updating to use samplers
 - Turned down FREQ_PUMP_TARGET to 20 to avoid overfocusing on a solution
 - (2020.09.09-10.23.47) avg solutions=1.2, avg time=1136, % solved=52, % blank=59
 - Turned FREQ_PUMP_TARGET back to 10 - that %age blank is hideous
 - (2020.09.10-07.28.07) avg solutions=1.2, avg time=1032, % solved=58, % blank=36
-
-So something about sampling must be broken....
-
+- So something about sampling must be broken....
 - In seek-facsimile, 20+20=40 maps to 22+22, which cannot be satisfied
 - Error is in (map (comp cy/closest-node misc/int-k) (pn/filter-links-for (:links calc) :param))
 - This allows the same parameter to be pulled twice - cy/closest-node needs to take multiple parameters
@@ -108,22 +113,31 @@ So something about sampling must be broken....
 a second count of actual bricks, stored in :original-bricks
 - (2020.09.10-12.47.50) avg solutions=2.7, avg time=964, % solved=66, % blank=16 - pretty good (TAGGED to v1.07)
 
-v1.07
+### v1.07
 
 - 41 (5 16 22 25 1) had a tiny success rate. 22+25 wasn't started from 20+20 because 16 and 22 are both nearer 20 than 25 is... so I made fuzzy-closest-nodes which occasionally looks beyond the obvious choices
-- (2020.09.10-19.52.48) avg solutions=3.4, avg time=879, % solved=73, % blank=17 - BEST YET, with an 86% success rate for 41
+- (2020.09.10-19.52.48) avg solutions=3.4, avg time=879, % solved=73, % blank=17 - BEST YET, with an 86% success rate for 41, up from 6%
 - Looking at 31	(3 5 24 3 14) - ((5 * 3) * 3) - 14)
 - We frequently make 3 * 5 = 15 but never go with it. I've added 3 * 15 = 45 to the pnet, no joy.
 - Now activate the pnet with the results of any block we make, initially but not periodically, to "suggest" calculations be tried from this block?
+- Updated seek-facsimile to use blocks as well as bricks for inputs. Seems to solve t=31
+- (2020.09.11-10.03.30) avg solutions=4.8, avg time=815, % solved=75, % blank=4 
+- But trialled in visualizer with t=114, and it's *crazy*
+- seek-facsimile over-triggers a lot - e.g. 3 * 4 = 12 leads to 20 * 143 = 2860 because that's all there is
+- stopped it and rand-block from ever multiplying by 1
+- tweaked seek-facsimile so the result of the made calculation has to be within 50% of the calc we're trying to facsimile
+- Noted (9 7 2 25 18) never gets 9 * ( 7 + 2)
+- Set the minimal dismante config to 0.4
+- (2020.09.11-11.33.52) avg solutions=4.4, avg time=885, % solved=70, % blank=29
+- (looks like it screwed t=31, helped t=114)
+- Set the minimal dismante config to 0.3 - makes little difference to t=31 (18% success still), t=114 is 57% (down
+- Raised it to 0.5, t=114 is 73%, t=31 is 9%
+- (2020.09.11-12.06.34) avg solutions=4.1, avg time=882, % solved=69, % blank=28
 
-TODO:
+## Next 
+
 - consider blocks as input to seek-facsimile
 
-seek-facsimile should include not just bricks, but blocks, as inputs
-e.g. once we have 3 * 5 = 15
-seek-facsimile 3 * 10 = 30
-could get to (3 * 15) = 45
--- It should be doing this already (via cy/closest-node) but the subsequent check of brick-free? may kill these opportunities.
 
 
 81	(9 7 2 25 18) - never gets 9 * (7+2). Why is 9 * 9 not tried early, 9 as a target2?
@@ -134,15 +148,14 @@ could get to (3 * 15) = 45
 No solutions for:
 127	(7 6 4 22 25) - (((25 - (6 + 4)) * 7) + 22)
 
+## TODO stack
 
 - TODO: move sampler code into its own file
 - TODO: make the ratios in misc/fuzzy-closest-nodes configurable parameters
-
-
-----------
+- TODO: cy/format-block and cl/-format-block are the same, resolve
+- TODO: make the constant in dismantler configurable
 
 ## Future ideas
-
 
 ### Memory
 
@@ -170,9 +183,10 @@ I've got a lot of config params in config.clj
 
 Evolve them:
 1. Do a run with 10 different variants of parameters
-2. Take the best 3 (measured by % complete, then speed)
+2. Take the best 3 (measured by % complete)
 3. Do 6 evolutions of #1, 3 of #1, 1 of #3
 4. Repeat; should be O(7) runs in 24h
+5. Get good results on 1-4; drop the # iterations; repeat (?)
 
 ******
 

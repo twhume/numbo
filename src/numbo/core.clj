@@ -91,14 +91,23 @@
 
 (defn run-until
  [pred]
- (loop []
-  (do
-	 	(cr/process-next-codelet)
+ (try
+	 (loop []
+	  (do
+		 	(cr/process-next-codelet)
 
-	 	(tick)
-	 	(if (not (or (pred) @cy/COMPLETE))
-	 		 (recur)))))
-
+		 	(tick)
+		 	(if (or (pred) @cy/COMPLETE)
+		 			[@cr/ITERATIONS (if (empty? (cy/get-solutions)) nil (cy/format-block (:val (first (cy/get-solutions)))))]
+		 		 (recur))))
+			(catch Exception e
+				 (do
+						(log/error "Caught " e)
+						(println e)
+						(dump)
+						[@cr/ITERATIONS nil]
+						))))
+	
 (defn run-until-empty-cr
  []
  (run-until (fn[] (empty? @cr/CODERACK))))
@@ -147,30 +156,79 @@
 (defn run-calcs
  "Run max i iterations of a calculation of target t, bricks b, c times, vizualize if v is set"
  [c i t b v]
- (dotimes [n c]
+ (loop [n 0 iterations 0 solutions '[]]
 
-		; re-init everything every time so we can run from the REPL
-	(try
-		(pn/initialize-pnet)
-		(cy/reset)
-		(hist/reset)
-		(cr/reset)
+ 	(if (= n c)
+ 		[
+ 			(int (/ iterations c)) ; average number of iterations
+ 			(* 100 (misc/round-to 2 (/ (- c (count (filter nil? solutions))) c))) ; %age of puzzles with a solution found
+ 			(count (distinct (filter #(not (nil? %1)) solutions))) ; # distinct solutions
+				t ; target we are going for (just to make debugging easier)
+ 		]
 
-		(cl/load-target t)
-		(doall (map cl/load-brick b))
+ 	(do
+				; re-init everything every time so we can run from the REPL
+				(pn/initialize-pnet)
+				(cy/reset)
+				(hist/reset)
+				(cr/reset)
 
-		(run-for-iterations i)
-		(if @cy/COMPLETE
-			(println n "," t "," b "," @cr/ITERATIONS "," (cy/format-block (:val (first (cy/get-solutions)))) "," (count (filter empty? (map :coderack @hist/HISTORY))))
-			(println n "," t "," b "," @cr/ITERATIONS ", none, " (count (filter empty? (map :coderack @hist/HISTORY)))))
+				(cl/load-target t)
+				(doall (map cl/load-brick b))
 
-	 (if v (viz/-main))
-		(catch Exception e
-		 (do
-				(log/error "Caught " e)
-				(println e)
-				(dump)
+				(let [result (run-for-iterations i)]
+					(if @cy/COMPLETE
+						(println n "," t "," b "," @cr/ITERATIONS "," (cl/-format-block (:val (first (cy/get-solutions)))) "," (count (filter empty? (map :coderack @hist/HISTORY))))
+						(println n "," t "," b "," @cr/ITERATIONS ", none, " (count (filter empty? (map :coderack @hist/HISTORY)))))
+
+				 (if v (viz/-main))
+				 (recur (inc n) (+ iterations (first result)) (conj solutions (second result)))
 )))))
+
+(def problems
+'((114 (11,20,7,1,6))
+ (87 (8,3,9,10,7))
+ (31 (3,5,24,3,14))
+ (25 (8,5,5,11,2))
+ (81 (9,7,2,25,18))
+ (6 (3,3,17,11,22))
+ (11 (2,5,1,25,23))
+ (116 (20,2,16,14,6))
+ (127 (7,6,4,22,25))
+ (41 (5,16,22,25,1))))
+
+(defn -average [coll] 
+  (misc/round-to 2 (/ (reduce + coll) (count coll))))
+
+(defn -transpose [coll]
+   (apply map vector coll))
+
+(defn run-for-config
+ [c]
+ (do
+ 	(reset! cfg/config c)
+ 	(let [results (map #(run-calcs 100 2000 (first %1) (second %1) false) problems) ; run against each problem 100 times and collect results
+ 							averages (map -average (-transpose results))]
+ 							(take 3 averages))))
+
+
+(defn run-epoch
+ "Mutate the starting config 10 times, run against each one, return the best after num epochs"
+ [starter num]
+ (loop [epoch-counter 1
+ 							configs-to-run (repeatedly 10 (partial cfg/evolve-config starter))]
+			(let [raw-results (map #(list %1 (run-for-config %1)) configs-to-run)
+									ordered-results (reverse (sort-by #(second (second %1)) raw-results))]
+								(do
+									(println "Epoch" epoch-counter ", best=" (first ordered-results))
+									(if (< epoch-counter num)
+										(recur
+											(inc epoch-counter)
+
+											(concat
+												(repeatedly 6 (partial cfg/evolve-config (first (first ordered-results))))
+												(repeatedly 3 (partial cfg/evolve-config (first (second ordered-results))))
+												(repeatedly 1 (partial cfg/evolve-config (first (misc/third ordered-results)))))))))))
 
 (defn -main
   [& args]
