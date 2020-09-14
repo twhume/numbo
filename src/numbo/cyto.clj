@@ -1,14 +1,14 @@
 (ns numbo.cyto
  (:require [clojure.set :refer [intersection]]
 											[clojure.tools.logging :as log]
- 										[numbo.config :as cfg :refer [config]]
+ 										[numbo.config :as cfg :refer [CONFIG]]
  										[numbo.misc :as misc]
  										[numbo.pnet :as pn]
  										[random-seed.core :refer :all])
  (:refer-clojure :exclude [rand rand-int rand-nth]))
 
 ; has a solution been found?
-(def COMPLETE (atom false))
+(def COMPLETE (misc/thread-local (atom false)))
 
 ; ----- Private functions -----
 
@@ -20,7 +20,7 @@
 (defn -initial-attr
 	"Calculates an initial attractiveness for a given value"
  [n]
- (cond-> (:ATTR_DEFAULT @config)
+ (cond-> (:ATTR_DEFAULT @@CONFIG)
  	(= 0 (mod n 5)) (+ 0.1)
  	(= 0 (mod n 10)) (+ 0.1)
  	(= 0 (mod n 100)) (+ 0.1)
@@ -86,18 +86,22 @@
   }
 )
 
-(def CYTO (atom (new-cyto)))
+(def CYTO (misc/thread-local (atom (new-cyto))))
+(def BRICK-ATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CYTO :attr :bricks))))
+(def TARGET-ATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CYTO :attr :targets))))
+(def BLOCK-INVATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CYTO :attr :blocks (partial misc/invert-val :attr)))))
+(def NODE-ATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CYTO :attr (fn [x] (concat (:blocks x) (:bricks x)))))))
 
 (defn reset
 	"Resets the cytoplasm"
 	[]
-	(reset! CYTO (new-cyto))
-	(reset! COMPLETE false))
-
-(def brick-attr-sampler (misc/mk-sampler CYTO :attr :bricks))
-(def target-attr-sampler (misc/mk-sampler CYTO :attr :targets))
-(def block-invattr-sampler (misc/mk-sampler CYTO :attr :blocks (partial misc/invert-val :attr)))
-(def node-attr-sampler (misc/mk-sampler CYTO :attr (fn [x] (concat (:blocks x) (:bricks x)))))
+	(reset! @CYTO (new-cyto))
+	(reset! @COMPLETE false)
+	(reset! @BRICK-ATTR-SAMPLER (misc/mk-sampler @CYTO :attr :bricks))
+ (reset! @TARGET-ATTR-SAMPLER (misc/mk-sampler @CYTO :attr :targets))
+ (reset! @BLOCK-INVATTR-SAMPLER (misc/mk-sampler @CYTO :attr :blocks (partial misc/invert-val :attr)))
+ (reset! @NODE-ATTR-SAMPLER (misc/mk-sampler @CYTO :attr (fn [x] (concat (:blocks x) (:bricks x)))))
+	)
 
 ; ----- Functions for targets -----
 
@@ -108,22 +112,22 @@
  	(do
  		(log/warn "set-target" t "but there's already a target in " (:targets c))
  		c)))
- ([t] (reset! CYTO (set-target @CYTO t))))
+ ([t] (reset! @CYTO (set-target @@CYTO t))))
 
 (defn get-target
 	"Returns the current primary target"
 	([c] (:val (first (:targets c))))
-	([] (get-target @CYTO)))
+	([] (get-target @@CYTO)))
 
 (defn get-target2
 	"Returns all secondary targets, or a random one"
 	([c] (map :val (rest (:targets c))))
-	([] (get-target2 @CYTO)))
+	([] (get-target2 @@CYTO)))
 
 (defn random-target
 	"Returns a random target, probabilistically weighted by attraction"
 	[]
-	(:val (target-attr-sampler)))
+	(:val (@@TARGET-ATTR-SAMPLER)))
 
 (defn add-target2
  "Adds a secondary target t"
@@ -132,7 +136,7 @@
  	(do
  		(log/warn "add-target2" t "but no primary target set")
  		c)))
- ([t] (reset! CYTO (add-target2 @CYTO t))))
+ ([t] (reset! @CYTO (add-target2 @@CYTO t))))
 
 (defn del-target2
  "Removes the first instance of a secondary target t"
@@ -141,7 +145,7 @@
   (= t (get-target)) (do (log/warn "del-target2 called on primary target" t) c)
   (empty? (rest (:targets c))) (do (log/warn "del-target2 called but no secondary targets set") c)
   :else (update-in c [:targets] -remove-first t)))
- ([t] (reset! CYTO (del-target2 @CYTO t))))
+ ([t] (reset! @CYTO (del-target2 @@CYTO t))))
 
 (defn -plug-block
  "In block a, find a leaf node where block b can provide the value and substitute b for that node"
@@ -174,7 +178,7 @@
 	([c b] (do
 		(log/debug "plug-target2 c=" c "b="b)
 		(if (seq? b) (update-in c [:blocks] -plug-blocks b) c))) ; only plug in blocks, plugging in bricks is a noop
- ([b] (reset! CYTO (plug-target2 @CYTO b))))
+ ([b] (reset! @CYTO (plug-target2 @@CYTO b))))
 
 ; ----- Functions for bricks -----
 
@@ -183,29 +187,29 @@
  ([c v] (-> c
  	(update-in [:bricks] conj (-new-node v (-initial-attr v)))
  	(update-in [:original-bricks] conj v)))
- ([v] (reset! CYTO (add-brick @CYTO v))))
+ ([v] (reset! @CYTO (add-brick @@CYTO v))))
 
 (defn brick-free?
 	"Is a brick with value v free? Are n copies of it free?"
  ([c n v] (-contains-n-vals? (:bricks c) v n))
- ([n v] (brick-free? @CYTO n v))
- ([v] (brick-free? @CYTO 1 v)))
+ ([n v] (brick-free? @@CYTO n v))
+ ([v] (brick-free? @@CYTO 1 v)))
 
 (defn largest-brick
  "Return the value of the largest free brick"
  ([c] (first (reverse (sort (map :val (:bricks c))))))
- ([] (largest-brick @CYTO)))
+ ([] (largest-brick @@CYTO)))
 
 (defn random-brick
 	"Return a random brick, or n random bricks, probabilistically weighted by attraction"
-	[] (:val (brick-attr-sampler)))
+	[] (:val (@@BRICK-ATTR-SAMPLER)))
 
 (defn closest-brick
 	"Returns the closest brick to the value v"
 	([c v] (do
 		(log/debug "closest-brick c=" c "v=" v)
 		(-closest-node (:bricks c) identity v)))
-	([v] (closest-brick @CYTO v)))
+	([v] (closest-brick @@CYTO v)))
 
 ; Used when going from (target=100) (* 24 4) --> (+ (* 24 4) 4)
 ; (combine-target '(* 24 4) 4)
@@ -221,7 +225,7 @@
 	 		(log/warn "combine-target2 couldn't find block" b)
 	 		c)
 	 	(update-in c [:blocks] (partial replace (hash-map bl new-bl))))))
- ([b t o] (reset! CYTO (combine-target2 @CYTO b t o))))
+ ([b t o] (reset! @CYTO (combine-target2 @@CYTO b t o))))
 
 ; ----- Functions for blocks -----
 
@@ -230,7 +234,7 @@
 (defn block-exists?
  "Does the cytoplasm contain the supplied block b?"
  ([c b] (-contains-n-vals? (:blocks c) b 1))
- ([b] (block-exists? @CYTO b)))
+ ([b] (block-exists? @@CYTO b)))
 
 (defn add-block
 	"Add a new block b to the cytoplasm c"
@@ -246,7 +250,7 @@
 		 (do
 		 	(log/warn "add-block failed, bricks not free for " b)
 		 	c))) ; otherwise don't
-	([b] (reset! CYTO (add-block @CYTO b))))
+	([b] (reset! @CYTO (add-block @@CYTO b))))
 
 (defn del-block
  "Removes the block b from the cytoplasm c, returning its bricks"
@@ -264,22 +268,22 @@
 	 		(do
 	 		 (log/warn "del-block failed, block not in cytoplasm " b)
 	 		 	c))); otherwise don't
- ([b] (reset! CYTO (del-block @CYTO b))))
+ ([b] (reset! @CYTO (del-block @@CYTO b))))
 
 (defn closest-block
  "Return the block which most closely produces v"
 	([c v] (-closest-node (:blocks c) eval v))
-	([v] (closest-block @CYTO v)))
+	([v] (closest-block @@CYTO v)))
 
 (defn unworthy-block
  "Return a random block, weighted by the inverse of its attractiveness"
  []
-	(:val (block-invattr-sampler))) ; invert it back again once we have it
+	(:val (@@BLOCK-INVATTR-SAMPLER))) ; invert it back again once we have it
 
 (defn get-block
 	"Read the block b from cyto c"
 	([c b] (first (filter #(= b (:val %1)) (:blocks c))))
-	([b] (get-block @CYTO b)))
+	([b] (get-block @@CYTO b)))
 
 (defn format-block
  "Turn the block or brick b into a nice human-readable calculation"
@@ -300,29 +304,29 @@
 
 (defn random-node
 	"Return a random node, or n random nodes, probabilistically weighted by attraction"
- ([n] (:val (node-attr-sampler n)))
-	([] (:val (node-attr-sampler))))
+ ([n] (:val (@@NODE-ATTR-SAMPLER n)))
+	([] (:val (@@NODE-ATTR-SAMPLER))))
 
 (defn node-free?
 	"Is a node with value v free? Are n copies of it free?"
  ([c n v] (-contains-n-evals? (concat (:bricks c) (:blocks c)) v n))
- ([n v] (node-free? @CYTO n v))
- ([v] (node-free? @CYTO 1 v)))
+ ([n v] (node-free? @@CYTO n v))
+ ([v] (node-free? @@CYTO 1 v)))
 
 (defn pump-node
  "Pump the attractiveness of the node n"
  ([c n]
  	(-> c
- 		(update-in [:blocks] (partial -inc-attr (:ATTR_INC @config)) n)
- 		(update-in [:bricks] (partial -inc-attr (:ATTR_INC @config)) n)
- 		(update-in [:targets] (partial -inc-attr (:ATTR_INC @config)) n)
+ 		(update-in [:blocks] (partial -inc-attr (:ATTR_INC @@CONFIG)) n)
+ 		(update-in [:bricks] (partial -inc-attr (:ATTR_INC @@CONFIG)) n)
+ 		(update-in [:targets] (partial -inc-attr (:ATTR_INC @@CONFIG)) n)
  	))
- ([v] (reset! CYTO (pump-node @CYTO v))))
+ ([v] (reset! @CYTO (pump-node @@CYTO v))))
 
 (defn closest-node
  "Return the node which most closely produces v"
 	([c v] (-closest-node (concat (:bricks c) (:blocks c)) eval v))
-	([v] (closest-node @CYTO v)))
+	([v] (closest-node @@CYTO v)))
 
 
 (defn -lookup-node
@@ -332,13 +336,43 @@
  	(some #{v} (map :val (:bricks c))) v ; it's a brick, just return it
  	(first (filter #(= (eval %1) v) (map :val (:blocks c))))))
 
+(defn fuzzy-closest
+	"Return an element of sequence s close to the input value n: closest 70% of the time, second-closest 20%, third 10%"
+	[s n]
+	(do
+		(log/debug "fuzzy-closest s=" s " n=" n)
+		(let [which (condp >= (rand)
+																(:FUZZY_CLOSEST_TOP @@cfg/CONFIG) first
+																(:FUZZY_CLOSEST_MID @@cfg/CONFIG) (if (> (count s) 1) second first)
+																(condp >= (count s)
+																	2 first
+																	1 second
+																	misc/third
+																))]
+		 (log/debug "which=" which "s=" (count s))
+			(nth s (first (which (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))))
+
+(defn fuzzy-closest-seq
+ "Return a list of integer elements from sequence c which are closest to each item in s, w/o reusing elements"
+ [c s]
+ (loop [nodes c
+ 							ins s
+ 							ret '[]]
+ 							(if (or (empty? ins) (empty? nodes)) ret
+	 							(let [best-match (fuzzy-closest nodes (first ins))]
+	 								(recur
+	 									(misc/seq-remove nodes best-match)
+	 									(rest ins)
+	 									(conj ret best-match)
+	 								)))))
+
 (defn closest-nodes
  "Return the nodes in cytoplasm c which most closely match those in input sequence s"
  ([c s] 
   (do (log/debug "closest-nodes c=" c "s=" s)
   (map (partial -lookup-node c)
-  	(misc/fuzzy-closest-seq (map :val (concat (:bricks c) (map eval (:blocks c)))) s))))
- ([s] (closest-nodes @CYTO s)))
+  	(fuzzy-closest-seq (map :val (concat (:bricks c) (map eval (:blocks c)))) s))))
+ ([s] (closest-nodes @@CYTO s)))
 
 ; ----- Other functions -----
 
@@ -346,10 +380,10 @@
  "Causes all attractiveness of all bricks, blocks, targets to drop"
  ([c]
 	 (-> c
-	 	(update-in [:blocks] (partial -dec-attr (:ATTR_DEC @config)))
-	 	(update-in [:bricks] (partial -dec-attr (:ATTR_DEC @config)))
-	 	(update-in [:targets] (partial -dec-attr (:ATTR_DEC @config)))))
- ([] (reset! CYTO (decay @CYTO))))
+	 	(update-in [:blocks] (partial -dec-attr (:ATTR_DEC @@CONFIG)))
+	 	(update-in [:bricks] (partial -dec-attr (:ATTR_DEC @@CONFIG)))
+	 	(update-in [:targets] (partial -dec-attr (:ATTR_DEC @@CONFIG)))))
+ ([] (reset! @CYTO (decay @@CYTO))))
 
 (defn get-solutions
  "Return all blocks which are complete and valid solutions"
@@ -361,7 +395,7 @@
 				  (count (-bricks-for-block (:val %1)))
 						(count (misc/common-elements (-bricks-for-block (:val %1)) (:original-bricks c)))))
 			(:blocks c)))
- ([] (get-solutions @CYTO)))
+ ([] (get-solutions @@CYTO)))
 
 ; Contributors to temperature:
 ; # secondary targets - 0.2 * (# secondary targets)
@@ -386,4 +420,4 @@
 	  (* 0.2 (count (:bricks c))) ; add 0.2 for every free brick
 	  (/ (reduce + (map :attr (:blocks c))) 2) ; + half the sum of the attr of all blocks 	
 	 ) 0.1 0.9))
- ([] (get-temperature @CYTO)))
+ ([] (get-temperature @@CYTO)))

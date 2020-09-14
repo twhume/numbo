@@ -1,6 +1,8 @@
-(ns numbo.config)
+(ns numbo.config
+	(:require
+											[numbo.misc :as misc]))
 
-(def config (atom '{
+(def CONFIG (misc/thread-local (atom '{
 
 ; ----- Configuration for core.clj -----
 
@@ -56,7 +58,7 @@
 :FUZZY_CLOSEST_MID 0.9
 
 
-}))
+})))
 
 ; Map of type --> urgency for codelets
 
@@ -64,20 +66,20 @@
 
 
 (def urgencies (atom {
-	:activate-pnet (:URGENCY_MEDIUM @config)
-	:inc-attraction (:URGENCY_MEDIUM @config)
-	:rand-syntactic-comparison (:URGENCY_LOW @config)
-	:check-done (:URGENCY_HIGH @config)
-	:fulfil-target2 (:URGENCY_HIGH @config)
-	:rand-target-match (:URGENCY_MEDIUM @config)
-	:load-target (:URGENCY_HIGH @config)
-	:create-target2 (:URGENCY_HIGH @config)
-	:probe-target2 (:URGENCY_HIGH @config)
-	:load-brick (:URGENCY_HIGH @config)
-	:test-block (:URGENCY_HIGH @config)
-	:seek-facsimile (:URGENCY_MEDIUM @config)
-	:rand-block (:URGENCY_LOW @config)
-	:dismantler (:URGENCY_LOW @config)
+	:activate-pnet (:URGENCY_MEDIUM @@CONFIG)
+	:inc-attraction (:URGENCY_MEDIUM @@CONFIG)
+	:rand-syntactic-comparison (:URGENCY_LOW @@CONFIG)
+	:check-done (:URGENCY_HIGH @@CONFIG)
+	:fulfil-target2 (:URGENCY_HIGH @@CONFIG)
+	:rand-target-match (:URGENCY_MEDIUM @@CONFIG)
+	:load-target (:URGENCY_HIGH @@CONFIG)
+	:create-target2 (:URGENCY_HIGH @@CONFIG)
+	:probe-target2 (:URGENCY_HIGH @@CONFIG)
+	:load-brick (:URGENCY_HIGH @@CONFIG)
+	:test-block (:URGENCY_HIGH @@CONFIG)
+	:seek-facsimile (:URGENCY_MEDIUM @@CONFIG)
+	:rand-block (:URGENCY_LOW @@CONFIG)
+	:dismantler (:URGENCY_LOW @@CONFIG)
 	}))
 
 (defn -mod-int

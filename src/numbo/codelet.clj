@@ -47,7 +47,7 @@
 (defn new-codelet
  "Create a skeleton of a new codelet, with optional modified fields"
  [t & s]
- (into (hash-map :type t :urgency (if (t @urgencies) (t @urgencies) (:URGENCY_LOW @config)) :fn nil :iteration @cr/ITERATIONS) (map vec (partition 2 s))))
+ (into (hash-map :type t :urgency (if (t @urgencies) (t @urgencies) (:URGENCY_LOW @@CONFIG)) :fn nil :iteration @@cr/ITERATIONS) (map vec (partition 2 s))))
 
 ;----- CODELETS HEREON -----
 
@@ -113,7 +113,7 @@
 			(if (not (empty? (cy/get-solutions)))
 				(do
 					(log/info "check-done SOLVED! " (first (cy/get-solutions)))
-					(reset! cy/COMPLETE true))))))))
+					(reset! @cy/COMPLETE true))))))))
 
 (defn fulfil-target2
  "Given a target block or brick b which we believe to resolve to value of a secondary target, plug it in"
@@ -262,7 +262,6 @@
 
 						; If this is near a highly activated node, it's worth pursuing
 						(not (empty? (pn/val-near-and-activated 25 (eval b) 0.2)))
-;						(>= (:activation ((pn/closest-keyword (eval b)) @pn/PNET)) 0.2)
 							(do
 							 (log/debug "test-block b=" bstr " is worthy")
 							 (probe-target2 b)
@@ -308,7 +307,7 @@
 	        	)))))))
 
 ; rand-op: (low urgency) - select 2 random bricks (biased by attractiveness), and an op
-; (biased towards active pnet nodes),  place resulting block in the WM (p145, #4)
+; (biased towards active nodes),  place resulting block in the WM (p145, #4)
 
 (defn rand-block
  "Make a new block out of sampled random bricks and ops"

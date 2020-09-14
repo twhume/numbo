@@ -1,6 +1,6 @@
 (ns numbo.pnet
 	(:require [clojure.tools.logging :as log]
-											[numbo.config :as cfg :refer [config]]
+											[numbo.config :as cfg :refer [CONFIG]]
 											[numbo.misc :as misc]))
 
 ; Pnet is a map of name -> node, where name is a keyword name of the node, and node is a map:
@@ -14,10 +14,10 @@
 (def operator-name-map (hash-map :plus "+" :minus "-" :times "*"))
 (def op-lookups {+ "+" - "-" * "*"})
 
-(def PNET (atom '{}))
+(def PNET (misc/thread-local (atom '{})))
 
-(def op-sampler (misc/mk-sampler PNET :activation (fn [x] (filter #(= :operator (:type %)) (vals x)))))
-(def calc-sampler (misc/mk-sampler PNET :activation (fn [x] (filter #(= :calculation (:type %)) (vals x)))))
+(def op-sampler (misc/mk-sampler @PNET :activation (fn [x] (filter #(= :operator (:type %)) (vals x)))))
+(def calc-sampler (misc/mk-sampler @PNET :activation (fn [x] (filter #(= :calculation (:type %)) (vals x)))))
 
 
 ; Initial values for the Pnet - others (e.g. activation) can be added programmatically
@@ -1102,7 +1102,7 @@
 (defn get-numbers
  "Return all the numbers in the Pnet"
  ([p] (map #(Integer/parseInt (name (:name %))) (filter #(= :number (:type %)) (vals p))))
- ([] (get-numbers @PNET)))
+ ([] (get-numbers @@PNET)))
 
 (defn get-operators
  "Returns a list of all valid operators for the Pnet"
@@ -1140,9 +1140,9 @@
 (defn initialize-pnet
  "Fill in the default values"
  ([pnet]
-	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation (:PN_DEFAULT @config) :weight 1)))]
+	 (let [weights-and-activations (-update-values pnet (fn [x] (assoc x :activation (:PN_DEFAULT @@CONFIG) :weight 1)))]
 	 	(apply assoc '{} (mapcat #(list %1 (assoc (get weights-and-activations %1) :name %1)) (keys weights-and-activations)))))
- ([] (reset! PNET (initialize-pnet initial-pnet))))
+ ([] (reset! @PNET (initialize-pnet initial-pnet))))
 
 (defn -get-neighbors
  "Return the neighbors of node n in pnet n"
@@ -1152,7 +1152,7 @@
 (defn -update-activation
  "Update the activation of node n by an increment i"
  [i n]
- (update n :activation (fn [x] (misc/normalized (+ (* i (:PN_INC @config)) x)))))
+ (update n :activation (fn [x] (misc/normalized (+ (* i (:PN_INC @@CONFIG)) x)))))
 
 (defn -map-values
 	[m keys f & args]
@@ -1181,11 +1181,11 @@
  						node-and-neighbors (set (conj neighbors n))
  						neighbors-2 (remove node-and-neighbors (distinct (mapcat (partial -get-neighbors p) neighbors)))]
  (-> p
-	 (update n (partial -update-activation (:PN_SELF @config)))
-  (-map-values neighbors (partial -update-activation (:PN_NEIGHBOR @config)))
-  (-map-values neighbors-2 (partial -update-activation (:PN_NNEIGHBOR @config)))
+	 (update n (partial -update-activation (:PN_SELF @@CONFIG)))
+  (-map-values neighbors (partial -update-activation (:PN_NEIGHBOR @@CONFIG)))
+  (-map-values neighbors-2 (partial -update-activation (:PN_NNEIGHBOR @@CONFIG)))
  )))
- ([n] (reset! PNET (activate-node @PNET n))))
+ ([n] (reset! @PNET (activate-node @@PNET n))))
 
 
 (defn -get-random-by-type
@@ -1196,12 +1196,12 @@
 (defn get-random-op
 	"Get a random operator, sampled probabilistically by activation"
  ([p] (-get-random-by-type p :operator))
- ([] (get-random-op @PNET)))
+ ([] (get-random-op @@PNET)))
 
 (defn get-random-calc
 	"Get a random calculation, sampled probabilistically by activation"
  ([p] (-get-random-by-type p :calculation))
- ([] (get-random-calc @PNET)))
+ ([] (get-random-calc @@PNET)))
 
 (defn filter-links-for 
  [l t]
@@ -1229,8 +1229,8 @@
 
 (defn decay
  "Reduce the :activation of all nodes in the PNet"
- ([pn] (-update-values pn (fn [x] (assoc x :activation (misc/normalized (:activation x) (- 0 (:PN_DECAY @config)))))))
- ([] (reset! PNET (decay @PNET))))
+ ([pn] (-update-values pn (fn [x] (assoc x :activation (misc/normalized (:activation x) (- 0 (:PN_DECAY @@CONFIG)))))))
+ ([] (reset! @PNET (decay @@PNET))))
 
 (defn val-near-and-activated
  "Return all the number nodes which are <= d distance from value v, with a minimum activation of a"
@@ -1241,7 +1241,7 @@
 	  		(<= (Math/abs (- v (Integer/parseInt (name %1)))) d)
 	  		(>= (:activation (%1 p)) a))
 		 (keys p)))
- ([d v a] (val-near-and-activated @PNET d v a)))
+ ([d v a] (val-near-and-activated @@PNET d v a)))
 
 (defn closest-keyword
  "Return the keyword of a Pnet node with the closest value to v"

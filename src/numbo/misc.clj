@@ -2,8 +2,8 @@
 	(:require [clojure.tools.logging :as log]
 											[clojure.set :as set]
 											[clojure.zip :as zip]
-											[numbo.config :as cfg]
 											[random-seed.core :refer :all])
+	(:import (clojure.lang IDeref))
 	(:refer-clojure :exclude [rand rand-int rand-nth]))
 
 ; Useful functions I want to avoid duplicating across files
@@ -54,7 +54,6 @@
  [k]
  (Integer/parseInt (name k)))
 
-
 (defn seq-remove
  "Return sequence s without the first instance of value v"
  [s v] ((if (vector? s) vec identity) ; preserve vectorhood!
@@ -65,36 +64,6 @@
 	[s n]
 	(do (log/debug "closest s=" s " n=" n)
 	(nth s (first (first (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s)))))))
-
-(defn fuzzy-closest
-	"Return an element of sequence s close to the input value n: closest 70% of the time, second-closest 20%, third 10%"
-	[s n]
-	(do
-		(log/debug "fuzzy-closest s=" s " n=" n)
-		(let [which (condp >= (rand)
-																(:FUZZY_CLOSEST_TOP @cfg/config) first
-																(:FUZZY_CLOSEST_MID @cfg/config) (if (> (count s) 1) second first)
-																(condp >= (count s)
-																	2 first
-																	1 second
-																	third
-																))]
-		 (log/debug "which=" which "s=" (count s))
-			(nth s (first (which (sort-by second (map-indexed #(list %1 (Math/abs (- n %2))) s))))))))
-
-(defn fuzzy-closest-seq
- "Return a list of integer elements from sequence c which are closest to each item in s, w/o reusing elements"
- [c s]
- (loop [nodes c
- 							ins s
- 							ret '[]]
- 							(if (or (empty? ins) (empty? nodes)) ret
-	 							(let [best-match (fuzzy-closest nodes (first ins))]
-	 								(recur
-	 									(seq-remove nodes best-match)
-	 									(rest ins)
-	 									(conj ret best-match)
-	 								)))))
 
 (defn common-elements [& colls]
   (let [freqs (map frequencies colls)]
@@ -164,3 +133,47 @@
  "Returns the inverse value of key k in input c"
  [k min max c]
  (- (+ max min) (k c)))
+
+
+
+(defn ^{:dont-test "Used in impl of thread-local"}
+  thread-local*
+  "Non-macro version of thread-local - see documentation for same."
+  [init]
+  (let [generator (proxy [ThreadLocal] []
+                    (initialValue [] (init)))]
+    (reify IDeref
+      (deref [this]
+        (.get generator)))))
+
+(defmacro thread-local
+  "Takes a body of expressions, and returns a java.lang.ThreadLocal object.
+   (see http://download.oracle.com/javase/6/docs/api/java/lang/ThreadLocal.html).
+   To get the current value of the thread-local binding, you must deref (@) the
+   thread-local object. The body of expressions will be executed once per thread
+   and future derefs will be cached.
+   Note that while nothing is preventing you from passing these objects around
+   to other threads (once you deref the thread-local, the resulting object knows
+   nothing about threads), you will of course lose some of the benefit of having
+   thread-local objects."
+  [& body]
+  `(thread-local* (fn [] ~@body)))
+
+
+(def a (thread-local (atom 0)))
+
+
+
+(defn get-atom
+	[]
+	a
+)
+
+(defn thing-doer
+ [x]
+ (let [a (get-atom)]
+ 	(reset! @a 2)
+ 	@a))
+
+
+(pmap thing-doer (range 0 20))

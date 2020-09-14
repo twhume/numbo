@@ -4,7 +4,7 @@
 											[clojure.tools.cli :refer [parse-opts]]
 											[numbo.coderack :as cr]
 											[numbo.codelet :as cl]
-											[numbo.config :as cfg :refer [config]]
+											[numbo.config :as cfg :refer [CONFIG]]
 											[numbo.cyto :as cy]
 											[numbo.history :as hist]
 											[numbo.misc :as misc]
@@ -23,10 +23,10 @@
 	"Dump state to console"
 	[]
 	(do
-		(log/debug "ITERATION=" @cr/ITERATIONS)
-		(log/debug "CYTO=" @cy/CYTO)
-		(log/debug "PNET=" @pn/PNET)
-		(log/debug "CODERACK=" @cr/CODERACK)
+		(log/debug "ITERATION=" @@cr/ITERATIONS)
+		(log/debug "CYTO=" @@cy/CYTO)
+		(log/debug "PNET=" @@pn/PNET)
+		(log/debug "CODERACK=" @@cr/CODERACK)
 	))
 
 ; Tick is called every n iterations and takes charge of starting random tasks. Each tick:
@@ -39,26 +39,25 @@
 	"Schedule random regular tasks"
 	[]
 	(do
-		(log/debug "tick")
+		(log/debug "tick, CR=" (count @@cr/CODERACK) ",temp=" (cy/get-temperature))
 
 ;			(= 0 (mod @cr/ITERATIONS 5)) (do
 ;				(if (< (rand) (cy/get-temperature)) (cl/rand-block)))
 
 		
-			(if	(= 0 (mod @cr/ITERATIONS (:FREQ_DISMANTLE @config))) (do
+			(if	(= 0 (mod @@cr/ITERATIONS (:FREQ_DISMANTLE @@CONFIG))) (do
 																																	(if (< (rand) (cy/get-temperature)) (cl/dismantler)))) ; if it's getting too hot, dismantle something
 
-		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_BLOCK @config))) (do
+		 (if	(= 0 (mod @@cr/ITERATIONS (:FREQ_RAND_BLOCK @@CONFIG))) (do
 																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-block))))
 
-  	(if (= 0 (mod @cr/ITERATIONS (:FREQ_SEEK_FACSIMILE @config))) (do
-																																	(if (> (rand) (cy/get-temperature)) (cl/seek-facsimile))))
+  	(if (= 0 (mod @@cr/ITERATIONS (:FREQ_SEEK_FACSIMILE @@CONFIG))) (do
+																																	(if (> (rand) (cy/get-temperature))	(cl/seek-facsimile))))
  
-
-		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_TARGET_MATCH @config))) (do
+		 (if	(= 0 (mod @@cr/ITERATIONS (:FREQ_RAND_TARGET_MATCH @@CONFIG))) (do
 																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-target-match))))
 
-		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_RAND_SYNTACTIC_COMPARISON @config))) (do
+		 (if	(= 0 (mod @@cr/ITERATIONS (:FREQ_RAND_SYNTACTIC_COMPARISON @@CONFIG))) (do
 																														 		(if (> (rand) (cy/get-temperature)) (cl/rand-syntactic-comparison))))
 
 
@@ -67,7 +66,7 @@
 
 			; Pump a random brick every few iterations
 
-		 (if	(= 0 (mod @cr/ITERATIONS (:FREQ_PUMP_BRICK @config))) (do 
+		 (if	(= 0 (mod @@cr/ITERATIONS (:FREQ_PUMP_BRICK @@CONFIG))) (do 
 																																	(if (> (rand) (cy/get-temperature)) ; When it's not so hot, pump a brick target
 																																		(let [br (cy/random-brick)]
 																																			(if br
@@ -75,7 +74,7 @@
 
 		; Pump a target (chosen randomly from the primary and secondary targets) 1 in 10 iterations
 
-			(if	(= 0 (mod @cr/ITERATIONS (:FREQ_PUMP_TARGET @config))) (let [t (cy/random-target)]
+			(if	(= 0 (mod @@cr/ITERATIONS (:FREQ_PUMP_TARGET @@CONFIG))) (let [t (cy/random-target)]
 																																		 (if (not (nil? t))
 																																		 	(do
 																																		 		(log/debug "tick activating target" t)
@@ -97,24 +96,24 @@
 		 	(cr/process-next-codelet)
 
 		 	(tick)
-		 	(if (or (pred) @cy/COMPLETE)
-		 			[@cr/ITERATIONS (if (empty? (cy/get-solutions)) nil (cy/format-block (:val (first (cy/get-solutions)))))]
+		 	(if (or (pred) @@cy/COMPLETE)
+		 			[@@cr/ITERATIONS (if (empty? (cy/get-solutions)) nil (cy/format-block (:val (first (cy/get-solutions)))))]
 		 		 (recur))))
 			(catch Exception e
 				 (do
 						(log/error "Caught " e)
 						(println e)
 						(dump)
-						[@cr/ITERATIONS nil]
+						[@@cr/ITERATIONS nil]
 						))))
 	
 (defn run-until-empty-cr
  []
- (run-until (fn[] (empty? @cr/CODERACK))))
+ (run-until (fn[] (empty? @@cr/CODERACK))))
 
 (defn run-for-iterations
  [n]
- (run-until (fn[] (>= @cr/ITERATIONS n))))
+ (run-until (fn[] (>= @@cr/ITERATIONS n))))
 
 (defn parse-int [s] (Integer/parseInt s))
 
@@ -177,9 +176,9 @@
 				(doall (map cl/load-brick b))
 
 				(let [result (run-for-iterations i)]
-					(if @cy/COMPLETE
-						(println n "," t "," b "," @cr/ITERATIONS "," (cl/-format-block (:val (first (cy/get-solutions)))) "," (count (filter empty? (map :coderack @hist/HISTORY))))
-						(println n "," t "," b "," @cr/ITERATIONS ", none, " (count (filter empty? (map :coderack @hist/HISTORY)))))
+					(if @@cy/COMPLETE
+						(println n "," t "," b "," @@cr/ITERATIONS "," (cl/-format-block (:val (first (cy/get-solutions)))) "," (count (filter empty? (map :coderack @@hist/HISTORY))))
+						(println n "," t "," b "," @@cr/ITERATIONS ", none, " (count (filter empty? (map :coderack @@hist/HISTORY)))))
 
 				 (if v (viz/-main))
 				 (recur (inc n) (+ iterations (first result)) (conj solutions (second result)))
@@ -206,8 +205,8 @@
 (defn run-for-config
  [c]
  (do
- 	(reset! cfg/config c)
- 	(let [results (map #(run-calcs 100 2000 (first %1) (second %1) false) problems) ; run against each problem 100 times and collect results
+ 	(reset! @cfg/CONFIG c)
+ 	(let [results (pmap #(run-calcs 1 2000 (first %1) (second %1) false) problems) ; run against each problem 100 times and collect results
  							averages (map -average (-transpose results))]
  							(take 3 averages))))
 

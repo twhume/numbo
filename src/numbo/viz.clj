@@ -194,7 +194,7 @@
  "Rerender the pnet buffer image to canvas c"
  [c]
  (do
-	 (reset! PNET-IMAGE (plot-pnet (:pnet (nth @hist/HISTORY @CURRENT)) (.getWidth c) (.getHeight c)))
+	 (reset! PNET-IMAGE (plot-pnet (:pnet (nth @@hist/HISTORY @CURRENT)) (.getWidth c) (.getHeight c)))
 		(repaint! c)))
 
 (defn render-pnet
@@ -214,7 +214,7 @@
  "Rerender the working memory buffer image"
  [c]
  (do
-	 (reset! WM-IMAGE (plot-wm (:cyto (nth @hist/HISTORY @CURRENT)) (.getWidth c) (.getHeight c)))
+	 (reset! WM-IMAGE (plot-wm (:cyto (nth @@hist/HISTORY @CURRENT)) (.getWidth c) (.getHeight c)))
  	(repaint! c)))
 
 (defn render-wm
@@ -233,9 +233,14 @@
 
 (defn -current-coderack
  []
+ (do
+ 	(log/debug "current=" @CURRENT)
+ 	(log/debug "hist" (.hashCode hist/HISTORY))
+ 	(log/debug "@hist" (.hashCode @hist/HISTORY))
+ 	(log/debug "@@hist" (.hashCode @@hist/HISTORY))
  (vector
  	:columns [ { :key :iteration :text "Born"} { :key :urgency :text "Urgency"}  	{ :key :desc :text "Description"} ]
- 	:rows (vec (into '[["Born" "Urgency" "Codelet"]] (:coderack (nth @hist/HISTORY @CURRENT))))))
+ 	:rows (vec (into '[["Born" "Urgency" "Codelet"]] (:coderack (nth @@hist/HISTORY @CURRENT)))))))
 
 (defn cr-tab
  "Draws the Coderack tab"
@@ -294,9 +299,9 @@
 					(reset! CURRENT i)
 					(repaint-images r)
 					(config! (select r [:#coderack-table]) :model (-current-coderack))
-					(config! (select r [:#iteration]) :text (str (inc @CURRENT) "/" (count @hist/HISTORY)))
-					(text! (select r [:#codelet]) (:desc (:codelet (nth @hist/HISTORY @CURRENT))))
-					(text! (select r [:#temperature]) (format "%3.0f%%" (* 100 (:temperature (nth @hist/HISTORY @CURRENT)))))
+					(config! (select r [:#iteration]) :text (str (inc @CURRENT) "/" (count @@hist/HISTORY)))
+					(text! (select r [:#codelet]) (:desc (:codelet (nth @@hist/HISTORY @CURRENT))))
+					(text! (select r [:#temperature]) (format "%3.0f%%" (* 100 (:temperature (nth @@hist/HISTORY @CURRENT)))))
 	)))
 
 (defn go-back [f]
