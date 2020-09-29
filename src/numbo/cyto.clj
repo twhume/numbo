@@ -15,7 +15,7 @@
 (defn -new-node
  "Create a new node with value v, attractiveness a"
  ([v a] {:val v :attr a})
- ([v] (-new-node v 0)))
+ ([v] (-new-node v (:ATTR_DEFAULT @@CONFIG))))
 
 (defn -initial-attr
 	"Calculates an initial attractiveness for a given value"
@@ -89,7 +89,7 @@
 (def CYTO (misc/thread-local (atom (new-cyto))))
 (def BRICK-ATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CYTO :attr :bricks))))
 (def TARGET-ATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CYTO :attr :targets))))
-(def BLOCK-INVATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CYTO :attr :blocks (partial misc/invert-val :attr)))))
+(def BLOCK-INVATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler2 @CYTO :attr :blocks (partial misc/invert-val :attr)))))
 (def NODE-ATTR-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CYTO :attr (fn [x] (concat (:blocks x) (:bricks x)))))))
 
 (defn reset
@@ -278,7 +278,12 @@
 (defn unworthy-block
  "Return a random block, weighted by the inverse of its attractiveness"
  []
-	(:val (@@BLOCK-INVATTR-SAMPLER))) ; invert it back again once we have it
+ (try
+		(:val (@@BLOCK-INVATTR-SAMPLER))
+		(catch Exception e
+			(do
+				(println "unworthy-block " e "cyto=" @@CYTO)
+		)))) ; invert it back again once we have it
 
 (defn get-block
 	"Read the block b from cyto c"

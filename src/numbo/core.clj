@@ -102,6 +102,7 @@
 			(catch Exception e
 				 (do
 						(log/error "Caught " e)
+						(println @cr/CODERACK)
 						(println e)
 						(dump)
 						[@@cr/ITERATIONS nil]
@@ -153,8 +154,8 @@
 		(log/error s)))
 
 (defn run-calcs
- "Run max i iterations of a calculation of target t, bricks b, c times, vizualize if v is set"
- [c i t b v]
+ "Run max i iterations of a calculation of target t, bricks b, c times, vizualize if v is set, debug if d = true"
+ [c i t b v d]
  (loop [n 0 iterations 0 solutions '[]]
 
  	(if (= n c)
@@ -176,9 +177,10 @@
 				(doall (map cl/load-brick b))
 
 				(let [result (run-for-iterations i)]
-					(if @@cy/COMPLETE
-						(println n "," t "," b "," @@cr/ITERATIONS "," (cl/-format-block (:val (first (cy/get-solutions)))) "," (count (filter empty? (map :coderack @@hist/HISTORY))))
-						(println n "," t "," b "," @@cr/ITERATIONS ", none, " (count (filter empty? (map :coderack @@hist/HISTORY)))))
+					(if d
+						(if @@cy/COMPLETE
+							(println n "," t "," b "," @@cr/ITERATIONS "," (cl/-format-block (:val (first (cy/get-solutions)))) "," (count (filter empty? (map :coderack @@hist/HISTORY))))
+							(println n "," t "," b "," @@cr/ITERATIONS ", none, " (count (filter empty? (map :coderack @@hist/HISTORY))))))
 
 				 (if v (viz/-main))
 				 (recur (inc n) (+ iterations (first result)) (conj solutions (second result)))
@@ -206,28 +208,51 @@
  [c]
  (do
  	(reset! @cfg/CONFIG c)
- 	(let [results (pmap #(run-calcs 1 2000 (first %1) (second %1) false) problems) ; run against each problem 100 times and collect results
+ 	(let [results (pmap #(run-calcs 100 2000 (first %1) (second %1) false false) problems) ; run against each problem 100 times and collect results
  							averages (map -average (-transpose results))]
  							(take 3 averages))))
 
+(defn -unchunk [s]
+  (when (seq s)
+    (lazy-seq
+      (cons (first s)
+            (-unchunk (next s))))))
 
 (defn run-epoch
- "Mutate the starting config 10 times, run against each one, return the best after num epochs"
- [starter num]
- (loop [epoch-counter 1
- 							configs-to-run (repeatedly 10 (partial cfg/evolve-config starter))]
-			(let [raw-results (map #(list %1 (run-for-config %1)) configs-to-run)
-									ordered-results (reverse (sort-by #(second (second %1)) raw-results))]
-								(do
-									(println "Epoch" epoch-counter ", best=" (first ordered-results))
-									(if (< epoch-counter num)
-										(recur
-											(inc epoch-counter)
+ ""
+[start-cfg start-percent max-it]
 
-											(concat
-												(repeatedly 6 (partial cfg/evolve-config (first (first ordered-results))))
-												(repeatedly 3 (partial cfg/evolve-config (first (second ordered-results))))
-												(repeatedly 1 (partial cfg/evolve-config (first (misc/third ordered-results)))))))))))
+; take the first 10 configurations which deliver a greater accuracy than the current
+
+	(loop [cfg start-cfg percent start-percent it 0]
+		(if (= max-it it)
+			(do (println "End of iterations") cfg)
+			(do
+				(println "Iteration=" it "percent=" percent "cfg=" cfg)
+				(let [results (first
+						 (reverse
+						 	(sort-by #(second (second %1))
+						 	 (take 5
+								 	(filter #(> (second (second %1)) percent)
+								 		(pmap #(let [result (run-for-config %1)] (do (println (second result)) (list %1 result))) (-unchunk (repeatedly 20 (partial cfg/evolve-config cfg)))))))))]
+				(if (nil? results)
+					(do (println "Couldn't find a better child") cfg)
+					(recur
+					 (first results)
+					 (second (second results))
+					 (inc it)
+					 )))))))
+
+
+(defn -do-task
+ ""
+ [n]
+ (do
+ 	(println "start n=" n)
+ 	(Thread/sleep (+ 3000 (rand 5000)))
+ 	(println "end n=" n)
+))
+
 
 (defn -main
   [& args]
@@ -240,4 +265,4 @@
   			(= 1 (:visualize opts))
   			(< 1 (:count opts))) (user-error "Visualizing over >1 rounds")
 
-  		:else (run-calcs (:count opts) (:iterations opts) (:target opts) (:bricks opts) (= 1 (:visualize opts))))))
+  		:else (run-calcs (:count opts) (:iterations opts) (:target opts) (:bricks opts) (= 1 (:visualize opts)) true))))

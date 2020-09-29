@@ -15,7 +15,7 @@
 	(assoc c :urgency (misc/invert-key :urgency (:URGENCY_HIGH @@CONFIG) (:URGENCY_LOW @@CONFIG) c)))
 
 (def PRIORITY-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CODERACK :urgency))))
-(def INV-PRIORITY-SAMPLER (misc/thread-local (atom (misc/mk-sampler @CODERACK :urgency identity -urg-invert))))
+(def INV-PRIORITY-SAMPLER (misc/thread-local (atom (misc/mk-sampler2 @CODERACK :urgency identity -urg-invert))))
 
 (defn reset
  "Reset the coderack"

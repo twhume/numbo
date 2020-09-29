@@ -47,7 +47,7 @@
  "Invert the value of key k in map m"
  [k m]
  (if (nil? m) nil
- (assoc m k (round-to 2 (- 1 (k m))))))
+ (assoc m k (normalized (round-to 2 (- 1 (k m))) 0.01 1.0))))
 
 (defn int-k
  "Turn keyword into an integer"
@@ -111,6 +111,7 @@
    (loop [rem s ret '[] tot w]
 				(if (or (empty? rem) (= n (count ret))) ret
 	    (let [cur (-sample-val rem f (rand tot))]
+;	     (println "rem=" rem "ret=" ret "tot=" tot "cur=" cur)
 						(recur (seq-remove rem cur) (conj ret cur) (- tot (f cur))))))))
  ([s f n] (sample s f n (reduce + (map f s))))
  ([s f] (first (sample s f 1))))
@@ -128,6 +129,27 @@
    ([n] (map o (sample (map o (p @a)) f n)))))
  ([a f p] (mk-sampler a f p identity))
  ([a f] (mk-sampler a f identity identity)))
+
+(defn mk-sampler2
+ "Create a sampler for the sequence in atom a using function f to identify value of an element in it, p to filter out values"
+ ([a f p o]
+ 	(fn
+ 		([]
+ 			(try
+ 				(o (sample (map o (p @a)) f))
+	 			(catch Exception e (do
+		 			(println "mk-sampler2 EXCEPTION a=" a "f=" f "p=" p "o=" o "e=" e)
+		 			(log/info "mk-sampler2 EXCEPTION a=" a "f=" f "p=" p "o=" o "e=" e)))))
+   ([n]
+   	(try
+					(map o (sample (map o (p @a)) f n))
+					(catch Exception e (do
+		 			(println "mk-sampler2 EXCEPTION a=" a "f=" f "p=" p "o=" o "e=" e)
+		 			(log/info "mk-sampler2 EXCEPTION a=" a "f=" f "p=" p "o=" o "e=" e)))))))
+
+ ([a f p] (mk-sampler a f p identity))
+ ([a f] (mk-sampler a f identity identity)))
+
 
 (defn invert-key
  "Returns the inverse value of key k in input c"

@@ -134,7 +134,70 @@ a second count of actual bricks, stored in :original-bricks
 - Raised it to 0.5, t=114 is 73%, t=31 is 9%
 - (2020.09.11-12.06.34) avg solutions=4.1, avg time=882, % solved=69, % blank=28
 
+### parallel
+
+- Did a trial of evolving 10 children/generation for 10 generations. Parallelized with pmap, it ran in 31 hours(!). Results were a little better: average solutions= 4.5, average time= 851.8 %age solved=72.4, ) 
+- The same thing run in serial took 49h, but some of these hours were at the same time (i.e. parallel one suffered). Serial results were not so great, but maybe in the same error: 4.8 solutions, average 898.4 iterations, 70.2% solved
+- Tried again, in parallel, evolving more aggressively: made it 6 children/generation, 20 generations, 20% likely that any parameter changed. Started from the 72.4 point {:FUZZY_CLOSEST_MID 0.9, :PN_INC 21/100, :PN_DECAY 2/25, :ATTR_INC 83/100, :FREQ_DISMANTLE 7, :URGENCY_LOW 1, :ATTR_DEFAULT 77/100, :PN_SELF 259/50, :CODERACK_SIZE 31, :FREQ_PUMP_TARGET 13, :PN_DEFAULT 1/25, :FREQ_RAND_SYNTACTIC_COMPARISON 11, :URGENCY_MEDIUM 8, :FREQ_PUMP_BRICK 10, :FREQ_SEEK_FACSIMILE 10, :ATTR_DEC 1/25, :PN_NNEIGHBOR 113/100, :FREQ_RAND_BLOCK 4, :PN_NEIGHBOR 323/100, :FUZZY_CLOSEST_TOP 21/25, :URGENCY_HIGH 6, :FREQ_RAND_TARGET_MATCH 13}
+
+TODO: fix unworthy-block sampler
+TODO: only take items from the next generation which are better than the current one. Otherwise evolve the current one
+- make a constant sequence of evolutions from the base
+- filter for those better than the current
+- take n
+
+Iteration= 2 percent= 74.3 cfg= {:FUZZY_CLOSEST_MID 0.9, :PN_INC 21/100, :PN_DECAY 2/25, :ATTR_INC 83/100, :FREQ_DISMANTLE 8, :URGENCY_LOW 1, :ATTR_DEFAULT 77/100, :PN_SELF 259/50, :CODERACK_SIZE 31, :FREQ_PUMP_TARGET 13, :PN_DEFAULT 1/20, :FREQ_RAND_SYNTACTIC_COMPARISON 11, :URGENCY_MEDIUM 8, :FREQ_PUMP_BRICK 10, :FREQ_SEEK_FACSIMILE 10, :ATTR_DEC 1/25, :PN_NNEIGHBOR 113/100, :FREQ_RAND_BLOCK 4, :PN_NEIGHBOR 323/100, :FUZZY_CLOSEST_TOP 21/25, :URGENCY_HIGH 6, :FREQ_RAND_TARGET_MATCH 13}
+
+{:FUZZY_CLOSEST_MID 0.9, :PN_INC 21/100, :PN_DECAY 2/25, :ATTR_INC 83/100, :FREQ_DISMANTLE 8, :URGENCY_LOW 1, :ATTR_DEFAULT 77/100, :PN_SELF 259/50, :CODERACK_SIZE 31, :FREQ_PUMP_TARGET 13, :PN_DEFAULT 1/20, :FREQ_RAND_SYNTACTIC_COMPARISON 11, :URGENCY_MEDIUM 8, :FREQ_PUMP_BRICK 10, :FREQ_SEEK_FACSIMILE 10, :ATTR_DEC 1/25, :PN_NNEIGHBOR 113/100, :FREQ_RAND_BLOCK 4, :PN_NEIGHBOR 323/100, :FUZZY_CLOSEST_TOP 21/25, :URGENCY_HIGH 6, :FREQ_RAND_TARGET_MATCH 13}
+
+{:FUZZY_CLOSEST_MID 0.9, :PN_INC 21/100, :PN_DECAY 2/25, :ATTR_INC 83/100, :FREQ_DISMANTLE 8, :URGENCY_LOW 1, :ATTR_DEFAULT 77/100, :PN_SELF 259/50, :CODERACK_SIZE 31, :FREQ_PUMP_TARGET 13, :PN_DEFAULT 1/20, :FREQ_RAND_SYNTACTIC_COMPARISON 11, :URGENCY_MEDIUM 8, :FREQ_PUMP_BRICK 10, :FREQ_SEEK_FACSIMILE 10, :ATTR_DEC 1/25, :PN_NNEIGHBOR 113/100, :FREQ_RAND_BLOCK 4, :PN_NEIGHBOR 323/100, :FUZZY_CLOSEST_TOP 21/25, :URGENCY_HIGH 6, :FREQ_RAND_TARGET_MATCH 13}
+
+Really need to fix the unworthy block calculator.
+Issue is that the :attr of blocks sometimes goes above 1.0
+I'm not quiiiiite sure how this can happen - evolved parameters perhaps?
+
+
+unworthy-block  #error {
+ :cause nil
+ :via
+ [{:type java.lang.NullPointerException
+   :message nil
+   :at [clojure.lang.Numbers ops Numbers.java 1068]}]
+ :trace
+ [[clojure.lang.Numbers ops Numbers.java 1068]
+  [clojure.lang.Numbers minus Numbers.java 161]
+  [numbo.misc$sample invokeStatic misc.clj 114]
+  [numbo.misc$sample invoke misc.clj 107]
+  [numbo.misc$sample invokeStatic misc.clj 115]
+  [numbo.misc$sample invoke misc.clj 107]
+  [numbo.misc$sample invokeStatic misc.clj 116]
+  [numbo.misc$sample invoke misc.clj 107]
+  [numbo.misc$mk_sampler$fn__884 invoke misc.clj 127]
+  [numbo.cyto$unworthy_block invokeStatic cyto.clj 282]
+  [numbo.cyto$unworthy_block invoke cyto.clj 278]
+  [numbo.codelet$dismantler invokeStatic codelet.clj 340]
+  [numbo.codelet$dismantler invoke codelet.clj 337]
+  [numbo.core$tick invokeStatic core.clj 49]
+  [numbo.core$tick invoke core.clj 38]
+  [numbo.core$run_until invokeStatic core.clj 98]
+  [numbo.core$run_until invoke core.clj 91]
+  [numbo.core$run_for_iterations invokeStatic core.clj 117]
+  [numbo.core$run_for_iterations invoke core.clj 115]
+  [numbo.core$run_calcs invokeStatic core.clj 179]
+  [numbo.core$run_calcs invoke core.clj 156]
+  [numbo.core$run_for_config$fn__7307 invoke core.clj 211]
+  [clojure.core$pmap$fn__8447$fn__8448 invoke core.clj 7022]
+  [clojure.core$binding_conveyor_fn$fn__5739 invoke core.clj 2030]
+  [clojure.lang.AFn call AFn.java 18]
+  [java.util.concurrent.FutureTask run FutureTask.java 264]
+  [java.util.concurrent.ThreadPoolExecutor runWorker ThreadPoolExecutor.java 1128]
+  [java.util.concurrent.ThreadPoolExecutor$Worker run ThreadPoolExecutor.java 628]
+  [java.lang.Thread run Thread.java 835]]} cyto= {:bricks ({:val 6, :attr 0.39} {:val 16, :attr 0.01} {:val 14, :attr 0.01}), :blocks ({:val (#object[clojure.core$_STAR_ 0x23f4ec50 clojure.core$_STAR_@23f4ec50] 20 2), :attr 1.03}), :targets [{:val 116, :attr 0.48}], :original-bricks (16 6 14 2 20)}
+
+
 ## Next 
+
+- insert a (take 5) or similar into the main loop in core.clj so that in any generation we don't do all 20 children but stop after we have 5 which improve on the status quo, and take the best of them
 
 - consider blocks as input to seek-facsimile
 

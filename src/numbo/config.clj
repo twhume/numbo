@@ -290,7 +290,7 @@
 	 	(let [cur-key (first ks)
 	 							cur-cfg (cur-key config-modmap)
 	 							f (:mod-fn cur-cfg)]
-	 			 (if (< (rand) 0.1)
+	 			 (if (< (rand) 0.2)
 	 					(recur (rest ks) (assoc cfg cur-key (f (cur-key cfg) (:floor cur-cfg) (:ceiling cur-cfg) (:mod-min cur-cfg) (:mod-max cur-cfg))))
 	  					(recur (rest ks) cfg))))))
 
