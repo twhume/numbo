@@ -65,7 +65,7 @@
 
 
 
-(def urgencies (atom {
+(def URGENCIES (misc/thread-local (atom {
 	:activate-pnet (:URGENCY_MEDIUM @@CONFIG)
 	:inc-attraction (:URGENCY_MEDIUM @@CONFIG)
 	:rand-syntactic-comparison (:URGENCY_LOW @@CONFIG)
@@ -80,7 +80,7 @@
 	:seek-facsimile (:URGENCY_MEDIUM @@CONFIG)
 	:rand-block (:URGENCY_LOW @@CONFIG)
 	:dismantler (:URGENCY_LOW @@CONFIG)
-	}))
+	})))
 
 (defn -mod-int
  [val floor ceiling min-add max-add]
@@ -290,9 +290,19 @@
 	 	(let [cur-key (first ks)
 	 							cur-cfg (cur-key config-modmap)
 	 							f (:mod-fn cur-cfg)]
-	 			 (if (< (rand) 0.2)
+	 			 (if (< (rand) 0.7)
 	 					(recur (rest ks) (assoc cfg cur-key (f (cur-key cfg) (:floor cur-cfg) (:ceiling cur-cfg) (:mod-min cur-cfg) (:mod-max cur-cfg))))
 	  					(recur (rest ks) cfg))))))
 
+(defn evolve-urgencies
+ "Return a sliightly evolved version of the urgencies u"
+ [u]
+ (loop [ks (keys u) urg u]
+ 	(if (empty? ks) urg
+	 	(let [cur-key (first ks)
+	 							cur-urg (cur-key urg)]
+	 			 (if (< (rand) 0.7)
+	 					(recur (rest ks) (assoc urg cur-key (-mod-int cur-urg 1 100 -5 5)))
+	  					(recur (rest ks) urg))))))
 
 

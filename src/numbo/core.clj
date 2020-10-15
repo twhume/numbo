@@ -208,9 +208,18 @@
  [c]
  (do
  	(reset! @cfg/CONFIG c)
- 	(let [results (pmap #(run-calcs 100 2000 (first %1) (second %1) false false) problems) ; run against each problem 100 times and collect results
+ 	(let [results (pmap #(run-calcs 100 1000 (first %1) (second %1) false false) problems) ; run against each problem 100 times and collect results
  							averages (map -average (-transpose results))]
  							(take 3 averages))))
+
+(defn run-for-urgencies
+ [u]
+ (do
+ 	(reset! @cfg/URGENCIES u)
+ 	(let [results (pmap #(run-calcs 100 1000 (first %1) (second %1) false false) problems) ; run against each problem 100 times and collect results
+ 							averages (map -average (-transpose results))]
+ 							(take 3 averages))))
+
 
 (defn -unchunk [s]
   (when (seq s)
@@ -234,7 +243,7 @@
 						 	(sort-by #(second (second %1))
 						 	 (take 5
 								 	(filter #(> (second (second %1)) percent)
-								 		(pmap #(let [result (run-for-config %1)] (do (println (second result)) (list %1 result))) (-unchunk (repeatedly 20 (partial cfg/evolve-config cfg)))))))))]
+								 		(pmap #(let [result (run-for-config %1)] (do (println (second result)) (list %1 result))) (-unchunk (repeatedly 500 (partial cfg/evolve-config cfg)))))))))]
 				(if (nil? results)
 					(do (println "Couldn't find a better child") cfg)
 					(recur
@@ -243,6 +252,30 @@
 					 (inc it)
 					 )))))))
 
+(defn run-epoch-urgencies
+ ""
+[start-urg start-percent max-it]
+
+; take the first 10 configurations which deliver a greater accuracy than the current
+
+	(loop [urg start-urg percent start-percent it 0]
+		(if (= max-it it)
+			(do (println "End of iterations") urg)
+			(do
+				(println "Iteration=" it "percent=" percent "urgencies=" urg)
+				(let [results (first
+						 (reverse
+						 	(sort-by #(second (second %1))
+						 	 (take 5
+								 	(filter #(> (second (second %1)) percent)
+								 		(pmap #(let [result (run-for-urgencies %1)] (do (println (second result)) (list %1 result))) (-unchunk (repeatedly 500 (partial cfg/evolve-urgencies urg)))))))))]
+				(if (nil? results)
+					(do (println "Couldn't find a better child") urg)
+					(recur
+					 (first results)
+					 (second (second results))
+					 (inc it)
+					 )))))))
 
 (defn -do-task
  ""
