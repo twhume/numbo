@@ -62,9 +62,6 @@
 
 ; Map of type --> urgency for codelets
 
-
-
-
 (def URGENCIES (misc/thread-local (atom {
 	:activate-pnet (:URGENCY_MEDIUM @@CONFIG)
 	:inc-attraction (:URGENCY_MEDIUM @@CONFIG)
@@ -281,6 +278,17 @@
 
 
 })
+
+(defn random-config
+ "Return a totally random config"
+ []
+ (into '{}
+	 (map
+	 	#(hash-map %1
+	 			(+ (:floor (get config-modmap %1))
+	 				((if (= (:mod-fn (get config-modmap %1)) -mod-float) rand rand-int)
+	 					(- (:ceiling (get config-modmap %1)) (:floor (get config-modmap %1)))))) 
+	 	(keys config-modmap))))
 
 (defn evolve-config
  "Return a sliightly evolved version of the config c"

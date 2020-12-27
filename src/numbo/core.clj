@@ -252,6 +252,32 @@
 					 (inc it)
 					 )))))))
 
+(defn run-epoch-random
+ ""
+[start-percent max-it]
+
+; take the first 10 configurations which deliver a greater accuracy than the current
+
+	(loop [cfg nil percent start-percent it 0]
+		(if (= max-it it)
+			(do (println "End of iterations") cfg)
+			(do
+				(println "Iteration=" it "percent=" percent "cfg=" cfg)
+				(let [configs (if (nil? cfg) (repeatedly 500 (partial cfg/random-config)) (-unchunk (repeatedly 500 (partial cfg/evolve-config cfg))))
+										results (first
+										 (reverse
+										 	(sort-by #(second (second %1))
+										 	 (take 5
+												 	(filter #(> (second (second %1)) percent)
+												 		(pmap #(let [result (run-for-config %1)] (do (println (second result)) (list %1 result))) configs))))))]
+				(if (nil? results)
+					(do (println "Couldn't find a better child") cfg)
+					(recur
+					 (first results)
+					 (second (second results))
+					 (inc it)
+					 )))))))
+
 (defn run-epoch-urgencies
  ""
 [start-urg start-percent max-it]

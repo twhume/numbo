@@ -155,6 +155,8 @@ After another, still the best
 
 Iteration= 4 percent= 65.4 urgencies= {:check-done 5, :test-block 3, :rand-syntactic-comparison 1, :rand-target-match 1, :create-target2 10, :activate-pnet 1, :inc-attraction 1, :load-brick 12, :fulfil-target2 4, :dismantler 1, :probe-target2 8, :seek-facsimile 3, :load-target 1, :rand-block 1}
 
+- Kicked of three attempts to start from *random* positions. All quickly make it to ~ 65 %, then hang there.
+- Wrote run-epoch-random to start from 500 random positions and choose the first 5 > 60%, all end up in the same place.
 
 ## Next 
 - consider blocks as input to seek-facsimile
